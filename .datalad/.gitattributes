@@ -1,0 +1,3 @@
+# Text files (according to file --mime-type) are added directly to git.
+# See http://git-annex.branchable.com/tips/largefiles/ for more info.
+** annex.largefiles=nothing
