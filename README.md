@@ -3,13 +3,13 @@
 CONP data is a repository containing the datasets available in the 
 Canadian Open Neuroscience Platform. It leverages 
 [DataLad](http://datalad.org) to store only metadata and references to 
-the data files. Data files can be downloaded depending each data owner's 
+the data files. Data files can be downloaded depending on each data owner's 
 access policy.
 
 ## Dataset structure
 
 The dataset is structured as follows:
-* `investigators` contains sub-datasets investigators based in Canada.
+* `investigators` contains sub-datasets for investigators based in Canada.
 * `projects` contains sub-datasets for projects hosted in Canada.
 Investigators and projects are responsible for the management and curation 
 of their own sub-datasets.
@@ -40,9 +40,12 @@ sub-dataset in the CONP repository as follows:
 3. Create your sub-dataset in your cloned fork, under `investigators` or `projects` (TODO: add command).
 4. Push your fork to GitHub.
 5. Create a pull request.
+
 Once the pull request is accepted by the CONP data managers, your 
 dataset is created. It is then up to you to manage its content and 
 decide on the creation of sub-datasets in it. You may want to host your 
 sub-dataset on GitHub to facilitate its management. Modifications to 
 your dataset can be propagated to the CONP dataset through pull 
 requests, by repeating steps 4 and 5 above.
+
+We welcome your feedback!
