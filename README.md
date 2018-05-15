@@ -53,7 +53,7 @@ sub-dataset in the CONP repository as follows:
 1. Fork the CONP data repository on GitHub:
    * Navigate to http://github.com/CONP-PCNO/conp-dataset (this page)
    * In the top-right corner of the page, click Fork. 
-   * This will create a copy of the dataset at http://github.com:<github_username>/conp-dataset.
+   * This will create a copy of the dataset at http://github.com:username/conp-dataset
 
 2. Install your fork on your computer:
 
