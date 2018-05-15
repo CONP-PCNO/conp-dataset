@@ -12,4 +12,4 @@
 	url = git@github.com:jbpoline/conp-dataset-jb.git
 [submodule "investigators/tristan"]
 	path = investigators/tristan
-	url = ./investigators/tristan
+	url = git@github.com:glatard/conp-dataset-tristan.git
