@@ -1,3 +1,6 @@
 [submodule "investigators/jb"]
 	path = investigators/jb
 	url = git@github.com:jbpoline/conp-dataset-jb.git
+[submodule "investigators/tglatard"]
+	path = investigators/tglatard
+	url = ./investigators/tglatard
