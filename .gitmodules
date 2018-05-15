@@ -1,6 +1,3 @@
 [submodule "investigators/tglatard"]
 	path = investigators/tglatard
 	url = git@github.com:glatard/conp-dataset-tglatard.git
-[submodule "investigators/toto"]
-	path = investigators/toto
-	url = ./investigators/toto

@@ -48,7 +48,7 @@ sub-dataset in the CONP repository as follows:
 3. Create your sub-dataset in your cloned fork, under `investigators` or `projects`. For instance:
 
 ```
-datalad create investigators/<your_name>
+datalad create -d . investigators/<your_name>
 ```
 
 4. Add files to your sub-dataset
