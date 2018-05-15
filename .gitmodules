@@ -4,3 +4,9 @@
 [submodule "investigators/glatard"]
 	path = investigators/glatard
 	url = ./investigators/glatard
+[submodule "jb"]
+	path = jb
+	url = ./jb
+[submodule "investigators/jb"]
+	path = investigators/jb
+	url = git@github.com:jbpoline/conp-dataset-jb.git
