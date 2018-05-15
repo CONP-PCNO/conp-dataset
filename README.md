@@ -22,7 +22,7 @@ Requirements:
 
 * [Git](https://git-scm.com/downloads)
 * [Git annex](http://git-annex.branchable.com/install)
-* DataLad: `pip install datalad`
+* DataLad: `pip install git+https://github.com/datalad/datalad.git`
 
 To start, clone the CONP dataset on your computer:
 
@@ -45,9 +45,20 @@ sub-dataset in the CONP repository as follows:
 
 1. Fork the CONP data repository on GitHub. This will create a copy of the dataset at `http://github.com:<github_username>/conp-data`.
 2. Clone your fork on your computer: `git clone git@github.com:<github_username>/conp-data`.
-3. Create your sub-dataset in your cloned fork, under `investigators` or `projects` (TODO: add command).
-4. Push your fork to GitHub.
-5. Create a pull request.
+3. Create your sub-dataset in your cloned fork, under `investigators` or `projects`. For instance:
+
+```
+datalad investigators/<your_name>
+```
+
+4. Add files to your sub-dataset
+
+```
+datalad add investigators/<your_name>/image.nii.gz
+```
+
+5. Push your fork to GitHub.
+6. Create a pull request.
 
 Once the pull request is accepted by the CONP data managers, your 
 dataset is created. It is then up to you to manage its content and 
