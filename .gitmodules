@@ -1,3 +1,6 @@
 [submodule "investigators/tglatard"]
 	path = investigators/tglatard
 	url = git@github.com:glatard/conp-dataset-tglatard.git
+[submodule "investigators/glatard"]
+	path = investigators/glatard
+	url = ./investigators/glatard
