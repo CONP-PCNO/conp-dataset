@@ -43,35 +43,56 @@ This may require authentication depending on the data owner's configuration.
 If you are an investigator or a project manager, you can create a 
 sub-dataset in the CONP repository as follows:
 
-1. Fork the CONP data repository on GitHub. This will create a copy of the dataset at `http://github.com:<github_username>/conp-data`.
-2. Clone your fork on your computer: `git clone git@github.com:<github_username>/conp-data`.
+1. Fork the CONP data repository on GitHub. This will create a copy of the dataset at `http://github.com:<github_username>/conp-dataset`.
+2. Clone your fork on your computer: `git clone git@github.com:<github_username>/conp-dataset`.
 3. Create your sub-dataset in your cloned fork, under `investigators` or `projects`. For instance:
 
 ```
 datalad create -d . investigators/<your_name>
 ```
-
 4. Publish your sub-dataset:
-    a. Add a sibling for your dataset on GitHub: `datalad create-sibling-github conp-dataset-<name>`. DataLad will ask your GitHub username and password to create the siblng.
-    b. Update the `.gitmodules` file in the parent dataset to add your sibling. It should contain a section that looks like this:
-    
+    From the main repository (`conp-dataset`):
+
+    a. Add a sibling for your dataset on GitHub:
+
+    ```datalad create-sibling-github conp-dataset-<name>```
+
+    DataLad will ask your GitHub user name and password to create the sibling.
+
+    b. Update the `.gitmodules` file to add your sibling. It should contain a section that looks like this:
+
     ```
     [submodule "investigators/<username>"]
         path = investigators/<username>
         url = git@github.com:<username>/conp-dataset-<username>.git
     ```
 
-    c. Commit the modified `.gitmodules` file: `git add .gitmodules ; git commit -m "Updated .gitmodules"`
-    
-5. Add files to your sub-dataset
-    a. Add a README.md file to your sub-dataset, directly in the Git repository:
-    `datalad add --to-git ./README.md`
-    b. Publish your README.md file to GitHub: 
-    `datalad publish --to github`
+    Note the Git endpoint in the url.
 
+    c. Commit the modified `.gitmodules` file:
+
+    ```git add .gitmodules
+    git commit -m "Updated .gitmodules"```
+
+5. Add files to your sub-dataset
+    From your sub-dataset (`investigators/<username>`):
     
-6. Push your fork to GitHub.
-7. Create a pull request.
+    a. Create and add a README.md file, directly in the Git repository:
+    `datalad add --to-git ./README.md`
+    
+    b. Add a file accessible through http (for instance an image file):
+    `git annex addurl <url>`
+    
+    c. Publish the modifications:
+    `datalad save`
+    `datalad publish --to github`
+    
+7. Publish the modifications to the main dataset:
+    From the main repository (`conp-dataset`):
+    `datalad save`
+    `datalad publish --to origin`
+
+8. Create a pull request.
 
 Once the pull request is accepted by the CONP data managers, your 
 dataset is created. It is then up to you to manage its content and 
