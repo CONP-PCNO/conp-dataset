@@ -26,15 +26,21 @@ Requirements:
 
 To start, clone the CONP dataset on your computer:
 
-```git clone http://github.com/CONP-PCNO/conp-data```
+```console
+git clone http://github.com/CONP-PCNO/conp-data
+```
 
 You can then search for relevant files and sub-datasets as follows:
 
-```datalad search T1```
+```console
+datalad search T1
+```
 
 And you can finally get the files you are interested in by typing:
 
-```datalad get <file_name>```
+```console
+datalad get <file_name>
+```
 
 This may require authentication depending on the data owner's configuration.
 
@@ -46,11 +52,13 @@ sub-dataset in the CONP repository as follows:
 1. Fork the CONP data repository on GitHub. This will create a copy of the dataset at `http://github.com:<github_username>/conp-dataset`.
 2. Clone your fork on your computer:
 
-```git clone git@github.com:<github_username>/conp-dataset```
+```console
+git clone git@github.com:<github_username>/conp-dataset
+```
 
 3. Create your sub-dataset in your cloned fork, under `investigators` or `projects`. For instance:
 
-```
+```console
 datalad create -d . investigators/<your_name>
 ```
 
@@ -60,7 +68,9 @@ datalad create -d . investigators/<your_name>
 
     a. Add a sibling for your dataset on GitHub:
 
-    ```datalad create-sibling-github conp-dataset-<name>```
+    ```console
+    datalad create-sibling-github conp-dataset-<name>
+    ```
 
     DataLad will ask your GitHub user name and password to create the sibling.
 
@@ -86,19 +96,27 @@ datalad create -d . investigators/<your_name>
     From your sub-dataset (`investigators/<username>`):
     
     a. Create and add a README.md file, directly in the Git repository:
-    `datalad add --to-git ./README.md`
-    
+    ```console
+    datalad add --to-git ./README.md
+    ```
+
     b. Add a file accessible through http (for instance an image file):
-    `git annex addurl <url>`
-    
+    ```console
+    git annex addurl <url>
+    ```
+
     c. Publish the modifications:
-    `datalad save`
-    `datalad publish --to github`
+    ```console
+    datalad save
+    datalad publish --to github
+    ```
     
 7. Publish the modifications to the main dataset:
     From the main repository (`conp-dataset`):
-    `datalad save`
-    `datalad publish --to origin`
+    ```console
+    datalad save
+    datalad publish --to origin
+    ```
 
 8. Create a pull request.
 
