@@ -3,7 +3,7 @@
 	url = git@github.com:glatard/conp-dataset-tglatard.git
 [submodule "investigators/glatard"]
 	path = investigators/glatard
-	url = ./investigators/glatard
+	url = git@github.com:glatard/conp-dataset-glatard.git
 [submodule "jb"]
 	path = jb
 	url = ./jb
