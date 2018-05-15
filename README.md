@@ -24,16 +24,16 @@ Requirements:
 * [Git annex](http://git-annex.branchable.com/install)
 * DataLad: `pip install git+https://github.com/datalad/datalad.git`
 
-To start, clone the CONP dataset on your computer:
+To start, install the main CONP dataset on your computer:
 
 ```console
-git clone http://github.com/CONP-PCNO/conp-data
+datalad install http://github.com/CONP-PCNO/conp-dataset
 ```
 
-You can then search for relevant files and sub-datasets as follows:
-
+You can also install sub-datasets you are interested in:
 ```console
-datalad search T1
+cd conp-dataset
+datalad install investigators/jb
 ```
 
 And you can finally get the files you are interested in by typing:
@@ -43,6 +43,13 @@ datalad get <file_name>
 ```
 
 This may require authentication depending on the data owner's configuration.
+
+You can also search for relevant files and sub-datasets as follows:
+
+```console
+datalad search T1
+```
+
 
 ## Adding data
 
