@@ -1,0 +1,3 @@
+[submodule "investigators/tglatard"]
+	path = investigators/tglatard
+	url = ./investigators/tglatard
