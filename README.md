@@ -91,13 +91,6 @@ datalad create -d . investigators/<your_name>
 
     Note the Git endpoint in the url.
 
-    c. Commit the modified `.gitmodules` file:
-
-    ```console
-    git add .gitmodules
-    git commit -m "Updated .gitmodules"
-    ```
-
 5. Add files to your sub-dataset
 
     From your sub-dataset (`investigators/<username>`):
