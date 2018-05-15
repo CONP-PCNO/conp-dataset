@@ -105,20 +105,23 @@ datalad create -d . investigators/<username>
     datalad publish --to github
     ```
     
-7. Publish the modifications to the main dataset:
+7. Publish the modifications to your fork of the main dataset:
+
     From the main repository (`conp-dataset`):
     ```console
     datalad save
     datalad publish --to origin
     ```
 
-8. Create a pull request.
+8. Publish modifications to the main dataset:
+
+    Create a new pull request from http://github.com:<github_username>/conp-dataset to http://github.com/CONP-PCNO/conp-dataset.
+    TODO: add a screenshot here.
 
 Once the pull request is accepted by the CONP data managers, your 
-dataset is created. It is then up to you to manage its content and 
-decide on the creation of sub-datasets in it. You may want to host your 
-sub-dataset on GitHub to facilitate its management. Modifications to 
+dataset is created in the CONP repository. It is then up to you to manage its content and 
+decide on the creation of sub-datasets in it. Modifications to 
 your dataset can be propagated to the CONP dataset through pull 
-requests, by repeating steps 4 and 5 above.
+requests, by repeating the last step above.
 
 We welcome your feedback! :smiley:
