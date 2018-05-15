@@ -4,3 +4,6 @@
 [submodule "jb"]
 	path = jb
 	url = ./jb
+[submodule "investigators/jb"]
+	path = investigators/jb
+	url = ./investigators/jb
