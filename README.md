@@ -89,7 +89,7 @@ datalad create -d . investigators/<username>
 
     Note the Git endpoint in the url.
 
-5. Add files to your sub-dataset
+5. Add files to your sub-dataset:
 
     From your sub-dataset (`investigators/<username>`):
     
@@ -119,7 +119,8 @@ datalad create -d . investigators/<username>
 
 8. Publish modifications to the main dataset:
 
-    Create a new pull request from http://github.com:<github_username>/conp-dataset to http://github.com/CONP-PCNO/conp-dataset.
+    Create a new pull request from http://github.com:username/conp-dataset to http://github.com/CONP-PCNO/conp-dataset.
+
     TODO: add a screenshot here.
 
 Once the pull request is accepted by the CONP data managers, your 
