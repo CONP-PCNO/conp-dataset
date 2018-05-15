@@ -44,13 +44,18 @@ If you are an investigator or a project manager, you can create a
 sub-dataset in the CONP repository as follows:
 
 1. Fork the CONP data repository on GitHub. This will create a copy of the dataset at `http://github.com:<github_username>/conp-dataset`.
-2. Clone your fork on your computer: `git clone git@github.com:<github_username>/conp-dataset`.
+2. Clone your fork on your computer:
+
+```git clone git@github.com:<github_username>/conp-dataset```
+
 3. Create your sub-dataset in your cloned fork, under `investigators` or `projects`. For instance:
 
 ```
 datalad create -d . investigators/<your_name>
 ```
+
 4. Publish your sub-dataset:
+
     From the main repository (`conp-dataset`):
 
     a. Add a sibling for your dataset on GitHub:
@@ -71,10 +76,13 @@ datalad create -d . investigators/<your_name>
 
     c. Commit the modified `.gitmodules` file:
 
-    ```git add .gitmodules
-    git commit -m "Updated .gitmodules"```
+    ```console
+    git add .gitmodules
+    git commit -m "Updated .gitmodules"
+    ```
 
 5. Add files to your sub-dataset
+
     From your sub-dataset (`investigators/<username>`):
     
     a. Create and add a README.md file, directly in the Git repository:
