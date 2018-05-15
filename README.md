@@ -1,6 +1,6 @@
-# CONP data
+# CONP dataset
 
-CONP data is a repository containing the datasets available in the 
+CONP dataset is a repository containing the datasets available in the 
 Canadian Open Neuroscience Platform. It leverages 
 [DataLad](http://datalad.org) to store metadata and references to 
 data files distributed in various storage spaces and accessible depending on each data owner's 
