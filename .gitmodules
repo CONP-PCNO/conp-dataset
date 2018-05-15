@@ -6,4 +6,4 @@
 	url = ./jb
 [submodule "investigators/jb"]
 	path = investigators/jb
-	url = ./investigators/jb
+	url = git@github.com:jbpoline/conp-dataset-jb.git
