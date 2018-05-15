@@ -30,7 +30,7 @@ To start, install the main CONP dataset on your computer:
 datalad install -r http://github.com/CONP-PCNO/conp-dataset
 ```
 
-Get the files you are interested in by typing:
+Get the files you are interested in:
 
 ```console
 datalad get <file_name>
@@ -50,7 +50,11 @@ datalad search T1
 If you are an investigator or a project manager, you can create a 
 sub-dataset in the CONP repository as follows:
 
-1. Fork the CONP data repository on GitHub. This will create a copy of the dataset at `http://github.com:<github_username>/conp-dataset`.
+1. Fork the CONP data repository on GitHub:
+   * Navigate to http://github.com/CONP-PCNO/conp-dataset (this page)
+   * In the top-right corner of the page, click Fork. 
+   * This will create a copy of the dataset at http://github.com:<github_username>/conp-dataset.
+
 2. Install your fork on your computer:
 
 ```console
@@ -70,7 +74,7 @@ datalad create -d . investigators/<username>
     a. Add a sibling for your dataset on GitHub:
 
     ```console
-    datalad create-sibling-github -d investigators <username> conp-dataset-<username>
+    datalad create-sibling-github -d investigators/<username> conp-dataset-<username>
     ```
 
     DataLad will ask your GitHub user name and password to create the sibling.
