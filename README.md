@@ -51,14 +51,27 @@ sub-dataset in the CONP repository as follows:
 datalad create -d . investigators/<your_name>
 ```
 
-4. Add files to your sub-dataset
-
-```
-datalad add investigators/<your_name>/image.nii.gz
-```
+4. Publish your sub-dataset:
+    a. Add a sibling for your dataset on GitHub: `datalad create-sibling-github conp-dataset-<name>`. DataLad will ask your GitHub username and password to create the siblng.
+    b. Update the `.gitmodules` file in the parent dataset to add your sibling. It should contain a section that looks like this:
     
-5. Push your fork to GitHub.
-6. Create a pull request.
+    ```
+    [submodule "investigators/<username>"]
+        path = investigators/<username>
+        url = git@github.com:<username>/conp-dataset-<username>.git
+    ```
+
+    c. Commit the modified `.gitmodules` file: `git add .gitmodules ; git commit -m "Updated .gitmodules"`
+    
+5. Add files to your sub-dataset
+    a. Add a README.md file to your sub-dataset, directly in the Git repository:
+    `datalad add --to-git ./README.md`
+    b. Publish your README.md file to GitHub: 
+    `datalad publish --to github`
+
+    
+6. Push your fork to GitHub.
+7. Create a pull request.
 
 Once the pull request is accepted by the CONP data managers, your 
 dataset is created. It is then up to you to manage its content and 
