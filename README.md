@@ -27,16 +27,10 @@ Requirements:
 To start, install the main CONP dataset on your computer:
 
 ```console
-datalad install http://github.com/CONP-PCNO/conp-dataset
+datalad install -r http://github.com/CONP-PCNO/conp-dataset
 ```
 
-You can also install sub-datasets you are interested in:
-```console
-cd conp-dataset
-datalad install investigators/jb
-```
-
-And you can finally get the files you are interested in by typing:
+Get the files you are interested in by typing:
 
 ```console
 datalad get <file_name>
@@ -57,10 +51,10 @@ If you are an investigator or a project manager, you can create a
 sub-dataset in the CONP repository as follows:
 
 1. Fork the CONP data repository on GitHub. This will create a copy of the dataset at `http://github.com:<github_username>/conp-dataset`.
-2. Clone your fork on your computer:
+2. Install your fork on your computer:
 
 ```console
-git clone git@github.com:<username>/conp-dataset
+datalad install git@github.com:<username>/conp-dataset
 ```
 
 3. Create your sub-dataset in your cloned fork, under `investigators` or `projects`. For instance:
