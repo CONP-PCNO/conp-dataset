@@ -60,13 +60,13 @@ sub-dataset in the CONP repository as follows:
 2. Clone your fork on your computer:
 
 ```console
-git clone git@github.com:<github_username>/conp-dataset
+git clone git@github.com:<username>/conp-dataset
 ```
 
 3. Create your sub-dataset in your cloned fork, under `investigators` or `projects`. For instance:
 
 ```console
-datalad create -d . investigators/<your_name>
+datalad create -d . investigators/<username>
 ```
 
 4. Publish your sub-dataset:
@@ -76,7 +76,7 @@ datalad create -d . investigators/<your_name>
     a. Add a sibling for your dataset on GitHub:
 
     ```console
-    datalad create-sibling-github conp-dataset-<name>
+    datalad create-sibling-github -d investigators <username> conp-dataset-<username>
     ```
 
     DataLad will ask your GitHub user name and password to create the sibling.
@@ -102,7 +102,7 @@ datalad create -d . investigators/<your_name>
 
     b. Add a file accessible through http (for instance an image file):
     ```console
-    git annex addurl <url>
+    git annex addurl <url> --file <local_path>
     ```
 
     c. Publish the modifications:
