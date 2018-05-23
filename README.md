@@ -6,6 +6,8 @@ Canadian Open Neuroscience Platform. It leverages
 data files distributed in various storage spaces and accessible depending on each data owner's 
 policy.
 
+We welcome your feedback! :smiley:
+
 ## Dataset structure
 
 The dataset is structured as follows:
@@ -129,4 +131,11 @@ decide on the creation of sub-datasets in it. Modifications to
 your dataset can be propagated to the CONP dataset through pull 
 requests, by repeating the last step above.
 
-We welcome your feedback! :smiley:
+## Re-using existing data
+
+You can easily reuse any published dataset in your own dataset. For instance,
+to add data from the [CoRR](http://fcon_1000.projects.nitrc.org/indi/CoRR/html):
+```
+datalad install -d . --source ///corr/RawDataBIDS CorrBIDS
+```
+Datasets available in DataLad are listed [here](http://datasets.datalad.org).
