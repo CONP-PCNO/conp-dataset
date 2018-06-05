@@ -84,7 +84,7 @@ datalad create -d . investigators/<username>
     ```
     [submodule "investigators/<username>"]
         path = investigators/<username>
-        url = http://github.com:<username>/conp-dataset-<username>.git
+        url = http://github.com/<username>/conp-dataset-<username>.git
     ```
 
     Note the Git endpoint in the url.
