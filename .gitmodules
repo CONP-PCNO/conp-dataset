@@ -6,4 +6,4 @@
 	url = https://github.com/glatard/conp-dataset-tglatard.git
 [submodule "investigators/Park-Patrick"]
 	path = investigators/Park-Patrick
-	url = http://github.com:<username>/conp-dataset-<username>.git
+	url = http://github.com:park-patrick/conp-dataset-park-patrick.git
