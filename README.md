@@ -109,17 +109,12 @@ datalad create -d . investigators/<username>
     * Files that you want to make available through Google Drive:
     ```console
     pip install git+https://github.com/glatard/git-annex-remote-googledrive.git@dev
-    ```
-    From your dataset:
-    ```console
     git-annex-remote-googledrive setup
     git annex initremote google type=external externaltype=googledrive prefix=CONP-data root_id=<folder_id> chunk=50MiB encryption=shared mac=HMACSHA512
     ```
     where `<folder_id>` is the id of the Google Drive folder where you want to upload the files. Don't forget to 
     check the permissions of this folder, for instance, make it world-readable if you want your files to be
-    world readable.
-        
-    Assuming that you want to add image.nii.gz to the dataset:
+    world readable. Assuming that you want to add image.nii.gz to the dataset:
     ```console
     datalad add image.nii.gz
     git annex move image.nii.gz --to google
