@@ -101,12 +101,12 @@ datalad create -d . investigators/<username>
     ```
 
     b. Add data files:
-    Files that are already accessible through http:
+    * Files that are already accessible through http:
     ```console
     git annex addurl <url> --file <local_path>
     ```
 
-    Files that you want to make available through Google Drive:
+    * Files that you want to make available through Google Drive:
     ```console
     pip install git+https://github.com/glatard/git-annex-remote-googledrive.git@dev
     ```
