@@ -18,13 +18,13 @@ The dataset is structured as follows:
 Investigators and projects are responsible for the management and curation 
 of their own sub-datasets.
 
-## Accessing data
-
-Requirements:
+## Requirements
 
 * [Git](https://git-scm.com/downloads)
 * [Git annex](http://git-annex.branchable.com/install)
 * DataLad: `pip install git+https://github.com/datalad/datalad.git`
+
+## Accessing data
 
 To start, install the main CONP dataset on your computer:
 
