@@ -103,9 +103,7 @@ datalad create -d . investigators/<username>
     b. Add data files:
 
         - To add files that are already accessible through http:
-        ```console
-        git annex addurl <url> --file <local_path>
-        ```
+        `git annex addurl <url> --file <local_path>`
 
         - To push your files to Google Drive:
         ```console
