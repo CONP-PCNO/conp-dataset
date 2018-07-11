@@ -100,16 +100,21 @@ datalad create -d . investigators/<username>
     datalad add --to-git ./README.md
     ```
 
-    b. Add data files. 
+    b. Add data files:
+
         1. To add files that are already accessible through http:
+
         ```console
         git annex addurl <url> --file <local_path>
         ```
+
         2. To push your files to Google Drive:
+
         ```console
         pip install git+https://github.com/glatard/git-annex-remote-googledrive.git@dev
         ```
         From your dataset:
+
         ```console
         git-annex-remote-googledrive setup
         git annex initremote google type=external externaltype=googledrive prefix=CONP-data root_id=<folder_id> chunk=50MiB encryption=shared mac=HMACSHA512
