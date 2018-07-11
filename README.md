@@ -103,13 +103,11 @@ datalad create -d . investigators/<username>
     b. Add data files:
 
         1. To add files that are already accessible through http:
-
         ```console
         git annex addurl <url> --file <local_path>
         ```
 
         2. To push your files to Google Drive:
-
         ```console
         pip install git+https://github.com/glatard/git-annex-remote-googledrive.git@dev
         ```
@@ -124,7 +122,7 @@ datalad create -d . investigators/<username>
         world readable.
         
         Assuming that you want to add image.nii.gz to the dataset:
-        ```
+        ```console
         datalad add image.nii.gz
         git annex move image.nii.gz --to google
         ```
