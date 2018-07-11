@@ -117,7 +117,7 @@ datalad create -d . investigators/<username>
     world readable. Assuming that you want to add image.nii.gz to the dataset:
     ```console
     datalad add image.nii.gz
-    git annex move image.nii.gz --to google
+    git annex copy image.nii.gz --to google
     ```
 
     c. Publish the modifications:
