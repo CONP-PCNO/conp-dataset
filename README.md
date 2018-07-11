@@ -6,6 +6,8 @@ Canadian Open Neuroscience Platform. It leverages
 data files distributed in various storage spaces and accessible depending on each data owner's 
 policy.
 
+We welcome your feedback! :smiley:
+
 ## Dataset structure
 
 The dataset is structured as follows:
@@ -16,13 +18,13 @@ The dataset is structured as follows:
 Investigators and projects are responsible for the management and curation 
 of their own sub-datasets.
 
-## Accessing data
-
-Requirements:
+## Requirements
 
 * [Git](https://git-scm.com/downloads)
 * [Git annex](http://git-annex.branchable.com/install)
 * DataLad: `pip install git+https://github.com/datalad/datalad.git`
+
+## Accessing data
 
 To start, install the main CONP dataset on your computer:
 
@@ -98,9 +100,24 @@ datalad create -d . investigators/<username>
     datalad add --to-git ./README.md
     ```
 
-    b. Add a file accessible through http (for instance an image file):
+    b. Add data files:
+    * Files that are already accessible through http:
     ```console
     git annex addurl <url> --file <local_path>
+    ```
+
+    * Files that you want to make available through Google Drive:
+    ```console
+    pip install git+https://github.com/glatard/git-annex-remote-googledrive.git@dev
+    git-annex-remote-googledrive setup
+    git annex initremote google type=external externaltype=googledrive prefix=CONP-data root_id=<folder_id> chunk=50MiB encryption=shared mac=HMACSHA512
+    ```
+    where `<folder_id>` is the id of the Google Drive folder where you want to upload the files. Don't forget to 
+    check the permissions of this folder, for instance, make it world-readable if you want your files to be
+    world readable. Assuming that you want to add image.nii.gz to the dataset:
+    ```console
+    datalad add image.nii.gz
+    git annex copy image.nii.gz --to google
     ```
 
     c. Publish the modifications:
@@ -129,4 +146,11 @@ decide on the creation of sub-datasets in it. Modifications to
 your dataset can be propagated to the CONP dataset through pull 
 requests, by repeating the last step above.
 
-We welcome your feedback! :smiley:
+## Re-using existing data
+
+You can easily reuse any published dataset in your own dataset. For instance,
+to add data from the [CoRR](http://fcon_1000.projects.nitrc.org/indi/CoRR/html):
+```
+datalad install -d . --source ///corr/RawDataBIDS CorrBIDS
+```
+Datasets available in DataLad are listed [here](http://datasets.datalad.org).
