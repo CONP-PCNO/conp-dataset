@@ -146,6 +146,35 @@ decide on the creation of sub-datasets in it. Modifications to
 your dataset can be propagated to the CONP dataset through pull 
 requests, by repeating the last step above.
 
+## dataset meta-data
+
+Adding meta-data about your dataset is recommended. Although there is no standard yet for CONP, preliminary work favor a JSON file with the following attributes based on [bioCADDIE DATS](https://github.com/biocaddie/WG3-MetadataSpecifications):
+- schema
+- title
+- description
+- dates
+- creators
+- storedIn
+- type
+- version
+- privacy
+- licenses
+
+Here is an example:
+```
+{
+    "schema": "https://github.com/biocaddie/DATS/blob/master/dataset_schema.json",
+    "title": "SDas Phantom",
+    "description": "Samir Das phantom scans",
+    "dates": [ "2018-12-05" ],
+    "creators": [ "McGill Centre for Integrative Neuroscience" ],
+    "storedIn": "",
+    "type": [ "fMRI", "phantom" ],
+    "version": "1.0",
+    "privacy": "public open",
+    "licenses": [ "CC BY-ND" ],
+}
+```
 ## Re-using existing data
 
 You can easily reuse any published dataset in your own dataset. For instance,
