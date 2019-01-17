@@ -169,7 +169,20 @@ Here is an example:
     "dates": [ "2018-12-05" ],
     "creators": [ "McGill Centre for Integrative Neuroscience" ],
     "storedIn": "",
-    "type": [ "fMRI", "phantom" ],
+    "type": [
+         { 
+            "information": {
+                "value": "fMRI",
+                "valueIRI": "http://uri.interlex.org/base/ilx_0506130"
+            }
+        },
+        {
+            "information": {
+                "value": "phantom",
+                "valueIRI": "http://uri.interlex.org/base/ilx_0381893"
+            }
+        }
+    ],
     "version": "1.0",
     "privacy": "public open",
     "licenses": [ "CC BY-ND" ],
