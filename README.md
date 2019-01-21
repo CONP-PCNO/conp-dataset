@@ -167,10 +167,17 @@ Here is an example:
     "title": "SDas Phantom",
     "description": "Samir Das phantom scans",
     "dates": [ "2018-12-05" ],
-    "creators": [ "McGill Centre for Integrative Neuroscience" ],
-    "storedIn": "",
+    "creators": {
+        "name": "McGill Center for Integrative Neuroscience",
+        "abbreviation": "MCIN"
+    },
+    "storedIn": {
+            "identifier": "CONP open data",
+            "name": "CONP",
+            "access": {}
+        },
     "type": [
-         { 
+        { 
             "information": {
                 "value": "fMRI",
                 "valueIRI": "http://uri.interlex.org/base/ilx_0506130"
@@ -178,7 +185,7 @@ Here is an example:
         },
         {
             "information": {
-                "value": "phantom",
+                "value": "Quality Control Subject",
                 "valueIRI": "http://uri.interlex.org/base/ilx_0381893"
             }
         }
@@ -186,6 +193,23 @@ Here is an example:
     "version": "1.0",
     "privacy": "public open",
     "licenses": [ "CC BY-ND" ],
+    "dimension": [
+        {
+            "name": "nGroup",
+            "description": "number of MRI scanner",
+            "values": "13",
+        },
+        {
+            "name": "nSubject",
+            "description": "total number of subject scanned",
+            "values": "1",
+        },
+        {
+            "name": "nTimepoint",
+            "description": "total number of timepoint",
+            "values": "512",
+        }
+    ]
 }
 ```
 ## Re-using existing data
