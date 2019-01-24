@@ -166,7 +166,17 @@ Here is an example:
     "schema": "https://github.com/biocaddie/DATS/blob/master/dataset_schema.json",
     "title": "SDas Phantom",
     "description": "Samir Das phantom scans",
-    "dates": [ "2018-12-05" ],
+    "dates": [ 
+        {
+            "date": "2018-12-05",
+            "type": [
+                {
+                    "value": "Creation Date",
+                    "valueIRI": "http://uri.interlex.org/base/ilx_0102618"
+                }
+            ]
+        }
+    ],
     "creators": {
         "name": "McGill Center for Integrative Neuroscience",
         "abbreviation": "MCIN"
@@ -192,7 +202,10 @@ Here is an example:
     ],
     "version": "1.0",
     "privacy": "public open",
-    "licenses": [ "CC BY-ND" ],
+    "licenses": {
+        "name": "CC BY-ND",
+        "version": "4.0"
+    },
     "dimension": [
         {
             "name": "nGroup",
