@@ -1,0 +1,63 @@
+{
+    "schema": "https://github.com/biocaddie/DATS/blob/master/dataset_schema.json",
+    "title": "SDas Phantom",
+    "description": "Samir Das phantom scans",
+    "dates": [ 
+        {
+            "date": "2018-12-05",
+            "type": [
+                {
+                    "value": "Creation Date",
+                    "valueIRI": "http://uri.interlex.org/base/ilx_0102618"
+                }
+            ]
+        }
+    ],
+    "creators": {
+        "name": "McGill Center for Integrative Neuroscience",
+        "abbreviation": "MCIN"
+    },
+    "storedIn": {
+            "identifier": "CONP open data",
+            "name": "CONP",
+            "access": {}
+        },
+    "type": [
+        { 
+            "information": {
+                "value": "fMRI",
+                "valueIRI": "http://uri.interlex.org/base/ilx_0506130"
+            }
+        },
+        {
+            "information": {
+                "value": "Quality Control Subject",
+                "valueIRI": "http://uri.interlex.org/base/ilx_0381893"
+            }
+        }
+    ],
+    "version": "1.0",
+    "privacy": "public open",
+    "licenses": {
+        "name": "CC BY-ND",
+        "version": "4.0"
+    },
+    "dimension": [
+        {
+            "name": "nGroup",
+            "description": "number of MRI scanner",
+            "values": "13",
+        },
+        {
+            "name": "nSubject",
+            "description": "total number of subject scanned",
+            "values": "1",
+        },
+        {
+            "name": "nTimepoint",
+            "description": "total number of timepoint",
+            "values": "512",
+        }
+    ]
+}
+
