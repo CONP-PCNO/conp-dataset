@@ -160,7 +160,7 @@ Adding meta-data about your dataset is recommended. Although there is no standar
 - privacy
 - licenses
 
-example are available at [metadata/example](https://github.com/CONP-PCNO/conp-dataset/metadata/example).
+example are available at [metadata/example](metadata/example).
 
 ## Re-using existing data
 
