@@ -28,21 +28,25 @@
                 "valueIRI": "https://uri.interlex.org/base/ilx_0506130"
             }
         },
+		{
             "information": {
                 "value": "PET",
                 "valueIRI": "https://uri.interlex.org/base/ilx_0108777"
             }
         },
+		{
             "information": {
                 "value": "MEG",
                 "valueIRI": "https://uri.interlex.org/base/ilx_0224541"
             }
         },
+		{
             "information": {
                 "value": "Genetics",
                 "valueIRI": "https://uri.interlex.org/base/ilx_0104598"
             }
         },
+		{
             "information": {
                 "value": "Clinical data",
                 "valueIRI": "https://uri.interlex.org/base/ilx_TBD"
@@ -52,12 +56,12 @@
     "version": "1.0",
     "availability": "embargoed",
     "privacy": "Open Access; Registered Access",
-    "distribution"; {
+    "distribution": {
 	},
 	"primaryPublications": [
 		{
 			"title": "Rationale and Structure for a new Center for Studies on Prevention of Alzheimer’s Disease (StoP-AD)",
-			"publicationVenue": "The Journal of Prevention of Alzheimer’s Disease - JPAD© Volume 3, Number 4, 2016"
+			"publicationVenue": "The Journal of Prevention of Alzheimer’s Disease - JPAD© Volume 3, Number 4, 2016",
 			"authors": [
 				{
 					"fullName": "J.C.S. Breitner",
