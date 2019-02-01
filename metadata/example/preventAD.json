@@ -91,5 +91,62 @@
 			"name": "Alzheimer"
 		}
 	],
+	"extraProperties": [
+		{
+			"category": "Total number of subjects",
+			"values": [
+				{
+					"value": "430"
+				}
+			]
+		},
+		{
+			"category": "Subgroups",
+			"categoryIRI": "",
+			"values": [
+				{
+					"description": "name",
+					{
+						"value": "Observational cohort"
+					}
+				},
+				{
+					"description": "name",
+					{
+						"value": "clinical trial 1"
+					}
+				},
+				{
+					"description": "name",
+					{
+						"value": "clinical trial 2"
+					}
+				}
+			]
+		},
+		{
+			"category": "Subgroups - number of subjects",
+			"values": [
+				{
+					"description": "Observational cohort",
+					{
+						"value": "211"
+					}
+				},
+				{
+					"description": "clinical trial 1",
+					{
+						"value": "195"
+					}
+				},
+				{
+					"description": "clinical trial 2",
+					{
+						"value": "24"
+					}
+				}
+			]
+		}
+	]
 }
 
