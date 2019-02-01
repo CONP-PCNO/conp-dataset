@@ -101,52 +101,45 @@
 			]
 		},
 		{
-			"category": "Subgroups",
+			"category": "Subgroups name",
 			"categoryIRI": "",
 			"values": [
 				{
-					"description": "name",
-					{
-						"value": "Observational cohort"
-					}
+					"value": "Observational cohort"
 				},
 				{
-					"description": "name",
-					{
-						"value": "clinical trial 1"
-					}
+					"value": "clinical trial 1"
+
 				},
 				{
-					"description": "name",
-					{
-						"value": "clinical trial 2"
-					}
+					"value": "clinical trial 2"
 				}
 			]
 		},
 		{
-			"category": "Subgroups - number of subjects",
+			"category": "Observational cohort - number of subjects",
 			"values": [
-				{
-					"description": "Observational cohort",
-					{
-						"value": "211"
-					}
-				},
-				{
-					"description": "clinical trial 1",
-					{
-						"value": "195"
-					}
-				},
-				{
-					"description": "clinical trial 2",
-					{
-						"value": "24"
-					}
+                {
+                    "value": "211"
 				}
-			]
-		}
+            ]
+        },
+		{
+			"category": "clinical trial 1 - number of subjects",
+			"values": [
+                {
+                    "value": "195"
+				}
+            ]
+        },
+		{
+			"category": "clinical trial 2 - number of subjects",
+			"values": [
+                {
+                    "value": "24"
+				}
+            ]
+        }
 	]
 }
 
