@@ -28,25 +28,25 @@
                 "valueIRI": "https://uri.interlex.org/base/ilx_0506130"
             }
         },
-		{
+        {
             "information": {
                 "value": "PET",
                 "valueIRI": "https://uri.interlex.org/base/ilx_0108777"
             }
         },
-		{
+        {
             "information": {
                 "value": "MEG",
                 "valueIRI": "https://uri.interlex.org/base/ilx_0224541"
             }
         },
-		{
+        {
             "information": {
                 "value": "Genetics",
                 "valueIRI": "https://uri.interlex.org/base/ilx_0104598"
             }
         },
-		{
+        {
             "information": {
                 "value": "Clinical data",
                 "valueIRI": "https://uri.interlex.org/base/ilx_TBD"
@@ -57,89 +57,89 @@
     "availability": "embargoed",
     "privacy": "Open Access; Registered Access",
     "distribution": {
-	},
-	"primaryPublications": [
-		{
-			"title": "Rationale and Structure for a new Center for Studies on Prevention of Alzheimer’s Disease (StoP-AD)",
-			"publicationVenue": "The Journal of Prevention of Alzheimer’s Disease - JPAD© Volume 3, Number 4, 2016",
-			"authors": [
-				{
-					"fullName": "J.C.S. Breitner",
-					"lastName": "Breitner",
-					"affiliations": "PREVENT-AD Research Group (2016)"
-				},
-				{
-					"fullName": "J. Poirier",
-					"lastName": "Poirier",
-					"affiliations": "PREVENT-AD Research Group (2016)"
-				},
-				{
-					"fullName": "P.E. Etienne1",
-					"lastName": "Etienne1",
-					"affiliations": "PREVENT-AD Research Group (2016)"
-				}
-				{
-					"fullName": "J.M. Leoutsakos",
-					"lastName": "Leoutsakos",
-					"affiliations": "PREVENT-AD Research Group (2016)"
-				}
-			]
-		}
-	],
-	"isAbout": [
-		{		
-			"name": "Alzheimer"
-		}
-	],
-	"extraProperties": [
-		{
-			"category": "Total number of subjects",
-			"values": [
-				{
-					"value": "430"
-				}
-			]
-		},
-		{
-			"category": "Subgroups name",
-			"categoryIRI": "",
-			"values": [
-				{
-					"value": "Observational cohort"
-				},
-				{
-					"value": "clinical trial 1"
-
-				},
-				{
-					"value": "clinical trial 2"
-				}
-			]
-		},
-		{
-			"category": "Observational cohort - number of subjects",
-			"values": [
+    },
+    "primaryPublications": [
+        {
+            "title": "Rationale and Structure for a new Center for Studies on Prevention of Alzheimer’s Disease (StoP-AD)",
+            "publicationVenue": "The Journal of Prevention of Alzheimer’s Disease - JPAD© Volume 3, Number 4, 2016",
+            "authors": [
                 {
-                    "value": "211"
-				}
-            ]
-        },
-		{
-			"category": "clinical trial 1 - number of subjects",
-			"values": [
+                    "fullName": "J.C.S. Breitner",
+                    "lastName": "Breitner",
+                    "affiliations": "PREVENT-AD Research Group (2016)"
+                },
                 {
-                    "value": "195"
-				}
-            ]
-        },
-		{
-			"category": "clinical trial 2 - number of subjects",
-			"values": [
+                    "fullName": "J. Poirier",
+                    "lastName": "Poirier",
+                    "affiliations": "PREVENT-AD Research Group (2016)"
+                },
                 {
-                    "value": "24"
-				}
+                    "fullName": "P.E. Etienne1",
+                    "lastName": "Etienne1",
+                    "affiliations": "PREVENT-AD Research Group (2016)"
+                }
+                {
+                    "fullName": "J.M. Leoutsakos",
+                    "lastName": "Leoutsakos",
+                    "affiliations": "PREVENT-AD Research Group (2016)"
+                }
             ]
         }
-	]
+    ],
+    "isAbout": [
+        {        
+            "name": "Alzheimer"
+        }
+    ],
+    "extraProperties": [
+        {
+            "category": "Total number of subjects",
+            "values": [
+                {
+                    "value": "430"
+                }
+            ]
+        },
+        {
+            "category": "Subgroups name",
+            "categoryIRI": "",
+            "values": [
+                {
+                    "value": "Observational cohort"
+                },
+                {
+                    "value": "clinical trial 1"
+
+                },
+                {
+                    "value": "clinical trial 2"
+                }
+            ]
+        },
+        {
+            "category": "Observational cohort - number of subjects",
+            "values": [
+                {
+                    "value": "211"
+                }
+            ]
+        },
+        {
+            "category": "clinical trial 1 - number of subjects",
+            "values": [
+                {
+                    "value": "195"
+                }
+            ]
+        },
+        {
+            "category": "clinical trial 2 - number of subjects",
+            "values": [
+                {
+                    "value": "24"
+                }
+            ]
+        }
+    ]
 }
 
