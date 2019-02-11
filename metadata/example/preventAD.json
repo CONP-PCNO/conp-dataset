@@ -11,6 +11,24 @@
                     "valueIRI": "https://uri.interlex.org/base/ilx_TBD"
                 }
             ]
+        },
+        {
+            "date": "2011-11-01",
+            "type": [
+                {
+                    "value": "Start Date",
+                    "valueIRI": "https://uri.interlex.org/base/ilx_TBD"
+                }
+            ]
+        },
+        {
+            "date": "2017-11-27",
+            "type": [
+                {
+                    "value": "End Date",
+                    "valueIRI": "https://uri.interlex.org/base/ilx_TBD"
+                }
+            ]
         }
     ],
     "creators": {
@@ -56,6 +74,11 @@
     "version": "1.0",
     "availability": "embargoed",
     "privacy": "Open Access; Registered Access",
+    "licenses": {
+        "dataUsesConditions": {
+            "value": "texte à venir"
+        }
+    },
     "distribution": {
     },
     "primaryPublications": [
@@ -64,22 +87,28 @@
             "publicationVenue": "The Journal of Prevention of Alzheimer’s Disease - JPAD© Volume 3, Number 4, 2016",
             "authors": [
                 {
-                    "fullName": "J.C.S. Breitner",
+                    "fullName": "John C.S. Breitner",
+                    "firstName": "John",
+                    "middleName": "C.S.",
                     "lastName": "Breitner",
                     "affiliations": "PREVENT-AD Research Group (2016)"
                 },
                 {
-                    "fullName": "J. Poirier",
+                    "fullName": "Judes Poirier",
                     "lastName": "Poirier",
                     "affiliations": "PREVENT-AD Research Group (2016)"
                 },
                 {
-                    "fullName": "P.E. Etienne1",
+                    "fullName": "Pierre E. Etienne1",
+                    "firstName": "Pierre",
+                    "middleName": "E.",
                     "lastName": "Etienne1",
                     "affiliations": "PREVENT-AD Research Group (2016)"
                 }
                 {
-                    "fullName": "J.M. Leoutsakos",
+                    "fullName": "Jeannie M Leoutsakos",
+                    "firstName": "Jeannie",
+                    "middleName": "M",
                     "lastName": "Leoutsakos",
                     "affiliations": "PREVENT-AD Research Group (2016)"
                 }
@@ -87,9 +116,95 @@
         }
     ],
     "isAbout": [
-        {        
-            "name": "Alzheimer"
+        {   
+            "@type": "disease", 
+            "name": "Alzheimer",
+            "diseaseStatus": {
+                "information": {
+                    "value": "pre-symptomatic",
+                    "valueIRI": "https://uri.interlex.org/base/ilx_TBD"
+                }
+            }
+        },
+        {   
+            "@type": "BiologicalEntity", 
+            "name": "Older adults human"
         }
+    ],
+    "spatialCoverage": 
+        {
+            "name": "Québec (province)",
+            "description": "Province of Québec in Canada"
+        },
+    "aggregation": "instance of dataset",
+    "dimensions": 
+        [
+           {
+            "name": "RBANS",
+            "description": "Neuropsychological test"
+           }
+        ],
+    "acknowledges" : {
+        "funders": [
+                {
+                    "name": "Fonds de Recheche du Québec - Santé",
+                    "abbreviation": "FRQ-S"
+                },
+                {
+                    "name": "McGill University"
+                },
+                {
+                    "name": "Pfizer Canada"
+                },
+                {
+                    "name": "Douglas Hospital researcher center and foundation"
+                },
+                {
+                    "name": "Fondation Lévesque"
+                },
+                {
+                    "name": "Canada Fund for Innovation",
+                    "abbreviation": "CFI"
+                },
+                {
+                    "name": "Fond Canadien de l'Innovation",
+                    "abbreviation": "FCI"
+                }
+                 
+            ]
+    },
+    "keywords": [
+        {
+            "information": {
+                "value": "Prevention",
+                "valueIRI": ""
+            }
+        },
+        {
+            "information": {
+                "value": "Alzheimer disease",
+                "valueIRI": ""
+            }
+        },
+        {
+            "information": {
+                "value": "biomarkers",
+                "valueIRI": ""
+            }
+        },
+        {
+            "information": {
+                "value": "multimodal",
+                "valueIRI": ""
+            }
+        },
+        {
+            "information": {
+                "value": "longitudinal",
+                "valueIRI": ""
+            }
+        }
+
     ],
     "extraProperties": [
         {
@@ -97,46 +212,6 @@
             "values": [
                 {
                     "value": "430"
-                }
-            ]
-        },
-        {
-            "category": "Subgroups name",
-            "categoryIRI": "",
-            "values": [
-                {
-                    "value": "Observational cohort"
-                },
-                {
-                    "value": "clinical trial 1"
-
-                },
-                {
-                    "value": "clinical trial 2"
-                }
-            ]
-        },
-        {
-            "category": "Observational cohort - number of subjects",
-            "values": [
-                {
-                    "value": "211"
-                }
-            ]
-        },
-        {
-            "category": "clinical trial 1 - number of subjects",
-            "values": [
-                {
-                    "value": "195"
-                }
-            ]
-        },
-        {
-            "category": "clinical trial 2 - number of subjects",
-            "values": [
-                {
-                    "value": "24"
                 }
             ]
         }
