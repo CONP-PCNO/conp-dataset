@@ -1,30 +1,43 @@
 {
-    "schema": "https://github.com/datatagsuite/schema/blob/master/dataset_schema.json",
+    "$schema": "https://w3id.org/dats/schema/dataset_schema.json",
+    "@type": "Dataset",
     "title": "PREVENT-AD",
     "description": "Longitudinal multimodal study of pre-symptomatic Alzheimer Disease",
     "dates": [ 
         {
+            "$schema": "https://w3id.org/dats/schema/date_info_schema.json",
+            "@type": "Date",
             "date": "2019-04-01",
             "type": [
                 {
+                   "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
+                   "@type": "Annotation",
                     "value": "Release Date",
                     "valueIRI": "https://uri.interlex.org/base/ilx_TBD"
                 }
             ]
         },
         {
+            "$schema": "https://w3id.org/dats/schema/date_info_schema.json",
+            "@type": "Date",
             "date": "2011-11-01",
             "type": [
                 {
+                   "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
+                   "@type": "Annotation",
                     "value": "Start Date",
                     "valueIRI": "https://uri.interlex.org/base/ilx_TBD"
                 }
             ]
         },
         {
+            "$schema": "https://w3id.org/dats/schema/date_info_schema.json",
+            "@type": "Date",
             "date": "2017-11-27",
             "type": [
                 {
+                   "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
+                   "@type": "Annotation",
                     "value": "End Date",
                     "valueIRI": "https://uri.interlex.org/base/ilx_TBD"
                 }
@@ -40,32 +53,52 @@
             "access": {}
         },
     "type": [
-        { 
+        {
+            "$schema": "https://w3id.org/dats/schema/data_type_schema.json",
+            "@type": "DataType",
             "information": {
+                "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
+                "@type": "Annotation",
                 "value": "fMRI",
                 "valueIRI": "https://uri.interlex.org/base/ilx_0506130"
             }
         },
         {
+            "$schema": "https://w3id.org/dats/schema/data_type_schema.json",
+            "@type": "DataType",
             "information": {
+                "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
+                "@type": "Annotation",
                 "value": "PET",
                 "valueIRI": "https://uri.interlex.org/base/ilx_0108777"
             }
         },
         {
+            "$schema": "https://w3id.org/dats/schema/data_type_schema.json",
+            "@type": "DataType",
             "information": {
+                "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
+                "@type": "Annotation",
                 "value": "MEG",
                 "valueIRI": "https://uri.interlex.org/base/ilx_0224541"
             }
         },
         {
+            "$schema": "https://w3id.org/dats/schema/data_type_schema.json",
+            "@type": "DataType",
             "information": {
+                "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
+                "@type": "Annotation",
                 "value": "Genetics",
                 "valueIRI": "https://uri.interlex.org/base/ilx_0104598"
             }
         },
         {
+            "$schema": "https://w3id.org/dats/schema/data_type_schema.json",
+            "@type": "DataType",
             "information": {
+                "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
+                "@type": "Annotation",
                 "value": "Clinical data",
                 "valueIRI": "https://uri.interlex.org/base/ilx_TBD"
             }
@@ -75,6 +108,8 @@
     "availability": "embargoed",
     "privacy": "Open Access; Registered Access",
     "licenses": {
+        "$schema": "https://w3id.org/dats/schema/license_schema.json",
+        "@type": "Licence",
         "dataUsesConditions": {
             "value": "texte à venir"
         }
@@ -83,10 +118,14 @@
     },
     "primaryPublications": [
         {
+            "$schema": "https://w3id.org/dats/schema/publication_schema.json",
+            "@type": "Publication",
             "title": "Rationale and Structure for a new Center for Studies on Prevention of Alzheimer’s Disease (StoP-AD)",
             "publicationVenue": "The Journal of Prevention of Alzheimer’s Disease - JPAD© Volume 3, Number 4, 2016",
             "authors": [
                 {
+                    "$schema": "https://w3id.org/dats/schema/person_schema.json",
+                    "@type": "Person",
                     "fullName": "John C.S. Breitner",
                     "firstName": "John",
                     "middleName": "C.S.",
@@ -94,11 +133,15 @@
                     "affiliations": "PREVENT-AD Research Group (2016)"
                 },
                 {
+                    "$schema": "https://w3id.org/dats/schema/person_schema.json",
+                    "@type": "Person",
                     "fullName": "Judes Poirier",
                     "lastName": "Poirier",
                     "affiliations": "PREVENT-AD Research Group (2016)"
                 },
                 {
+                    "$schema": "https://w3id.org/dats/schema/person_schema.json",
+                    "@type": "Person",
                     "fullName": "Pierre E. Etienne1",
                     "firstName": "Pierre",
                     "middleName": "E.",
@@ -106,6 +149,8 @@
                     "affiliations": "PREVENT-AD Research Group (2016)"
                 }
                 {
+                    "$schema": "https://w3id.org/dats/schema/person_schema.json",
+                    "@type": "Person",
                     "fullName": "Jeannie M Leoutsakos",
                     "firstName": "Jeannie",
                     "middleName": "M",
@@ -117,9 +162,12 @@
     ],
     "isAbout": [
         {   
+            "$schema": "https://w3id.org/dats/schema/disease_schema.json",
             "@type": "disease", 
             "name": "Alzheimer",
             "diseaseStatus": {
+                "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
+                "@type": "Annotation",
                 "information": {
                     "value": "pre-symptomatic",
                     "valueIRI": "https://uri.interlex.org/base/ilx_TBD"
@@ -127,46 +175,65 @@
             }
         },
         {   
+            "$schema": "https://w3id.org/dats/schema/biological_entity_schema.json",
             "@type": "BiologicalEntity", 
             "name": "Older adults human"
         }
     ],
-    "spatialCoverage": 
-        {
-            "name": "Québec (province)",
-            "description": "Province of Québec in Canada"
-        },
+    "spatialCoverage": {
+        "$schema": "https://w3id.org/dats/schema/place_schema.json",
+        "@type": "Place",
+        "name": "Québec (province)",
+        "description": "Province of Québec in Canada"
+    },
     "aggregation": "instance of dataset",
-    "dimensions": 
-        [
-           {
-            "name": "RBANS",
-            "description": "Neuropsychological test"
-           }
-        ],
+    "dimensions": [
+        {
+            "$schema": "https://w3id.org/dats/schema/dimension_schema.json",
+            "@type": "Dimension",
+            "name" : "RBANS",
+            "description": "Neuropsychological test",
+        }
+    ],
     "acknowledges" : {
+        "$schema": "https://w3id.org/dats/schema/grant_schema.json",
+        "@type": "Grant",
         "funders": [
                 {
+                    "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                    "@type": "Organization",
                     "name": "Fonds de Recheche du Québec - Santé",
                     "abbreviation": "FRQ-S"
                 },
                 {
+                    "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                    "@type": "Organization",
                     "name": "McGill University"
                 },
                 {
+                    "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                    "@type": "Organization",
                     "name": "Pfizer Canada"
                 },
                 {
+                    "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                    "@type": "Organization",
                     "name": "Douglas Hospital researcher center and foundation"
                 },
                 {
+                    "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                    "@type": "Organization",
                     "name": "Fondation Lévesque"
                 },
                 {
+                    "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                    "@type": "Organization",
                     "name": "Canada Fund for Innovation",
                     "abbreviation": "CFI"
                 },
                 {
+                    "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                    "@type": "Organization",
                     "name": "Fond Canadien de l'Innovation",
                     "abbreviation": "FCI"
                 }
@@ -175,30 +242,40 @@
     },
     "keywords": [
         {
+            "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
+            "@type": "Annotation",
             "information": {
                 "value": "Prevention",
                 "valueIRI": ""
             }
         },
         {
+            "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
+            "@type": "Annotation",
             "information": {
                 "value": "Alzheimer disease",
                 "valueIRI": ""
             }
         },
         {
+            "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
+            "@type": "Annotation",
             "information": {
                 "value": "biomarkers",
                 "valueIRI": ""
             }
         },
         {
+            "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
+            "@type": "Annotation",
             "information": {
                 "value": "multimodal",
                 "valueIRI": ""
             }
         },
         {
+            "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
+            "@type": "Annotation",
             "information": {
                 "value": "longitudinal",
                 "valueIRI": ""
@@ -212,6 +289,46 @@
             "values": [
                 {
                     "value": "430"
+                }
+            ]
+        },
+        {
+            "category": "Subgroups name",
+            "categoryIRI": "",
+            "values": [
+                {
+                    "value": "Observational cohort"
+                },
+                {
+                    "value": "clinical trial 1"
+
+                },
+                {
+                    "value": "clinical trial 2"
+                }
+            ]
+        },
+        {
+            "category": "Observational cohort - number of subjects",
+            "values": [
+                {
+                    "value": "211"
+                }
+            ]
+        },
+        {
+            "category": "clinical trial 1 - number of subjects",
+            "values": [
+                {
+                    "value": "195"
+                }
+            ]
+        },
+        {
+            "category": "clinical trial 2 - number of subjects",
+            "values": [
+                {
+                    "value": "24"
                 }
             ]
         }
