@@ -130,14 +130,26 @@
                     "firstName": "John",
                     "middleName": "C.S.",
                     "lastName": "Breitner",
-                    "affiliations": "PREVENT-AD Research Group (2016)"
+                    "affiliations": [
+                         {
+                            "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                            "@type": "Organization",
+                            "name": "PREVENT-AD Research Group"
+                        }
+                    ]
                 },
                 {
                     "$schema": "https://w3id.org/dats/schema/person_schema.json",
                     "@type": "Person",
                     "fullName": "Judes Poirier",
                     "lastName": "Poirier",
-                    "affiliations": "PREVENT-AD Research Group (2016)"
+                    "affiliations": [
+                         {
+                            "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                            "@type": "Organization",
+                            "name": "PREVENT-AD Research Group"
+                        }
+                    ]
                 },
                 {
                     "$schema": "https://w3id.org/dats/schema/person_schema.json",
@@ -146,8 +158,14 @@
                     "firstName": "Pierre",
                     "middleName": "E.",
                     "lastName": "Etienne1",
-                    "affiliations": "PREVENT-AD Research Group (2016)"
-                }
+                    "affiliations": [
+                         {
+                            "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                            "@type": "Organization",
+                            "name": "PREVENT-AD Research Group"
+                        }
+                    ]
+                },
                 {
                     "$schema": "https://w3id.org/dats/schema/person_schema.json",
                     "@type": "Person",
@@ -155,7 +173,13 @@
                     "firstName": "Jeannie",
                     "middleName": "M",
                     "lastName": "Leoutsakos",
-                    "affiliations": "PREVENT-AD Research Group (2016)"
+                    "affiliations": [
+                         {
+                            "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                            "@type": "Organization",
+                            "name": "PREVENT-AD Research Group"
+                        }
+                    ]
                 }
             ]
         }
@@ -192,7 +216,7 @@
             "$schema": "https://w3id.org/dats/schema/dimension_schema.json",
             "@type": "Dimension",
             "name" : "RBANS",
-            "description": "Neuropsychological test",
+            "description": "Neuropsychological test"
         }
     ],
     "acknowledges" : {
@@ -283,52 +307,381 @@
         }
 
     ],
+    "citations": [
+        {
+            "$schema": "https://w3id.org/dats/schema/publication_schema.json",
+            "@type": "Publication",
+            "title": "Brain properties predict proximity to symptom onset in sporadic Alzheimer's disease",
+            "publicationVenue": "Brain : a journal of neurology",
+            "authors": [
+                {
+                    "$schema": "https://w3id.org/dats/schema/person_schema.json",
+                    "@type": "Person",
+                    "fullName": "JW Vogel",
+                    "firstName": "JW",
+                    "lastName": "Vogel",
+                    "affiliations": [
+                        {
+                            "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                            "@type": "Organization",
+                            "name": "Montreal Neurological Institute",
+                            "location": {
+                                "$schema": "https://w3id.org/dats/schema/place_schema.json",
+                                "@type": "Place",
+                                "name": "Montreal"
+                            }
+                        },
+                        {
+                            "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                            "@type": "Organization",
+                            "name": "Centre for the Studies on Prevention of Alzheimer's Disease",
+                            "location": {
+                                "$schema": "https://w3id.org/dats/schema/place_schema.json",
+                                "@type": "Place",
+                                "name": "Montreal"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "$schema": "https://w3id.org/dats/schema/person_schema.json",
+                    "@type": "Person",
+                    "fullName": "E Vachon-Presseau",
+                    "firstName": "E",
+                    "lastName": "Vachon-Presseau",
+                    "affiliations": [
+                        {
+                            "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                            "@type": "Organization",
+                            "name": "Northwestern University",
+                            "location": {
+                                "$schema": "https://w3id.org/dats/schema/place_schema.json",
+                                "@type": "Place",
+                                "name": "Chicago"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "$schema": "https://w3id.org/dats/schema/person_schema.json",
+                    "@type": "Person",
+                    "fullName": "A Pichet Binette",
+                    "firstName": "A",
+                    "lastName": "Pichet Binette",
+                    "affiliations": [
+                        {
+                            "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                            "@type": "Organization",
+                            "name": "Centre for the Studies on Prevention of Alzheimer's Disease",
+                            "location": {
+                                "$schema": "https://w3id.org/dats/schema/place_schema.json",
+                                "@type": "Place",
+                                "name": "Montreal"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "$schema": "https://w3id.org/dats/schema/person_schema.json",
+                    "@type": "Person",
+                    "fullName": "A TAM",
+                    "firstName": "A",
+                    "lastName": "Tam",
+                    "affiliations": [
+                        {
+                            "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                            "@type": "Organization",
+                            "name": "Centre for the Studies on Prevention of Alzheimer's Disease",
+                            "location": {
+                                "$schema": "https://w3id.org/dats/schema/place_schema.json",
+                                "@type": "Place",
+                                "name": "Montreal"
+                            }
+                        },
+                        {
+                            "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                            "@type": "Organization",
+                            "name": "Centre de recherche de l'Institut universitaire de gériatrie de Montréal",
+                            "location": {
+                                "$schema": "https://w3id.org/dats/schema/place_schema.json",
+                                "@type": "Place",
+                                "name": "Montreal"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "$schema": "https://w3id.org/dats/schema/person_schema.json",
+                    "@type": "Person",
+                    "fullName": "P Orban",
+                    "firstName": "O",
+                    "lastName": "Orban",
+                    "affiliations": [
+                        {
+                            "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                            "@type": "Organization",
+                            "name": "Centre for the Studies on Prevention of Alzheimer's Disease",
+                            "location": {
+                                "$schema": "https://w3id.org/dats/schema/place_schema.json",
+                                "@type": "Place",
+                                "name": "Montreal"
+                            }
+                        },
+                        {
+                            "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                            "@type": "Organization",
+                            "name": "Centre de recherche de l'Institut universitaire de gériatrie de Montréal",
+                            "location": {
+                                "$schema": "https://w3id.org/dats/schema/place_schema.json",
+                                "@type": "Place",
+                                "name": "Montreal"
+                            }
+                        },
+                        {
+                            "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                            "@type": "Organization",
+                            "name": "University of Montréal",
+                            "location": {
+                                "$schema": "https://w3id.org/dats/schema/place_schema.json",
+                                "@type": "Place",
+                                "name": "Montreal"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "$schema": "https://w3id.org/dats/schema/person_schema.json",
+                    "@type": "Person",
+                    "fullName": "R La Joie",
+                    "firstName": "R",
+                    "lastName": "La Joie",
+                    "affiliations": [
+                        {
+                            "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                            "@type": "Organization",
+                            "name": "University of California",
+                            "location": {
+                                "$schema": "https://w3id.org/dats/schema/place_schema.json",
+                                "@type": "Place",
+                                "name": "San Francisco"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "$schema": "https://w3id.org/dats/schema/person_schema.json",
+                    "@type": "Person",
+                    "fullName": "M Savard",
+                    "firstName": "M",
+                    "lastName": "Savard",
+                    "affiliations": [
+                        {
+                            "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                            "@type": "Organization",
+                            "name": "Centre for the Studies on Prevention of Alzheimer's Disease",
+                            "location": {
+                                "$schema": "https://w3id.org/dats/schema/place_schema.json",
+                                "@type": "Place",
+                                "name": "Montreal"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "$schema": "https://w3id.org/dats/schema/person_schema.json",
+                    "@type": "Person",
+                    "fullName": "C Picard",
+                    "firstName": "C",
+                    "lastName": "Picard",
+                    "affiliations": [
+                        {
+                            "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                            "@type": "Organization",
+                            "name": "Centre for the Studies on Prevention of Alzheimer's Disease",
+                            "location": {
+                                "$schema": "https://w3id.org/dats/schema/place_schema.json",
+                                "@type": "Place",
+                                "name": "Montreal"
+                            }
+                        },
+                        {
+                            "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                            "@type": "Organization",
+                            "name": "McGill University",
+                            "location": {
+                                "$schema": "https://w3id.org/dats/schema/place_schema.json",
+                                "@type": "Place",
+                                "name": "Montreal"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "$schema": "https://w3id.org/dats/schema/person_schema.json",
+                    "@type": "Person",
+                    "fullName": "J Poirier",
+                    "firstName": "J",
+                    "lastName": "Poirier",
+                    "affiliations": [
+                        {
+                            "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                            "@type": "Organization",
+                            "name": "Centre for the Studies on Prevention of Alzheimer's Disease",
+                            "location": {
+                                "$schema": "https://w3id.org/dats/schema/place_schema.json",
+                                "@type": "Place",
+                                "name": "Montreal"
+                            }
+                        },
+                        {
+                            "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                            "@type": "Organization",
+                            "name": "McGill University",
+                            "location": {
+                                "$schema": "https://w3id.org/dats/schema/place_schema.json",
+                                "@type": "Place",
+                                "name": "Montreal"
+                            }
+                        },
+                        {
+                            "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                            "@type": "Organization",
+                            "name": "McGill University and Genome Quebec Innovation Centre",
+                            "location": {
+                                "$schema": "https://w3id.org/dats/schema/place_schema.json",
+                                "@type": "Place",
+                                "name": "Montreal"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "$schema": "https://w3id.org/dats/schema/person_schema.json",
+                    "@type": "Person",
+                    "fullName": "P Bellec",
+                    "firstName": "P",
+                    "lastName": "Bellec",
+                    "affiliations": [
+                        {
+                            "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                            "@type": "Organization",
+                            "name": "Centre for the Studies on Prevention of Alzheimer's Disease",
+                            "location": {
+                                "$schema": "https://w3id.org/dats/schema/place_schema.json",
+                                "@type": "Place",
+                                "name": "Montreal"
+                            }
+                        },
+                        {
+                            "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                            "@type": "Organization",
+                            "name": "University of Montreal",
+                            "location": {
+                                "$schema": "https://w3id.org/dats/schema/place_schema.json",
+                                "@type": "Place",
+                                "name": "Montreal"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "$schema": "https://w3id.org/dats/schema/person_schema.json",
+                    "@type": "Person",
+                    "fullName": "JCS Breitner",
+                    "firstName": "J",
+                    "lastName": "Breitner",
+                    "affiliations": [
+                        {
+                            "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                            "@type": "Organization",
+                            "name": "Centre for the Studies on Prevention of Alzheimer's Disease",
+                            "location": {
+                                "$schema": "https://w3id.org/dats/schema/place_schema.json",
+                                "@type": "Place",
+                                "name": "Montreal"
+                            }
+                        },
+                        {
+                            "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                            "@type": "Organization",
+                            "name": "McGill University",
+                            "location": {
+                                "$schema": "https://w3id.org/dats/schema/place_schema.json",
+                                "@type": "Place",
+                                "name": "Montreal"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                    "@type": "Organization",
+                    "name": "Alzheimer’s Disease Neuroimaging Initiative"
+                },
+                {
+                    "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                    "@type": "Organization",
+                    "name": "PREVENT-AD Research Group"
+                }
+            ],
+            "dates": [
+                {
+                    "$schema": "https://w3id.org/dats/schema/date_info_schema.json",
+                    "@type": "Date",
+                    "date": "2018-04-23",
+                    "type": [
+                        {
+                            "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
+                            "@type": "Annotation",
+                            "value": "Release Date",
+                            "valueIRI": "https://uri.interlex.org/base/ilx_TBD"
+                        }
+                    ]
+                }
+            ],
+            "identifier": {
+                "$schema": "https://w3id.org/dats/schema/identifier_info_schema.json",
+                "@type": "Identifier",
+                "identifier": "doi: 10.1093/brain/awy093",
+                "identifierSource": "International DOI Foundation"
+            }
+        },
+        {
+            "$schema": "https://w3id.org/dats/schema/publication_schema.json",
+            "@type": "Publication",
+            "title": "Bi-directional Association of Cerebrospinal Fluid Immune Markers with Stage of Alzheimer’s Disease Pathogenesis.",
+            "publicationVenue": "Journal of Alzheimers Diseases",
+            "dates": [
+                {
+                    "$schema": "https://w3id.org/dats/schema/date_info_schema.json",
+                    "@type": "Date",
+                    "date": "2018-04-11",
+                    "type": [
+                        {
+                            "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
+                            "@type": "Annotation",
+                            "value": "Publication Date",
+                            "valueIRI": "https://uri.interlex.org/base/ilx_TBD"
+                        }
+                    ]
+                }
+            ],
+            "identifier": {
+                "$schema": "https://w3id.org/dats/schema/identifier_info_schema.json",
+                "@type": "Identifier",
+                "identifier": "doi: 10.3233/JAD-170887",
+                "identifierSource": "International DOI Foundation"
+            },
+            "authorsList": "Meyer PF, Savard M, Poirier J, Labonté A, Rosa-Neto P, Weitz TM, Town T, Breitner J; Alzheimer’s Disease Neuroimaging Initiative; PREVENT-AD Research Group"
+        }
+    ],
+    "citationCount" : 2,
     "extraProperties": [
         {
             "category": "Total number of subjects",
             "values": [
                 {
                     "value": "430"
-                }
-            ]
-        },
-        {
-            "category": "Subgroups name",
-            "categoryIRI": "",
-            "values": [
-                {
-                    "value": "Observational cohort"
-                },
-                {
-                    "value": "clinical trial 1"
-
-                },
-                {
-                    "value": "clinical trial 2"
-                }
-            ]
-        },
-        {
-            "category": "Observational cohort - number of subjects",
-            "values": [
-                {
-                    "value": "211"
-                }
-            ]
-        },
-        {
-            "category": "clinical trial 1 - number of subjects",
-            "values": [
-                {
-                    "value": "195"
-                }
-            ]
-        },
-        {
-            "category": "clinical trial 2 - number of subjects",
-            "values": [
-                {
-                    "value": "24"
                 }
             ]
         }
