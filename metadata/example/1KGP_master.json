@@ -1,6 +1,11 @@
 {
 	"version": "1.0",
 	"privacy": "public open",
+	"licenses": [
+		{
+			"name": "to be determined"
+		}
+	],
 	"identifier": {
 		"identifier" : "1KGP"
 	},
@@ -55,7 +60,7 @@
 			"type": {
 				"value":"CONP DATS JSON fileset creation date"
 			},
-			"date": "2019-04-01 12:43:32"
+			"date": "2019-04-01 14:23:21"
 		}
 	],
 	"hasPart": [

@@ -1,6 +1,11 @@
 {
 	"version": "1.0",
 	"privacy": "public open",
+	"licenses": [
+		{
+			"name": "to be determined"
+		}
+	],
 	"identifier": {
 		"identifier": "1KGP_chr15"
 	},
