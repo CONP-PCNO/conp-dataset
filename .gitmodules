@@ -7,3 +7,6 @@
 [submodule "investigators/Park-Patrick"]
 	path = investigators/Park-Patrick
 	url = http://github.com/park-patrick/conp-dataset-park-patrick.git
+[submodule "projects/1000GenomesProject"]
+	path = projects/1000GenomesProject
+	url = ./projects/1000GenomesProject
