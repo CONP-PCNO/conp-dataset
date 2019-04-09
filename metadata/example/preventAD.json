@@ -13,7 +13,7 @@
                    "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
                    "@type": "Annotation",
                     "value": "Release Date",
-                    "valueIRI": "https://uri.interlex.org/base/ilx_TBD"
+                    "valueIRI": ""
                 }
             ]
         },
@@ -26,7 +26,7 @@
                    "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
                    "@type": "Annotation",
                     "value": "Start Date",
-                    "valueIRI": "https://uri.interlex.org/base/ilx_TBD"
+                    "valueIRI": ""
                 }
             ]
         },
@@ -39,7 +39,7 @@
                    "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
                    "@type": "Annotation",
                     "value": "End Date",
-                    "valueIRI": "https://uri.interlex.org/base/ilx_TBD"
+                    "valueIRI": ""
                 }
             ]
         }
@@ -59,8 +59,8 @@
             "information": {
                 "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
                 "@type": "Annotation",
-                "value": "fMRI",
-                "valueIRI": "https://uri.interlex.org/base/ilx_0506130"
+                "value": "MRI",
+                "valueIRI": ""
             }
         },
         {
@@ -69,8 +69,8 @@
             "information": {
                 "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
                 "@type": "Annotation",
-                "value": "PET",
-                "valueIRI": "https://uri.interlex.org/base/ilx_0108777"
+                "value": "Neuropscycological tests",
+                "valueIRI": ""
             }
         },
         {
@@ -79,8 +79,8 @@
             "information": {
                 "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
                 "@type": "Annotation",
-                "value": "MEG",
-                "valueIRI": "https://uri.interlex.org/base/ilx_0224541"
+                "value": "Cerebrospinal fluid collection",
+                "valueIRI": ""
             }
         },
         {
@@ -100,12 +100,12 @@
                 "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
                 "@type": "Annotation",
                 "value": "Clinical data",
-                "valueIRI": "https://uri.interlex.org/base/ilx_TBD"
+                "valueIRI": ""
             }
         }
     ],
     "version": "1.0",
-    "availability": "embargoed",
+    "availability": "available; available with restriction",
     "privacy": "Open Access; Registered Access",
     "licenses": {
         "$schema": "https://w3id.org/dats/schema/license_schema.json",
@@ -114,7 +114,27 @@
             "value": "texte à venir"
         }
     },
-    "distribution": {
+    "distributions": {
+        "$schema": "http://json-schema.org/draft-04/schema",
+        "@type": "DatasetDistribution",
+        "formats": [
+	    {
+                "description": "minc"
+	    },
+    	    {
+		"dscription": "NifTY"
+	    },
+	    {
+		"description": "tsv"
+	    }
+	],
+	"size" : "300000000000",
+	"unit" : {
+            "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
+            "@type": "Annotation",
+            "value": "GB",
+            "valueIRI": ""
+	}
     },
     "primaryPublications": [
         {
@@ -194,7 +214,7 @@
                 "@type": "Annotation",
                 "information": {
                     "value": "pre-symptomatic",
-                    "valueIRI": "https://uri.interlex.org/base/ilx_TBD"
+                    "valueIRI": ""
                 }
             }
         },
@@ -311,7 +331,7 @@
         {
             "$schema": "https://w3id.org/dats/schema/publication_schema.json",
             "@type": "Publication",
-            "title": "Brain properties predict proximity to symptom onset in sporadic Alzheimer's disease",
+            "title": "Brain properties predict proximity to symptom onset in sporadic Alzheimer’s disease",
             "publicationVenue": "Brain : a journal of neurology",
             "authors": [
                 {
@@ -634,7 +654,7 @@
                             "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
                             "@type": "Annotation",
                             "value": "Release Date",
-                            "valueIRI": "https://uri.interlex.org/base/ilx_TBD"
+                            "valueIRI": ""
                         }
                     ]
                 }
@@ -661,7 +681,7 @@
                             "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
                             "@type": "Annotation",
                             "value": "Publication Date",
-                            "valueIRI": "https://uri.interlex.org/base/ilx_TBD"
+                            "valueIRI": ""
                         }
                     ]
                 }
@@ -673,9 +693,318 @@
                 "identifierSource": "International DOI Foundation"
             },
             "authorsList": "Meyer PF, Savard M, Poirier J, Labonté A, Rosa-Neto P, Weitz TM, Town T, Breitner J; Alzheimer’s Disease Neuroimaging Initiative; PREVENT-AD Research Group"
+        },
+	{
+            "$schema": "https://w3id.org/dats/schema/publication_schema.json",
+            "@type": "Publication",
+            "title": "INTREPAD: a randomized trial of naproxen to slow progress of pre-symptomatic Alzheimer’s disease",
+	    "publicationVenue": "Neurology",
+            "dates": [
+                {
+                    "$schema": "https://w3id.org/dats/schema/date_info_schema.json",
+                    "@type": "Date",
+                    "date": "2019-04-05",
+                    "type": [
+                        {
+                            "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
+                            "@type": "Annotation",
+                            "value": "Publication Date",
+                            "valueIRI": ""
+                        }
+                    ]
+                }
+            ],
+            "identifier": {
+                "$schema": "https://w3id.org/dats/schema/identifier_info_schema.json",
+                "@type": "Identifier",
+                "identifier": "doi:10.1212/WNL.0000000000007232",
+                "identifierSource": "International DOI Foundation"
+            },
+            "authorsList": "Meyer PF, Tremblay-Mercier J, Leoutsakos J, Madjar C, Lafaille-Maignan ME, Savard M, Rosa-Neto P, Poirier J, Etienne P, and Breitner J for the PREVENT-AD research group"
+        },
+	{
+            "$schema": "https://w3id.org/dats/schema/publication_schema.json",
+            "@type": "Publication",
+            "title": "Bi-directional Association of Cerebrospinal Fluid Immune Markers with Stage of Alzheimer’s Disease Pathogenesis.",
+            "publicationVenue": "Journal of Alzheimers Disease",
+            "dates": [
+                {
+                    "$schema": "https://w3id.org/dats/schema/date_info_schema.json",
+                    "@type": "Date",
+                    "date": "2018-04-11",
+                    "type": [
+                        {
+                            "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
+                            "@type": "Annotation",
+                            "value": "Publication Date",
+                            "valueIRI": ""
+                        }
+                    ]
+                }
+            ],
+            "identifier": {
+                "$schema": "https://w3id.org/dats/schema/identifier_info_schema.json",
+                "@type": "Identifier",
+                "identifier": "doi: 10.3233/JAD-170887",
+                "identifierSource": "International DOI Foundation"
+            },
+            "authorsList": "Meyer PF, Savard M, Poirier J, Labonté A, Rosa-Neto P, Weitz TM, Town T, Breitner J; Alzheimer’s Disease Neuroimaging Initiative; PREVENT-AD Research Group"
+        },
+        {
+            "$schema": "https://w3id.org/dats/schema/publication_schema.json",
+            "@type": "Publication",
+            "title": "Subjective cognitive decline is associated with altered Default Mode Network connectivity in individuals with a family history of Alzheimer’s Disease",
+	    "publicationVenue": "Biological Psychiatry: Cognitive Neurosciences and Neuroimaging",
+            "dates": [
+                {
+                    "$schema": "https://w3id.org/dats/schema/date_info_schema.json",
+                    "@type": "Date",
+                    "date": "2018-05-01",
+                    "type": [
+                        {
+                            "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
+                            "@type": "Annotation",
+                            "value": "Publication Date",
+                            "valueIRI": ""
+                        }
+                    ]
+                }
+            ],
+            "identifier": {
+                "$schema": "https://w3id.org/dats/schema/identifier_info_schema.json",
+                "@type": "Identifier",
+                "identifier": "DOI: 10.1016/j.bpsc.2017.11.012",
+                "identifierSource": "International DOI Foundation"
+            },
+            "authorsList": "Verfaillie SCJ, Pichet Binette A, Vachon-Presseau E, Tabrizi S, Savard M, Bellec P, Ossenkoppele R, Scheltens P, van der Flier WM, Breitner JC, Villeneuve  S for the PREVENT-AD Research Group"
+        },
+        {
+            "$schema": "https://w3id.org/dats/schema/publication_schema.json",
+            "@type": "Publication",
+            "title": "Proximity to Parental Symptoms Onset and Amyloid-beta Burden in sporadic Alzheimer disease",
+	    "publicationVenue": "JAMA Neurology",
+            "dates": [
+                {
+                    "$schema": "https://w3id.org/dats/schema/date_info_schema.json",
+                    "@type": "Date",
+                    "date": "2018-05-01",
+                    "type": [
+                        {
+                            "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
+                            "@type": "Annotation",
+                            "value": "Publication Date",
+                            "valueIRI": ""
+                        }
+                    ]
+                }
+            ],
+            "identifier": {
+                "$schema": "https://w3id.org/dats/schema/identifier_info_schema.json",
+                "@type": "Identifier",
+                "identifier": "DOI: 10.1001/jamaneurol.2017.5135",
+                "identifierSource": "International DOI Foundation"
+            },
+            "authorsList": "Villeneuve S, Vogel JW, Gonneaud J, Pichet Binette A, Rosa-Neto P, Gauthier S, Bateman RJ, Fagan AM, Morris JC, Benzinger TL, Johnson SC, Breitner JC,  Poirier J, for the Prevent-AD group"
+        },
+        {
+            "$schema": "https://w3id.org/dats/schema/publication_schema.json",
+            "@type": "Publication",
+            "title": "Regionally specific changes in the hippocampal circuitry accompany progression of cerebrospinal fluid biomarkers in preclinical Alzheimer’s disease",
+	    "publicationVenue": "Human Brain Mapping",
+            "dates": [
+                {
+                    "$schema": "https://w3id.org/dats/schema/date_info_schema.json",
+                    "@type": "Date",
+                    "date": "2018-02-01",
+                    "type": [
+                        {
+                            "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
+                            "@type": "Annotation",
+                            "value": "Publication Date",
+                            "valueIRI": ""
+                        }
+                    ]
+                }
+            ],
+            "identifier": {
+                "$schema": "https://w3id.org/dats/schema/identifier_info_schema.json",
+                "@type": "Identifier",
+                "identifier": "DOI: 10.1002/hbm.23897",
+                "identifierSource": "International DOI Foundation"
+            },
+            "authorsList": "Tardif CL, Devenyi G, Amaral RSC, Pelleieux S, Poirier J, Rosa-Neto P, Breitner J, Chakravarty MM; PREVENT-AD Research Group"
+        }
+
+        {
+            "$schema": "https://w3id.org/dats/schema/publication_schema.json",
+            "@type": "Publication",
+            "title": "Deficit in Central Auditory Processing as a Biomarker of Pre-Clinical Alzheimer’s Disease",
+	    "publicationVenue": "Journal of Alzheimer's Disease",
+            "dates": [
+                {
+                    "$schema": "https://w3id.org/dats/schema/date_info_schema.json",
+                    "@type": "Date",
+                    "date": "2017-08-21",
+                    "type": [
+                        {
+                            "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
+                            "@type": "Annotation",
+                            "value": "Publication Date",
+                            "valueIRI": ""
+                        }
+                    ]
+                }
+            ],
+            "identifier": {
+                "$schema": "https://w3id.org/dats/schema/identifier_info_schema.json",
+                "@type": "Identifier",
+                "identifier": "DOI: 10.3233/JAD-170545",
+                "identifierSource": "International DOI Foundation"
+            },
+            "authorsList": "Tuwaig M, Savard M, Jutras B, Poirier J, Collins DL, Rosa-Neto P, Fontaine D and Breitner JCS for the PREVENT-AD Research Group"
+        },
+   	{
+            "$schema": "https://w3id.org/dats/schema/publication_schema.json",
+            "@type": "Publication",
+            "title": "Validation of a Regression Technique for Segmentation of White Matter Hyperintensities in Alzheimer's Disease",
+	    "publicationVenue": "IEEE Trans Med Imaging",
+            "dates": [
+                {
+                    "$schema": "https://w3id.org/dats/schema/date_info_schema.json",
+                    "@type": "Date",
+                    "date": "2017-08-01",
+                    "type": [
+                        {
+                            "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
+                            "@type": "Annotation",
+                            "value": "Publication Date",
+                            "valueIRI": ""
+                        }
+                    ]
+                }
+            ],
+            "identifier": {
+                "$schema": "https://w3id.org/dats/schema/identifier_info_schema.json",
+                "@type": "Identifier",
+                "identifier": "DOI: 10.1109/TMI.2017.2693978",
+                "identifierSource": "International DOI Foundation"
+            },
+            "authorsList": "Dadar M, Pascoal TA, Manitsirikul S, Misquitta K, Fonov VS, Tartaglia MC, Breitner J, Rosa-Neto P, Carmichael OT, Decarli C, Collins DL"
+        },
+ 	{
+            "$schema": "https://w3id.org/dats/schema/publication_schema.json",
+            "@type": "Publication",
+            "title": "Odor identification as a biomarker of preclinical AD in older adults at risk",
+	    "publicationVenue": "Neurology",
+            "dates": [
+                {
+                    "$schema": "https://w3id.org/dats/schema/date_info_schema.json",
+                    "@type": "Date",
+                    "date": "2017-07-25",
+                    "type": [
+                        {
+                            "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
+                            "@type": "Annotation",
+                            "value": "Publication Date",
+                            "valueIRI": ""
+                        }
+                    ]
+                }
+            ],
+            "identifier": {
+                "$schema": "https://w3id.org/dats/schema/identifier_info_schema.json",
+                "@type": "Identifier",
+                "identifier": "DOI: 10.1212/WNL.0000000000004159",
+                "identifierSource": "International DOI Foundation"
+            },
+            "authorsList": "Lafaille-Magnan ME, Poirier J, Etienne P, Tremblay-Mercier  J, Frenette J, Rosa-Neto P, Breitner JCS; PREVENT-AD Research Group"
+        },
+	{
+            "$schema": "https://w3id.org/dats/schema/publication_schema.json",
+            "@type": "Publication",
+            "title": "Alzheimer’s Progression Score’: Development of a Biomarker Summary Outcome for AD Prevention Trials",
+	    "publicationVenue": "The Journal of Prevention of Alzheimer’s Disease",
+            "dates": [
+                {
+                    "$schema": "https://w3id.org/dats/schema/date_info_schema.json",
+                    "@type": "Date",
+                    "date": "2016",
+                    "type": [
+                        {
+                            "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
+                            "@type": "Annotation",
+                            "value": "Publication Date",
+                            "valueIRI": ""
+                        }
+                    ]
+                }
+            ],
+            "identifier": {
+                "$schema": "https://w3id.org/dats/schema/identifier_info_schema.json",
+                "@type": "Identifier",
+                "identifier": "DOI: 10.14283/jpad.2016.120",
+                "identifierSource": "International DOI Foundation"
+            },
+            "authorsList": "J.-M. Leoutsakos, A.L. Gross , R.N. Jones, M.S. Albert, J.C.S. Breitner"
+        },
+	{
+            "$schema": "https://w3id.org/dats/schema/publication_schema.json",
+            "@type": "Publication",
+            "title": "Rationale and Structure for a new Center for Studies on Prevention of Alzheimer’s Disease (StoP-AD)",
+	    "publicationVenue": "The Journal of Prevention of Alzheimer’s Disease",
+            "dates": [
+                {
+                    "$schema": "https://w3id.org/dats/schema/date_info_schema.json",
+                    "@type": "Date",
+                    "date": "2016",
+                    "type": [
+                        {
+                            "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
+                            "@type": "Annotation",
+                            "value": "Publication Date",
+                            "valueIRI": ""
+                        }
+                    ]
+                }
+            ],
+            "identifier": {
+                "$schema": "https://w3id.org/dats/schema/identifier_info_schema.json",
+                "@type": "Identifier",
+                "identifier": "DOI: 10.14283/jpad.2016.121",
+                "identifierSource": "International DOI Foundation"
+            },
+            "authorsList": "J.C.S. Breitner, J. Poirier, P.E. Etienne1, J.M. Leoutsakos for the PREVENT-AD Research Group"
+        },
+	{
+            "$schema": "https://w3id.org/dats/schema/publication_schema.json",
+            "@type": "Publication",
+            "title": "Test-retest resting-state fMRI in healthy elderly persons with a family history of Alzheimer's disease",
+	    "publicationVenue": "Scientific Data",
+            "dates": [
+                {
+                    "$schema": "https://w3id.org/dats/schema/date_info_schema.json",
+                    "@type": "Date",
+                    "date": "2015-10-13",
+                    "type": [
+                        {
+                            "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
+                            "@type": "Annotation",
+                            "value": "Publication Date",
+                            "valueIRI": ""
+                        }
+                    ]
+                }
+            ],
+            "identifier": {
+                "$schema": "https://w3id.org/dats/schema/identifier_info_schema.json",
+                "@type": "Identifier",
+                "identifier": "doi: 10.1038/sdata.2015.43.",
+                "identifierSource": "International DOI Foundation"
+            },
+            "authorsList": "Orban P, Madjar C, Savard M, Dansereau C, Tam A, Das S, Evans AC, Rosa-Neto P, Breitner JC, Bellec P; PREVENT-AD Research Group"
         }
     ],
-    "citationCount" : 2,
+    "citationCount" : 13,
     "extraProperties": [
         {
             "category": "Total number of subjects",
@@ -684,6 +1013,54 @@
                     "value": "430"
                 }
             ]
-        }
+        },
+        {
+            "category": "Timepoint description",
+            "values": [
+                {
+                    "value": "EL=eligibility, EN=enrolment, BL=Baseline, FU=follow-up (12M, 24M, 36M, 48M)"
+                }
+	    ]
+	},
+        {
+            "category": "Total number of subjects at BL",
+            "values": [
+                {
+                    "value": "385"
+                }
+	    ]
+	},
+        {
+            "category": "Total number of subjects with 12 months follow-up",
+            "values": [
+                {
+                    "value": "338"
+                }
+	    ]
+	},
+        {
+            "category": "Total number of subjects with 24 months follow-up",
+            "values": [
+                {
+                    "value": "289"
+                }
+	    ]
+	},
+        {
+            "category": "Total number of subjects with 36 months follow-up",
+            "values": [
+                {
+                    "value": "232"
+                }
+	    ]
+	},
+        {
+            "category": "Total number of subjects with 48 months follow-up",
+            "values": [
+                {
+                    "value": "172"
+                }
+	    ]
+	}
     ]
 }
