@@ -64,7 +64,7 @@
                 "description": "minc"
             }
 	],
-        "size" : "38000000000",
+        "size" : "38",
         "unit" : {
             "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
             "@type": "Annotation",
