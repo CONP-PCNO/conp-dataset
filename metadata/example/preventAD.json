@@ -111,7 +111,7 @@
         "$schema": "https://w3id.org/dats/schema/license_schema.json",
         "@type": "Licence",
         "dataUsesConditions": {
-            "value": "texte à venir"
+            "value": "Data used in preparation of this article were obtained from the Pre-symptomatic Evaluation of Novel or Experimental Treatments for Alzheimer’s Disease (PREVENT-AD) program. (Breitner et al., 2016 & Tremblay-Mercier, Madjar, et al., 2019)"
         }
     },
     "distributions": {
@@ -235,9 +235,93 @@
         {
             "$schema": "https://w3id.org/dats/schema/dimension_schema.json",
             "@type": "Dimension",
-            "name" : "RBANS",
-            "description": "Neuropsychological test"
-        }
+            "name" : "Demographics",
+            "description": "Characteristics of the study population including the age at testing session, gender, language, handedness, ethnicity, mother tongue, marital status, education (years), education (level)"
+        },
+        {
+            "$schema": "https://w3id.org/dats/schema/dimension_schema.json",
+            "@type": "Dimension",
+            "name" : "Anthropometrics",
+            "description": "Measurement of the size and proportions of the human body including Weight, Height, Body Mass Index."
+        },
+        {
+            "$schema": "https://w3id.org/dats/schema/dimension_schema.json",
+            "@type": "Dimension",
+            "name" : "Lifestyle",
+            "description": "Information on the way of living of the research participants expressed by their physical activity level, hobbies, alcool, smoking, sleeping & appetite habits, profession, retirement data, living situation, type of housing."
+        },
+        {
+            "$schema": "https://w3id.org/dats/schema/dimension_schema.json",
+            "@type": "Dimension",
+            "name" : "Family history of AD",
+            "description": "Home-made questionnaire to depict the family history of Alzheimer Disease including information on the first degree or other family members affected with Alzheimer Disease and/or other kind of memory problems. The information includes the age of symptoms onset, diagnosis history, age of death, if applicable and cause of death if applicable"
+        },
+        {
+            "$schema": "https://w3id.org/dats/schema/dimension_schema.json",
+            "@type": "Dimension",
+            "name" : "Medical data",
+            "description": "Various home-made questionnaires and samples collection to gather information on the medical conditions, surgical history, pharmacological profile, lab results (urine, blood draw), cardiac condition (electrocardiogram), blood pressure, pulse, CAIDE score (cardiovascular risk score)"
+        },
+        {
+            "$schema": "https://w3id.org/dats/schema/dimension_schema.json",
+            "@type": "Dimension",
+            "name" : "Single Nucleotide Polymorphism (SNPs) determination",
+            "description": "Variants of genes associated with AD:  APOE, BDNF, HMGR intronM, BCHEK, TLR4"
+  	},
+        {
+            "$schema": "https://w3id.org/dats/schema/dimension_schema.json",
+            "@type": "Dimension",
+            "name" : "University of Pennsylvania Smell Identification Test (UPSIT)",
+            "description": "Standardized test of olfactory capabilities using scratch-and-sniff stimuli of 40 items (4 randomized booklets of 10 odorants each)."
+        },
+        {
+            "$schema": "https://w3id.org/dats/schema/dimension_schema.json",
+            "@type": "Dimension",
+            "name" : "Synthetic Sentence Identification with Ipsilateral Competing Message test",
+            "description": "Central Auditory Processing assessement of the ability to comprehend spoken language intermingled with a background 		stimulus."
+        },
+        {
+            "$schema": "https://w3id.org/dats/schema/dimension_schema.json",
+            "@type": "Dimension",
+            "name" : "Dichotic Sentence Identification (DSI) test",
+            "description": "Central Auditory Processing assessment of the ability to follow auditory stimuli simultaneously in each ear"
+        },
+        {
+            "$schema": "https://w3id.org/dats/schema/dimension_schema.json",
+            "@type": "Dimension",
+            "name" : "Repeatable Battery for the Assessement of Neuropsychological Status (RBANS)",
+            "description": "Measurement of neuropsychological performance for 5 cognitive domains: immediate memory, delayed memory, attention, language and visuospatial abilities. A global cognition score summarizes all these domains. "
+        },
+        {
+            "$schema": "https://w3id.org/dats/schema/dimension_schema.json",
+            "@type": "Dimension",
+            "name" : "Alzheimer Dementia 8 (AD8)",
+            "description": " Questionnaire administered to the study partner to rate the participant on eight daily functioning abilities."
+        },
+        {
+            "$schema": "https://w3id.org/dats/schema/dimension_schema.json",
+            "@type": "Dimension",
+            "name" : "Everyday Cognition (ECog) test ",
+            "description": "Questionnaire to rate subjective cognitive decline over the past year using 4 points scale."
+        },
+        {
+            "$schema": "https://w3id.org/dats/schema/dimension_schema.json",
+            "@type": "Dimension",
+            "name" : "Montreal Cognitive Assessment (MoCA)",
+            "description": "Screening test for the detection of mild cognitive impairment assessing 8 domains of cognitive functioning: attention and concentration, executive functions, memory, language, visuoconstructional skills, conceptual thinking, calculations, and orientation."
+        },
+        {
+            "$schema": "https://w3id.org/dats/schema/dimension_schema.json",
+            "@type": "Dimension",
+            "name" : "Clinical Dementia Rating (CDR)",
+            "description": "Structured-interview used to detect the presence of symptoms of dementia and quantify their severity with a numeric scale ranging from 0 through 3. This composite score is derived from scores obtain in  six cognitive and functionnal areas: memory, orientation, judgment & problem solving, community affairs, home & hobbies, and personal care."
+        },
+        {
+            "$schema": "https://w3id.org/dats/schema/dimension_schema.json",
+            "@type": "Dimension",
+            "name" : "Cerebrospinal Fluid (CSF) protein levels related with Alzheimer's Disease",
+            "description": "protein levels of amyloid-beta 1-42 (Ab1-42), total tau (tTau) and phosphorylated tau (pTau)"
+  	}
     ],
     "acknowledges" : {
         "$schema": "https://w3id.org/dats/schema/grant_schema.json",
