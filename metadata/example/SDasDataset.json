@@ -62,12 +62,9 @@
         "formats": [
             {   
                 "description": "minc"
-            },
-            {   
-                "dscription": "NifTY"
             }
 	],
-        "size" : TODO
+        "size" : "38000000000",
         "unit" : {
             "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
             "@type": "Annotation",
@@ -88,8 +85,7 @@
         "name": "North Ameria",
         "description": "13 scanner in 6 sites accross North America"
     },
-
-    "licenses": "licenses": {
+    "licenses": {
         "$schema": "https://w3id.org/dats/schema/license_schema.json",
         "@type": "Licence",
         "name": "CC BY-ND",
@@ -103,7 +99,7 @@
                 {
                     "$schema": "https://w3id.org/dats/schema/organization_schema.json",
                     "@type": "Organization",
-                    "name": "à veniri ***",
+                    "name": "à venir ***",
                     "abbreviation": ""
                 }
 	]
