@@ -128,7 +128,7 @@
 		"description": "tsv"
 	    }
 	],
-	"size" : "300000000000",
+	"size" : "300",
 	"unit" : {
             "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
             "@type": "Annotation",
