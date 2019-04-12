@@ -118,23 +118,23 @@
         "$schema": "http://json-schema.org/draft-04/schema",
         "@type": "DatasetDistribution",
         "formats": [
-	    {
+            {
                 "description": "minc"
-	    },
-    	    {
-		"dscription": "NifTY"
-	    },
-	    {
-		"description": "tsv"
-	    }
-	],
-	"size" : "300",
-	"unit" : {
+            },
+            {
+                "dscription": "NifTY"
+            },
+            {
+                "description": "tsv"
+            }
+        ],
+        "size" : "300",
+        "unit" : {
             "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
             "@type": "Annotation",
             "value": "GB",
             "valueIRI": ""
-	}
+        }
     },
     "primaryPublications": [
         {
@@ -267,7 +267,7 @@
             "@type": "Dimension",
             "name" : "Single Nucleotide Polymorphism (SNPs) determination",
             "description": "Variants of genes associated with AD:  APOE, BDNF, HMGR intronM, BCHEK, TLR4"
-  	},
+        },
         {
             "$schema": "https://w3id.org/dats/schema/dimension_schema.json",
             "@type": "Dimension",
@@ -278,7 +278,7 @@
             "$schema": "https://w3id.org/dats/schema/dimension_schema.json",
             "@type": "Dimension",
             "name" : "Synthetic Sentence Identification with Ipsilateral Competing Message test",
-            "description": "Central Auditory Processing assessement of the ability to comprehend spoken language intermingled with a background 		stimulus."
+            "description": "Central Auditory Processing assessement of the ability to comprehend spoken language intermingled with a background stimulus."
         },
         {
             "$schema": "https://w3id.org/dats/schema/dimension_schema.json",
@@ -321,7 +321,7 @@
             "@type": "Dimension",
             "name" : "Cerebrospinal Fluid (CSF) protein levels related with Alzheimer's Disease",
             "description": "protein levels of amyloid-beta 1-42 (Ab1-42), total tau (tTau) and phosphorylated tau (pTau)"
-  	}
+          }
     ],
     "acknowledges" : {
         "$schema": "https://w3id.org/dats/schema/grant_schema.json",
@@ -778,11 +778,11 @@
             },
             "authorsList": "Meyer PF, Savard M, Poirier J, Labonté A, Rosa-Neto P, Weitz TM, Town T, Breitner J; Alzheimer’s Disease Neuroimaging Initiative; PREVENT-AD Research Group"
         },
-	{
+        {
             "$schema": "https://w3id.org/dats/schema/publication_schema.json",
             "@type": "Publication",
             "title": "INTREPAD: a randomized trial of naproxen to slow progress of pre-symptomatic Alzheimer’s disease",
-	    "publicationVenue": "Neurology",
+            "publicationVenue": "Neurology",
             "dates": [
                 {
                     "$schema": "https://w3id.org/dats/schema/date_info_schema.json",
@@ -806,7 +806,7 @@
             },
             "authorsList": "Meyer PF, Tremblay-Mercier J, Leoutsakos J, Madjar C, Lafaille-Maignan ME, Savard M, Rosa-Neto P, Poirier J, Etienne P, and Breitner J for the PREVENT-AD research group"
         },
-	{
+        {
             "$schema": "https://w3id.org/dats/schema/publication_schema.json",
             "@type": "Publication",
             "title": "Bi-directional Association of Cerebrospinal Fluid Immune Markers with Stage of Alzheimer’s Disease Pathogenesis.",
@@ -838,7 +838,7 @@
             "$schema": "https://w3id.org/dats/schema/publication_schema.json",
             "@type": "Publication",
             "title": "Subjective cognitive decline is associated with altered Default Mode Network connectivity in individuals with a family history of Alzheimer’s Disease",
-	    "publicationVenue": "Biological Psychiatry: Cognitive Neurosciences and Neuroimaging",
+            "publicationVenue": "Biological Psychiatry: Cognitive Neurosciences and Neuroimaging",
             "dates": [
                 {
                     "$schema": "https://w3id.org/dats/schema/date_info_schema.json",
@@ -866,7 +866,7 @@
             "$schema": "https://w3id.org/dats/schema/publication_schema.json",
             "@type": "Publication",
             "title": "Proximity to Parental Symptoms Onset and Amyloid-beta Burden in sporadic Alzheimer disease",
-	    "publicationVenue": "JAMA Neurology",
+            "publicationVenue": "JAMA Neurology",
             "dates": [
                 {
                     "$schema": "https://w3id.org/dats/schema/date_info_schema.json",
@@ -894,7 +894,7 @@
             "$schema": "https://w3id.org/dats/schema/publication_schema.json",
             "@type": "Publication",
             "title": "Regionally specific changes in the hippocampal circuitry accompany progression of cerebrospinal fluid biomarkers in preclinical Alzheimer’s disease",
-	    "publicationVenue": "Human Brain Mapping",
+            "publicationVenue": "Human Brain Mapping",
             "dates": [
                 {
                     "$schema": "https://w3id.org/dats/schema/date_info_schema.json",
@@ -923,7 +923,7 @@
             "$schema": "https://w3id.org/dats/schema/publication_schema.json",
             "@type": "Publication",
             "title": "Deficit in Central Auditory Processing as a Biomarker of Pre-Clinical Alzheimer’s Disease",
-	    "publicationVenue": "Journal of Alzheimer's Disease",
+            "publicationVenue": "Journal of Alzheimer's Disease",
             "dates": [
                 {
                     "$schema": "https://w3id.org/dats/schema/date_info_schema.json",
@@ -947,11 +947,11 @@
             },
             "authorsList": "Tuwaig M, Savard M, Jutras B, Poirier J, Collins DL, Rosa-Neto P, Fontaine D and Breitner JCS for the PREVENT-AD Research Group"
         },
-   	{
+           {
             "$schema": "https://w3id.org/dats/schema/publication_schema.json",
             "@type": "Publication",
             "title": "Validation of a Regression Technique for Segmentation of White Matter Hyperintensities in Alzheimer's Disease",
-	    "publicationVenue": "IEEE Trans Med Imaging",
+            "publicationVenue": "IEEE Trans Med Imaging",
             "dates": [
                 {
                     "$schema": "https://w3id.org/dats/schema/date_info_schema.json",
@@ -975,11 +975,11 @@
             },
             "authorsList": "Dadar M, Pascoal TA, Manitsirikul S, Misquitta K, Fonov VS, Tartaglia MC, Breitner J, Rosa-Neto P, Carmichael OT, Decarli C, Collins DL"
         },
- 	{
+         {
             "$schema": "https://w3id.org/dats/schema/publication_schema.json",
             "@type": "Publication",
             "title": "Odor identification as a biomarker of preclinical AD in older adults at risk",
-	    "publicationVenue": "Neurology",
+            "publicationVenue": "Neurology",
             "dates": [
                 {
                     "$schema": "https://w3id.org/dats/schema/date_info_schema.json",
@@ -1003,11 +1003,11 @@
             },
             "authorsList": "Lafaille-Magnan ME, Poirier J, Etienne P, Tremblay-Mercier  J, Frenette J, Rosa-Neto P, Breitner JCS; PREVENT-AD Research Group"
         },
-	{
+        {
             "$schema": "https://w3id.org/dats/schema/publication_schema.json",
             "@type": "Publication",
             "title": "Alzheimer’s Progression Score’: Development of a Biomarker Summary Outcome for AD Prevention Trials",
-	    "publicationVenue": "The Journal of Prevention of Alzheimer’s Disease",
+            "publicationVenue": "The Journal of Prevention of Alzheimer’s Disease",
             "dates": [
                 {
                     "$schema": "https://w3id.org/dats/schema/date_info_schema.json",
@@ -1031,11 +1031,11 @@
             },
             "authorsList": "J.-M. Leoutsakos, A.L. Gross , R.N. Jones, M.S. Albert, J.C.S. Breitner"
         },
-	{
+        {
             "$schema": "https://w3id.org/dats/schema/publication_schema.json",
             "@type": "Publication",
             "title": "Rationale and Structure for a new Center for Studies on Prevention of Alzheimer’s Disease (StoP-AD)",
-	    "publicationVenue": "The Journal of Prevention of Alzheimer’s Disease",
+            "publicationVenue": "The Journal of Prevention of Alzheimer’s Disease",
             "dates": [
                 {
                     "$schema": "https://w3id.org/dats/schema/date_info_schema.json",
@@ -1059,11 +1059,11 @@
             },
             "authorsList": "J.C.S. Breitner, J. Poirier, P.E. Etienne1, J.M. Leoutsakos for the PREVENT-AD Research Group"
         },
-	{
+        {
             "$schema": "https://w3id.org/dats/schema/publication_schema.json",
             "@type": "Publication",
             "title": "Test-retest resting-state fMRI in healthy elderly persons with a family history of Alzheimer's disease",
-	    "publicationVenue": "Scientific Data",
+            "publicationVenue": "Scientific Data",
             "dates": [
                 {
                     "$schema": "https://w3id.org/dats/schema/date_info_schema.json",
@@ -1104,47 +1104,47 @@
                 {
                     "value": "EL=eligibility, EN=enrolment, BL=Baseline, FU=follow-up (12M, 24M, 36M, 48M)"
                 }
-	    ]
-	},
+            ]
+        },
         {
             "category": "Total number of subjects at BL",
             "values": [
                 {
                     "value": "385"
                 }
-	    ]
-	},
+            ]
+        },
         {
             "category": "Total number of subjects with 12 months follow-up",
             "values": [
                 {
                     "value": "338"
                 }
-	    ]
-	},
+            ]
+        },
         {
             "category": "Total number of subjects with 24 months follow-up",
             "values": [
                 {
                     "value": "289"
                 }
-	    ]
-	},
+            ]
+        },
         {
             "category": "Total number of subjects with 36 months follow-up",
             "values": [
                 {
                     "value": "232"
                 }
-	    ]
-	},
+            ]
+        },
         {
             "category": "Total number of subjects with 48 months follow-up",
             "values": [
                 {
                     "value": "172"
                 }
-	    ]
-	}
+            ]
+        }
     ]
 }
