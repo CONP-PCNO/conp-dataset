@@ -9,4 +9,4 @@
 	url = http://github.com/emmetaobrien/conp-dataset-1000GenomesProject.git
 [submodule "projects/PERFORM"]
 	path = projects/PERFORM
-	url = ./projects/PERFORM
+	url = https://github.com/thomasbeaudry/conp-dataset-PERFORM.git
