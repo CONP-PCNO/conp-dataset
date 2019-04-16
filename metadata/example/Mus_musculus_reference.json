@@ -1,0 +1,81 @@
+{
+	"version": "1.0",
+	"privacy": "public open",
+	"licenses": [
+		{
+			"name": "to be determined"
+		}
+	],
+	"identifier": {
+		"identifier": "10090_refseq"
+	},
+	"title":"Mus musculus reference genome",
+	"dates": [
+		{
+			"type": {
+				"value":"reference data download date"
+			},
+			"date": "2019-04-16 15:18:39"
+		}
+	],
+	"types": [
+		{
+			"information": {
+				"value": "genomics"
+			}
+		}
+	],
+	"storedIn": {
+		"name": "https://www.ncbi.nlm.nih.gov/genome/52?genome_assembly_id=334509",
+		"description": "NCBI page describing reference genome"
+	},
+	"dimensions": [
+		{
+			"name": {
+				"value": "Size of genome (in Mb)"
+			},
+			"values": [
+				"2689.66"
+			]
+		},
+		{
+			"name": {
+				"value": "Percentage of genome composed of guanine/cytosine"
+			},
+			"values": [
+				"42.4891"
+			]
+		},
+		{
+			"name": {
+				"value": "Number of identified protein-encoding genes in genome"
+			},
+			"values": [
+				"61940"
+			]
+		}
+	],
+	"creators": [
+		{
+			"name": "Genome Reference Consortium"
+		}
+	],
+	"extraProperties": [
+		{
+			"category": "FTP link to FASTA file containing DNA sequence",
+			"values": [
+				{
+					"value": "ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/vertebrate_mammalian/Mus_musculus/latest_assembly_versions/GCF_000001635.26_GRCm38.p6/GCF_000001635.26_GRCm38.p6_genomic.fna.gz"
+				}
+			]
+		},
+		{
+			"category": "FTP link to GFF file containing detailed annotations",
+			"values": [
+				{
+					"value": "ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/vertebrate_mammalian/Mus_musculus/latest_assembly_versions/GCF_000001635.26_GRCm38.p6/GCF_000001635.26_GRCm38.p6_genomic.gff.gz"
+				}
+			]
+		}
+	]
+}

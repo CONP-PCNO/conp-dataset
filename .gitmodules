@@ -1,9 +1,6 @@
 [submodule "investigators/jb"]
 	path = investigators/jb
 	url = https://github.com/jbpoline/conp-dataset-jb.git
-[submodule "investigators/tglatard"]
-	path = investigators/tglatard
-	url = https://github.com/glatard/conp-dataset-tglatard.git
 [submodule "investigators/Park-Patrick"]
 	path = investigators/Park-Patrick
 	url = http://github.com/park-patrick/conp-dataset-park-patrick.git
@@ -13,3 +10,6 @@
 [submodule "projects/reference_genomes"]
 	path = projects/reference_genomes
 	url = http://github.com/emmetaobrien/conp-dataset-reference_genomes.git
+[submodule "projects/PERFORM"]
+	path = projects/PERFORM
+	url = https://github.com/thomasbeaudry/conp-dataset-PERFORM.git

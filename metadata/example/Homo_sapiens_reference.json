@@ -1,0 +1,81 @@
+{
+	"version": "1.0",
+	"privacy": "public open",
+	"licenses": [
+		{
+			"name": "to be determined"
+		}
+	],
+	"identifier": {
+		"identifier": "9606_refseq"
+	},
+	"title":"Homo sapiens reference genome",
+	"dates": [
+		{
+			"type": {
+				"value":"reference data download date"
+			},
+			"date": "2019-04-16 15:26:10"
+		}
+	],
+	"types": [
+		{
+			"information": {
+				"value": "genomics"
+			}
+		}
+	],
+	"storedIn": {
+		"name": "https://www.ncbi.nlm.nih.gov/genome/52?genome_assembly_id=368248",
+		"description": "NCBI page describing reference genome"
+	},
+	"dimensions": [
+		{
+			"name": {
+				"value": "Size of genome (in Mb)"
+			},
+			"values": [
+				"3257.32"
+			]
+		},
+		{
+			"name": {
+				"value": "Percentage of genome composed of guanine/cytosine"
+			},
+			"values": [
+				"41.465"
+			]
+		},
+		{
+			"name": {
+				"value": "Number of identified protein-encoding genes in genome"
+			},
+			"values": [
+				"119294"
+			]
+		}
+	],
+	"creators": [
+		{
+			"name": "Genome Reference Consortium"
+		}
+	],
+	"extraProperties": [
+		{
+			"category": "FTP link to FASTA file containing DNA sequence",
+			"values": [
+				{
+					"value": "ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/vertebrate_mammalian/Homo_sapiens/latest_assembly_versions/GCF_000001405.38_GRCh38.p12/GCF_000001405.38_GRCh38.p12_genomic.fna.gz"
+				}
+			]
+		},
+		{
+			"category": "FTP link to GFF file containing detailed annotations",
+			"values": [
+				{
+					"value": "ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/vertebrate_mammalian/Homo_sapiens/latest_assembly_versions/GCF_000001405.38_GRCh38.p12/GCF_000001405.38_GRCh38.p12_genomic.gff.gz"
+				}
+			]
+		}
+	]
+}
