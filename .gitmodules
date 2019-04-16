@@ -13,3 +13,6 @@
 [submodule "projects/1000GenomeProject"]
 	path = projects/1000GenomeProject
 	url = ./projects/1000GenomeProject
+[submodule "projects/1KGP"]
+	path = projects/1KGP
+	url = ./projects/1KGP
