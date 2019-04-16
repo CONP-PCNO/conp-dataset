@@ -10,3 +10,6 @@
 [submodule "projects/1000GenomesProject"]
 	path = projects/1000GenomesProject
 	url = http://github.com/emmetaobrien/conp-dataset-1000GenomesProject.git
+[submodule "projects/1000GenomeProject"]
+	path = projects/1000GenomeProject
+	url = ./projects/1000GenomeProject
