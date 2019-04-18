@@ -917,8 +917,7 @@
                 "identifierSource": "International DOI Foundation"
             },
             "authorsList": "Tardif CL, Devenyi G, Amaral RSC, Pelleieux S, Poirier J, Rosa-Neto P, Breitner J, Chakravarty MM; PREVENT-AD Research Group"
-        }
-
+        },
         {
             "$schema": "https://w3id.org/dats/schema/publication_schema.json",
             "@type": "Publication",
@@ -947,7 +946,7 @@
             },
             "authorsList": "Tuwaig M, Savard M, Jutras B, Poirier J, Collins DL, Rosa-Neto P, Fontaine D and Breitner JCS for the PREVENT-AD Research Group"
         },
-           {
+        {
             "$schema": "https://w3id.org/dats/schema/publication_schema.json",
             "@type": "Publication",
             "title": "Validation of a Regression Technique for Segmentation of White Matter Hyperintensities in Alzheimer's Disease",
@@ -975,7 +974,7 @@
             },
             "authorsList": "Dadar M, Pascoal TA, Manitsirikul S, Misquitta K, Fonov VS, Tartaglia MC, Breitner J, Rosa-Neto P, Carmichael OT, Decarli C, Collins DL"
         },
-         {
+        {
             "$schema": "https://w3id.org/dats/schema/publication_schema.json",
             "@type": "Publication",
             "title": "Odor identification as a biomarker of preclinical AD in older adults at risk",
