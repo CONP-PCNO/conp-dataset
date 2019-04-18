@@ -13,3 +13,6 @@
 [submodule "projects/PERFORM"]
 	path = projects/PERFORM
 	url = https://github.com/thomasbeaudry/conp-dataset-PERFORM.git
+[submodule "projects/1KGP"]
+	path = projects/1KGP
+	url = ./projects/1KGP
