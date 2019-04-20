@@ -10,3 +10,6 @@
 [submodule "projects/PERFORM"]
 	path = projects/PERFORM
 	url = https://github.com/thomasbeaudry/conp-dataset-PERFORM.git
+[submodule "projects/visual-working-memory"]
+	path = projects/visual-working-memory
+	url = https://github.com/OpenNeuroDatasets/ds001634.git
