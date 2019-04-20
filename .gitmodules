@@ -11,5 +11,5 @@
 	path = projects/PERFORM
   url = https://github.com/thomasbeaudry/conp-dataset-PERFORM.git
 [submodule "projects/auditory-brainstorm"]
-  path = projects/auditory-brainstorm
-  url = https://github.com/OpenNeuroDatasets/ds000246.git
+	path = projects/auditory-brainstorm
+	url = https://github.com/OpenNeuroDatasets/ds000246.git
