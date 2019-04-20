@@ -9,4 +9,7 @@
 	url = http://github.com/emmetaobrien/conp-dataset-1000GenomesProject.git
 [submodule "projects/PERFORM"]
 	path = projects/PERFORM
-	url = https://github.com/thomasbeaudry/conp-dataset-PERFORM.git
+  url = https://github.com/thomasbeaudry/conp-dataset-PERFORM.git
+[submodule "projects/auditory-brainstorm"]
+  path = projects/auditory-brainstorm
+  url = https://github.com/OpenNeuroDatasets/ds000246.git
