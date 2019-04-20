@@ -1,0 +1,25 @@
+{
+".":
+{
+"content_info":
+"objects/da/cn-7ed29a1ab7a15cca3f98b8a5a424bc.xz",
+"datalad_version":
+"0.12.0rc2",
+"dataset_info":
+"objects/da/ds-7ed29a1ab7a15cca3f98b8a5a424bc",
+"extractors":
+[
+"datalad_core",
+"annex",
+"minc"
+],
+"id":
+"8de99b0e-5f94-11e9-9e05-52545e9add8e",
+"refcommit":
+"9140b13cb00bf8c096971cec4347dfcb81192dbe",
+"author":
+"McGill Center for Intergrative Neuroscience",
+"description":
+"Samir Das Phantom scans"
+}
+}
