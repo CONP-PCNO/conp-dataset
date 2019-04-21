@@ -177,7 +177,7 @@ Datasets available in DataLad are listed [here](http://datasets.datalad.org).
 To test a PR that proposes the addition of a new dataset, this is a possible workflow:
 
 1. To create the PR, you should work on your fork of of conp-dataset (eg github://jbpoline/conp-dataset)
-2. Make sure your fork master branch is not ahead of github://conp-pcno/conp-dataset
+2. Make sure your fork master branch is not ahead of github://conp-pcno/conp-dataset master branch
 2. Clone your fork locally, eg 
 ```
 mkdir myfork-of-conp-dataset
