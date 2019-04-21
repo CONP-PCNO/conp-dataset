@@ -170,3 +170,42 @@ to add data from the [CoRR](http://fcon_1000.projects.nitrc.org/indi/CoRR/html):
 datalad install -d . --source ///corr/RawDataBIDS CorrBIDS
 ```
 Datasets available in DataLad are listed [here](http://datasets.datalad.org).
+
+
+# Pull Request workflow
+
+To test a PR that proposes the addition of a new dataset, this is a possible workflow:
+
+1. To create the PR, you should work on your fork of of conp-dataset (eg github://jbpoline/conp-dataset)
+2. Make sure your fork master branch is not ahead of github://conp-pcno/conp-dataset
+2. Clone your fork locally, eg 
+```
+mkdir myfork-of-conp-dataset
+cd myfork-of-conp-dataset
+git clone git@github.com:jbpoline/conp-dataset.git
+```
+3. Add the remote from which the PR comes from (unless it comes from a branch of conp-dataset), for instance if the PR comes from the `myfriend-fork` github handle (and check that the remote is added):
+```
+git remote add myfriend-fork git@github.com:myfriend-fork/conp-dataset.git
+git remote -vv 
+``` 
+4. Pull the pull request to your local fork, for instance if it is in master of `myfriend-fork`: 
+```
+git pull myfriend-fork master
+```
+5. Push to your local fork in master
+git push origin master:master
+
+6. Datalad install this 
+```
+datalad install -r https://github.com/jbpoline/conp-dataset.git
+```
+7. Check there that all is fine:
+- the `git annex whereis` is giving sensible urls
+- the `datalad get` work for open data
+- ...
+
+
+
+
+
