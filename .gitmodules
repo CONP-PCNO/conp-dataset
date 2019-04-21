@@ -13,3 +13,6 @@
 [submodule "projects/multicenter-phantom"]
   path = projects/multicenter-phantom
   url = https://github.com/conpdatasets/multicenter-phantom.git
+[submodule "projects/SIMON-dataset"]
+	path = projects/SIMON-dataset
+	url = https://github.com/conpdatasets/SIMON-dataset
