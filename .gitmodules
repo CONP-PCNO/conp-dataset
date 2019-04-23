@@ -10,6 +10,9 @@
 [submodule "projects/PERFORM"]
 	path = projects/PERFORM
   url = https://github.com/thomasbeaudry/conp-dataset-PERFORM.git
+[submodule "projects/multicenter-phantom"]
+  path = projects/multicenter-phantom
+  url = https://github.com/conpdatasets/multicenter-phantom.git
 [submodule "projects/auditory-brainstorm"]
 	path = projects/auditory-brainstorm
 	url = https://github.com/OpenNeuroDatasets/ds000246.git
