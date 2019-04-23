@@ -178,7 +178,7 @@ To test a PR that proposes the addition of a new dataset, this is a possible wor
 
 1. To create the PR, you should work on your fork of of conp-dataset (eg github://jbpoline/conp-dataset)
 
-2. Make sure your fork master branch is not ahead of github://conp-pcno/conp-dataset master branch
+2. Ensure your fork master branch is not ahead of github://conp-pcno/conp-dataset master branch
 
 3. Clone your fork locally, eg 
 ```
