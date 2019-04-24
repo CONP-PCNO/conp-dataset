@@ -15,7 +15,7 @@
 			"type": {
 				"value":"reference data download date"
 			},
-			"date": "2019-04-16 12:42:04"
+			"date": "2019-04-24 09:57:49"
 		}
 	],
 	"types": [
@@ -26,8 +26,8 @@
 		}
 	],
 	"storedIn": {
-		"name": "https://www.ncbi.nlm.nih.gov/genome/442?genome_assembly_id=300134",
-		"description": "NCBI page describing reference genome"
+		"name": "ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/vertebrate_mammalian/Callithrix_jacchus/latest_assembly_versions/GCF_000004665.1_Callithrix_jacchus-3.2/GCF_000004665.1_Callithrix_jacchus-3.2_genomic.fna.gz",
+		"description": "FTP link to FASTA file containing DNA sequence"
 	},
 	"dimensions": [
 		{
@@ -35,7 +35,7 @@
 				"value": "Size of genome (in Mb)"
 			},
 			"values": [
-				"2914.96"
+				"2733.01"
 			]
 		},
 		{
@@ -43,7 +43,7 @@
 				"value": "Percentage of genome composed of guanine/cytosine"
 			},
 			"values": [
-				"41.3414"
+				"40.8"
 			]
 		},
 		{
@@ -61,14 +61,6 @@
 		}
 	],
 	"extraProperties": [
-		{
-			"category": "FTP link to FASTA file containing DNA sequence",
-			"values": [
-				{
-					"value": "ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/vertebrate_mammalian/Callithrix_jacchus/latest_assembly_versions/GCF_000004665.1_Callithrix_jacchus-3.2/GCF_000004665.1_Callithrix_jacchus-3.2_genomic.fna.gz"
-				}
-			]
-		},
 		{
 			"category": "FTP link to GFF file containing detailed annotations",
 			"values": [

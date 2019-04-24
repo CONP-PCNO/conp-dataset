@@ -15,7 +15,7 @@
 			"type": {
 				"value":"reference data download date"
 			},
-			"date": "2019-04-16 15:18:39"
+			"date": "2019-04-24 09:53:25"
 		}
 	],
 	"types": [
@@ -26,8 +26,8 @@
 		}
 	],
 	"storedIn": {
-		"name": "https://www.ncbi.nlm.nih.gov/genome/52?genome_assembly_id=334509",
-		"description": "NCBI page describing reference genome"
+		"name": "ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/vertebrate_mammalian/Mus_musculus/latest_assembly_versions/GCF_000001635.26_GRCm38.p6/GCF_000001635.26_GRCm38.p6_genomic.fna.gz",
+		"description": "FTP link to FASTA file containing DNA sequence"
 	},
 	"dimensions": [
 		{
@@ -62,18 +62,10 @@
 	],
 	"extraProperties": [
 		{
-			"category": "FTP link to FASTA file containing DNA sequence",
-			"values": [
-				{
-					"value": "ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/vertebrate_mammalian/Mus_musculus/latest_assembly_versions/GCF_000001635.26_GRCm38.p6/GCF_000001635.26_GRCm38.p6_genomic.fna.gz"
-				}
-			]
-		},
-		{
 			"category": "FTP link to GFF file containing detailed annotations",
 			"values": [
 				{
-					"value": "ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/vertebrate_mammalian/Mus_musculus/latest_assembly_versions/GCF_000001635.26_GRCm38.p6/GCF_000001635.26_GRCm38.p6_genomic.gff.gz"
+					"value": "ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/vertebrate_mammalian/Mus_musculus/latest_assembly_versions/GCF_000001635.38_GRCm38.p6/GCF_000001635.26_GRCm38.p6_genomic.gff.gz"
 				}
 			]
 		}
