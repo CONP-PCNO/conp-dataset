@@ -19,3 +19,6 @@
 [submodule "projects/reference-genomes"]
 	path = projects/reference-genomes
 	url = http://github.com/emmetaobrien/conp-dataset-reference-genomes.git
+[submodule "projects/refseq"]
+	path = projects/refseq
+	url = http://github.com/emmetaobrien/conp-dataset-refseq.git
