@@ -18,4 +18,4 @@
 	url = http://github.com/emmetaobrien/conp-dataset-1KGP.git
 [submodule "projects/reference-genomes"]
 	path = projects/reference-genomes
-	url = ./projects/reference-genomes
+	url = http://github.com/emmetaobrien/conp-dataset-reference-genomes.git
