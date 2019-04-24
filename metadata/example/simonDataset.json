@@ -35,15 +35,15 @@
         "name": "Laboratoire MEDICS"
     },
     "storedIn": {
-            "identifier": "CONP open data",
+            "identifier": "http://fcon_1000.projects.nitrc.org/indi",
             "name": "CONP",
-            "access": {}
+            "access": {"http://fcon_1000.projects.nitrc.org/indi/retro/SIMON.html"}
         },
     "type": [
         { 
             "information": {
                 "value": "MRI",
-                "valueIRI": "http://uri.interlex.org/base/ilx_"
+                "valueIRI": ""
             }
         },
         {
@@ -60,7 +60,7 @@
         "@type": "DatasetDistribution",
         "formats": [
             {   
-                "description": "Nifty"
+                "description": "Nifti"
             }
 	],
         "size" : "12",
