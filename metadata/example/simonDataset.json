@@ -1,0 +1,231 @@
+{
+    "schema": "https://github.com/biocaddie/DATS/blob/master/dataset_schema.json",
+    "title": "SIMON",
+    "description": "The Single Individual volunteer for Multiple Observations across Networks (SIMON) MRI dataset is a sample of convenience of one ambidextrous healthy male aged between 29 and 46 years old, scanned in 73 sessions at multiple sites and with various scanner models",
+    "dates": [ 
+	{
+            "$schema": "https://w3id.org/dats/schema/date_info_schema.json",
+            "@type": "Date",
+            "date": "2001-09-20",
+            "type": [
+                {
+                   "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
+                   "@type": "Annotation",
+                    "value": "Start Date",
+                    "valueIRI": "https://uri.interlex.org/base/ilx_TBD"
+                }
+            ]
+	},
+	{
+            "$schema": "https://w3id.org/dats/schema/date_info_schema.json",
+            "@type": "Date",
+            "date": "2018-09-18",
+            "type": [
+                {
+                   "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
+                   "@type": "Annotation",
+                    "value": "End Date",
+                    "valueIRI": "https://uri.interlex.org/base/ilx_TBD"
+                }
+            ]
+	}
+
+    ],
+    "creators": {
+        "name": "Laboratoire MEDICS"
+    },
+    "storedIn": {
+            "identifier": "http://fcon_1000.projects.nitrc.org/indi",
+            "name": "CONP",
+            "access": {"http://fcon_1000.projects.nitrc.org/indi/retro/SIMON.html"}
+        },
+    "type": [
+        { 
+            "information": {
+                "value": "MRI",
+                "valueIRI": ""
+            }
+        },
+        {
+            "information": {
+                "value": "Quality Control Subject",
+                "valueIRI": "http://uri.interlex.org/base/ilx_0381893"
+            }
+        }
+    ],
+    "version": "1.0",
+    "privacy": "Open Access",
+    "distributions": {
+        "$schema": "http://json-schema.org/draft-04/schema",
+        "@type": "DatasetDistribution",
+        "formats": [
+            {   
+                "description": "Nifti"
+            }
+	],
+        "size" : "12",
+        "unit" : {
+            "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
+            "@type": "Annotation",
+            "value": "GB",
+            "valueIRI": "https://uri.interlex.org/base/ilx_TBD"
+        }
+    },
+    "isAbout": [
+        {
+            "$schema": "https://w3id.org/dats/schema/biological_entity_schema.json",
+            "@type": "BiologicalEntity",
+            "name": "adult human"
+        }
+    ],
+    "licenses": {
+        "$schema": "https://w3id.org/dats/schema/license_schema.json",
+        "@type": "Licence",
+        "name": "CC BY-SA",
+    },
+    "aggregation": "instance of dataset",
+    "acknowledges" : {
+        "$schema": "https://w3id.org/dats/schema/grant_schema.json",
+        "@type": "Grant",
+        "funders": [
+                {
+                    "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                    "@type": "Organization",
+                    "name": "Fonds de Recheche du Québec - Santé",
+                    "abbreviation": "FRQ-S"
+                },
+                {
+                    "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                    "@type": "Organization",
+                    "name": "Consortium pour l'Identification précoce de la Maladie d'Alzheimer - Québec",
+                    "abbreviation": "CIMA-Q"
+                },
+                {
+                    "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                    "@type": "Organization",
+                    "name": "Canadian Consortium on Neurodegeneration in Aging",
+                    "abbreviation": "CCNA"
+                },
+                {
+                    "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                    "@type": "Organization",
+                    "name": "Consortium Canadien en Neurodégénérescence associée au Vieillissement",
+                    "abbreviation": "CCNA"
+                },
+                {
+                    "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                    "@type": "Organization",
+                    "name": "Ontario Neurodegenerative Disease Research Initiative",
+                    "abbreviation": "ONDRI"
+                },
+                {
+                    "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                    "@type": "Organization",
+                    "name": "Pfizer Canada Innovation Fund"
+                },
+                {
+                    "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                    "@type": "Organization",
+                    "name": "Ontario Brain Institute Foundation"
+                },
+                {
+                    "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                    "@type": "Organization",
+                    "name": "Canada Fund for Innovation",
+                    "abbreviation": "CFI"
+                },
+                {
+                    "$schema": "https://w3id.org/dats/schema/organization_schema.json",
+                    "@type": "Organization",
+                    "name": "Fond Canadien de l'Innovation",
+                    "abbreviation": "FCI"
+                }
+                 
+            ]
+    },
+    "dimensions": [
+        {
+            "$schema": "https://w3id.org/dats/schema/dimension_schema.json",
+            "@type": "Dimension",
+            "name" : "T1w"
+        },
+        {
+            "$schema": "https://w3id.org/dats/schema/dimension_schema.json",
+            "@type": "Dimension",
+            "name" : "T1"
+        },
+        {
+            "$schema": "https://w3id.org/dats/schema/dimension_schema.json",
+            "@type": "Dimension",
+            "name" : "T2"
+        },
+        {
+            "$schema": "https://w3id.org/dats/schema/dimension_schema.json",
+            "@type": "Dimension",
+            "name" : "PDw"
+        },
+        {
+            "$schema": "https://w3id.org/dats/schema/dimension_schema.json",
+            "@type": "Dimension",
+            "name" : " T2*"
+        },
+        {
+            "$schema": "https://w3id.org/dats/schema/dimension_schema.json",
+            "@type": "Dimension",
+            "name" : "resting state fMRI"
+        },
+        {
+            "$schema": "https://w3id.org/dats/schema/dimension_schema.json",
+            "@type": "Dimension",
+            "name" : "SWI"
+        },
+        {
+            "$schema": "https://w3id.org/dats/schema/dimension_schema.json",
+            "@type": "Dimension",
+            "name" : "ASL"
+        },
+        {
+            "$schema": "https://w3id.org/dats/schema/dimension_schema.json",
+            "@type": "Dimension",
+            "name" : "age at scan"
+        }
+    ],
+    "keywords": [
+        {
+            "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
+            "@type": "Annotation",
+            "information": {
+                "value": "Phantom",
+                "valueIRI": ""
+            }
+        },	
+        {
+            "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
+            "@type": "Annotation",
+            "information": {
+                "value": "MRI",
+                "valueIRI": ""
+            }
+        }
+    ],
+    "primaryPublications": [
+        {
+            "$schema": "https://w3id.org/dats/schema/publication_schema.json",
+            "@type": "Publication",
+            "title": "The Canadian Dementia Imaging Protocol: Harmonizing National Cohorts",
+            "publicationVenue": "Journal of Magnetic Resonance Imaging, volume 49, Issue 2",
+            "authorsList": "Simon Duchesne PhD, Isabelle Chouinard MRT, Olivier Potvin PhD, Vladimir S. Fonov PhD, April Khademi PhD, Robert Bartha PhD, Pierre Bellec PhD, D. Louis Collins PhD, Maxime Descoteaux PhD, Rick Hoge PhD, Cheryl R. McCreary PhD, Joel Ramirez PhD, Christopher J.M. Scott BScH, Eric E. Smith MD, Stephen C. Strother PhD, Sandra E. Black MD for the CIMA‐Q group and the CCNA group"
+	}
+    ],
+    "extraProperties": [
+        {
+            "category": "Total number of sessions",
+            "values": [
+                {
+                    "value": "73"
+                }
+            ]
+        }
+    ]
+}
+
