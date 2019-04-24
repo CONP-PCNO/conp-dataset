@@ -174,10 +174,10 @@
                 {
                     "$schema": "https://w3id.org/dats/schema/person_schema.json",
                     "@type": "Person",
-                    "fullName": "Pierre E. Etienne1",
+                    "fullName": "Pierre E. Etienne",
                     "firstName": "Pierre",
                     "middleName": "E.",
-                    "lastName": "Etienne1",
+                    "lastName": "Etienne",
                     "affiliations": [
                          {
                             "$schema": "https://w3id.org/dats/schema/organization_schema.json",
