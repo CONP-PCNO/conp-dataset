@@ -15,4 +15,7 @@
   url = https://github.com/conpdatasets/multicenter-phantom.git
 [submodule "projects/visual-working-memory"]
 	path = projects/visual-working-memory
-	url = https://github.com/OpenNeuroDatasets/ds001634.git
+  url = https://github.com/OpenNeuroDatasets/ds001634.git
+[submodule "projects/preventad-open"]
+  path = projects/preventad-open
+  url = https://github.com/conpdatasets/preventad-open.git
