@@ -1,18 +1,21 @@
 [submodule "investigators/jb"]
-	path = investigators/jb
-	url = https://github.com/jbpoline/conp-dataset-jb.git
+  path = investigators/jb
+  url = https://github.com/jbpoline/conp-dataset-jb.git
 [submodule "investigators/Park-Patrick"]
-	path = investigators/Park-Patrick
-	url = http://github.com/park-patrick/conp-dataset-park-patrick.git
+  path = investigators/Park-Patrick
+  url = http://github.com/park-patrick/conp-dataset-park-patrick.git
 [submodule "projects/1000GenomesProject"]
-	path = projects/1000GenomesProject
-	url = http://github.com/emmetaobrien/conp-dataset-1000GenomesProject.git
+  path = projects/1000GenomesProject
+  url = http://github.com/emmetaobrien/conp-dataset-1000GenomesProject.git
 [submodule "projects/PERFORM"]
-	path = projects/PERFORM
-	url = https://github.com/thomasbeaudry/conp-dataset-PERFORM.git
+  path = projects/PERFORM
+  url = https://github.com/thomasbeaudry/conp-dataset-PERFORM.git
 [submodule "projects/multicenter-phantom"]
-  	path = projects/multicenter-phantom
- 	url = https://github.com/conpdatasets/multicenter-phantom.git
+  path = projects/multicenter-phantom
+  url = https://github.com/conpdatasets/multicenter-phantom.git
 [submodule "projects/visual-working-memory"]
-	path = projects/visual-working-memory
-	url = https://github.com/OpenNeuroDatasets/ds001634.git
+  path = projects/visual-working-memory
+  url = https://github.com/OpenNeuroDatasets/ds001634.git
+[submodule "projects/preventad-open"]
+  path = projects/preventad-open
+  url = https://github.com/conpdatasets/preventad-open.git
