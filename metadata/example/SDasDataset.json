@@ -1,8 +1,7 @@
 
     "schema": "https://github.com/biocaddie/DATS/blob/master/dataset_schema.json",
     "title": "S. Das Human MRI Phantom ",
-    "description": "Human Brain phantom scans, T1 weighted images and others on 13 scanner in 6 sites accross North America. The data have been collected on a single participant and are available in minc format. ",
-    "description": "Multiple MRI scans of a single human phantom over 11 years",
+    "description": "Human Brain phantom scans, Multiple MRI scans of a single human phantom over 11 years, T1 weighted images and others on 13 scanner in 6 sites accross North America. The data are available in minc format. ",
     "dates": [ 
 	{
             "$schema": "https://w3id.org/dats/schema/date_info_schema.json",
