@@ -1,4 +1,4 @@
-{
+
     "schema": "https://github.com/biocaddie/DATS/blob/master/dataset_schema.json",
     "title": "S. Das Human MRI Phantom ",
     "description": "Human Brain phantom scans, T1 weighted images and others on n=? sites. The data have been collected on a single participant and are available in minc format. ",
@@ -13,7 +13,7 @@
                    "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
                    "@type": "Annotation",
                     "value": "Start Date",
-                    "valueIRI": "https://uri.interlex.org/base/ilx_TBD"
+                    "valueIRI": ""
                 }
             ]
 	},
@@ -26,7 +26,7 @@
                    "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
                    "@type": "Annotation",
                     "value": "End Date",
-                    "valueIRI": "https://uri.interlex.org/base/ilx_TBD"
+                    "valueIRI": ""
                 }
             ]
 	}
@@ -39,13 +39,13 @@
     "storedIn": {
             "identifier": "CONP open data",
             "name": "CONP",
-            "access": {}
+            "access": "https://phantom-dev.loris.ca"
         },
     "type": [
         { 
             "information": {
                 "value": "MRI",
-                "valueIRI": "http://uri.interlex.org/base/ilx_"
+                "valueIRI": ""
             }
         },
         {
@@ -70,7 +70,7 @@
             "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
             "@type": "Annotation",
             "value": "GB",
-            "valueIRI": "https://uri.interlex.org/base/ilx_TBD"
+            "valueIRI": ""
         }
     },
     "isAbout": [
@@ -93,18 +93,6 @@
         "version": "4.0"
     },
     "aggregation": "instance of dataset",
-    "acknowledges" : {
-        "$schema": "https://w3id.org/dats/schema/grant_schema.json",
-        "@type": "Grant",
-        "funders": [
-                {
-                    "$schema": "https://w3id.org/dats/schema/organization_schema.json",
-                    "@type": "Organization",
-                    "name": "à venir ***",
-                    "abbreviation": ""
-                }
-	]
-    },
     "dimensions": [
         {
             "$schema": "https://w3id.org/dats/schema/dimension_schema.json",
