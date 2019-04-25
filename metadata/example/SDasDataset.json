@@ -82,7 +82,7 @@
     "spatialCoverage": {
         "$schema": "https://w3id.org/dats/schema/place_schema.json",
         "@type": "Place",
-        "name": "North Ameria",
+        "name": "North America",
         "description": "13 scanner in 6 sites accross North America"
     },
     "licenses": {
