@@ -19,3 +19,6 @@
 [submodule "projects/preventad-open"]
   path = projects/preventad-open
   url = https://github.com/conpdatasets/preventad-open.git
+[submodule "projects/SIMON-dataset"]
+	path = projects/SIMON-dataset
+	url = https://github.com/conpdatasets/SIMON-dataset
