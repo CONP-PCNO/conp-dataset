@@ -4,12 +4,12 @@
 [submodule "investigators/Park-Patrick"]
   path = investigators/Park-Patrick
   url = http://github.com/park-patrick/conp-dataset-park-patrick.git
-[submodule "projects/1000GenomesProject"]
-  path = projects/1000GenomesProject
-  url = http://github.com/conpdatasets/1000GenomesProject.git
-[submodule "projects/PERFORM"]
-  path = projects/PERFORM
-  url = https://github.com/conpdatasets/PERFORM.git
+#[submodule "projects/1000GenomesProject"]
+#  path = projects/1000GenomesProject
+#  url = http://github.com/conpdatasets/1000GenomesProject.git
+#[submodule "projects/PERFORM"]
+#  path = projects/PERFORM
+#  url = https://github.com/conpdatasets/PERFORM.git
 [submodule "projects/multicenter-phantom"]
   path = projects/multicenter-phantom
   url = https://github.com/conpdatasets/multicenter-phantom.git
