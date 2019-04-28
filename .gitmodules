@@ -17,8 +17,8 @@
   path = projects/SIMON-dataset
   url = https://github.com/conpdatasets/SIMON-dataset
 [submodule "projects/PERFORM"]
-	path = projects/PERFORM
-	url = https://github.com/conpdatasets/PERFORM.git
+  path = projects/PERFORM
+  url = https://github.com/conpdatasets/PERFORM.git
 [submodule "projects/1000GenomesProject"]
-	path = projects/1000GenomesProject
-	url = https://github.com/conpdatasets/1000GenomesProject.git
+  path = projects/1000GenomesProject
+  url = https://github.com/conpdatasets/1000GenomesProject.git
