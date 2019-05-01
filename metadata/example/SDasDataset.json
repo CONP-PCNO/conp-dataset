@@ -1,17 +1,35 @@
-{
+
     "schema": "https://github.com/biocaddie/DATS/blob/master/dataset_schema.json",
-    "title": "SDas Phantom",
-    "description": "Samir Das phantom scans",
+    "title": "S. Das Human MRI Phantom ",
+    "description": "Human Brain phantom scans, Multiple MRI scans of a single human phantom over 11 years, T1 weighted images and others on 13 scanner in 6 sites accross North America. The data are available in minc format. ",
     "dates": [ 
-        {
-            "date": "2018-12-05",
+	{
+            "$schema": "https://w3id.org/dats/schema/date_info_schema.json",
+            "@type": "Date",
+            "date": "2008-04-25",
             "type": [
                 {
-                    "value": "Creation Date",
-                    "valueIRI": "http://uri.interlex.org/base/ilx_0102618"
+                   "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
+                   "@type": "Annotation",
+                    "value": "Start Date",
+                    "valueIRI": ""
                 }
             ]
-        }
+	},
+	{
+            "$schema": "https://w3id.org/dats/schema/date_info_schema.json",
+            "@type": "Date",
+            "date": "2019-04-15",
+            "type": [
+                {
+                   "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
+                   "@type": "Annotation",
+                    "value": "End Date",
+                    "valueIRI": ""
+                }
+            ]
+	}
+
     ],
     "creators": {
         "name": "McGill Center for Integrative Neuroscience",
@@ -20,13 +38,13 @@
     "storedIn": {
             "identifier": "CONP open data",
             "name": "CONP",
-            "access": {}
+            "access": "https://phantom-dev.loris.ca"
         },
     "type": [
         { 
             "information": {
-                "value": "fMRI",
-                "valueIRI": "http://uri.interlex.org/base/ilx_0506130"
+                "value": "MRI",
+                "valueIRI": ""
             }
         },
         {
@@ -37,26 +55,106 @@
         }
     ],
     "version": "1.0",
-    "privacy": "public open",
+    "privacy": "Open Access",
+    "distributions": {
+        "$schema": "http://json-schema.org/draft-04/schema",
+        "@type": "DatasetDistribution",
+        "formats": [
+            {   
+                "description": "minc"
+            }
+	],
+        "size" : "38",
+        "unit" : {
+            "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
+            "@type": "Annotation",
+            "value": "GB",
+            "valueIRI": ""
+        }
+    },
+    "isAbout": [
+        {
+            "$schema": "https://w3id.org/dats/schema/biological_entity_schema.json",
+            "@type": "BiologicalEntity",
+            "name": "adult human"
+        }
+    ],
+    "spatialCoverage": {
+        "$schema": "https://w3id.org/dats/schema/place_schema.json",
+        "@type": "Place",
+        "name": "North America",
+        "description": "13 scanner in 6 sites accross North America"
+    },
     "licenses": {
+        "$schema": "https://w3id.org/dats/schema/license_schema.json",
+        "@type": "Licence",
         "name": "CC BY-ND",
         "version": "4.0"
     },
-    "dimension": [
+    "aggregation": "instance of dataset",
+    "dimensions": [
         {
-            "name": "nGroup",
-            "description": "number of MRI scanner",
-            "values": "13",
+            "$schema": "https://w3id.org/dats/schema/dimension_schema.json",
+            "@type": "Dimension",
+            "name" : "resting BOLD"
         },
         {
-            "name": "nSubject",
-            "description": "total number of subject scanned",
-            "values": "1",
+            "$schema": "https://w3id.org/dats/schema/dimension_schema.json",
+            "@type": "Dimension",
+            "name" : "fieldmap BOLD"
         },
         {
-            "name": "nTimepoint",
-            "description": "total number of timepoint",
-            "values": "512",
+            "$schema": "https://w3id.org/dats/schema/dimension_schema.json",
+            "@type": "Dimension",
+            "name" : "fieldmap DWI"
+        },
+        {
+            "$schema": "https://w3id.org/dats/schema/dimension_schema.json",
+            "@type": "Dimension",
+            "name" : "DWI 65 directions"
+        },
+        {
+            "$schema": "https://w3id.org/dats/schema/dimension_schema.json",
+            "@type": "Dimension",
+            "name" : "DWI 25 directions"
+        },
+        {
+            "$schema": "https://w3id.org/dats/schema/dimension_schema.json",
+            "@type": "Dimension",
+            "name" : "T1w"
+        },
+        {
+            "$schema": "https://w3id.org/dats/schema/dimension_schema.json",
+            "@type": "Dimension",
+            "name" : "T2w"
+        }
+    ],
+    "keywords": [
+        {
+            "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
+            "@type": "Annotation",
+            "information": {
+                "value": "Phantom",
+                "valueIRI": ""
+            }
+        },	
+        {
+            "$schema": "https://w3id.org/dats/schema/annotation_schema.json",
+            "@type": "Annotation",
+            "information": {
+                "value": "MRI",
+                "valueIRI": ""
+            }
+        }
+    ],
+    "extraProperties": [
+        {
+            "category": "Total number of sessions",
+            "values": [
+                {
+                    "value": "521"
+                }
+            ]
         }
     ]
 }
