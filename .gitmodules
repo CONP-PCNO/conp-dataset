@@ -28,3 +28,6 @@
 [submodule "investigators/Khanlab/HCPUR100-Template"]
 	path = investigators/Khanlab/HCPUR100-Template
 	url = https://github.com/khanlab-datasets/HCPUR100-Template.git
+[submodule "investigators/Khanlab/BigBrainMRICoreg"]
+	path = investigators/Khanlab/BigBrainMRICoreg
+	url = https://github.com/khanlab-datasets/BigBrainMRICoreg.git
