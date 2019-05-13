@@ -25,3 +25,6 @@
 [submodule "investigators/Khanlab/BigBrainHippoUnfold"]
 	path = investigators/Khanlab/BigBrainHippoUnfold
 	url = https://github.com/khanlab-datasets/BigBrainHippoUnfold.git
+[submodule "investigators/Khanlab/HCPUR100-Template"]
+	path = investigators/Khanlab/HCPUR100-Template
+	url = https://github.com/khanlab-datasets/HCPUR100-Template.git
