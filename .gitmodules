@@ -25,3 +25,6 @@
 [submodule "projects/1KGP-test"]
 	path = projects/1KGP-test
 	url = http://github.com/emmetaobrien/conp-dataset-1KGP-test.git
+[submodule "projects/1KGP-21May2019"]
+	path = projects/1KGP-21May2019
+	url = ./projects/1KGP-21May2019
