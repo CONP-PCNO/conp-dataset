@@ -22,3 +22,6 @@
 [submodule "projects/1KGP-17May2019"]
 	path = projects/1KGP-17May2019
 	url = http://github.com/emmetaobrien/conp-dataset-1KGP-17May2019.git
+[submodule "projects/1KGP-21May2019"]
+	path = projects/1KGP-21May2019
+	url = ./projects/1KGP-21May2019
