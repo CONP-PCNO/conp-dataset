@@ -19,9 +19,6 @@
 [submodule "projects/refseq"]
 	path = projects/refseq
 	url = http://github.com/emmetaobrien/conp-dataset-refseq.git
-[submodule "projects/1KGP-21May2019"]
-	path = projects/1KGP-21May2019
-	url = http://github.com/emmetaobrien/conp-dataset-1KGP-21May2019.git
 [submodule "projects/1KGP-22May2019"]
 	path = projects/1KGP-22May2019
-	url = ./projects/1KGP-22May2019
+	url = http://github.com/emmetaobrien/conp-dataset-1KGP-22May2019.git
