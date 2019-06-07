@@ -22,6 +22,7 @@
 [submodule "projects/1000GenomesProject"]
   path = projects/1000GenomesProject
   url = https://github.com/conpdatasets/1000GenomesProject.git
+
 [submodule "projects/conp-dataset-1KGP"]
-  path = projects/conp-dataset-1KGP
-  url = https://github.com/emmetaobrien/conp-dataset-1KGP.git
+	path = projects/conp-dataset-1KGP
+	url = https://github.com/emmetaobrien/conp-dataset-1KGP
