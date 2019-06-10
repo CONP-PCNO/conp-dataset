@@ -25,3 +25,6 @@
 [submodule "projects/conp-dataset-1KGP"]
   path = projects/conp-dataset-1KGP
   url = https://github.com/emmetaobrien/conp-dataset-1KGP
+[submodule "projects/conp-dataset-refseq"]
+	path = projects/conp-dataset-refseq
+	url = https://github.com/emmetaobrien/conp-dataset-refseq
