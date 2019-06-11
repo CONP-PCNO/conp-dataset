@@ -33,4 +33,4 @@
   url = https://github.com/khanlab-datasets/BigBrainMRICoreg.git
 [submodule "projects/refseq"]
   path = projects/refseq
-  url = https://github.com/emmetaobrien/conp-dataset-refseq
+  url = https://github.com/emmetaobrien/conp-dataset-refseq.git
