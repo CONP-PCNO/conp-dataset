@@ -22,3 +22,12 @@
 [submodule "projects/1000GenomesProject"]
   path = projects/1000GenomesProject
   url = https://github.com/conpdatasets/1000GenomesProject.git
+[submodule "investigators/Khanlab/BigBrainHippoUnfold"]
+  path = investigators/Khanlab/BigBrainHippoUnfold
+  url = https://github.com/khanlab-datasets/BigBrainHippoUnfold.git
+[submodule "investigators/Khanlab/HCPUR100-Template"]
+  path = investigators/Khanlab/HCPUR100-Template
+  url = https://github.com/khanlab-datasets/HCPUR100-Template.git
+[submodule "investigators/Khanlab/BigBrainMRICoreg"]
+  path = investigators/Khanlab/BigBrainMRICoreg
+  url = https://github.com/khanlab-datasets/BigBrainMRICoreg.git
