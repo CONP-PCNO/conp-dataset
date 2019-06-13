@@ -22,6 +22,7 @@
 [submodule "projects/1000GenomesProject"]
   path = projects/1000GenomesProject
   url = https://github.com/conpdatasets/1000GenomesProject.git
+  branch = master
 [submodule "investigators/Khanlab/BigBrainHippoUnfold"]
   path = investigators/Khanlab/BigBrainHippoUnfold
   url = https://github.com/khanlab-datasets/BigBrainHippoUnfold.git
