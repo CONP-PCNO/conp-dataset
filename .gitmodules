@@ -31,3 +31,6 @@
 [submodule "investigators/Khanlab/BigBrainMRICoreg"]
   path = investigators/Khanlab/BigBrainMRICoreg
   url = https://github.com/khanlab-datasets/BigBrainMRICoreg.git
+[submodule "projects/EPOI-Montreal-2018"]
+	path = projects/EPOI-Montreal-2018
+	url = https://github.com/dlq/EPOI-Montreal-2018.git
