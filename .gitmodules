@@ -34,6 +34,3 @@
 [submodule "projects/refseq"]
   path = projects/refseq
   url = https://github.com/emmetaobrien/conp-dataset-refseq.git
-[submodule "1KGP-GoogleDrive"]
-	path = 1KGP-GoogleDrive
-	url = https://github.com/emmetaobrien/1KGP-GoogleDrive
