@@ -40,3 +40,6 @@
 [submodule "projects/1KGP-torrent"]
   path = projects/1KGP-torrent
   url = https://github.com/emmetaobrien/1KGP-torrent.git
+[submodule "projects/1KGP-GoogleDrive-27Jun2019"]
+	path = projects/1KGP-GoogleDrive-27Jun2019
+	url = ./projects/1KGP-GoogleDrive-27Jun2019
