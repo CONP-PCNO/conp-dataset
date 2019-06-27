@@ -48,3 +48,8 @@ You can also search for relevant files and sub-datasets as follows:
 ```console
 datalad search T1
 ```
+## Contributing
+
+Projects in this repository are git submodules pointing at dataset instances available at the https://github.com/conpdatasets conpdatasets repository.
+Therefore, to contribute to such projects it is required that collaborators have access to both repositories 
+
