@@ -4,10 +4,12 @@ New contributions are more than welcome! ❤️
 
 ## Contribution workflow
 
-Whether you are planning to add
-a new dataset, add data to an existing one, or simply fix a typo or a bug
-wherever in this repository, you will have to follow the following workflow:
+You should perform the workflow below if:
+ 1. you are planning to add a new dataset
+ 2. you are adding data to an already existing dataset
+ 3. you are making any changes (e.g. fixing a typo or a bug)
 
+Please perform the following steps:
 1. Fork this repository, or make that your existing fork is up-to-date.
 2. Clone your fork on your local computer, or make sure that your existing clone
 is up-to-date.
@@ -16,13 +18,13 @@ is up-to-date.
 5. Open a pull request (PR) to the main repository.
 For steps 3. and 4., see detailed instructions in the sections below.
 
-This follows a very common GitHub workflow. If you are not familiar with
-it, we suggest to read [GitHub documentation](https://help.github.com/en),
+If you are not familiar with
+these steps, we suggest to read [GitHub documentation](https://help.github.com/en),
 in particular the articles on [forks]
 (https://help.github.com/en/articles/working-with-forks) and [pull
 requests](https://help.github.com/en/articles/creating-a-pull-request-from-a-fork).
 
-Your PR will be reviewed by two members of our technical team. They will
+Your PR will be reviewed by at least two members of our technical team. They will
 make sure that your contribution meets the quality standards for inclusion
 in this repository. Refer to the [PR
 template](https://github.com/CONP-PCNO/conp-dataset/.github/PULL_REQUEST_TEMPLATE.md)
