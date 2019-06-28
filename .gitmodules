@@ -43,3 +43,6 @@
 [submodule "projects/1KGP-GoogleDrive-27Jun2019"]
   path = projects/1KGP-GoogleDrive-27Jun2019
   url = https://github.com/emmetaobrien/1KGP-GoogleDrive-27Jun2019.git
+[submodule "projects/1000Genomes-28Jun2019"]
+	path = projects/1000Genomes-28Jun2019
+	url = ./projects/1000Genomes-28Jun2019
