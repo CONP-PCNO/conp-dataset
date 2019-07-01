@@ -25,3 +25,12 @@
 [submodule "projects/auditory-brainstorm"]
   path = projects/auditory-brainstorm
   url = https://github.com/OpenNeuroDatasets/ds000246.git
+[submodule "investigators/Khanlab/BigBrainHippoUnfold"]
+  path = investigators/Khanlab/BigBrainHippoUnfold
+  url = https://github.com/khanlab-datasets/BigBrainHippoUnfold.git
+[submodule "investigators/Khanlab/HCPUR100-Template"]
+  path = investigators/Khanlab/HCPUR100-Template
+  url = https://github.com/khanlab-datasets/HCPUR100-Template.git
+[submodule "investigators/Khanlab/BigBrainMRICoreg"]
+  path = investigators/Khanlab/BigBrainMRICoreg
+  url = https://github.com/khanlab-datasets/BigBrainMRICoreg.git
