@@ -32,8 +32,7 @@ for more information about PR evaluations.
 
 ## Adding data
 
-You can create a
-sub-dataset in the CONP repository as follows:
+You can create a sub-dataset in the CONP repository as follows:
 
 1. Create your sub-dataset in your cloned fork, under `investigators` or `projects`. For instance:
 
@@ -121,6 +120,7 @@ DATS](https://github.com/biocaddie/WG3-MetadataSpecifications):
 - version
 - privacy
 - licenses
+
 Examples are available at [metadata/example](https://github.com/CONP-PCNO/conp-dataset/tree/master/metadata/example).
 
 ## Re-using existing data
