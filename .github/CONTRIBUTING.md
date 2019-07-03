@@ -1,6 +1,6 @@
 # Contribution			
 
-New contributions are more than welcome! ❤️ 
+New contributions are more than welcome! ❤️
 
 ## Contribution workflow
 
@@ -10,7 +10,7 @@ You should perform the workflow below if:
  3. you are making any changes (e.g. fixing a typo or a bug)
 
 Please perform the following steps:
-1. Fork this repository, or make that your existing fork is up-to-date.
+1. Fork this repository, or make sure that your existing fork is up-to-date.
 2. Clone your fork on your local computer, or make sure that your existing clone
 is up-to-date.
 3. Edit your local clone, and commit your changes using `datalad save`.
@@ -32,7 +32,7 @@ for more information about PR evaluations.
 
 ## Adding data
 
-You can create a 
+You can create a
 sub-dataset in the CONP repository as follows:
 
 1. Create your sub-dataset in your cloned fork, under `investigators` or `projects`. For instance:
@@ -66,7 +66,7 @@ datalad create -d . investigators/<username>
 3. Add files to your sub-dataset:
 
     From your sub-dataset (`investigators/<username>`):
-    
+
     a. Create and add a README.md file, directly in the Git repository:
     ```console
     datalad add --to-git ./README.md
@@ -84,7 +84,7 @@ datalad create -d . investigators/<username>
     git-annex-remote-googledrive setup
     git annex initremote google type=external externaltype=googledrive prefix=CONP-data root_id=<folder_id> chunk=50MiB encryption=shared mac=HMACSHA512
     ```
-    where `<folder_id>` is the id of the Google Drive folder where you want to upload the files. Don't forget to 
+    where `<folder_id>` is the id of the Google Drive folder where you want to upload the files. Don't forget to
     check the permissions of this folder, for instance, make it world-readable if you want your files to be
     world readable. Assuming that you want to add image.nii.gz to the dataset:
     ```console
@@ -97,7 +97,7 @@ datalad create -d . investigators/<username>
     datalad save
     datalad publish --to github
     ```
-    
+
 4. Publish the modifications to your fork of the main dataset:
 
     From the main repository (`conp-dataset`):
@@ -108,7 +108,7 @@ datalad create -d . investigators/<username>
 
 ## Adding meta-data
 
-Adding meta-data about your dataset is required. Metadata has to be added in 
+Adding meta-data about your dataset is required. Metadata has to be added in
 a JSON file with the following attributes based on [bioCADDIE
 DATS](https://github.com/biocaddie/WG3-MetadataSpecifications):
 - schema
@@ -121,7 +121,7 @@ DATS](https://github.com/biocaddie/WG3-MetadataSpecifications):
 - version
 - privacy
 - licenses
-Examples are available at [metadata/example](metadata/example).
+Examples are available at [metadata/example](https://github.com/CONP-PCNO/conp-dataset/tree/master/metadata/example).
 
 ## Re-using existing data
 
@@ -131,4 +131,3 @@ to add data from the [CoRR](http://fcon_1000.projects.nitrc.org/indi/CoRR/html):
 datalad install -d . --source ///corr/RawDataBIDS CorrBIDS
 ```
 Datasets available in DataLad are listed [here](http://datasets.datalad.org).
-
