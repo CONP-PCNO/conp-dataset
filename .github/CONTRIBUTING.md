@@ -121,7 +121,7 @@ DATS](https://github.com/biocaddie/WG3-MetadataSpecifications):
 - version
 - privacy
 - licenses
-Examples are available at [metadata/example](metadata/example).
+Examples are available at [metadata/example](https://github.com/CONP-PCNO/conp-dataset/tree/master/metadata/example).
 
 ## Re-using existing data
 
