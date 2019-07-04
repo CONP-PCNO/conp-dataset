@@ -15,8 +15,9 @@ Please perform the following steps:
 is up-to-date.
 3. Edit your local clone, and commit your changes using `datalad save`.
 4. Push your changes to your fork using `datalad publish`.
-5. Open a pull request (PR) to the main repository.
-For steps 3. and 4., see detailed instructions in the sections below.
+5. Get a DOI for your dataset.
+6. Open a pull request (PR) to the main repository.
+For steps 3., 4. and 5., see detailed instructions in Section "Adding data" below.
 
 If you are not familiar with
 these steps, we suggest to read [GitHub documentation](https://help.github.com/en),
@@ -97,19 +98,12 @@ datalad create -d . investigators/<username>
     datalad save
     datalad publish --to github
     ```
-    
-4. Publish the modifications to your fork of the main dataset:
 
-    From the main repository (`conp-dataset`):
-    ```console
-    datalad save
-    datalad publish --to origin
-    ```
+4. Add metadata to your dataset
 
-## Adding meta-data
-
-Adding meta-data about your dataset is required. Metadata has to be added in 
-a JSON file with the following attributes based on [bioCADDIE
+Adding meta-data about your dataset is required. Metadata has to be added
+in a JSON file called `dats.json`, located at the root of your dataset, and
+containing the following attributes based on [bioCADDIE
 DATS](https://github.com/biocaddie/WG3-MetadataSpecifications):
 - schema
 - title
@@ -123,6 +117,31 @@ DATS](https://github.com/biocaddie/WG3-MetadataSpecifications):
 - licenses
 Examples are available at [metadata/example](metadata/example).
 
+5. Publish the modifications to your fork of the main dataset:
+
+    From the main repository (`conp-dataset`):
+    ```console
+    datalad save
+    datalad publish --to origin
+    ```
+
+6. Get a Digital Object Identifier for your dataset
+
+Datasets in CONP are required to have a Digital Object Identifier (DOI). A
+DOI is a unique and permanent identifier associated with a research object
+to make it citeable and retrievable. To get a DOI for your dataset, follow
+the following steps:
+
+a. Log in to [Zenodo](https://zenodo.org), preferably using your GitHub
+account.
+b. [Flip the switch](https://zenodo.org/account/settings/github) of your
+dataset GitHub repository.
+c. Release your dataset on GitHub (see instructions
+[here](https://help.github.com/en/articles/creating-releases)).
+d. This will create a DOI and archive your dataset on Zenodo. Get the DOI
+badge from [here](https://zenodo.org/account/settings/github/) and add it
+to the `README.md` file of your dataset.
+
 ## Re-using existing data
 
 You can reuse any published dataset in your own dataset. For instance,
@@ -131,4 +150,3 @@ to add data from the [CoRR](http://fcon_1000.projects.nitrc.org/indi/CoRR/html):
 datalad install -d . --source ///corr/RawDataBIDS CorrBIDS
 ```
 Datasets available in DataLad are listed [here](http://datasets.datalad.org).
-
