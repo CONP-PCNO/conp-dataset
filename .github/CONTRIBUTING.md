@@ -2,6 +2,18 @@
 
 New contributions are more than welcome! ❤️
 
+Before you start, we suggest that you get familiar with git and GitHub
+ as our contribution workflow heavily relies on these tools. If
+you have never used git, a good quick start guide is available
+[here](https://rogerdudler.github.io/git-guide). If you're looking for more
+comprehensive training, you can check [this](https://try.github.io) out.
+GitHub guides are available [here](https://guides.github.com). We will also
+refer to specific sections of them in the instructions below.
+
+One last thing before we start: if you need help at any stage, please [open
+an issue](https://github.com/CONP-PCNO/conp-dataset/issues/new/choose) in
+this repository. We'll do our best to help you!
+
 ## Contribution workflow
 
 You should perform the workflow below if:
@@ -10,20 +22,15 @@ You should perform the workflow below if:
  3. you are making any changes (e.g. fixing a typo or a bug)
 
 Please perform the following steps:
-1. Fork this repository, or make sure that your existing fork is up-to-date.
+1. [Fork](https://help.github.com/en/articles/working-with-forks) this repository, or make sure that your existing fork is up-to-date.
 2. Clone your fork on your local computer, or make sure that your existing clone
 is up-to-date.
 3. Edit your local clone, and commit your changes using `datalad save`.
 4. Push your changes to your fork using `datalad publish`.
 5. Get a DOI for your dataset.
-6. Open a pull request (PR) to the main repository.
+6. Open a [pull
+request](https://help.github.com/en/articles/creating-a-pull-request-from-a-fork) (PR) to the main repository.
 For steps 3., 4. and 5., see detailed instructions in Section "Adding data" below.
-
-If you are not familiar with
-these steps, we suggest to read [GitHub documentation](https://help.github.com/en),
-in particular the articles on [forks]
-(https://help.github.com/en/articles/working-with-forks) and [pull
-requests](https://help.github.com/en/articles/creating-a-pull-request-from-a-fork).
 
 Your PR will be reviewed by at least two members of our technical team. They will
 make sure that your contribution meets the quality standards for inclusion
