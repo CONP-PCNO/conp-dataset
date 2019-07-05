@@ -1,0 +1,18 @@
+dist: trusty
+sudo: required
+language: python
+
+python:
+- 3.6
+
+before_install:
+- sudo apt-get update -qq
+- sudo apt-get install -y -qq python git-annex
+
+install:
+- pip install pytest datalad
+- pip freeze
+
+script:
+- python tests/create_tests.py
+- pytest tests/
