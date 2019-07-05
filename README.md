@@ -172,7 +172,7 @@ datalad install -d . --source ///corr/RawDataBIDS CorrBIDS
 Datasets available in DataLad are listed [here](http://datasets.datalad.org).
 
 
-# Pull Request workflow
+## Pull Request workflow
 
 To test a PR that proposes the addition of a new dataset, this is a possible workflow:
 
@@ -212,3 +212,10 @@ datalad install -r https://github.com/<mygithubhandle>/conp-dataset.git
 - the `datalad get` work for open data
 - ...
 
+
+## Tests
+
+1. Execute `python tests/create_tests.py` from the root of conp-dataset repository
+2. Run `pytest tests/` to execute tests for all datasets in projects and investigators
+3. To run specific test on specific datasets, run `pytest tests/test_<name of dataset>` like
+`pytest tests/test_SIMON-dataset`
