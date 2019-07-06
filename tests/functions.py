@@ -5,7 +5,7 @@ import datalad.api as api
 import subprocess
 
 
-def test_recurse(directory, odds):
+def recurse(directory, odds):
 
     # Get all file names in directory
     files = listdir(directory)
@@ -33,7 +33,7 @@ def test_recurse(directory, odds):
         # If the file is a directory
         if isdir(full_path):
 
-            result = test_recurse(full_path, odds)
+            result = recurse(full_path, odds)
 
             if result != "All good":
                 return result
@@ -58,7 +58,7 @@ def test_recurse(directory, odds):
     return "All good"
 
 
-def test(dataset):
+def examine(dataset):
 
     # Number of files to test in each dataset
     num_files = 100
@@ -73,4 +73,4 @@ def test(dataset):
     odds = num_files/count
 
     # Start to test dataset
-    return test_recurse(abspath(root_dir + "/" + dataset), odds)
+    return recurse(abspath(root_dir + "/" + dataset), odds)

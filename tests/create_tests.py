@@ -5,6 +5,6 @@ dataset_titles = list(filter(lambda x: x[0] != ".", os.listdir("projects") + os.
 
 for title in dataset_titles:
     with open("tests/test_" + title + ".py", "w") as f:
-        f.write("from functions import test\n\n\n")
+        f.write("from functions import examine\n\n\n")
         f.write("def test_" + title.replace("-", "_") + "():\n")
-        f.write("\tassert test('" + title + "') == 'All good'\n")
+        f.write("\tassert examine('" + title + "') == 'All good'\n")
