@@ -48,7 +48,6 @@ You can also search for relevant files and sub-datasets as follows:
 ```console
 datalad search T1
 ```
-
 ```
 datalad install -r https://github.com/<mygithubhandle>/conp-dataset.git
 ```
@@ -128,4 +127,3 @@ d. Retrieve the files of interest as with other backends
 * Only the version of git-annex-remote-googledrive installed with pip3 is observed to work for this process; using older versions of pip can cause problems.
 
 * If the Google Drive remote is not correctly set up, the project directory will appear to contain correctly formed git-annex links, but they will not connect to anything.
-
