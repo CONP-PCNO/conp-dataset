@@ -22,7 +22,7 @@ You should perform the workflow below if:
  3. you are making any changes (e.g. fixing a typo or a bug)
 
 Please perform the following steps:
-1. [Fork](https://help.github.com/en/articles/working-with-forks) this repository, or make sure that your existing fork is up-to-date.
+1. [Fork](https://help.github.com/en/articles/working-with-forks) this repository, or ensure that your existing fork is up-to-date.
 2. Clone your fork on your local computer, or make sure that your existing clone
 is up-to-date.
 3. Edit your local clone, and commit your changes using `datalad save`.
