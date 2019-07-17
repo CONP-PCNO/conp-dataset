@@ -8,7 +8,7 @@ policy.
 
 The instructions below explain how to find and get data from the dataset.
 You can also add data by following the instructions in our [contribution
-guidelines](https://github.com/CONP-PCNO/conp-dataset/.github/CONTRIBUTING.md).
+guidelines](https://github.com/CONP-PCNO/conp-dataset/blob/master/.github/CONTRIBUTING.md).
 We welcome your feedback! :smiley:
 
 ## Dataset structure
