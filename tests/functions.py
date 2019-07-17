@@ -5,11 +5,17 @@ import datalad.api as api
 
 
 def recurse(directory, odds):
+    """
+    recurse recursively checks each file in directory and sub-directories with odds chance.
+    Odds is a positive decimal that dictates how likely a file is to be tested from 0 (no chance) to 1 or
+    above (100% chance). This function tests for if files can be retrieved with datalad and if they can't,
+    if there is an authentication setup for security.
+    """
 
     # Get all file names in directory
     files = listdir(directory)
 
-    # Loop throw every file
+    # Loop through every file
     for file_name in files:
 
         # If the file name is .git or .datalad, ignore
@@ -21,10 +27,7 @@ def recurse(directory, odds):
         # If the file is a directory
         if isdir(full_path):
 
-            result = recurse(full_path, odds)
-
-            if result != "All good":
-                return result
+            return recurse(full_path, odds)
 
         # If the file is a broken symlink and with odd chance
         elif not exists(full_path) and random() < odds:
@@ -38,10 +41,8 @@ def recurse(directory, odds):
                 return "No annexkey in file: " + full_path
 
             # Check for authentication
-            if (msg["status"] == "error" and
-                    "unable to access" not in msg["message"].lower() and
-                    "not available" not in msg["message"].lower()):
-                return "No authentication setup for file: " + full_path
+            if msg["status"] == "error" and "unable to access" not in msg["message"].lower():
+                return "Cannot download file and didn't hit authentication request for file: " + full_path
 
     return "All good"
 
