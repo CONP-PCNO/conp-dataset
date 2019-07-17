@@ -14,5 +14,6 @@ install:
 - pip freeze
 
 script:
+- find . -name config.sh | xargs bash
 - python tests/create_tests.py
 - pytest tests/
