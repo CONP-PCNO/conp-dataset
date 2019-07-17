@@ -53,11 +53,11 @@ def examine(dataset):
     full_dir = join(root_dir, dataset)
 
     # Check if dats.json and README.md are present in root of dataset
-    # if "dats.json" not in listdir(full_dir):
-    #     return "Dataset " + full_dir + " doesn't contain dats.json in its root directory"
-    #
-    # if "README.md" not in listdir(full_dir):
-    #     return "Dataset " + full_dir + " doesn't contain README.md in its root directory"
+    if "dats.json" not in listdir(full_dir):
+        return "Dataset " + full_dir + " doesn't contain dats.json in its root directory"
+
+    if "README.md" not in listdir(full_dir):
+        return "Dataset " + full_dir + " doesn't contain README.md in its root directory"
 
     # Number of files to test in each dataset
     num_files = 100
