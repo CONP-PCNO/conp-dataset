@@ -148,6 +148,8 @@ c. Release your dataset on GitHub (see instructions
 d. This will create a DOI and archive your dataset on Zenodo. Get the DOI
 badge from [here](https://zenodo.org/account/settings/github/) and add it
 to the `README.md` file of your dataset.
+e. The DOI badge links to the DOI associated with the latest DOI of your dataset. 
+   Add this link to your DATS model.
 
 ## Re-using existing data
 
