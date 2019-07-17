@@ -110,7 +110,7 @@ datalad create -d . investigators/<username>
 Adding meta-data about your dataset is required. Metadata has to be added
 in a JSON file called `dats.json`, located at the root of your dataset, and
 containing the following attributes based on [bioCADDIE
-DATS](https://github.com/biocaddie/WG3-MetadataSpecifications):
+DATS](https://github.com/datatagsuite/schema):
 - schema
 - title
 - description
