@@ -50,6 +50,9 @@ datalad search T1
 ```
 ## Contributing
 
-Projects in this repository are git submodules pointing at dataset instances available at the https://github.com/conpdatasets conpdatasets repository.
-Therefore, to contribute to such projects it is required that collaborators have access to both repositories 
+This repository has multiple git submodules pointing at dataset instances available in the [conpdatasets](https://github.com/conpdatasets) repository.
+Therefore, to contribute to such datasets it is required that collaborators have push access to both repositories.
+
+In addition, it is important to keep in mind that the conpdatasets repository is a fork of the [OpenNeuroDatasets](https://github.com/OpenNeuroDatasets/ds001634) project. 
+Thus, when raising a PR, contributors should be careful to request branch merge to conpdatasets:master rather than to OpenNeuroDatasers:master, which is not currently approved.
 
