@@ -34,3 +34,10 @@
 [submodule "projects/EPOI-Montreal-2018"]
 	path = projects/EPOI-Montreal-2018
 	url = https://github.com/dlq/EPOI-Montreal-2018.git
+[submodule "projects/1000GenomesProject"]
+  path = projects/statscan
+  url = https://github.com/dlq/conp-dataset-statscan.git
+[submodule "projects/statscan"]
+	path = projects/statscan
+	url = ./projects/statscan
+	datalad-id = 7e116d0a-acc5-11e9-9cf1-a860b629df96
