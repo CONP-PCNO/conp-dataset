@@ -2,3 +2,4 @@
 venv/
 tests/test*
 __pycache__/
+.DS_Store
