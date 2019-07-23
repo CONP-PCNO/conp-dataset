@@ -33,13 +33,6 @@ def recurse(directory, odds):
         elif not exists(full_path) and random() < odds:
             msg = api.get(path=full_path, on_failure="ignore", return_type="item-or-list")
 
-            # Check for URL in each file
-            if "annexkey" in msg.keys():
-                if "URL" not in msg["annexkey"]:
-                    return "No URL in annexkey: " + msg["annexkey"] + " for file: " + full_path
-            else:
-                return "No annexkey in file: " + full_path
-
             # Check for authentication
             if msg["status"] == "error" and "unable to access" not in msg["message"].lower():
                 return "Cannot download file and didn't hit authentication request for file: " + full_path
@@ -54,10 +47,11 @@ def examine(dataset):
     full_dir = join(root_dir, dataset)
 
     # Check if dats.json and README.md are present in root of dataset
-    if "dats.json" not in listdir(full_dir):
+    file_names = [file_name.lower() for file_name in listdir(full_dir)]
+    if "dats.json" not in file_names:
         return "Dataset " + full_dir + " doesn't contain dats.json in its root directory"
 
-    if "README.md" not in listdir(full_dir):
+    if "readme.md" not in file_names:
         return "Dataset " + full_dir + " doesn't contain README.md in its root directory"
 
     # Number of files to test in each dataset
