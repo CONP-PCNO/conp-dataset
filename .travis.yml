@@ -5,6 +5,9 @@ language: python
 python:
 - 3.6
 
+git:
+  submodules: false
+
 before_install:
 - bash <(wget -q -O- http://neuro.debian.net/_files/neurodebian-travis.sh)
 - sudo apt-get -q install -y git-annex-standalone
@@ -12,6 +15,7 @@ before_install:
 install:
 - pip install datalad
 - pip freeze
+- datalad install -r .
 
 script:
 - find . -name config.sh | xargs bash
