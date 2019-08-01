@@ -8,7 +8,7 @@ policy.
 
 The instructions below explain how to find and get data from the dataset.
 You can also add data by following the instructions in our [contribution
-guidelines](https://github.com/CONP-PCNO/conp-dataset/.github/CONTRIBUTING.md).
+guidelines](https://github.com/CONP-PCNO/conp-dataset/blob/master/.github/CONTRIBUTING.md).
 We welcome your feedback! :smiley:
 
 ## Dataset structure
@@ -48,15 +48,6 @@ You can also search for relevant files and sub-datasets as follows:
 ```console
 datalad search T1
 ```
-```
-datalad install -r https://github.com/<mygithubhandle>/conp-dataset.git
-```
-
-8. Check there that all is fine:
-- the `git annex whereis` is giving sensible urls
-- the `datalad get` work for open data
-- ...
-
 
 ## To download data from Google Drive:
 
@@ -127,3 +118,11 @@ d. Retrieve the files of interest as with other backends
 * Only the version of git-annex-remote-googledrive installed with pip3 is observed to work for this process; using older versions of pip can cause problems.
 
 * If the Google Drive remote is not correctly set up, the project directory will appear to contain correctly formed git-annex links, but they will not connect to anything.
+
+## Tests
+
+1. Execute `python tests/create_tests.py` from the root of conp-dataset repository
+2. Run `pytest tests/` to execute tests for all datasets in projects and investigators
+3. To run specific test on specific datasets, run `pytest tests/test_<name of dataset>` like
+`pytest tests/test_SIMON-dataset`
+
