@@ -37,3 +37,6 @@
 [submodule "projects/1000GenomesProject"]
   path = projects/1000GenomesProject
   url = https://github.com/emmetaobrien/1000GenomesProject.git
+[submodule "projects/1KGP-Aug_02_2019"]
+	path = projects/1KGP-Aug_02_2019
+	url = ./projects/1KGP-Aug_02_2019
