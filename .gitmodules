@@ -19,9 +19,6 @@
 [submodule "projects/PERFORM"]
   path = projects/PERFORM
   url = https://github.com/conpdatasets/PERFORM.git
-[submodule "projects/1000GenomesProject"]
-  path = projects/1000GenomesProject
-  url = https://github.com/emmetaobrien/1000GenomesProject.git
 [submodule "investigators/Khanlab/BigBrainHippoUnfold"]
   path = investigators/Khanlab/BigBrainHippoUnfold
   url = https://github.com/khanlab-datasets/BigBrainHippoUnfold.git
