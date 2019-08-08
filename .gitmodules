@@ -28,9 +28,6 @@
 [submodule "investigators/Khanlab/BigBrainMRICoreg"]
   path = investigators/Khanlab/BigBrainMRICoreg
   url = https://github.com/khanlab-datasets/BigBrainMRICoreg.git
-[submodule "projects/refseq"]
-  path = projects/refseq
-  url = https://github.com/emmetaobrien/conp-dataset-refseq.git
 [submodule "projects/1KGP-GoogleDrive"]
   path = projects/1KGP-GoogleDrive
   url = https://github.com/emmetaobrien/1KGP-GoogleDrive.git
