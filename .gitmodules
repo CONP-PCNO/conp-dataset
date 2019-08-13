@@ -28,9 +28,6 @@
 [submodule "investigators/Khanlab/BigBrainMRICoreg"]
   path = investigators/Khanlab/BigBrainMRICoreg
   url = https://github.com/khanlab-datasets/BigBrainMRICoreg.git
-[submodule "projects/1KGP-GoogleDrive"]
-  path = projects/1KGP-GoogleDrive
-  url = https://github.com/emmetaobrien/1KGP-GoogleDrive.git
 [submodule "projects/1000GenomesProject"]
   path = projects/1000GenomesProject
   url = https://github.com/emmetaobrien/1000GenomesProject.git
