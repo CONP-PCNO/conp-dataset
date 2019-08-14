@@ -23,7 +23,7 @@ of their own sub-datasets.
 
 ## Installing required software 
 
-1. [Git]
+### git
 
 ```sudo apt-get install git```
 
@@ -32,7 +32,7 @@ It is useful to configure your ```git``` credentials to avoid having to enter th
 ```git config --global user.name "yourusername"```
 ```git config --global user.email "your.name@your.institution.ca"```
 
-2. [Git annex]
+### git-annex
 
 First install the neurodebian package repository:
 
@@ -48,7 +48,7 @@ The version of git-annex installed can be verified with:
 
 As of August 14 2019, this installs git annex v 7.20190730, which works with CONP datasets.  Earlier versions of git-annex may not.
 
-3. DataLad: 
+### DataLad: 
 
 ```sudo apt-get install datalad```
 
