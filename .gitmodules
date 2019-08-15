@@ -30,7 +30,7 @@
   url = https://github.com/khanlab-datasets/BigBrainMRICoreg.git
 [submodule "projects/1000GenomesProject"]
   path = projects/1000GenomesProject
-  url = http://github.com/emmetaobrien/1000GenomesProject.git
+  url = https://github.com/emmetaobrien/1000GenomesProject.git
 [submodule "projects/refseq"]
   path = projects/refseq
-  url = http://github.com/emmetaobrien/refseq.git
+  url = https://github.com/emmetaobrien/refseq.git
