@@ -32,5 +32,5 @@
   path = projects/1000GenomesProject
   url = http://github.com/emmetaobrien/1000GenomesProject.git
 [submodule "projects/refseq"]
-	path = projects/refseq
-	url = ./projects/refseq
+  path = projects/refseq
+  url = http://github.com/emmetaobrien/refseq.git
