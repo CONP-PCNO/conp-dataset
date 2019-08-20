@@ -21,11 +21,36 @@ The dataset is structured as follows:
 Investigators and projects are responsible for the management and curation 
 of their own sub-datasets.
 
-## Requirements
+## Installing required software 
 
-* [Git](https://git-scm.com/downloads)
-* [Git annex](http://git-annex.branchable.com/install)
-* DataLad: `pip install git+https://github.com/datalad/datalad.git`
+### git
+
+```sudo apt-get install git```
+
+It is useful to configure your ```git``` credentials to avoid having to enter them repeatedly: 
+
+```git config --global user.name "yourusername"```
+```git config --global user.email "your.name@your.institution.ca"```
+
+### git-annex
+
+First install the neurodebian package repository:
+
+```sudo apt-get install neurodebian```
+
+Then install the version of git-annex included in this repository:
+
+```sudo apt-get install git-annex-standalone```
+
+The version of git-annex installed can be verified with:
+
+```git annex version```
+
+As of August 14 2019, this installs git annex v 7.20190730, which works with CONP datasets.  Earlier versions of git-annex may not.
+
+### DataLad: 
+
+```sudo apt-get install datalad```
 
 ## Getting the data
 
@@ -49,9 +74,11 @@ You can also search for relevant files and sub-datasets as follows:
 datalad search T1
 ```
 
+
 ## Tests
 
 1. Execute `python tests/create_tests.py` from the root of conp-dataset repository
 2. Run `pytest tests/` to execute tests for all datasets in projects and investigators
 3. To run specific test on specific datasets, run `pytest tests/test_<name of dataset>` like
 `pytest tests/test_SIMON-dataset`
+
