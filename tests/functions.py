@@ -55,8 +55,9 @@ def examine(dataset):
         return "Dataset " + full_dir + " doesn't contain README.md in its root directory"
 
     # Number of files to test in each dataset
-    num_files = 100
-
+    # with 100 files, the test is not completing before Travis timeout (about 10~12 minutes)
+    num_files = 10
+    
     # Count the number of testable files while ignoring files in directories starting with "."
     count = sum([len(files) if basename(dirname(r))[0] != "." else 0 for r, d, files in walk(full_dir)])
 
