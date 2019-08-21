@@ -34,3 +34,6 @@
 [submodule "projects/refseq"]
   path = projects/refseq
   url = https://github.com/emmetaobrien/refseq.git
+[submodule "projects/Brainspan"]
+	path = projects/Brainspan
+	url = ./projects/Brainspan
