@@ -1,5 +1,7 @@
 # CONP dataset
 
+[![Build Status](https://travis-ci.org/CONP-PCNO/conp-dataset.svg?branch=master)](https://travis-ci.org/CONP-PCNO/conp-dataset)
+
 CONP dataset is a repository containing the datasets available in the 
 Canadian Open Neuroscience Platform. It leverages 
 [DataLad](http://datalad.org) to store metadata and references to 
