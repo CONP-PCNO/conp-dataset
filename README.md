@@ -63,7 +63,7 @@ datalad install -r http://github.com/CONP-PCNO/conp-dataset
 Get the files you are interested in:
 
 ```console
-datalad get <file_name>git submodule update --recursive --remote
+datalad get <file_name>
 ```
 
 This may require authentication depending on the data owner's configuration.
