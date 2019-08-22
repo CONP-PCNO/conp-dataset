@@ -63,7 +63,7 @@ datalad install -r http://github.com/CONP-PCNO/conp-dataset
 Get the files you are interested in:
 
 ```console
-datalad get <file_name>
+datalad get <file_name>git submodule update --recursive --remote
 ```
 
 This may require authentication depending on the data owner's configuration.
@@ -81,4 +81,33 @@ datalad search T1
 2. Run `pytest tests/` to execute tests for all datasets in projects and investigators
 3. To run specific test on specific datasets, run `pytest tests/test_<name of dataset>` like
 `pytest tests/test_SIMON-dataset`
+
+
+## Updating a Git submodule to the latest commit on origin
+
+1 - Clone the forked repository and go to projects
+```
+git clone git@github.com:<your_username>/conp-dataset.git
+cd conp-dataset/projects
+```
+2 - Make a new branch to work on
+```
+git checkout -b <new_branch>
+```
+3 - Note: If it is the *first time* the submodule gets updated use ```--init``` first, otherwise skip to 4
+```
+git submodule update --init --recursive <submodule_name>
+```
+4 - Run the following command
+```
+git submodule update --recursive --remote <submodule_name>
+```
+The option ```--remote``` supports updating to latest tips of remote branches
+
+5 - Commit and push your changes
+
+
+
+
+
 
