@@ -81,4 +81,3 @@ datalad search T1
 2. Run `pytest tests/` to execute tests for all datasets in projects and investigators
 3. To run specific test on specific datasets, run `pytest tests/test_<name of dataset>` like
 `pytest tests/test_SIMON-dataset`
-
