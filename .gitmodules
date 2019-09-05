@@ -38,5 +38,5 @@
   path = projects/Brainspan
   url = https://github.com/emmetaobrien/Brainspan.git
 [submodule "projects/nhpatlas"]
-	path = projects/nhpatlas
-	url = ./projects/nhpatlas
+  path = projects/nhpatlas
+  url = https://github.com/emmetaobrien/nhpatlas.git
