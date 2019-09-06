@@ -34,3 +34,6 @@
 [submodule "projects/refseq"]
   path = projects/refseq
   url = https://github.com/emmetaobrien/refseq.git
+[submodule "projects/FRDR-multimodal"]
+	path = projects/FRDR-multimodal
+	url = ./projects/FRDR-multimodal
