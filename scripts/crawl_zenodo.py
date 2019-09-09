@@ -87,10 +87,12 @@ def get_zenodo_dois():
                      # "type=dataset&"
                      # "q=keywords:\"canadian-open-neuroscience-platform\"&"
                      # "q=keywords:\"analysis\"&"
-                     "q=3363060"
+                     "q=3363060&"
                      "size=1").json()["hits"]["hits"]
+    print(len(r))
     for dataset in r:
         concept_doi = dataset["conceptrecid"]
+        title = clean(dataset["metadata"]["title"])
         if len(dataset["metadata"]["relations"]["version"]) != 1:
             raise Exception("Unexpected multiple versions")
         latest_version_doi = dataset["metadata"]["relations"]["version"][0]["last_child"]["pid_value"]
@@ -99,11 +101,11 @@ def get_zenodo_dois():
             if bucket["type"] == "zip":
                 zip_files.append(bucket["links"]["self"])
         if len(zip_files) < 1:
-            print("Zenodo dataset " + dataset["title"] + " does not contain a zip file")
+            print("Zenodo dataset " + title + " does not contain a zip file")
         zenodo_dois.append({
             "concept_doi": concept_doi,
             "latest_version": latest_version_doi,
-            "title": clean(dataset["metadata"]["title"]),
+            "title": title,
             "files": zip_files
         })
 
@@ -120,9 +122,6 @@ def verify_duplicates(zenodo_dois, conp_dois):
     titles = list(map(lambda x: x["title"], zenodo_dois))
     if len(titles) != len(set(titles)):
         raise Exception("Title duplicates exists in zenodo list")
-    file_link = list(map(lambda x: x["file"], zenodo_dois))
-    if len(file_link) != len(set(file_link)):
-        raise Exception("File link duplicates exists in zenodo list")
     concept_dois = list(map(lambda x: x["concept_doi"], conp_dois))
     if len(concept_dois) != len(set(concept_dois)):
         raise Exception("Concept DOI duplicates exists in conp list")
@@ -140,20 +139,22 @@ clean = lambda x: sub('\W|^(?=\d)','_', x)
 def create_new_dataset(dataset, token):
     dir = os.path.join("projects", dataset["title"])
     api.create(dir)
-    api.create_sibling_github("conp-dataset-" + dataset["title"],
-                              dataset=dir,
-                              recursive=True,
-                              github_login=token,
-                              github_passwd=token)
+    # api.create_sibling_github(("conp-dataset-" + dataset["title"])[0:100],
+    #                           dataset=dir,
+    #                           recursive=True,
+    #                           github_login=token,
+    #                           github_passwd=token)
     for file_url in dataset["files"]:
-        r = requests.get(file_url)
-        if r.ok:
-            with open("temp.zip", "wb") as f:
-                f.write(r.content)
-            with ZipFile("temp.zip", "r") as f:
-                f.extractall(dir)
-        else:
-            raise Exception("Failed to download zip file: " + file_url)
+        # r = requests.get(file_url)
+        # if r.ok:
+        #     with open("temp.zip", "wb") as f:
+        #         f.write(r.content)
+        #     with ZipFile("temp.zip", "r") as f:
+        #         f.extractall(dir)
+        # else:
+        #     raise Exception("Failed to download zip file: " + file_url)
+        api.download_url(file_url, path=dir, archive=True)
+        # print(api.publish(dataset=dir, to="github"))
 
 
 if __name__ == "__main__":
