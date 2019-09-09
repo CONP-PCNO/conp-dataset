@@ -2,7 +2,6 @@ import requests
 import os
 import json
 import sys
-from zipfile import ZipFile
 import datalad.api as api
 from re import sub
 
@@ -32,11 +31,9 @@ def crawl():
 
 def get_token():
     if len(sys.argv) != 2:
-        raise Exception("Need to pass Github access token")
+        raise Exception("Need to pass only your Github access token")
 
-    token = sys.argv[1]
-
-    return token
+    return sys.argv[1]
 
 
 def get_conp_dois():
@@ -138,26 +135,14 @@ clean = lambda x: sub('\W|^(?=\d)','_', x)
 
 def create_new_dataset(dataset, token):
     dir = os.path.join("projects", dataset["title"])
-    api.create(dir)
-    api.create_sibling_github(("conp-dataset-" + dataset["title"])[0:100],
-                              dataset=dir,
-                              recursive=True,
-                              github_login=token,
-                              github_passwd=token)
+    d = api.Dataset(dir)
+    d.create()
+    d.create_sibling_github(("conp-dataset-" + dataset["title"])[0:100],
+                            github_login=token,
+                            github_passwd=token)
     for file_url in dataset["files"]:
-        # r = requests.get(file_url)
-        # if r.ok:
-        #     with open("temp.zip", "wb") as f:
-        #         f.write(r.content)
-        #     with ZipFile("temp.zip", "r") as f:
-        #         f.extractall(dir)
-        # else:
-        #     raise Exception("Failed to download zip file: " + file_url)
-        print(api.download_url(file_url, path=dir))
-        print(api.save(dir))
-
-
-        # print(api.publish(dataset=dir, to="github"))
+        d.download_url(file_url, archive=True)
+        d.publish(to="github")
 
 
 if __name__ == "__main__":
