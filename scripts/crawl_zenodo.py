@@ -139,11 +139,11 @@ clean = lambda x: sub('\W|^(?=\d)','_', x)
 def create_new_dataset(dataset, token):
     dir = os.path.join("projects", dataset["title"])
     api.create(dir)
-    # api.create_sibling_github(("conp-dataset-" + dataset["title"])[0:100],
-    #                           dataset=dir,
-    #                           recursive=True,
-    #                           github_login=token,
-    #                           github_passwd=token)
+    api.create_sibling_github(("conp-dataset-" + dataset["title"])[0:100],
+                              dataset=dir,
+                              recursive=True,
+                              github_login=token,
+                              github_passwd=token)
     for file_url in dataset["files"]:
         # r = requests.get(file_url)
         # if r.ok:
@@ -153,7 +153,10 @@ def create_new_dataset(dataset, token):
         #         f.extractall(dir)
         # else:
         #     raise Exception("Failed to download zip file: " + file_url)
-        api.download_url(file_url, path=dir, archive=True)
+        print(api.download_url(file_url, path=dir))
+        print(api.save(dir))
+
+
         # print(api.publish(dataset=dir, to="github"))
 
 
