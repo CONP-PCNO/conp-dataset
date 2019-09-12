@@ -40,3 +40,6 @@
 [submodule "projects/nhpatlas"]
   path = projects/nhpatlas
   url = https://github.com/emmetaobrien/nhpatlas.git
+[submodule "projects/mm_neo_atlas"]
+	path = projects/mm_neo_atlas
+	url = ./projects/mm_neo_atlas
