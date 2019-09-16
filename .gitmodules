@@ -34,6 +34,3 @@
 [submodule "projects/nhpatlas"]
   path = projects/nhpatlas
   url = https://github.com/emmetaobrien/nhpatlas.git
-[submodule "investigators/Khanlab/BigBrainHippoUnfold"]
-	path = investigators/Khanlab/BigBrainHippoUnfold
-	url = https://github.com/khanlab-datasets/BigBrainHippoUnfold.git
