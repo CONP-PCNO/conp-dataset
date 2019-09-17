@@ -38,5 +38,5 @@
   path = investigators/Khanlab/BigBrainMRICoreg
   url = https://github.com/khanlab-datasets/BigBrainMRICoreg
 [submodule "investigators/Khanlab/BigBrainHippoUnfold"]
-	path = investigators/Khanlab/BigBrainHippoUnfold
-	url = https://github.com/khanlab-datasets/BigBrainHippoUnfold
+  path = investigators/Khanlab/BigBrainHippoUnfold
+  url = https://github.com/khanlab-datasets/BigBrainHippoUnfold
