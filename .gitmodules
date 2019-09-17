@@ -35,5 +35,5 @@
   path = projects/nhpatlas
   url = https://github.com/emmetaobrien/nhpatlas.git
 [submodule "investigators/Khanlab/BigBrainMRICoreg"]
-	path = investigators/Khanlab/BigBrainMRICoreg
-	url = https://github.com/khanlab-datasets/BigBrainMRICoreg
+  path = investigators/Khanlab/BigBrainMRICoreg
+  url = https://github.com/khanlab-datasets/BigBrainMRICoreg
