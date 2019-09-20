@@ -43,3 +43,6 @@
 [submodule "projects/mm_neo_atlas"]
   path = projects/mm_neo_atlas
   url = https://github.com/emmetaobrien/mm_neo_atlas.git
+[submodule "projects/celltypes"]
+	path = projects/celltypes
+	url = ./projects/celltypes
