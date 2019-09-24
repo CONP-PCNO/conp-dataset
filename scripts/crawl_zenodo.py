@@ -3,7 +3,7 @@ import os
 import json
 import sys
 import datalad.api as api
-from re import sub
+from re import sub, search
 from git import Repo
 
 
@@ -17,9 +17,6 @@ def crawl():
 
     # Verify no duplicates in both lists
     verify_duplicates(zenodo_dois, conp_dois)
-
-    # Create representation of conp-dataset repository
-    repo = Repo()
 
     commit_msg = []
 
@@ -37,13 +34,7 @@ def crawl():
             commit_msg.append("create " + dataset["title"])
 
     if len(commit_msg) >= 1:
-        repo.git.add(".")
-        repo.git.commit("-m", "[conp-bot] " + ", ".join(commit_msg))
-        origin = repo.remote("origin")
-        origin_url = next(origin.urls)
-        if "@" not in origin_url:
-            origin.set_url(origin_url.replace("https://", "https://" + token + "@"))
-        origin.push()
+        push_and_pull_request(commit_msg, token)
     else:
         print("No changes detected")
 
@@ -235,6 +226,27 @@ def update_dataset(zenodo_dataset, conp_dataset):
         raise Exception("No dats.json file in existing dataset, aborting")
 
     d.publish(to="github")
+
+
+def push_and_pull_request(msg, token):
+    repo = Repo()
+    repo.git.add(".")
+    repo.git.commit("-m", "[conp-bot] " + ", ".join(msg))
+    origin = repo.remote("origin")
+    origin_url = next(origin.urls)
+    if "@" not in origin_url:
+        origin.set_url(origin_url.replace("https://", "https://" + token + "@"))
+    origin.push()
+    username = search('github.com/(.*)/conp-dataset.git', origin_url).group(1)
+    r = requests.post("https://api.github.com/repos/CONP-PCNO/conp-dataset/pulls?access_token=" + token, data={
+        "title": "Zenodo crawler results",
+        "body": "Changes: \n" + "\n".join(msg),
+        "head": username + ":master",
+        "base": "master",
+        "draft": True
+    })
+    if r.status_code != 201:
+        raise Exception("Error while creating pull request")
 
 
 if __name__ == "__main__":

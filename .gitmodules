@@ -34,3 +34,6 @@
 [submodule "projects/refseq"]
   path = projects/refseq
   url = https://github.com/emmetaobrien/refseq.git
+[submodule "projects/Analysis_of_correlation_based_biomolecular_networks_from_different_omics_data_by_fitting_stochastic_block_models"]
+  path = projects/Analysis_of_correlation_based_biomolecular_networks_from_different_omics_data_by_fitting_stochastic_block_models
+  url = https://github.com/joeyzhou98/conp-dataset-Analysis_of_correlation_based_biomolecular_networks_from_different_omics_data_by_fittin.git
