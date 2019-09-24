@@ -238,7 +238,7 @@ def push_and_pull_request(msg, token):
         origin.set_url(origin_url.replace("https://", "https://" + token + "@"))
     origin.push()
     username = search('github.com/(.*)/conp-dataset.git', origin_url).group(1)
-    r = requests.post("https://api.github.com/repos/CONP-PCNO/conp-dataset/pulls?access_token=" + token, data={
+    r = requests.post("https://api.github.com/repos/CONP-PCNO/conp-dataset/pulls?access_token=" + token, json={
         "title": "Zenodo crawler results",
         "body": "Changes: \n" + "\n".join(msg),
         "head": username + ":master",
