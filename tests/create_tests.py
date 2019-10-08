@@ -1,17 +1,18 @@
-from os import listdir
 from string import Template
+from git import Repo
 
 
-dataset_titles = list(filter(lambda x: x[0] != ".", listdir("projects") + listdir("investigators")))
+submodules = list(map(lambda x: x.name, Repo(".").submodules))
 
 template = Template("""from functions import examine
 
 
-def test_$title_no_hyphen():
-    assert examine('$title') == 'All good'
+def test_$clean_title():
+    assert examine('$path') == 'All good'
 """)
 
-for title in dataset_titles:
-    with open("tests/test_" + title + ".py", "w") as f:
+for dataset in submodules:
+    with open("tests/test_" + dataset.replace("/", "_") + ".py", "w") as f:
 
-        f.write(template.substitute(title=title, title_no_hyphen=title.replace("-", "_")))
+        f.write(template.substitute(path=dataset,
+                                    clean_title=dataset.replace("/", "_").replace("-", "_")))
