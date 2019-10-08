@@ -40,7 +40,31 @@ for more information about PR evaluations.
 
 ## Adding data
 
-You can create a sub-dataset in the CONP repository as follows:
+You can create a sub-dataset in the CONP repository in two ways:
+
+1. Upload your dataset to https://zenodo.org with the specific keyword `canadian-open-neuroscience-platform` if the dataset is less than 50GB
+
+2. Upload manually the data using datalad and the command line (see instructions below)
+
+Note: Please don't forget to add a `README.md` at the root directory of your dataset.
+Adding meta-data about your dataset is required. Metadata has to be added
+in a JSON file called `dats.json`, located at the root of your dataset, and
+containing the following attributes based on [bioCADDIE
+DATS](https://github.com/datatagsuite/schema):
+- schema
+- title
+- description
+- dates
+- creators
+- storedIn
+- type
+- version
+- privacy
+- licenses
+
+Examples are available at [metadata/example](https://github.com/CONP-PCNO/conp-dataset/tree/master/metadata/example).
+
+### Uploading the dataset manually
 
 1. Create your sub-dataset in your cloned fork, under `investigators` or `projects`. For instance:
 
@@ -107,22 +131,7 @@ datalad create -d . investigators/<username>
 
 4. Add metadata to your dataset
 
-Adding meta-data about your dataset is required. Metadata has to be added
-in a JSON file called `dats.json`, located at the root of your dataset, and
-containing the following attributes based on [bioCADDIE
-DATS](https://github.com/datatagsuite/schema):
-- schema
-- title
-- description
-- dates
-- creators
-- storedIn
-- type
-- version
-- privacy
-- licenses
-
-Examples are available at [metadata/example](https://github.com/CONP-PCNO/conp-dataset/tree/master/metadata/example).
+Please refer to the Adding data notes
 
 5. Publish the modifications to your fork of the main dataset:
 

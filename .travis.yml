@@ -20,4 +20,4 @@ install:
 script:
 - find . -name config.sh | xargs bash
 - python tests/create_tests.py
-- pytest tests/
+- PYTHONPATH=$PWD pytest tests/

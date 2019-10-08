@@ -1,7 +1,31 @@
+from contextlib import contextmanager
 from os import listdir, walk
 from os.path import isdir, exists, join, abspath, basename, dirname
 from random import random
+import signal
+
 import datalad.api as api
+
+
+@contextmanager
+def timeout(time):
+    # Register a function to raise a TimeoutError on the signal.
+    signal.signal(signal.SIGALRM, raise_timeout)
+    # Schedule the signal to be sent after ``time``.
+    signal.alarm(time)
+
+    try:
+        yield
+    except TimeoutError:
+        pass
+    finally:
+        # Unregister the signal so it won't be triggered
+        # if the timeout is not reached.
+        signal.signal(signal.SIGALRM, signal.SIG_IGN)
+
+
+def raise_timeout(signum, frame):
+    raise TimeoutError
 
 
 def recurse(directory, odds):
@@ -31,11 +55,13 @@ def recurse(directory, odds):
 
         # If the file is a broken symlink and with odd chance
         elif not exists(full_path) and random() < odds:
-            msg = api.get(path=full_path, on_failure="ignore", return_type="item-or-list")
-
-            # Check for authentication
-            if msg["status"] == "error" and "unable to access" not in msg["message"].lower():
-                return "Cannot download file and didn't hit authentication request for file: " + full_path
+            # Timeouts the download or a hanging authentification
+            with timeout(3): 
+                msg = api.get(path=full_path, on_failure="ignore", return_type="item-or-list")
+                
+                # Check for authentication
+                if msg["status"] == "error" and "unable to access" not in msg["message"].lower():
+                    return "Cannot download file and didn't hit authentication request for file: " + full_path
 
     return "All good"
 
@@ -56,7 +82,7 @@ def examine(dataset):
 
     # Number of files to test in each dataset
     # with 100 files, the test is not completing before Travis timeout (about 10~12 minutes)
-    num_files = 10
+    num_files = 4
     
     # Count the number of testable files while ignoring files in directories starting with "."
     count = sum([len(files) if basename(dirname(r))[0] != "." else 0 for r, d, files in walk(full_dir)])
