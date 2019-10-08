@@ -70,8 +70,8 @@ def examine(dataset):
 
     # Check if dats.json and README.md are present in root of dataset
     file_names = [file_name for file_name in listdir(dataset)]
-    if "dats.json" not in file_names:
-        return "Dataset " + dataset + " doesn't contain dats.json in its root directory"
+    if "DATS.json" not in file_names:
+        return "Dataset " + dataset + " doesn't contain DATS.json in its root directory"
 
     if "README.md" not in file_names:
         return "Dataset " + dataset + " doesn't contain README.md in its root directory"
