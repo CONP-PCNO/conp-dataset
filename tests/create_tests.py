@@ -2,7 +2,7 @@ from string import Template
 from git import Repo
 
 
-submodules = list(map(lambda x: x.name, Repo(".").submodules))
+submodules = list(map(lambda x: x.path, Repo(".").submodules))
 
 template = Template("""from functions import examine
 
