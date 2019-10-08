@@ -69,11 +69,11 @@ def recurse(directory, odds):
 def examine(dataset):
 
     # Check if dats.json and README.md are present in root of dataset
-    file_names = [file_name.lower() for file_name in listdir(dataset)]
+    file_names = [file_name for file_name in listdir(dataset)]
     if "dats.json" not in file_names:
         return "Dataset " + dataset + " doesn't contain dats.json in its root directory"
 
-    if "readme.md" not in file_names:
+    if "README.md" not in file_names:
         return "Dataset " + dataset + " doesn't contain README.md in its root directory"
 
     # Number of files to test in each dataset
