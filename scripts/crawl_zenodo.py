@@ -247,6 +247,7 @@ def push_and_pull_request(msg, token):
     repo.git.commit("-m", "[conp-bot] " + ", ".join(msg))
     origin = repo.remote("origin")
     origin_url = next(origin.urls)
+    print(origin_url)
     if "@" not in origin_url:
         origin.set_url(origin_url.replace("https://", "https://" + token + "@"))
     origin.push()
