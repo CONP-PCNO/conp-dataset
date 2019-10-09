@@ -10,10 +10,13 @@ from git import Repo
 def crawl():
 
     # Patch arguments to get token
-    token = patch_input()
+    token, verbose = parse_args()
 
-    zenodo_dois = get_zenodo_dois()
-    conp_dois = get_conp_dois()
+    zenodo_dois = get_zenodo_dois(verbose)
+    conp_dois = get_conp_dois(verbose)
+    if verbose:
+        print("DOIs found on Zenodo: " + str(zenodo_dois))
+        print("DOIs found in CONP dataset: "+ str(conp_dois))
 
     # Verify no duplicates in both lists
     verify_duplicates(zenodo_dois, conp_dois)
@@ -39,21 +42,22 @@ def crawl():
         print("No changes detected")
 
 
-def patch_input():
-    parser = argparse.ArgumentParser(description="Zenodo crawler which searches for all "
+def parse_args():
+    parser = argparse.ArgumentParser(description="Zenodo crawler: searches for all "
                                                  "datasets in Zenodo with the keyword "
                                                  "'canadian-open-neuroscience-platform', "
                                                  "downloads or updates them locally, "
-                                                 "commits and push to a Github bot account "
+                                                 "commits and push to a GitHub account "
                                                  "and finally creates a pull request to "
                                                  "https://github.com/CONP-PCNO/conp-dataset")
-    parser.add_argument("token", action="store", help="github bot access token")
+    parser.add_argument("github_token", action="store", help="GitHub access token")
+    parser.add_argument("--verbose", action="store_true", help="Print debug information")
     args = parser.parse_args()
 
-    return args.token
+    return args.github_token, args.verbose
 
 
-def get_conp_dois():
+def get_conp_dois(verbose=False):
     dats_list = []
     dataset_container_dirs = get_dataset_container_dirs()
 
@@ -68,7 +72,12 @@ def get_conp_dois():
             if dats_name is not "":
                 directory = os.path.join(dataset_container, dataset)
                 with open(os.path.join(directory, dats_name), "r") as f:
-                    dat = json.load(f)
+                    try:
+                        dat = json.load(f)
+                    except Exception as e:
+                        print(("Error while loading DATS file {}: {}. " + 
+                               "Dataset will be ignored.").format(f.name, e))
+                        continue
                     if "zenodo" in dat.keys():
                         new_dict = dat["zenodo"]
                         new_dict.update({"directory": directory})
@@ -81,9 +90,9 @@ def get_dataset_container_dirs():
     return ["projects", "investigators"]
 
 
-def get_zenodo_dois():
+def get_zenodo_dois(verbose=False):
     zenodo_dois = []
-    r = query_zenodo()
+    r = query_zenodo(verbose)
     for dataset in r:
         doi_badge = dataset["conceptdoi"]
         concept_doi = dataset["conceptrecid"]
@@ -107,11 +116,15 @@ def get_zenodo_dois():
     return zenodo_dois
 
 
-def query_zenodo():
-    return requests.get("https://zenodo.org/api/records/?"
-                        "type=dataset&"
-                        "q=keywords:\"canadian-open-neuroscience-platform\""
-                        ).json()["hits"]["hits"]
+def query_zenodo(verbose=False):
+    query = ("https://zenodo.org/api/records/?"
+             "type=dataset&"
+             "q=keywords:\"canadian-open-neuroscience-platform\"")
+    results = requests.get(query).json()["hits"]["hits"]
+    if verbose:
+        print(query)
+        print(results)
+    return results
 
 
 def verify_duplicates(zenodo_dois, conp_dois):
