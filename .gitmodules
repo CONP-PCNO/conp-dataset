@@ -49,3 +49,6 @@
 [submodule "projects/test_dataset_do_not_merge"]
   path = projects/test_dataset_do_not_merge
   url = https://github.com/conp-bot/conp-dataset-test_dataset_do_not_merge.git
+[submodule "projects/test_dataset_do_not_merge"]
+  path = projects/test_dataset_do_not_merge
+  url = https://github.com/conp-bot/conp-dataset-test_dataset_do_not_merge.git
