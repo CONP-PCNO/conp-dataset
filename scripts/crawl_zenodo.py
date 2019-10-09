@@ -2,6 +2,7 @@ import requests
 import os
 import json
 import argparse
+from argparse import RawTextHelpFormatter
 import datalad.api as api
 from re import sub, search
 from git import Repo
@@ -31,10 +32,10 @@ def crawl():
             # If the conp dataset version isn't the lastest, update
             if dataset["latest_version"] != conp_dois[index]["version"]:
                 update_dataset(dataset, conp_dois[index])
-                commit_msg.append("update " + dataset["title"])
+                commit_msg.append("Updated " + dataset["title"])
         else:
             create_new_dataset(dataset, token)
-            commit_msg.append("create " + dataset["title"])
+            commit_msg.append("Created " + dataset["title"])
 
     if len(commit_msg) >= 1:
         push_and_pull_request(commit_msg, token)
@@ -43,17 +44,24 @@ def crawl():
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description='''
-    CONP Zenodo crawler. Performs the following steps:
-    1. searches for all datasets in Zenodo with the keyword 
+    parser = argparse.ArgumentParser(
+                                     formatter_class=RawTextHelpFormatter,
+                                     description=r'''
+    CONP Zenodo crawler.
+    
+    Performs the following steps:
+    1. searches for all datasets in Zenodo with the keyword
        'canadian-open-neuroscience-platform',
     2. downloads or updates them locally, 
     3. commits and push to a GitHub account (identified by parameter github_token),
     4. creates a pull request to https://github.com/CONP-PCNO/conp-dataset.
 
     Requirements:
-    * run from the basedir of a local clone of conp-dataset
-    * conp-dataset has to be set to branch 'master'
+    * GitHub user must have a fork of https://github.com/CONP-PCNO/conp-dataset
+    * Script must be run in the base directory of a local clone of this fork
+    * Git remote 'origin' of local Git clone must point to that fork. Warning: this script will 
+      push dataset updates to 'origin'.
+    * Local Git clone must be set to branch 'master' 
     ''')
     parser.add_argument("github_token", action="store", help="GitHub access token")
     parser.add_argument("--verbose", action="store_true", help="Print debug information")
@@ -249,6 +257,7 @@ def push_and_pull_request(msg, token):
     origin_url = next(origin.urls)
     if "@" not in origin_url:
         origin.set_url(origin_url.replace("https://", "https://" + token + "@"))
+    print("Pushing to {}".format(origin))
     origin.push() 
     username = search('github.com[/,:](.*)/conp-dataset.git', origin_url).group(1)
     pr_body = ""
