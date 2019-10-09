@@ -2,6 +2,7 @@ import requests
 import os
 import json
 import argparse
+from argparse import RawTextHelpFormatter
 import datalad.api as api
 from re import sub, search
 from git import Repo
@@ -10,10 +11,13 @@ from git import Repo
 def crawl():
 
     # Patch arguments to get token
-    token = patch_input()
+    token, verbose = parse_args()
 
-    zenodo_dois = get_zenodo_dois()
-    conp_dois = get_conp_dois()
+    zenodo_dois = get_zenodo_dois(verbose)
+    conp_dois = get_conp_dois(verbose)
+    if verbose:
+        print("DOIs found on Zenodo: " + str(zenodo_dois))
+        print("DOIs found in CONP dataset: "+ str(conp_dois))
 
     # Verify no duplicates in both lists
     verify_duplicates(zenodo_dois, conp_dois)
@@ -28,10 +32,10 @@ def crawl():
             # If the conp dataset version isn't the lastest, update
             if dataset["latest_version"] != conp_dois[index]["version"]:
                 update_dataset(dataset, conp_dois[index])
-                commit_msg.append("update " + dataset["title"])
+                commit_msg.append("Updated " + dataset["title"])
         else:
             create_new_dataset(dataset, token)
-            commit_msg.append("create " + dataset["title"])
+            commit_msg.append("Created " + dataset["title"])
 
     if len(commit_msg) >= 1:
         push_and_pull_request(commit_msg, token)
@@ -39,21 +43,34 @@ def crawl():
         print("No changes detected")
 
 
-def patch_input():
-    parser = argparse.ArgumentParser(description="Zenodo crawler which searches for all "
-                                                 "datasets in Zenodo with the keyword "
-                                                 "'canadian-open-neuroscience-platform', "
-                                                 "downloads or updates them locally, "
-                                                 "commits and push to a Github bot account "
-                                                 "and finally creates a pull request to "
-                                                 "https://github.com/CONP-PCNO/conp-dataset")
-    parser.add_argument("token", action="store", help="github bot access token")
+def parse_args():
+    parser = argparse.ArgumentParser(
+                                     formatter_class=RawTextHelpFormatter,
+                                     description=r'''
+    CONP Zenodo crawler.
+    
+    Performs the following steps:
+    1. searches for all datasets in Zenodo with the keyword
+       'canadian-open-neuroscience-platform',
+    2. downloads or updates them locally, 
+    3. commits and push to a GitHub account (identified by parameter github_token),
+    4. creates a pull request to https://github.com/CONP-PCNO/conp-dataset.
+
+    Requirements:
+    * GitHub user must have a fork of https://github.com/CONP-PCNO/conp-dataset
+    * Script must be run in the base directory of a local clone of this fork
+    * Git remote 'origin' of local Git clone must point to that fork. Warning: this script will 
+      push dataset updates to 'origin'.
+    * Local Git clone must be set to branch 'master' 
+    ''')
+    parser.add_argument("github_token", action="store", help="GitHub access token")
+    parser.add_argument("--verbose", action="store_true", help="Print debug information")
     args = parser.parse_args()
 
-    return args.token
+    return args.github_token, args.verbose
 
 
-def get_conp_dois():
+def get_conp_dois(verbose=False):
     dats_list = []
     dataset_container_dirs = get_dataset_container_dirs()
 
@@ -68,7 +85,12 @@ def get_conp_dois():
             if dats_name is not "":
                 directory = os.path.join(dataset_container, dataset)
                 with open(os.path.join(directory, dats_name), "r") as f:
-                    dat = json.load(f)
+                    try:
+                        dat = json.load(f)
+                    except Exception as e:
+                        print(("Error while loading DATS file {}: {}. " + 
+                               "Dataset will be ignored.").format(f.name, e))
+                        continue
                     if "zenodo" in dat.keys():
                         new_dict = dat["zenodo"]
                         new_dict.update({"directory": directory})
@@ -81,9 +103,9 @@ def get_dataset_container_dirs():
     return ["projects", "investigators"]
 
 
-def get_zenodo_dois():
+def get_zenodo_dois(verbose=False):
     zenodo_dois = []
-    r = query_zenodo()
+    r = query_zenodo(verbose)
     for dataset in r:
         doi_badge = dataset["conceptdoi"]
         concept_doi = dataset["conceptrecid"]
@@ -107,11 +129,14 @@ def get_zenodo_dois():
     return zenodo_dois
 
 
-def query_zenodo():
-    return requests.get("https://zenodo.org/api/records/?"
-                        "type=dataset&"
-                        "q=keywords:\"canadian-open-neuroscience-platform\""
-                        ).json()["hits"]["hits"]
+def query_zenodo(verbose=False):
+    query = ("https://zenodo.org/api/records/?"
+             "type=dataset&"
+             "q=keywords:\"canadian-open-neuroscience-platform\"")
+    results = requests.get(query).json()["hits"]["hits"]
+    if verbose:
+        print("Zenodo query: {}".format(query))
+    return results
 
 
 def verify_duplicates(zenodo_dois, conp_dois):
@@ -232,8 +257,7 @@ def push_and_pull_request(msg, token):
     origin_url = next(origin.urls)
     if "@" not in origin_url:
         origin.set_url(origin_url.replace("https://", "https://" + token + "@"))
-    origin.push()
-    username = search('github.com/(.*)/conp-dataset.git', origin_url).group(1)
+    username = search('github.com[/,:](.*)/conp-dataset.git', origin_url).group(1)
     pr_body = ""
     for change in msg:
         pr_body += "- " + change + "\n"
