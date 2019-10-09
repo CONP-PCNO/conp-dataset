@@ -257,8 +257,6 @@ def push_and_pull_request(msg, token):
     origin_url = next(origin.urls)
     if "@" not in origin_url:
         origin.set_url(origin_url.replace("https://", "https://" + token + "@"))
-    print("Pushing to {}".format(origin))
-    origin.push() 
     username = search('github.com[/,:](.*)/conp-dataset.git', origin_url).group(1)
     pr_body = ""
     for change in msg:
