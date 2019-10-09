@@ -43,13 +43,18 @@ def crawl():
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="Zenodo crawler: searches for all "
-                                                 "datasets in Zenodo with the keyword "
-                                                 "'canadian-open-neuroscience-platform', "
-                                                 "downloads or updates them locally, "
-                                                 "commits and push to a GitHub account "
-                                                 "and finally creates a pull request to "
-                                                 "https://github.com/CONP-PCNO/conp-dataset")
+    parser = argparse.ArgumentParser(description='''
+    CONP Zenodo crawler. Performs the following steps:
+    1. searches for all datasets in Zenodo with the keyword 
+       'canadian-open-neuroscience-platform',
+    2. downloads or updates them locally, 
+    3. commits and push to a GitHub account (identified by parameter github_token),
+    4. creates a pull request to https://github.com/CONP-PCNO/conp-dataset.
+
+    Requirements:
+    * run from the basedir of a local clone of conp-dataset
+    * conp-dataset has to be set to branch 'master'
+    ''')
     parser.add_argument("github_token", action="store", help="GitHub access token")
     parser.add_argument("--verbose", action="store_true", help="Print debug information")
     args = parser.parse_args()
@@ -122,8 +127,7 @@ def query_zenodo(verbose=False):
              "q=keywords:\"canadian-open-neuroscience-platform\"")
     results = requests.get(query).json()["hits"]["hits"]
     if verbose:
-        print(query)
-        print(results)
+        print("Zenodo query: {}".format(query))
     return results
 
 
