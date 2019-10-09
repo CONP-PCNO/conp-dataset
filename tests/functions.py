@@ -68,27 +68,23 @@ def recurse(directory, odds):
 
 def examine(dataset):
 
-    # Root directory can be projects or investigators
-    root_dir = "projects" if dataset in listdir("projects") else "investigators"
-    full_dir = join(root_dir, dataset)
-
     # Check if dats.json and README.md are present in root of dataset
-    file_names = [file_name.lower() for file_name in listdir(full_dir)]
-    if "dats.json" not in file_names:
-        return "Dataset " + full_dir + " doesn't contain dats.json in its root directory"
+    file_names = [file_name for file_name in listdir(dataset)]
+    if "DATS.json" not in file_names:
+        return "Dataset " + dataset + " doesn't contain DATS.json in its root directory"
 
-    if "readme.md" not in file_names:
-        return "Dataset " + full_dir + " doesn't contain README.md in its root directory"
+    if "README.md" not in file_names:
+        return "Dataset " + dataset + " doesn't contain README.md in its root directory"
 
     # Number of files to test in each dataset
     # with 100 files, the test is not completing before Travis timeout (about 10~12 minutes)
     num_files = 4
     
     # Count the number of testable files while ignoring files in directories starting with "."
-    count = sum([len(files) if basename(dirname(r))[0] != "." else 0 for r, d, files in walk(full_dir)])
+    count = sum([len(files) if basename(dirname(r))[0] != "." else 0 for r, d, files in walk(dataset)])
 
     # Calculate the odds to test a file
     odds = num_files/count
 
     # Start to test dataset
-    return recurse(abspath(full_dir), odds)
+    return recurse(abspath(dataset), odds)
