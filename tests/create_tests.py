@@ -1,6 +1,6 @@
 from string import Template
 from git import Repo
-from os.path import isfile
+from os.path import isfile, join
 
 
 submodules = list(map(lambda x: x.path, Repo(".").submodules))
@@ -10,16 +10,9 @@ if isfile("tests/diff.txt"):
     with open("tests/diff.txt", "r") as f:
         changes = f.readlines()
 
-    for line in changes:
-        for submodule in submodules:
-            if submodule in line:
-                changed_submodules.add(submodule)
+    changed_submodules = {submodule for submodule in submodules for line in changes if submodule in line}
 
-    if len(changed_submodules) > 0:
-        print("Detected changes in the following submodules, creating tests for them:")
-        for submodule in changed_submodules:
-            print(submodule)
-    else:
+    if len(changed_submodules) == 0:
         print("No changes in submodules")
 else:
     print("No diff.txt file detected, creating tests for every submodule")
@@ -34,7 +27,9 @@ def test_$clean_title():
 """)
 
 for submodule in changed_submodules:
-    with open("tests/test_" + submodule.replace("/", "_") + ".py", "w") as f:
+    test_file = "test_" + submodule.replace("/", "_") + ".py"
+    print("Creating " + test_file)
+    with open(join("tests", test_file), "w") as f:
 
         f.write(template.substitute(path=submodule,
                                     clean_title=submodule.replace("/", "_").replace("-", "_")))

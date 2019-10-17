@@ -6,24 +6,36 @@ python:
 - 3.6
 
 git:
+  # Skip automatic submodule cloning, since we are going to use datalad install instead
   submodules: false
+  # Shallow clone
   depth: 1
 
 before_install:
+# Shallow clone diff target
 - git clone --depth=1 --branch=master https://github.com/CONP-PCNO/conp-dataset.git ../conp-dataset-master
+# Install git annex, dependency for datalad
 - bash <(wget -q -O- http://neuro.debian.net/_files/neurodebian-travis.sh)
 - sudo apt-get -q install -y git-annex-standalone
 
 install:
+# Install datalad and install content of submodules
 - pip install datalad
 - pip freeze
 - datalad install -r .
 - datalad install -r ../conp-dataset-master
-- git config --global diff.renames 0
-- git diff --no-index --name-only . ../conp-dataset-master > tests/diff.txt || true
-- sed -i '\?^/dev/null?d' ./tests/diff.txt
 
 script:
+# Turn off file rename checking when doing a git diff
+- git config --global diff.renames 0
+# git diff between the incoming branch and the master branch of CONP-PCNO/conp-dataset
+# and pipe the output to tests/diff.txt
+# Note: I wasn't able to find a way to do a git diff between two directories with gitpython,
+# but if it is possible, please implement it in tests/create_tests.py and remove
+# the previous and the next two commands from travis.yml
+- git diff --no-index --name-only . ../conp-dataset-master > tests/diff.txt || true
+# Clean diff.txt from useless lines
+- sed -i '\?^/dev/null?d' ./tests/diff.txt
 - find . -name config.sh | xargs bash
 - python tests/create_tests.py
 - PYTHONPATH=$PWD pytest tests/
