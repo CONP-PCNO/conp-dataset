@@ -41,8 +41,8 @@
   path = investigators/Khanlab/BigBrainHippoUnfold
   url = https://github.com/khanlab-datasets/BigBrainHippoUnfold
 [submodule "projects/mm_neo_atlas"]
-	path = projects/mm_neo_atlas
-	url = ./projects/mm_neo_atlas
+  path = projects/mm_neo_atlas
+  url = https://github.com/emmetaobrien/mm_neo_atlas
 [submodule "projects/celltypes"]
-	path = projects/celltypes
-	url = ./projects/celltypes
+  path = projects/celltypes
+  url = https://github.com/emmetaobrien/celltypes
