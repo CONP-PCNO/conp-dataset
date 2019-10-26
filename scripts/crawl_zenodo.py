@@ -11,18 +11,23 @@ from git import Repo
 def crawl():
 
     # Patch arguments to get token
-    token, verbose = parse_args()
+    token, verbose, force = parse_args()
+
+    # Check requirements and return github username
+    username = check_requirements()
 
     zenodo_dois = get_zenodo_dois(verbose)
     conp_dois = get_conp_dois(verbose)
     if verbose:
         print("DOIs found on Zenodo: " + str(zenodo_dois))
-        print("DOIs found in CONP dataset: "+ str(conp_dois))
+        print("DOIs found in CONP dataset: " + str(conp_dois))
 
     # Verify no duplicates in both lists
     verify_duplicates(zenodo_dois, conp_dois)
 
+    # Commit message and directories to be staged
     commit_msg = []
+    stage_dirs = []
 
     for dataset in zenodo_dois:
         index = next((i for (i, d) in enumerate(conp_dois) if d["concept_doi"] == dataset["concept_doi"]), None)
@@ -33,12 +38,15 @@ def crawl():
             if dataset["latest_version"] != conp_dois[index]["version"]:
                 update_dataset(dataset, conp_dois[index])
                 commit_msg.append("Updated " + dataset["title"])
+                stage_dirs.append(conp_dois[index]["directory"])
         else:
-            create_new_dataset(dataset, token)
-            commit_msg.append("Created " + dataset["title"])
+            dataset_path = create_new_dataset(dataset, token, force, username)
+            if dataset_path != "":
+                commit_msg.append("Created " + dataset["title"])
+                stage_dirs.append(dataset_path)
 
     if len(commit_msg) >= 1:
-        push_and_pull_request(commit_msg, token)
+        push_and_pull_request(commit_msg, stage_dirs, token)
     else:
         print("No changes detected")
 
@@ -63,11 +71,25 @@ def parse_args():
       push dataset updates to 'origin'.
     * Local Git clone must be set to branch 'master' 
     ''')
-    parser.add_argument("github_token", action="store", help="GitHub access token")
+    parser.add_argument("github_token", action="store", nargs="?", help="GitHub access token")
     parser.add_argument("--verbose", action="store_true", help="Print debug information")
+    parser.add_argument("--force", action="store_true", help="Force updates")
     args = parser.parse_args()
 
-    return args.github_token, args.verbose
+    # If token is not passed as argument, check ~/.github_token else store token
+    token_path = os.path.join(os.path.expanduser('~'), ".github_token")
+    if args.github_token is None:
+        if os.path.isfile(token_path):
+            with open(token_path, "r") as f:
+                args.github_token = f.read()
+        else:
+            raise Exception("Token not passed by command line argument nor found in ~/.github_token file, "
+                            "please pass your github access token via the command line")
+    else:
+        with open(token_path, "w") as f:
+            f.write(args.github_token)
+
+    return args.github_token, args.verbose, args.force
 
 
 def get_conp_dois(verbose=False):
@@ -80,8 +102,8 @@ def get_conp_dois(verbose=False):
                 continue
             dir_list = os.listdir(os.path.join(dataset_container, dataset))
             dats_name = ""
-            if "dats.json" in dir_list:
-                dats_name = "dats.json"
+            if "DATS.json" in dir_list:
+                dats_name = "DATS.json"
             if dats_name is not "":
                 directory = os.path.join(dataset_container, dataset)
                 with open(os.path.join(directory, dats_name), "r") as f:
@@ -107,6 +129,9 @@ def get_zenodo_dois(verbose=False):
     zenodo_dois = []
     r = query_zenodo(verbose)
     for dataset in r:
+        if "files" not in dataset.keys():
+            print(dataset["metadata"]["title"] + ": no files available, dataset is probably restricted, skipping")
+            continue
         doi_badge = dataset["conceptdoi"]
         concept_doi = dataset["conceptrecid"]
         title = clean(dataset["metadata"]["title"])
@@ -163,11 +188,18 @@ def verify_duplicates(zenodo_dois, conp_dois):
 clean = lambda x: sub('\W|^(?=\d)','_', x)
 
 
-def create_new_dataset(dataset, token):
+def create_new_dataset(dataset, token, force, username):
+    repo_title = ("conp-dataset-" + dataset["title"])[0:100]
+    full_repository = "{}/{}".format(username, repo_title)
+
+    # Check for existing github repo with same name
+    if not verify_repository(username, full_repository, token, dataset, force):
+        return ""
+
     dataset_dir = os.path.join("projects", dataset["title"])
     d = api.Dataset(dataset_dir)
     d.create()
-    repo_title = ("conp-dataset-" + dataset["title"])[0:100]
+
     r = d.create_sibling_github(repo_title,
                                 github_login=token,
                                 github_passwd=token)
@@ -176,18 +208,27 @@ def create_new_dataset(dataset, token):
     for bucket in dataset["files"]:
         d.download_url(bucket["links"]["self"], archive=True if bucket["type"] == "zip" else False)
 
-    # Update dats.json or create one if it doesn't exist
-    if update_dats(os.path.join(dataset_dir, "dats.json"), dataset):
-        api.add(os.path.join(dataset_dir, "dats.json"))
+    # Update DATS.json or create one if it doesn't exist
+    if update_dats(os.path.join(dataset_dir, "DATS.json"), dataset):
+        api.add(os.path.join(dataset_dir, "DATS.json"))
     else:
-        create_new_dats(os.path.join(dataset_dir, "dats.json"), dataset)
-        api.add(os.path.join(dataset_dir, "dats.json"))
-
-    # Create README.md if doesn't exist
-    if create_readme(dataset, dataset_dir):
-        api.add(os.path.join(dataset_dir, "README.md"))
+        create_new_dats(os.path.join(dataset_dir, "DATS.json"), dataset)
+        api.add(os.path.join(dataset_dir, "DATS.json"))
 
     d.publish(to="github")
+
+    # Create and push README.md if doesn't exist to github repo
+    if create_readme(dataset, dataset_dir):
+        repo = Repo(dataset_dir)
+        repo.git.add("README.md")
+        repo.git.commit("-m", "[conp-bot] Create README.md")
+        origin = repo.remote("github")
+        origin_url = next(origin.urls)
+        if "@" not in origin_url:
+            origin.set_url(origin_url.replace("https://", "https://" + token + "@"))
+        repo.git.push("--set-upstream", "github", "master")
+
+    return d.path
 
 
 def update_gitmodules(directory, github_url):
@@ -231,7 +272,7 @@ def update_dataset(zenodo_dataset, conp_dataset):
 
     dataset_dir = conp_dataset["directory"]
     for file_name in os.listdir(dataset_dir):
-        if file_name[0] == "." or file_name.lower() == "dats.json":
+        if file_name[0] == "." or file_name == "DATS.json":
             continue
         api.remove(os.path.join(dataset_dir, file_name), check=False)
 
@@ -240,23 +281,26 @@ def update_dataset(zenodo_dataset, conp_dataset):
     for bucket in zenodo_dataset["files"]:
         d.download_url(bucket["links"]["self"], archive=True if bucket["type"] == "zip" else False)
 
-    # Update dats.json or DATS.json or create one if it doesn't exist
-    if update_dats(os.path.join(dataset_dir, "dats.json"), zenodo_dataset):
-        api.add(os.path.join(dataset_dir, "dats.json"))
+    # Update DATS.json or create one if it doesn't exist
+    if update_dats(os.path.join(dataset_dir, "DATS.json"), zenodo_dataset):
+        api.add(os.path.join(dataset_dir, "DATS.json"))
     else:
-        raise Exception("No dats.json file in existing dataset, aborting")
+        raise Exception("No DATS.json file in existing dataset, aborting")
 
     d.publish(to="github")
 
 
-def push_and_pull_request(msg, token):
+def push_and_pull_request(msg, directories, token):
     repo = Repo()
-    repo.git.add(".")
+    for directory in directories:
+        repo.git.add(directory)
+    repo.git.add(".gitmodules")
     repo.git.commit("-m", "[conp-bot] " + ", ".join(msg))
     origin = repo.remote("origin")
     origin_url = next(origin.urls)
     if "@" not in origin_url:
         origin.set_url(origin_url.replace("https://", "https://" + token + "@"))
+    origin.push()
     username = search('github.com[/,:](.*)/conp-dataset.git', origin_url).group(1)
     pr_body = ""
     for change in msg:
@@ -270,7 +314,7 @@ def push_and_pull_request(msg, token):
 
 Mandatory files and elements:
 - [x] A `README.md` file, at the root of the dataset
-- [x] A `dats.json` file, at the root of the dataset
+- [x] A `DATS.json` file, at the root of the dataset
 - [ ] If configuration is required (for instance to enable a special remote), a `config.sh` script at the root of the dataset
 - [x] A DOI (see instructions in [contribution guide](https://github.com/CONP-PCNO/conp-dataset/blob/master/.github/CONTRIBUTING.md), and corresponding badge in `README.md`
 
@@ -278,7 +322,7 @@ Functional checks:
 - [x] Dataset can be installed using DataLad, recursively if it has sub-datasets
 - [x] Every data file has a URL
 - [x] Every data file can be retrieved or requires authentication
-- [ ] `dats.json` is a valid DATs model
+- [ ] `DATS.json` is a valid DATs model
 - [ ] If dataset is derived data, raw data is a sub-dataset
 """.format(pr_body),
         "head": username + ":master",
@@ -297,6 +341,52 @@ Crawled from Zenodo: [![DOI](https://www.zenodo.org/badge/DOI/{1}.svg)](https://
                     .format(dataset["title"], dataset["doi_badge"]))
         return True
     return False
+
+
+def check_requirements():
+    # GitHub user must have a fork of https://github.com/CONP-PCNO/conp-dataset
+    # Script must be run in the base directory of a local clone of this fork
+    # Git remote 'origin' of local Git clone must point to that fork
+    # Local Git clone must be set to branch 'master'
+    repo = Repo()
+    git_root = repo.git.rev_parse("--show-toplevel")
+    if git_root != os.getcwd():
+        raise Exception("Script not ran at the base directory of local clone")
+    if "origin" not in repo.remotes:
+        raise Exception("Remote 'origin' does not exist in current reposition")
+    origin_url = next(repo.remote("origin").urls)
+    full_name = search('github.com[/,:](.*).git', origin_url).group(1)
+    r = requests.get("http://api.github.com/repos/" + full_name).json()
+    if not r["fork"] or r["parent"]["full_name"] != "CONP-PCNO/conp-dataset":
+        raise Exception("Current repository not a fork of CONP-PCNO/conp-dataset")
+    branch = repo.active_branch.name
+    if branch != "master":
+        raise Exception("Local git clone active branch not set to 'master'")
+
+    # return username
+    return full_name.split("/")[0]
+
+
+def verify_repository(username, full_repository, token, dataset, force):
+    if requests.get("http://api.github.com/repos/{}".format(full_repository)).status_code != 404:
+        print("Existing {} repository on github".format(full_repository))
+        if force:
+            print("--force specified, deleting and creating new github repository")
+        else:
+            msg = "Would you like to delete it? (Y/n)"
+            if prompt(msg).upper() != "Y":
+                print("Skipping " + dataset["title"])
+                return False
+        r = requests.delete("http://api.github.com/repos/{}".format(full_repository), auth=(username, token))
+        if not r.ok:
+            print("Failed to delete {}, please delete it manually or enable the delete_repo scope for the passed token")
+            print("Response: {}".format(str(r.content)))
+            return False
+    return True
+
+
+def prompt(msg):
+    return input(msg)
 
 
 if __name__ == "__main__":

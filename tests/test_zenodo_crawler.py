@@ -7,7 +7,7 @@ import os
 
 
 def mock_input():
-    return ''.join([random.choice(string.ascii_letters + string.digits) for n in range(32)])
+    return ''.join([random.choice(string.ascii_letters + string.digits) for n in range(32)]), False, False
 
 
 def mock_zenodo_query():
@@ -49,33 +49,40 @@ def mock_get_test_dataset_dir():
 
 class TestZenodoCrawler(TestCase):
 
-    @mock.patch("scripts.crawl_zenodo.patch_input", return_value=mock_input())
+    @mock.patch("scripts.crawl_zenodo.parse_args", return_value=mock_input())
     @mock.patch("scripts.crawl_zenodo.query_zenodo", return_value=mock_zenodo_query())
     @mock.patch("scripts.crawl_zenodo.get_conp_dois", return_value=mock_get_empty_conp_dois())
     @mock.patch("scripts.crawl_zenodo.create_new_dats")
     @mock.patch("scripts.crawl_zenodo.update_gitmodules")
     @mock.patch("scripts.crawl_zenodo.push_and_pull_request")
-    @mock.patch("scripts.crawl_zenodo.create_readme")
+    @mock.patch("scripts.crawl_zenodo.create_readme", return_value=False)
+    @mock.patch("scripts.crawl_zenodo.verify_repository", return_value=True)
+    @mock.patch("git.Repo")
     @mock.patch("datalad.api.Dataset")
     @mock.patch("datalad.api.add")
-    def test_create_new_dataset(self, mock_datalad_add, mock_dataset, mock_create_readme, mock_push_and_PR,
-                                mock_update_submodules,mock_create_new_dats, mock_empty_conp_dois,
-                                mock_zenodo_query, mock_input):
+    def test_create_new_dataset(self, mock_datalad_add, mock_dataset, mock_repo, mock_verify_repo,
+                                mock_create_readme, mock_push_and_PR, mock_update_submodules,
+                                mock_create_new_dats, mock_empty_conp_dois, mock_zenodo_query, mock_input):
         try:
             crawl()
         except Exception as e:
             self.fail("Unexpected Exception raised: " + str(e))
 
-    @mock.patch("scripts.crawl_zenodo.patch_input", return_value=mock_input())
+    @mock.patch("scripts.crawl_zenodo.parse_args", return_value=mock_input())
     @mock.patch("scripts.crawl_zenodo.query_zenodo", return_value=mock_zenodo_query())
     @mock.patch("scripts.crawl_zenodo.get_dataset_container_dirs", return_value=mock_get_test_dataset_dir())
     @mock.patch("scripts.crawl_zenodo.update_dats", return_value=True)
     @mock.patch("scripts.crawl_zenodo.update_gitmodules")
     @mock.patch("scripts.crawl_zenodo.push_and_pull_request")
+    @mock.patch("scripts.crawl_zenodo.create_readme", return_value=False)
+    @mock.patch("scripts.crawl_zenodo.verify_repository", return_value=True)
+    @mock.patch("git.Repo")
     @mock.patch("datalad.api.Dataset")
     @mock.patch("datalad.api.add")
-    def test_update_existing_dataset(self, mock_datalad_add, mock_dataset, mock_push_and_PR, mock_update_submodules,
-                                mock_update_dats, mock_get_test_dataset_dir, mock_zenodo_query, mock_input):
+    def test_update_existing_dataset(self, mock_datalad_add, mock_dataset, mock_repo, mock_verify_repo,
+                                     mock_create_readme, mock_push_and_PR, mock_update_submodules,
+                                     mock_create_new_dats, mock_get_test_dataset_dir, mock_zenodo_query,
+                                     mock_input):
         try:
             crawl()
         except Exception as e:
