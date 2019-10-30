@@ -7,7 +7,9 @@ import os
 
 
 def mock_input():
-    return ''.join([random.choice(string.ascii_letters + string.digits) for n in range(32)]), False, False
+    token1 = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(32)])
+    token2= ''.join([random.choice(string.ascii_letters + string.digits) for n in range(32)])
+    return token1, token2, False, False
 
 
 def mock_zenodo_query():

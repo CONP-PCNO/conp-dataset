@@ -11,12 +11,12 @@ from git import Repo
 def crawl():
 
     # Patch arguments to get token
-    token, verbose, force = parse_args()
+    github_token, zenodo_token, verbose, force = parse_args()
 
     # Check requirements and return github username
     username = check_requirements()
 
-    zenodo_dois = get_zenodo_dois(verbose)
+    zenodo_dois = get_zenodo_dois(zenodo_token, verbose)
     conp_dois = get_conp_dois(verbose)
     if verbose:
         print("DOIs found on Zenodo: " + str(zenodo_dois))
@@ -40,13 +40,13 @@ def crawl():
                 commit_msg.append("Updated " + dataset["title"])
                 stage_dirs.append(conp_dois[index]["directory"])
         else:
-            dataset_path = create_new_dataset(dataset, token, force, username)
+            dataset_path = create_new_dataset(dataset, github_token, force, username)
             if dataset_path != "":
                 commit_msg.append("Created " + dataset["title"])
                 stage_dirs.append(dataset_path)
 
     if len(commit_msg) >= 1:
-        push_and_pull_request(commit_msg, stage_dirs, token)
+        push_and_pull_request(commit_msg, stage_dirs, github_token)
     else:
         print("No changes detected")
 
@@ -72,24 +72,45 @@ def parse_args():
     * Local Git clone must be set to branch 'master' 
     ''')
     parser.add_argument("github_token", action="store", nargs="?", help="GitHub access token")
+    parser.add_argument("zenodo_token", action="store", nargs="?", help="Zenodo access token")
     parser.add_argument("--verbose", action="store_true", help="Print debug information")
     parser.add_argument("--force", action="store_true", help="Force updates")
     args = parser.parse_args()
 
-    # If token is not passed as argument, check ~/.github_token else store token
-    token_path = os.path.join(os.path.expanduser('~'), ".github_token")
-    if args.github_token is None:
-        if os.path.isfile(token_path):
-            with open(token_path, "r") as f:
-                args.github_token = f.read()
-        else:
-            raise Exception("Token not passed by command line argument nor found in ~/.github_token file, "
-                            "please pass your github access token via the command line")
-    else:
+    # If tokens aren't passed as arguments, check ~/.tokens else store tokens
+    token_path = os.path.join(os.path.expanduser('~'), ".tokens")
+    github_token = args.github_token
+    zenodo_token = args.zenodo_token
+    stored_tokens = {}
+    # If file does not exist, create an empty one else load existing token
+    if not os.path.isfile(token_path):
         with open(token_path, "w") as f:
-            f.write(args.github_token)
+            json.dump({}, f)
+    else:
+        with open(token_path, "r") as f:
+            stored_tokens = json.load(f)
 
-    return args.github_token, args.verbose, args.force
+    if not github_token and "github_token" not in stored_tokens.keys():
+        raise Exception("Github token not passed by command line argument nor found in ~/.tokens file, "
+                        "please pass your github access token via the command line")
+    elif github_token:
+        stored_tokens["github_token"] = github_token
+    else:
+        github_token = stored_tokens["github_token"]
+
+    if not zenodo_token and "zenodo_token" not in stored_tokens.keys():
+        raise Exception("Zenodo token not passed by command line argument nor found in ~/.tokens file, "
+                        "please pass your zenodo access token via the command line")
+    elif zenodo_token:
+        stored_tokens["zenodo_token"] = zenodo_token
+    else:
+        zenodo_token = stored_tokens["zenodo_token"]
+
+    # Store stored_tokens into ~/.tokens
+    with open(token_path, "w") as f:
+        json.dump(stored_tokens, f, indent=4)
+
+    return github_token, zenodo_token, args.verbose, args.force
 
 
 def get_conp_dois(verbose=False):
@@ -125,24 +146,42 @@ def get_dataset_container_dirs():
     return ["projects", "investigators"]
 
 
-def get_zenodo_dois(verbose=False):
+def get_zenodo_dois(token, verbose=False):
     zenodo_dois = []
-    r = query_zenodo(verbose)
-    for dataset in r:
+    datasets = query_zenodo(verbose)
+    for dataset in datasets:
+
+        # Retrieve file urls
+        files = []
         if "files" not in dataset.keys():
-            print(dataset["metadata"]["title"] + ": no files available, dataset is probably restricted, skipping")
-            continue
+            # This means the Zenodo dataset files are restricted
+            if verbose:
+                print(dataset["metadata"]["title"] +
+                      ": no files found, dataset is probably restricted, using token to retrieve file url")
+
+            # Try to retrieve file urls using the token
+            data = requests.get(dataset["links"]["latest"], params={'access_token': token}).json()
+            if "files" not in data.keys():
+                print("Unable to access files of dataset {} at url {} "
+                      "using the current Zenodo token, skipping this dataset"
+                      .format(dataset["metadata"]["title"], dataset["links"]["latest"]))
+                continue
+            else:
+                # Append access token to each file url
+                for bucket in data["files"]:
+                    bucket["links"]["self"] += "?access_token=" + token
+                    files.append(bucket)
+        else:
+            for bucket in dataset["files"]:
+                files.append(bucket)
+
         doi_badge = dataset["conceptdoi"]
         concept_doi = dataset["conceptrecid"]
         title = clean(dataset["metadata"]["title"])
         if len(dataset["metadata"]["relations"]["version"]) != 1:
             raise Exception("Unexpected multiple versions")
         latest_version_doi = dataset["metadata"]["relations"]["version"][0]["last_child"]["pid_value"]
-        files = []
-        for bucket in dataset["files"]:
-            files.append(bucket)
-        if len(files) < 1:
-            print("Zenodo dataset " + title + " does not contain any file")
+
         zenodo_dois.append({
             "concept_doi": concept_doi,
             "latest_version": latest_version_doi,
