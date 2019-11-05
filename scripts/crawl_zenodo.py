@@ -36,7 +36,7 @@ def crawl():
         if index is not None:
             # If the conp dataset version isn't the lastest, update
             if dataset["latest_version"] != conp_dois[index]["version"]:
-                update_dataset(dataset, conp_dois[index])
+                update_dataset(dataset, conp_dois[index], github_token)
                 commit_msg.append("Updated " + dataset["title"])
                 stage_dirs.append(conp_dois[index]["directory"])
         else:
@@ -46,7 +46,8 @@ def crawl():
                 stage_dirs.append(dataset_path)
 
     if len(commit_msg) >= 1:
-        push_and_pull_request(commit_msg, stage_dirs, github_token)
+        pass
+        # push_and_pull_request(commit_msg, stage_dirs, github_token)
     else:
         print("No changes detected")
 
@@ -249,23 +250,18 @@ def create_new_dataset(dataset, token, force, username):
 
     # Update DATS.json or create one if it doesn't exist
     if update_dats(os.path.join(dataset_dir, "DATS.json"), dataset):
-        api.add(os.path.join(dataset_dir, "DATS.json"))
+        commit_msg = "[conp-bot] Updated DATS.json"
     else:
         create_new_dats(os.path.join(dataset_dir, "DATS.json"), dataset)
-        api.add(os.path.join(dataset_dir, "DATS.json"))
+        commit_msg = "[conp-bot] Create DATS.json"
+
+    commit_push_file(dataset_dir, "DATS.json", commit_msg, token)
 
     d.publish(to="github")
 
     # Create and push README.md if doesn't exist to github repo
     if create_readme(dataset, dataset_dir):
-        repo = Repo(dataset_dir)
-        repo.git.add("README.md")
-        repo.git.commit("-m", "[conp-bot] Create README.md")
-        origin = repo.remote("github")
-        origin_url = next(origin.urls)
-        if "@" not in origin_url:
-            origin.set_url(origin_url.replace("https://", "https://" + token + "@"))
-        repo.git.push("--set-upstream", "github", "master")
+        commit_push_file(dataset_dir, "README.md", "[conp-bot] Create README.md", token)
 
     return d.path
 
@@ -304,14 +300,14 @@ def create_new_dats(path, dataset):
         json.dump(data, f, indent=4)
 
 
-def update_dataset(zenodo_dataset, conp_dataset):
+def update_dataset(zenodo_dataset, conp_dataset, token):
     # To update a dataset, we don't know which files have been updated
     # so we have to remove all existing files and redownload all files
     # fresh from the latest version of that zenodo dataset
 
     dataset_dir = conp_dataset["directory"]
     for file_name in os.listdir(dataset_dir):
-        if file_name[0] == "." or file_name == "DATS.json":
+        if file_name[0] == "." or file_name == "DATS.json" or file_name == "README.md":
             continue
         api.remove(os.path.join(dataset_dir, file_name), check=False)
 
@@ -320,9 +316,9 @@ def update_dataset(zenodo_dataset, conp_dataset):
     for bucket in zenodo_dataset["files"]:
         d.download_url(bucket["links"]["self"], archive=True if bucket["type"] == "zip" else False)
 
-    # Update DATS.json or create one if it doesn't exist
+    # Update DATS.json
     if update_dats(os.path.join(dataset_dir, "DATS.json"), zenodo_dataset):
-        api.add(os.path.join(dataset_dir, "DATS.json"))
+        commit_push_file(dataset_dir, "DATS.json", "[conp-bot] Update DATS.json", token)
     else:
         raise Exception("No DATS.json file in existing dataset, aborting")
 
@@ -426,6 +422,17 @@ def verify_repository(username, full_repository, token, dataset, force):
 
 def prompt(msg):
     return input(msg)
+
+
+def commit_push_file(dataset_dir, file_name, msg, token):
+    repo = Repo(dataset_dir)
+    repo.git.add(file_name)
+    repo.git.commit("-m", msg)
+    origin = repo.remote("github")
+    origin_url = next(origin.urls)
+    if "@" not in origin_url:
+        origin.set_url(origin_url.replace("https://", "https://" + token + "@"))
+    repo.git.push("--set-upstream", "github", "master")
 
 
 if __name__ == "__main__":
