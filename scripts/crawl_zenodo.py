@@ -372,7 +372,9 @@ def create_readme(dataset, path):
         with open(os.path.join(path, "README.md"), "w") as f:
             f.write("""# {0}
 
-Crawled from Zenodo: [![DOI](https://www.zenodo.org/badge/DOI/{1}.svg)](https://doi.org/{1})"""
+[![DOI](https://www.zenodo.org/badge/DOI/{1}.svg)](https://doi.org/{1})
+
+Crawled from Zenodo"""
                     .format(dataset["title"], dataset["doi_badge"]))
         return True
     return False
