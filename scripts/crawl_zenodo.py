@@ -46,8 +46,7 @@ def crawl():
                 stage_dirs.append(dataset_path)
 
     if len(commit_msg) >= 1:
-        pass
-        # push_and_pull_request(commit_msg, stage_dirs, github_token)
+        push_and_pull_request(commit_msg, stage_dirs, github_token)
     else:
         print("No changes detected")
 
