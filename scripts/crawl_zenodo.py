@@ -11,12 +11,12 @@ from git import Repo
 def crawl():
 
     # Patch arguments to get token
-    github_token, zenodo_token, verbose, force = parse_args()
+    github_token, stored_z_tokens, passed_z_tokens, verbose, force = parse_args()
 
     # Check requirements and return github username
     username = check_requirements()
 
-    zenodo_dois = get_zenodo_dois(zenodo_token, verbose)
+    zenodo_dois = get_zenodo_dois(stored_z_tokens, passed_z_tokens, verbose)
     conp_dois = get_conp_dois(verbose)
     if verbose:
         print("DOIs found on Zenodo: " + str(zenodo_dois))
@@ -72,7 +72,7 @@ def parse_args():
     * Local Git clone must be set to branch 'master' 
     ''')
     parser.add_argument("github_token", action="store", nargs="?", help="GitHub access token")
-    parser.add_argument("zenodo_token", action="store", nargs="?", help="Zenodo access token")
+    parser.add_argument('-z', nargs='*', help="Zenodo access tokens")
     parser.add_argument("--verbose", action="store_true", help="Print debug information")
     parser.add_argument("--force", action="store_true", help="Force updates")
     args = parser.parse_args()
@@ -80,7 +80,8 @@ def parse_args():
     # If tokens aren't passed as arguments, check ~/.tokens else store tokens
     token_path = os.path.join(os.path.expanduser('~'), ".tokens")
     github_token = args.github_token
-    zenodo_token = args.zenodo_token
+    passed_zenodo_tokens = args.z
+    stored_zenodo_tokens = None
     stored_tokens = {}
     # If file does not exist, create an empty one else load existing token
     if not os.path.isfile(token_path):
@@ -98,19 +99,19 @@ def parse_args():
     else:
         github_token = stored_tokens["github_token"]
 
-    if not zenodo_token and "zenodo_token" not in stored_tokens.keys():
-        raise Exception("Zenodo token not passed by command line argument nor found in ~/.tokens file, "
-                        "please pass your zenodo access token via the command line")
-    elif zenodo_token:
-        stored_tokens["zenodo_token"] = zenodo_token
+    if not passed_zenodo_tokens and "zenodo_tokens" not in stored_tokens.keys():
+        raise Exception("Zenodo tokens not passed by command line argument nor found in ~/.tokens file, "
+                        "please pass your zenodo access tokens via the command line")
+    elif passed_zenodo_tokens:
+        pass
     else:
-        zenodo_token = stored_tokens["zenodo_token"]
+        stored_zenodo_tokens = stored_tokens["zenodo_tokens"]
 
     # Store stored_tokens into ~/.tokens
     with open(token_path, "w") as f:
         json.dump(stored_tokens, f, indent=4)
 
-    return github_token, zenodo_token, args.verbose, args.force
+    return github_token, stored_zenodo_tokens, passed_zenodo_tokens, args.verbose, args.force
 
 
 def get_conp_dois(verbose=False):
@@ -146,10 +147,11 @@ def get_dataset_container_dirs():
     return ["projects", "investigators"]
 
 
-def get_zenodo_dois(token, verbose=False):
+def get_zenodo_dois(stored_tokens, passed_tokens, verbose=False):
     zenodo_dois = []
     datasets = query_zenodo(verbose)
     for dataset in datasets:
+        title = clean(dataset["metadata"]["title"])
 
         # Retrieve file urls
         files = []
@@ -157,27 +159,48 @@ def get_zenodo_dois(token, verbose=False):
             # This means the Zenodo dataset files are restricted
             if verbose:
                 print(dataset["metadata"]["title"] +
-                      ": no files found, dataset is probably restricted, using token to retrieve file url")
+                      ": no files found, dataset is probably restricted, using tokens to retrieve file url")
 
-            # Try to retrieve file urls using the token
-            data = requests.get(dataset["links"]["latest"], params={'access_token': token}).json()
-            if "files" not in data.keys():
-                print("Unable to access files of dataset {} at url {} "
-                      "using the current Zenodo token, skipping this dataset"
-                      .format(dataset["metadata"]["title"], dataset["links"]["latest"]))
-                continue
+            # Try to see if the dataset token is already known in stored tokens
+            if stored_tokens is not None and title in stored_tokens.keys():
+                data = requests.get(dataset["links"]["latest"], params={'access_token': stored_tokens[title]}).json()
+                if "files" not in data.keys():
+                    print("Unable to access " + title + " using stored tokens, skipping this dataset")
+                    continue
+                else:
+                    # Append access token to each file url
+                    for bucket in data["files"]:
+                        bucket["links"]["self"] += "?access_token=" + stored_tokens[title]
+                        files.append(bucket)
             else:
-                # Append access token to each file url
-                for bucket in data["files"]:
-                    bucket["links"]["self"] += "?access_token=" + token
-                    files.append(bucket)
+                # Try to retrieve file urls using the passed tokens
+                for token in passed_tokens:
+                    data = requests.get(dataset["links"]["latest"], params={'access_token': token}).json()
+                    if "files" not in data.keys():
+                        continue
+                    else:
+                        # Append access token to each file url
+                        for bucket in data["files"]:
+                            bucket["links"]["self"] += "?access_token=" + token
+                            files.append(bucket)
+                        # And store working token and dataset title
+                        if stored_tokens is None:
+                            stored_tokens = dict()
+                        stored_tokens[title] = token
+                        break
+                else:
+                    print("Unable to access files of dataset {} at url {} "
+                          "using the current Zenodo tokens, skipping this dataset"
+                          .format(dataset["metadata"]["title"], dataset["links"]["latest"]))
         else:
             for bucket in dataset["files"]:
                 files.append(bucket)
 
+        # Store known tokens with their associated datasets
+        store(stored_tokens)
+
         doi_badge = dataset["conceptdoi"]
         concept_doi = dataset["conceptrecid"]
-        title = clean(dataset["metadata"]["title"])
         if len(dataset["metadata"]["relations"]["version"]) != 1:
             raise Exception("Unexpected multiple versions")
         latest_version_doi = dataset["metadata"]["relations"]["version"][0]["last_child"]["pid_value"]
@@ -434,6 +457,16 @@ def commit_push_file(dataset_dir, file_name, msg, token):
     if "@" not in origin_url:
         origin.set_url(origin_url.replace("https://", "https://" + token + "@"))
     repo.git.push("--set-upstream", "github", "master")
+
+
+def store(known_zenodo_tokens):
+    token_path = os.path.join(os.path.expanduser('~'), ".tokens")
+    with open(token_path, "r+") as f:
+        data = json.load(f)
+        f.seek(0)
+        data["zenodo_tokens"] = known_zenodo_tokens
+        json.dump(data, f, indent=4)
+        f.truncate()
 
 
 if __name__ == "__main__":
