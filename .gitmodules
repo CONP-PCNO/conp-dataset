@@ -16,9 +16,6 @@
 [submodule "projects/SIMON-dataset"]  
   path = projects/SIMON-dataset
   url = https://github.com/conpdatasets/SIMON-dataset
-[submodule "projects/PERFORM"]
-  path = projects/PERFORM
-  url = https://github.com/conpdatasets/PERFORM.git
 [submodule "investigators/Khanlab/HCPUR100-Template"]
   path = investigators/Khanlab/HCPUR100-Template
   url = https://github.com/khanlab-datasets/HCPUR100-Template.git
