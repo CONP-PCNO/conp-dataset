@@ -37,3 +37,6 @@
 [submodule "projects/nhpatlas"]
   path = projects/nhpatlas
   url = https://github.com/emmetaobrien/nhpatlas.git
+[submodule "projects/PERFORM_Dataset__one_control_subject"]
+  path = projects/PERFORM_Dataset__one_control_subject
+  url = https://github.com/joeyzhou98/conp-dataset-PERFORM_Dataset__one_control_subject.git
