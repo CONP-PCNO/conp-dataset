@@ -22,9 +22,6 @@
 [submodule "investigators/Khanlab/HCPUR100-Template"]
   path = investigators/Khanlab/HCPUR100-Template
   url = https://github.com/khanlab-datasets/HCPUR100-Template.git
-[submodule "investigators/Khanlab/BigBrainMRICoreg"]
-  path = investigators/Khanlab/BigBrainMRICoreg
-  url = https://github.com/khanlab-datasets/BigBrainMRICoreg.git
 [submodule "projects/1000GenomesProject"]
   path = projects/1000GenomesProject
   url = https://github.com/emmetaobrien/1000GenomesProject.git
@@ -37,3 +34,18 @@
 [submodule "projects/nhpatlas"]
   path = projects/nhpatlas
   url = https://github.com/emmetaobrien/nhpatlas.git
+[submodule "investigators/Khanlab/BigBrainMRICoreg"]
+  path = investigators/Khanlab/BigBrainMRICoreg
+  url = https://github.com/khanlab-datasets/BigBrainMRICoreg
+[submodule "investigators/Khanlab/BigBrainHippoUnfold"]
+  path = investigators/Khanlab/BigBrainHippoUnfold
+  url = https://github.com/khanlab-datasets/BigBrainHippoUnfold
+[submodule "projects/mm_neo_atlas"]
+  path = projects/mm_neo_atlas
+  url = https://github.com/emmetaobrien/mm_neo_atlas.git
+[submodule "projects/celltypes"]
+  path = projects/celltypes
+  url = https://github.com/emmetaobrien/celltypes.git
+[submodule "projects/PERFORM_Dataset__one_control_subject"]
+  path = projects/PERFORM_Dataset__one_control_subject
+  url = https://github.com/conp-bot/conp-dataset-PERFORM_Dataset__one_control_subject.git
