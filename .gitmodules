@@ -37,3 +37,6 @@
 [submodule "projects/nhpatlas"]
   path = projects/nhpatlas
   url = https://github.com/emmetaobrien/nhpatlas.git
+[submodule "projects/test_dataset_do_not_merge"]
+  path = projects/test_dataset_do_not_merge
+  url = https://github.com/joeyzhou98/conp-dataset-test_dataset_do_not_merge.git
