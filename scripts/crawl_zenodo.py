@@ -25,10 +25,6 @@ def crawl():
     # Verify no duplicates in both lists
     verify_duplicates(zenodo_dois, conp_dois)
 
-    # Commit message and directories to be staged
-    commit_msg = []
-    stage_dirs = []
-
     for dataset in zenodo_dois:
         index = next((i for (i, d) in enumerate(conp_dois) if d["concept_doi"] == dataset["concept_doi"]), None)
 
@@ -37,18 +33,14 @@ def crawl():
             # If the conp dataset version isn't the lastest, update
             if dataset["latest_version"] != conp_dois[index]["version"]:
                 update_dataset(dataset, conp_dois[index], github_token)
-                commit_msg.append("Updated " + dataset["title"])
-                stage_dirs.append(conp_dois[index]["directory"])
+                push_and_pull_request("Updated " + dataset["title"], conp_dois[index]["directory"], github_token, dataset["title"])
+
         else:
             dataset_path = create_new_dataset(dataset, github_token, force, username)
             if dataset_path != "":
-                commit_msg.append("Created " + dataset["title"])
-                stage_dirs.append(dataset_path)
+                push_and_pull_request("Created " + dataset["title"], dataset_path, github_token, dataset["title"])
 
-    if len(commit_msg) >= 1:
-        push_and_pull_request(commit_msg, stage_dirs, github_token)
-    else:
-        print("No changes detected")
+    print("Done")
 
 
 def parse_args():
@@ -102,9 +94,7 @@ def parse_args():
     if not passed_zenodo_tokens and "zenodo_tokens" not in stored_tokens.keys():
         raise Exception("Zenodo tokens not passed by command line argument nor found in ~/.tokens file, "
                         "please pass your zenodo access tokens via the command line")
-    elif passed_zenodo_tokens:
-        pass
-    else:
+    if "zenodo_tokens" in stored_tokens.keys():
         stored_zenodo_tokens = stored_tokens["zenodo_tokens"]
 
     # Store stored_tokens into ~/.tokens
@@ -174,24 +164,31 @@ def get_zenodo_dois(stored_tokens, passed_tokens, verbose=False):
                         files.append(bucket)
             else:
                 # Try to retrieve file urls using the passed tokens
-                for token in passed_tokens:
-                    data = requests.get(dataset["links"]["latest"], params={'access_token': token}).json()
-                    if "files" not in data.keys():
-                        continue
+                if passed_tokens is not None:
+                    for token in passed_tokens:
+                        data = requests.get(dataset["links"]["latest"], params={'access_token': token}).json()
+                        if "files" not in data.keys():
+                            continue
+                        else:
+                            # Append access token to each file url
+                            for bucket in data["files"]:
+                                bucket["links"]["self"] += "?access_token=" + token
+                                files.append(bucket)
+                            # And store working token and dataset title
+                            if stored_tokens is None:
+                                stored_tokens = dict()
+                            stored_tokens[title] = token
+                            break
                     else:
-                        # Append access token to each file url
-                        for bucket in data["files"]:
-                            bucket["links"]["self"] += "?access_token=" + token
-                            files.append(bucket)
-                        # And store working token and dataset title
-                        if stored_tokens is None:
-                            stored_tokens = dict()
-                        stored_tokens[title] = token
-                        break
+                        print("Unable to access files of dataset {} at url {} "
+                              "using the current Zenodo tokens, skipping this dataset"
+                              .format(dataset["metadata"]["title"], dataset["links"]["latest"]))
+                        continue
                 else:
-                    print("Unable to access files of dataset {} at url {} "
-                          "using the current Zenodo tokens, skipping this dataset"
+                    print("No tokens available to access files of dataset"
+                          " {} at url {}, skipping this dataset"
                           .format(dataset["metadata"]["title"], dataset["links"]["latest"]))
+                    continue
         else:
             for bucket in dataset["files"]:
                 files.append(bucket)
@@ -265,7 +262,6 @@ def create_new_dataset(dataset, token, force, username):
     r = d.create_sibling_github(repo_title,
                                 github_login=token,
                                 github_passwd=token)
-    update_gitmodules(dataset_dir, r[0][1].replace(token + "@", ""))
 
     for bucket in dataset["files"]:
         d.download_url(bucket["links"]["self"], archive=True if bucket["type"] == "zip" else False)
@@ -284,6 +280,8 @@ def create_new_dataset(dataset, token, force, username):
     # Create and push README.md if doesn't exist to github repo
     if create_readme(dataset, dataset_dir):
         commit_push_file(dataset_dir, "README.md", "[conp-bot] Create README.md", token)
+
+    update_gitmodules(dataset_dir, r[0][1].replace(token + "@", ""))
 
     return d.path
 
@@ -347,21 +345,26 @@ def update_dataset(zenodo_dataset, conp_dataset, token):
     d.publish(to="github")
 
 
-def push_and_pull_request(msg, directories, token):
+def push_and_pull_request(msg, dataset_dir, token, title):
     repo = Repo()
-    for directory in directories:
-        repo.git.add(directory)
+
+    # Switch branch
+    if title not in repo.branches:
+        repo.git.checkout('-b', title)
+    else:
+        repo.git.checkout(title)
+
+    repo.git.add(dataset_dir)
     repo.git.add(".gitmodules")
-    repo.git.commit("-m", "[conp-bot] " + ", ".join(msg))
+    repo.git.commit("-m", "[conp-bot] " + msg)
     origin = repo.remote("origin")
     origin_url = next(origin.urls)
     if "@" not in origin_url:
         origin.set_url(origin_url.replace("https://", "https://" + token + "@"))
-    origin.push()
+    repo.git.push("--set-upstream", "origin", title)
     username = search('github.com[/,:](.*)/conp-dataset.git', origin_url).group(1)
-    pr_body = ""
-    for change in msg:
-        pr_body += "- " + change + "\n"
+
+    # Create PR
     r = requests.post("https://api.github.com/repos/CONP-PCNO/conp-dataset/pulls?access_token=" + token, json={
         "title": "Zenodo crawler results",
         "body": """## Description
@@ -381,12 +384,15 @@ Functional checks:
 - [x] Every data file can be retrieved or requires authentication
 - [ ] `DATS.json` is a valid DATs model
 - [ ] If dataset is derived data, raw data is a sub-dataset
-""".format(pr_body),
-        "head": username + ":master",
+""".format(msg + "\n"),
+        "head": username + ":" + title,
         "base": "master"
     })
     if r.status_code != 201:
         raise Exception("Error while creating pull request: " + r.text)
+
+    # Go back to master branch when done
+    repo.git.checkout("master")
 
 
 def create_readme(dataset, path):
