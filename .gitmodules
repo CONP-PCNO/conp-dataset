@@ -1,9 +1,3 @@
-[submodule "investigators/jb"]
-  path = investigators/jb
-  url = https://github.com/jbpoline/conp-dataset-jb.git
-[submodule "investigators/Park-Patrick"]
-  path = investigators/Park-Patrick
-  url = http://github.com/park-patrick/conp-dataset-park-patrick.git
 [submodule "projects/multicenter-phantom"]
   path = projects/multicenter-phantom
   url = https://github.com/conpdatasets/multicenter-phantom.git
