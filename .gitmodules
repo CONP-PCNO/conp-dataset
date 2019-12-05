@@ -52,3 +52,6 @@
 [submodule "openpain-placebo_predict_tetreault"]
 	path = openpain-placebo_predict_tetreault
 	url = https://github.com/big-data-lab-team/openpain-placebo_predict_tetreault.git
+[submodule "openpain-cbp_resting"]
+	path = openpain-cbp_resting
+	url = https://github.com/big-data-lab-team/openpain-cbp_resting.git
