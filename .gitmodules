@@ -46,3 +46,6 @@
 [submodule "openpain-placebo_1"]
 	path = openpain-placebo_1
 	url = https://github.com/big-data-lab-team/openpain-placebo_1.git
+[submodule "openpain-subacute_longitudinal_study"]
+	path = openpain-subacute_longitudinal_study
+	url = https://github.com/big-data-lab-team/openpain-subacute_longitudinal_study.git
