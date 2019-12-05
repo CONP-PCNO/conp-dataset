@@ -49,3 +49,6 @@
 [submodule "openpain-subacute_longitudinal_study"]
 	path = openpain-subacute_longitudinal_study
 	url = https://github.com/big-data-lab-team/openpain-subacute_longitudinal_study.git
+[submodule "openpain-placebo_predict_tetreault"]
+	path = openpain-placebo_predict_tetreault
+	url = https://github.com/big-data-lab-team/openpain-placebo_predict_tetreault.git
