@@ -55,3 +55,6 @@
 [submodule "openpain-cbp_resting"]
 	path = openpain-cbp_resting
 	url = https://github.com/big-data-lab-team/openpain-cbp_resting.git
+[submodule "openpain-BrainNetworkChange_Mano"]
+	path = openpain-BrainNetworkChange_Mano
+	url = https://github.com/big-data-lab-team/openpain-BrainNetworkChange_Mano.git
