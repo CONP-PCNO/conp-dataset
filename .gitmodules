@@ -44,17 +44,17 @@
 	path = projects/openpain/thermal
 	url = https://github.com/big-data-lab-team/openpain-thermal.git
 [submodule "openpain-placebo_1"]
-	path = openpain-placebo_1
+	path = projects/openpain/placebo_1
 	url = https://github.com/big-data-lab-team/openpain-placebo_1.git
 [submodule "openpain-subacute_longitudinal_study"]
-	path = openpain-subacute_longitudinal_study
+	path = projects/openpain/subacute_longitudinal_study
 	url = https://github.com/big-data-lab-team/openpain-subacute_longitudinal_study.git
 [submodule "openpain-placebo_predict_tetreault"]
-	path = openpain-placebo_predict_tetreault
+	path = projects/openpain/placebo_predict_tetreault
 	url = https://github.com/big-data-lab-team/openpain-placebo_predict_tetreault.git
 [submodule "openpain-cbp_resting"]
-	path = openpain-cbp_resting
+	path = projects/openpain/cbp_resting
 	url = https://github.com/big-data-lab-team/openpain-cbp_resting.git
 [submodule "openpain-BrainNetworkChange_Mano"]
-	path = openpain-BrainNetworkChange_Mano
+	path = projects/openpain/BrainNetworkChange_Mano
 	url = https://github.com/big-data-lab-team/openpain-BrainNetworkChange_Mano.git
