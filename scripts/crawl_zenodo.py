@@ -206,6 +206,7 @@ def get_zenodo_dois(stored_tokens, passed_tokens, verbose=False):
             "concept_doi": concept_doi,
             "latest_version": latest_version_doi,
             "title": title,
+            "original_title": dataset["metadata"]["title"],
             "files": files,
             "doi_badge": doi_badge
         })
@@ -315,7 +316,8 @@ def create_new_dats(path, dataset):
             "zenodo": {
                 "concept_doi": dataset["concept_doi"],
                 "version": dataset["latest_version"]
-            }
+            },
+            "title": dataset["original_title"]
         }
         json.dump(data, f, indent=4)
 
@@ -325,7 +327,10 @@ def update_dataset(zenodo_dataset, conp_dataset, token):
     # so we have to remove all existing files and redownload all files
     # fresh from the latest version of that zenodo dataset
 
+    # Pull in case of change from remote
     dataset_dir = conp_dataset["directory"]
+    Repo(dataset_dir).git.pull()
+
     for file_name in os.listdir(dataset_dir):
         if file_name[0] == "." or file_name == "DATS.json" or file_name == "README.md":
             continue
@@ -365,6 +370,7 @@ def push_and_pull_request(msg, dataset_dir, token, title):
     username = search('github.com[/,:](.*)/conp-dataset.git', origin_url).group(1)
 
     # Create PR
+    print("Creating PR for " + title)
     r = requests.post("https://api.github.com/repos/CONP-PCNO/conp-dataset/pulls?access_token=" + token, json={
         "title": "Zenodo crawler results",
         "body": """## Description
