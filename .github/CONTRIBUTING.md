@@ -44,7 +44,7 @@ You can create a sub-dataset in the CONP repository in two ways:
 
 1. Using Zenodo
     1. Upload your dataset to https://zenodo.org with the specific keyword `canadian-open-neuroscience-platform` if the dataset is less than 50GB and if it is more than 50GB, please contact [Zenodo](https://zenodo.org/support) with a request category of `File upload quota increase` in order to be able to upload it
-    2. If you set the dataset as restricted, create a personal token via Applications > Personal access tokens > New Token > Check all scopes > Create. Then send the token via email to tglatard@encs.concordia.ca
+    2. If you set the dataset as restricted, create a personal token via Applications > Personal access tokens > New Token > Check all scopes > Create. Then send the token via email to CONP Technical Steering Committee member Tristan Glatard (tglatard@encs.concordia.ca).
 2. Upload manually the data using datalad and the command line (see instructions below)
 
 Note: Please don't forget to add a `README.md` at the root directory of your dataset.
