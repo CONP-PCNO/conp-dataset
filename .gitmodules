@@ -58,3 +58,6 @@
 [submodule "openpain-BrainNetworkChange_Mano"]
 	path = projects/openpain/BrainNetworkChange_Mano
 	url = https://github.com/big-data-lab-team/openpain-BrainNetworkChange_Mano.git
+[submodule "projects/TEST_CONP_NEUROHUB"]
+  path = projects/TEST_CONP_NEUROHUB
+  url = https://github.com/conp-bot/conp-dataset-TEST_CONP_NEUROHUB.git
