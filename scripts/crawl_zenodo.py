@@ -218,9 +218,14 @@ def query_zenodo(verbose=False):
     query = ("https://zenodo.org/api/records/?"
              "type=dataset&"
              "q=keywords:\"canadian-open-neuroscience-platform\"")
-    results = requests.get(query).json()["hits"]["hits"]
     if verbose:
         print("Zenodo query: {}".format(query))
+    try:
+        results = requests.get(query).json()["hits"]["hits"]
+    except requests.exceptions.ConnectionError as e:
+        print("Zenodo query resulted in connection error: ", e)
+        print("Returning empty array")
+        return []
     return results
 
 
