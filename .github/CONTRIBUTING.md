@@ -190,7 +190,7 @@ A list of commands to accomplish this step is given in the next section on Updat
 
 The following schematic helps to visualize the three points just described:
 
-![](.github/docs/conpdataset-CONP%20interaction%20submodules%20update.png)
+![](/docs/conpdataset-CONP%20interaction%20submodules%20update.png)
 
 
 #### Updating a Git submodule to the latest commit on origin
