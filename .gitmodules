@@ -58,3 +58,8 @@
 [submodule "openpain-BrainNetworkChange_Mano"]
 	path = projects/openpain/BrainNetworkChange_Mano
 	url = https://github.com/big-data-lab-team/openpain-BrainNetworkChange_Mano.git
+[submodule "projects/bigbrain-datalad"]
+	path = projects/bigbrain-datalad
+	url = https://github.com/big-data-lab-team/bigbrain-datalad.git
+	branch = master
+	datalad-id = 466d6c6a-3509-11ea-9289-f0d5bf508098
