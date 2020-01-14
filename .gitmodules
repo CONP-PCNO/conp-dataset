@@ -1,9 +1,3 @@
-[submodule "investigators/jb"]
-  path = investigators/jb
-  url = https://github.com/jbpoline/conp-dataset-jb.git
-[submodule "investigators/Park-Patrick"]
-  path = investigators/Park-Patrick
-  url = http://github.com/park-patrick/conp-dataset-park-patrick.git
 [submodule "projects/multicenter-phantom"]
   path = projects/multicenter-phantom
   url = https://github.com/conpdatasets/multicenter-phantom.git
@@ -16,9 +10,6 @@
 [submodule "projects/SIMON-dataset"]  
   path = projects/SIMON-dataset
   url = https://github.com/conpdatasets/SIMON-dataset
-[submodule "investigators/Khanlab/BigBrainHippoUnfold"]
-  path = investigators/Khanlab/BigBrainHippoUnfold
-  url = https://github.com/khanlab-datasets/BigBrainHippoUnfold.git
 [submodule "investigators/Khanlab/HCPUR100-Template"]
   path = investigators/Khanlab/HCPUR100-Template
   url = https://github.com/khanlab-datasets/HCPUR100-Template.git
@@ -49,6 +40,21 @@
 [submodule "projects/PERFORM_Dataset__one_control_subject"]
   path = projects/PERFORM_Dataset__one_control_subject
   url = https://github.com/conp-bot/conp-dataset-PERFORM_Dataset__one_control_subject.git
-[submodule "projects/test_dataset_do_not_merge"]
-  path = projects/test_dataset_do_not_merge
-  url = https://github.com/conp-bot/conp-dataset-test_dataset_do_not_merge.git
+[submodule "openpain-thermal"]
+	path = projects/openpain/thermal
+	url = https://github.com/big-data-lab-team/openpain-thermal.git
+[submodule "openpain-placebo_1"]
+	path = projects/openpain/placebo_1
+	url = https://github.com/big-data-lab-team/openpain-placebo_1.git
+[submodule "openpain-subacute_longitudinal_study"]
+	path = projects/openpain/subacute_longitudinal_study
+	url = https://github.com/big-data-lab-team/openpain-subacute_longitudinal_study.git
+[submodule "openpain-placebo_predict_tetreault"]
+	path = projects/openpain/placebo_predict_tetreault
+	url = https://github.com/big-data-lab-team/openpain-placebo_predict_tetreault.git
+[submodule "openpain-cbp_resting"]
+	path = projects/openpain/cbp_resting
+	url = https://github.com/big-data-lab-team/openpain-cbp_resting.git
+[submodule "openpain-BrainNetworkChange_Mano"]
+	path = projects/openpain/BrainNetworkChange_Mano
+	url = https://github.com/big-data-lab-team/openpain-BrainNetworkChange_Mano.git
