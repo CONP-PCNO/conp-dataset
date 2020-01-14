@@ -60,4 +60,4 @@
 	url = https://github.com/big-data-lab-team/openpain-BrainNetworkChange_Mano.git
 [submodule "projects/preventad-test"]
 	path = projects/preventad-test
-	url = ./projects/preventad-test
+	url = https://github.com/emmetaobrien/preventad-test.git
