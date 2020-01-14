@@ -58,3 +58,6 @@
 [submodule "openpain-BrainNetworkChange_Mano"]
 	path = projects/openpain/BrainNetworkChange_Mano
 	url = https://github.com/big-data-lab-team/openpain-BrainNetworkChange_Mano.git
+[submodule "scripts/dats_validator/conp-dats"]
+	path = scripts/dats_validator/conp-dats
+	url = https://github.com/CONP-PCNO/schema
