@@ -4,4 +4,6 @@
 <pre>python validator.py --file=doc.json</pre>
 
 **Test valid and invalid examples:**
-<pre>python tests.py</pre>
+
+- valid and invalid dats files are in examples directory
+- tests located in tests/
