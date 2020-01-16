@@ -58,3 +58,6 @@
 [submodule "projects/PERFORM_Dataset__one_control_subject"]
   path = projects/PERFORM_Dataset__one_control_subject
   url = https://github.com/conp-bot/conp-dataset-PERFORM_Dataset__one_control_subject.git
+[submodule "projects/phantom-test"]
+	path = projects/phantom-test
+	url = ./projects/phantom-test
