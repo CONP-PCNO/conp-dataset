@@ -60,7 +60,7 @@ def recurse(directory, odds):
                 msg = api.get(path=full_path, on_failure="ignore", return_type="item-or-list")
                 
                 # Check for authentication
-                if msg["status"] == "error" and "unable to access" not in msg["message"].lower():
+                if isinstance(msg, dict) and msg["status"] == "error" and "unable to access" not in msg["message"].lower():
                     return "Cannot download file and didn't hit authentication request for file: " + full_path
 
     return "All good"
