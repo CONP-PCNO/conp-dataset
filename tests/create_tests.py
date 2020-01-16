@@ -12,7 +12,8 @@ def test_$clean_title():
 """)
 
 for dataset in submodules:
-    with open("tests/test_" + dataset.replace("/", "_") + ".py", "w") as f:
+    if dataset.split("/")[0] == "projects" or dataset.split("/")[0] == "investigators":
+        with open("tests/test_" + dataset.replace("/", "_") + ".py", "w") as f:
 
-        f.write(template.substitute(path=dataset,
-                                    clean_title=dataset.replace("/", "_").replace("-", "_")))
+            f.write(template.substitute(path=dataset,
+                                        clean_title=dataset.replace("/", "_").replace("-", "_")))
