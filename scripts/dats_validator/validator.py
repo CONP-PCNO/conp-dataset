@@ -8,7 +8,8 @@ from sys import argv
 
 logger = logging.getLogger(__name__)
 # path to a top-level schema
-SCHEMA_PATH = os.path.dirname(os.path.realpath(__file__)) + '/conp-dats/dataset_schema.json'
+SCHEMA_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'conp-dats', 'dataset_schema.json')
+
 
 def main(argv):
     FORMAT = '%(message)s'

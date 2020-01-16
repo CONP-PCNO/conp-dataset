@@ -14,9 +14,9 @@ before_install:
 
 install:
 - pip install datalad
+- pip install -r scripts/dats_validator/requirements.txt
 - pip freeze
 - datalad install -r .
-- pip install -r scripts/dats_validator/requirements.txt
 
 script:
 - find . -name config.sh | xargs bash
