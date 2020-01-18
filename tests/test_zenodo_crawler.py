@@ -45,7 +45,7 @@ def mock_get_empty_conp_dois():
 
 
 def mock_get_test_dataset_dir():
-    return [os.path.join("tests", "datasets")]
+    return os.path.join("tests", "datasets")
 
 
 class TestZenodoCrawler(TestCase):
@@ -78,7 +78,7 @@ class TestZenodoCrawler(TestCase):
     @mock.patch("scripts.crawl_zenodo.store")
     @mock.patch("scripts.crawl_zenodo.parse_args", return_value=mock_input())
     @mock.patch("scripts.crawl_zenodo.query_zenodo", return_value=mock_zenodo_query())
-    @mock.patch("scripts.crawl_zenodo.get_dataset_container_dirs", return_value=mock_get_test_dataset_dir())
+    @mock.patch("scripts.crawl_zenodo.get_dataset_container_dir", return_value=mock_get_test_dataset_dir())
     @mock.patch("scripts.crawl_zenodo.update_dats", return_value=True)
     @mock.patch("scripts.crawl_zenodo.update_gitmodules")
     @mock.patch("scripts.crawl_zenodo.push_and_pull_request")

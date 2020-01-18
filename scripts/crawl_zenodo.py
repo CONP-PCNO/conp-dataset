@@ -14,33 +14,55 @@ def crawl():
     github_token, stored_z_tokens, passed_z_tokens, verbose, force = parse_args()
 
     # Check requirements and return github username
-    username = check_requirements()
+    repo = Repo()
+    username = check_requirements(repo)
 
     zenodo_dois = get_zenodo_dois(stored_z_tokens, passed_z_tokens, verbose)
-    conp_dois = get_conp_dois(verbose)
+    conp_dois = get_conp_dois(zenodo_dois, repo, verbose)
     if verbose:
-        print("DOIs found on Zenodo: " + str(zenodo_dois))
-        print("DOIs found in CONP dataset: " + str(conp_dois))
-
-    # Verify no duplicates in both lists
-    verify_duplicates(zenodo_dois, conp_dois)
+        print("\n\n******************** Listing DOIs ********************")
+        print("Zenodo DOIs: ")
+        for zenodo_doi in zenodo_dois:
+            print("- Title: {}, Concept DOI: {}, Latest version DOI: {}".format(
+                zenodo_doi["original_title"], zenodo_doi["concept_doi"], zenodo_doi["latest_version"]))
+        print("CONP DOIs: ")
+        for conp_doi in conp_dois:
+            print("- Title: {}, Concept DOI: {}, Version DOI: {}".format(
+                conp_doi["title"], conp_doi["concept_doi"], conp_doi["version"]))
 
     for dataset in zenodo_dois:
         index = next((i for (i, d) in enumerate(conp_dois) if d["concept_doi"] == dataset["concept_doi"]), None)
 
         # If the zenodo dataset exists in conp datasets
         if index is not None:
-            # If the conp dataset version isn't the lastest, update
+            # If the conp dataset version isn't the latest, update
             if dataset["latest_version"] != conp_dois[index]["version"]:
+                if verbose:
+                    print("\n\n******************** Updating dataset {} ********************".format(
+                        dataset["original_title"]))
+
+                # Switch branch
+                repo.git.checkout("conp-bot/" + dataset["title"])
                 update_dataset(dataset, conp_dois[index], github_token)
-                push_and_pull_request("Updated " + dataset["title"], conp_dois[index]["directory"], github_token, dataset["title"])
+                push_and_pull_request("Updated " + dataset["title"], conp_dois[index]["directory"], github_token, dataset["title"], repo)
+                repo.git.checkout("master")  # Return to master branch
 
         else:
+            if verbose:
+                print("\n\n******************** Creating dataset {} ********************".format(
+                    dataset["original_title"]))
+
+            # Switch branch
+            if "conp-bot/" + dataset["title"] not in repo.remotes.origin.refs:
+                repo.git.checkout("-b", "conp-bot/" + dataset["title"])
+            else:
+                repo.git.checkout("conp-bot/" + dataset["title"])
             dataset_path = create_new_dataset(dataset, github_token, force, username)
             if dataset_path != "":
-                push_and_pull_request("Created " + dataset["title"], dataset_path, github_token, dataset["title"])
+                push_and_pull_request("Created " + dataset["title"], dataset_path, github_token, dataset["title"], repo)
+            repo.git.checkout("master")  # Return to master branch
 
-    print("Done")
+    print("\n\n******************** Done ********************")
 
 
 def parse_args():
@@ -104,53 +126,57 @@ def parse_args():
     return github_token, stored_zenodo_tokens, passed_zenodo_tokens, args.verbose, args.force
 
 
-def get_conp_dois(verbose=False):
-    dats_list = []
-    dataset_container_dirs = get_dataset_container_dirs()
+def get_conp_dois(zenodo_dois, repo, verbose=False):
+    if verbose:
+        print("\n\n******************** Retrieving CONP DOIs ********************")
 
-    for dataset_container in dataset_container_dirs:
-        for dataset in os.listdir(dataset_container):
-            if dataset[0] == ".":
-                continue
-            dir_list = os.listdir(os.path.join(dataset_container, dataset))
-            dats_name = ""
+    dats_list = []
+    dataset_container = get_dataset_container_dir()
+    branches = repo.remotes.origin.refs
+
+    for doi in zenodo_dois:
+        if "conp-bot/" + doi["title"] in branches:
+            repo.git.checkout("conp-bot/" + doi["title"])
+            dir_path = os.path.join(dataset_container, doi["title"])
+            api.install(dir_path)
+            dir_list = os.listdir(dir_path)
             if "DATS.json" in dir_list:
-                dats_name = "DATS.json"
-            if dats_name is not "":
-                directory = os.path.join(dataset_container, dataset)
-                with open(os.path.join(directory, dats_name), "r") as f:
+                with open(os.path.join(dir_path, "DATS.json"), "r") as f:
                     try:
                         dat = json.load(f)
                     except Exception as e:
-                        print(("Error while loading DATS file {}: {}. " + 
+                        print(("Error while loading DATS file {}: {}. " +
                                "Dataset will be ignored.").format(f.name, e))
                         continue
-                    if "zenodo" in dat.keys():
+                    if "zenodo" in dat.keys() and "title" in dat.keys():
                         new_dict = dat["zenodo"]
-                        new_dict.update({"directory": directory})
+                        new_dict.update({"title": dat["title"]})
+                        new_dict.update({"directory": dir_path})
                         dats_list.append(new_dict)
+
+            repo.git.checkout("master")  # Return to master branch
 
     return dats_list
 
 
-def get_dataset_container_dirs():
-    return ["projects", "investigators"]
+def get_dataset_container_dir():
+    return "projects"
 
 
 def get_zenodo_dois(stored_tokens, passed_tokens, verbose=False):
+    if verbose:
+        print("\n\n******************** Retrieving ZENODO DOIs ********************")
+
     zenodo_dois = []
     datasets = query_zenodo(verbose)
     for dataset in datasets:
-        title = clean(dataset["metadata"]["title"])
+        metadata = dataset["metadata"]
+        title = clean(metadata["title"])
 
         # Retrieve file urls
         files = []
         if "files" not in dataset.keys():
             # This means the Zenodo dataset files are restricted
-            if verbose:
-                print(dataset["metadata"]["title"] +
-                      ": no files found, dataset is probably restricted, using tokens to retrieve file url")
-
             # Try to see if the dataset token is already known in stored tokens
             if stored_tokens is not None and title in stored_tokens.keys():
                 data = requests.get(dataset["links"]["latest"], params={'access_token': stored_tokens[title]}).json()
@@ -182,12 +208,12 @@ def get_zenodo_dois(stored_tokens, passed_tokens, verbose=False):
                     else:
                         print("Unable to access files of dataset {} at url {} "
                               "using the current Zenodo tokens, skipping this dataset"
-                              .format(dataset["metadata"]["title"], dataset["links"]["latest"]))
+                              .format(metadata["title"], dataset["links"]["latest"]))
                         continue
                 else:
                     print("No tokens available to access files of dataset"
                           " {} at url {}, skipping this dataset"
-                          .format(dataset["metadata"]["title"], dataset["links"]["latest"]))
+                          .format(metadata["title"], dataset["links"]["latest"]))
                     continue
         else:
             for bucket in dataset["files"]:
@@ -196,19 +222,43 @@ def get_zenodo_dois(stored_tokens, passed_tokens, verbose=False):
         # Store known tokens with their associated datasets
         store(stored_tokens)
 
-        doi_badge = dataset["conceptdoi"]
-        concept_doi = dataset["conceptrecid"]
-        if len(dataset["metadata"]["relations"]["version"]) != 1:
+        if len(metadata["relations"]["version"]) != 1:
             raise Exception("Unexpected multiple versions")
-        latest_version_doi = dataset["metadata"]["relations"]["version"][0]["last_child"]["pid_value"]
+        latest_version_doi = metadata["relations"]["version"][0]["last_child"]["pid_value"]
 
         zenodo_dois.append({
-            "concept_doi": concept_doi,
+            "identifier": {
+                "identifier": "https://doi.org/{}".format(dataset["conceptdoi"]),
+                "identifierSource": "DOI"
+            },
+            "concept_doi": dataset["conceptrecid"],
             "latest_version": latest_version_doi,
             "title": title,
-            "original_title": dataset["metadata"]["title"],
+            "original_title": metadata["title"],
             "files": files,
-            "doi_badge": doi_badge
+            "doi_badge": dataset["conceptdoi"],
+            "creators": metadata["creators"],
+            "description": metadata["description"],
+            "types": [],
+            "version": metadata["version"] if "version" in metadata.keys() else None,
+            "licenses": [metadata["license"] if "license" in metadata.keys() else {}],
+            "keywords": metadata["keywords"]if "keywords" in metadata.keys() else [],
+            "distributions": {
+                "format": files[0]["type"] if len(files) > 0 and "type" in files[0].keys() else None,
+                "size": files[0]["size"] if len(files) > 0 and "size" in files[0].keys() else None,
+                "unit": {"value": "B"},
+                "access": dataset["links"]["html"]
+            },
+            "extraProperties": [
+                {
+                    "category": "subjects",
+                    "values": [{"value": None}]
+                },
+                {
+                    "category": "files",
+                    "values": [{"value": None}]
+                }
+            ]
         })
 
     return zenodo_dois
@@ -222,27 +272,6 @@ def query_zenodo(verbose=False):
     if verbose:
         print("Zenodo query: {}".format(query))
     return results
-
-
-def verify_duplicates(zenodo_dois, conp_dois):
-    concept_dois = list(map(lambda x: x["concept_doi"], zenodo_dois))
-    if len(concept_dois) != len(set(concept_dois)):
-        raise Exception("Concept DOI duplicates exists in zenodo list")
-    version_dois = list(map(lambda x: x["latest_version"], zenodo_dois))
-    if len(version_dois) != len(set(version_dois)):
-        raise Exception("Version DOI duplicates exists in zenodo list")
-    titles = list(map(lambda x: x["title"], zenodo_dois))
-    if len(titles) != len(set(titles)):
-        raise Exception("Title duplicates exists in zenodo list")
-    concept_dois = list(map(lambda x: x["concept_doi"], conp_dois))
-    if len(concept_dois) != len(set(concept_dois)):
-        raise Exception("Concept DOI duplicates exists in conp list")
-    version_dois = list(map(lambda x: x["version"], conp_dois))
-    if len(version_dois) != len(set(version_dois)):
-        raise Exception("Version DOI duplicates exists in conp list")
-    directories = list(map(lambda x: x["directory"], conp_dois))
-    if len(directories) != len(set(directories)):
-        raise Exception("Directory duplicates exists in conp list")
 
 
 clean = lambda x: sub('\W|^(?=\d)','_', x)
@@ -269,7 +298,7 @@ def create_new_dataset(dataset, token, force, username):
 
     # Update DATS.json or create one if it doesn't exist
     if update_dats(os.path.join(dataset_dir, "DATS.json"), dataset):
-        commit_msg = "[conp-bot] Updated DATS.json"
+        commit_msg = "[conp-bot] Update DATS.json"
     else:
         create_new_dats(os.path.join(dataset_dir, "DATS.json"), dataset)
         commit_msg = "[conp-bot] Create DATS.json"
@@ -317,7 +346,16 @@ def create_new_dats(path, dataset):
                 "concept_doi": dataset["concept_doi"],
                 "version": dataset["latest_version"]
             },
-            "title": dataset["original_title"]
+            "title": dataset["original_title"],
+            "identifier": dataset["identifier"],
+            "creators": dataset["creators"],
+            "description": dataset["description"],
+            "types": dataset["types"],
+            "version": dataset["version"],
+            "licenses": dataset["licenses"],
+            "keywords": dataset["keywords"],
+            "distributions": dataset["distributions"],
+            "extraProperties": dataset["extraProperties"]
         }
         json.dump(data, f, indent=4)
 
@@ -350,15 +388,7 @@ def update_dataset(zenodo_dataset, conp_dataset, token):
     d.publish(to="github")
 
 
-def push_and_pull_request(msg, dataset_dir, token, title):
-    repo = Repo()
-
-    # Switch branch
-    if title not in repo.branches:
-        repo.git.checkout('-b', title)
-    else:
-        repo.git.checkout(title)
-
+def push_and_pull_request(msg, dataset_dir, token, title, repo):
     repo.git.add(dataset_dir)
     repo.git.add(".gitmodules")
     repo.git.commit("-m", "[conp-bot] " + msg)
@@ -366,13 +396,13 @@ def push_and_pull_request(msg, dataset_dir, token, title):
     origin_url = next(origin.urls)
     if "@" not in origin_url:
         origin.set_url(origin_url.replace("https://", "https://" + token + "@"))
-    repo.git.push("--set-upstream", "origin", title)
+    repo.git.push("--set-upstream", "origin", "conp-bot/" + title)
     username = search('github.com[/,:](.*)/conp-dataset.git', origin_url).group(1)
 
     # Create PR
     print("Creating PR for " + title)
     r = requests.post("https://api.github.com/repos/CONP-PCNO/conp-dataset/pulls?access_token=" + token, json={
-        "title": "Zenodo crawler results",
+        "title": "Zenodo crawler result ({})".format(title),
         "body": """## Description
 {}
 
@@ -391,7 +421,7 @@ Functional checks:
 - [ ] `DATS.json` is a valid DATs model
 - [ ] If dataset is derived data, raw data is a sub-dataset
 """.format(msg + "\n"),
-        "head": username + ":" + title,
+        "head": username + ":conp-bot/" + title,
         "base": "master"
     })
     if r.status_code != 201:
@@ -414,12 +444,11 @@ Crawled from Zenodo"""
     return False
 
 
-def check_requirements():
+def check_requirements(repo):
     # GitHub user must have a fork of https://github.com/CONP-PCNO/conp-dataset
     # Script must be run in the base directory of a local clone of this fork
     # Git remote 'origin' of local Git clone must point to that fork
     # Local Git clone must be set to branch 'master'
-    repo = Repo()
     git_root = repo.git.rev_parse("--show-toplevel")
     if git_root != os.getcwd():
         raise Exception("Script not ran at the base directory of local clone")
@@ -482,4 +511,7 @@ def store(known_zenodo_tokens):
 
 
 if __name__ == "__main__":
-    crawl()
+    try:
+        crawl()
+    except Exception as e:
+        print("Unexpected exception: ", e)
