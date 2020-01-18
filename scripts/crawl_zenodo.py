@@ -42,10 +42,10 @@ def crawl():
                         dataset["original_title"]))
 
                 # Switch branch
-                repo.git.checkout("conp-bot/" + dataset["title"])
+                switch_branch(repo, "conp-bot/" + dataset["title"])
                 update_dataset(dataset, conp_dois[index], github_token)
                 push_and_pull_request("Updated " + dataset["title"], conp_dois[index]["directory"], github_token, dataset["title"], repo)
-                repo.git.checkout("master")  # Return to master branch
+                switch_branch(repo, "master")  # Return to master branch
 
         else:
             if verbose:
@@ -53,14 +53,11 @@ def crawl():
                     dataset["original_title"]))
 
             # Switch branch
-            if "conp-bot/" + dataset["title"] not in repo.remotes.origin.refs:
-                repo.git.checkout("-b", "conp-bot/" + dataset["title"])
-            else:
-                repo.git.checkout("conp-bot/" + dataset["title"])
+            switch_branch(repo, "conp-bot/" + dataset["title"], new=True)
             dataset_path = create_new_dataset(dataset, github_token, force, username)
             if dataset_path != "":
                 push_and_pull_request("Created " + dataset["title"], dataset_path, github_token, dataset["title"], repo)
-            repo.git.checkout("master")  # Return to master branch
+            switch_branch(repo, "master")  # Return to master branch
 
     print("\n\n******************** Done ********************")
 
@@ -136,7 +133,7 @@ def get_conp_dois(zenodo_dois, repo, verbose=False):
 
     for doi in zenodo_dois:
         if "conp-bot/" + doi["title"] in branches:
-            repo.git.checkout("conp-bot/" + doi["title"])
+            switch_branch(repo, "conp-bot/" + doi["title"])
             dir_path = os.path.join(dataset_container, doi["title"])
             api.install(dir_path)
             dir_list = os.listdir(dir_path)
@@ -154,7 +151,7 @@ def get_conp_dois(zenodo_dois, repo, verbose=False):
                         new_dict.update({"directory": dir_path})
                         dats_list.append(new_dict)
 
-            repo.git.checkout("master")  # Return to master branch
+            switch_branch(repo, "master")  # Return to master branch
 
     return dats_list
 
@@ -428,7 +425,7 @@ Functional checks:
         raise Exception("Error while creating pull request: " + r.text)
 
     # Go back to master branch when done
-    repo.git.checkout("master")
+    switch_branch(repo, "master")
 
 
 def create_readme(dataset, path):
@@ -508,6 +505,13 @@ def store(known_zenodo_tokens):
         data["zenodo_tokens"] = known_zenodo_tokens
         json.dump(data, f, indent=4)
         f.truncate()
+
+
+def switch_branch(repo, name, new=False):
+    if new and name not in repo.remotes.origin.refs:
+        repo.git.checkout("-b", name)
+    else:
+        repo.git.checkout(name)
 
 
 if __name__ == "__main__":
