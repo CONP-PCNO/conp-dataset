@@ -308,6 +308,9 @@ def create_new_dataset(dataset, token, force, username):
     if create_readme(dataset, dataset_dir):
         commit_push_file(dataset_dir, "README.md", "[conp-bot] Create README.md", token)
 
+    # Add description to Github repo
+    add_description(token, repo_title, username, dataset)
+
     update_gitmodules(dataset_dir, r[0][1].replace(token + "@", ""))
 
     return d.path
@@ -512,6 +515,17 @@ def switch_branch(repo, name, new=False):
         repo.git.checkout("-b", name)
     else:
         repo.git.checkout(name)
+
+
+def add_description(token, repo_title, username, dataset):
+    url = "https://api.github.com/repos/{}/{}".format(username, repo_title)
+    head = {"Authorization": "Token token={}".format(token)}
+    payload = {"description": "Please don't submit any PR to this repository. "
+                              "If you want to request modifications, please contact {}".format(dataset["creators"][0])}
+    r = requests.patch(url, payload, headers=head)
+    if not r.ok:
+        print("Problem adding description to repository {}:".format(repo_title))
+        print(r.content)
 
 
 if __name__ == "__main__":
