@@ -519,10 +519,10 @@ def switch_branch(repo, name, new=False):
 
 def add_description(token, repo_title, username, dataset):
     url = "https://api.github.com/repos/{}/{}".format(username, repo_title)
-    head = {"Authorization": "Token token={}".format(token)}
+    head = {"Authorization": "token {}".format(token)}
     payload = {"description": "Please don't submit any PR to this repository. "
                               "If you want to request modifications, please contact {}".format(dataset["creators"][0])}
-    r = requests.patch(url, payload, headers=head)
+    r = requests.patch(url, data=json.dumps(payload), headers=head)
     if not r.ok:
         print("Problem adding description to repository {}:".format(repo_title))
         print(r.content)
