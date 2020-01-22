@@ -56,6 +56,7 @@ def mock_get_test_dataset_dir():
 
 class TestZenodoCrawler(TestCase):
 
+    @mock.patch("scripts.crawl_zenodo.update_dats", return_value=True)
     @mock.patch("scripts.crawl_zenodo.add_description")
     @mock.patch("scripts.crawl_zenodo.switch_branch")
     @mock.patch("scripts.crawl_zenodo.check_requirements", return_value="username")
@@ -76,7 +77,7 @@ class TestZenodoCrawler(TestCase):
                                 mock_create_readme, mock_push_and_PR, mock_update_submodules,
                                 mock_create_new_dats, mock_empty_conp_dois, mock_zenodo_query, mock_input,
                                 mock_store, mock_commit_push_file, mock_check_requirements, mock_switch_branch,
-                                mock_add_description):
+                                mock_add_description, mock_update_dats):
         try:
             crawl()
         except Exception as e:
