@@ -2,5 +2,6 @@
 venv/
 tests/test*
 !tests/test_zenodo_crawler.py
+!tests/test_dats_validator.py
 __pycache__/
 .DS_Store

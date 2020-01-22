@@ -37,9 +37,6 @@
 [submodule "projects/celltypes"]
   path = projects/celltypes
   url = https://github.com/emmetaobrien/celltypes.git
-[submodule "projects/PERFORM_Dataset__one_control_subject"]
-  path = projects/PERFORM_Dataset__one_control_subject
-  url = https://github.com/conp-bot/conp-dataset-PERFORM_Dataset__one_control_subject.git
 [submodule "openpain-thermal"]
 	path = projects/openpain/thermal
 	url = https://github.com/big-data-lab-team/openpain-thermal.git
@@ -63,3 +60,9 @@
 	url = https://github.com/big-data-lab-team/bigbrain-datalad.git
 	branch = master
 	datalad-id = 466d6c6a-3509-11ea-9289-f0d5bf508098
+[submodule "projects/PERFORM_Dataset__one_control_subject"]
+  path = projects/PERFORM_Dataset__one_control_subject
+  url = https://github.com/conp-bot/conp-dataset-PERFORM_Dataset__one_control_subject.git
+[submodule "scripts/dats_validator/conp-dats"]
+	path = scripts/dats_validator/conp-dats
+	url = https://github.com/CONP-PCNO/schema
