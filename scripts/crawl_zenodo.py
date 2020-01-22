@@ -147,7 +147,7 @@ def get_conp_dois(zenodo_dois, repo, verbose=False):
                         continue
                     if "zenodo" in dat.keys() and "title" in dat.keys():
                         new_dict = dat["zenodo"]
-                        new_dict.update({"title": dat["title"]})
+                        new_dict.update({"title": dat["title"] if "title" in dat.keys() else "No Title"})
                         new_dict.update({"directory": dir_path})
                         dats_list.append(new_dict)
 
