@@ -328,7 +328,6 @@ def update_dats(path, zenodo_dataset, datalad_dataset, previous_dats):
     if os.path.isfile(path):
         with open(path, "r", encoding='utf-8') as f:
             data = json.load(f)
-        datalad_dataset.remove("DATS.json")  # Remove DATS.json from git annex
         data["zenodo"] = {
             "concept_doi": zenodo_dataset["concept_doi"],
             "version": zenodo_dataset["latest_version"]
