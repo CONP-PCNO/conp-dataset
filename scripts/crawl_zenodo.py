@@ -324,7 +324,7 @@ def update_gitmodules(directory, github_url):
 """.format(directory, github_url))
 
 
-def update_dats(path, zenodo_dataset, datalad_dataset):
+def update_dats(path, zenodo_dataset, datalad_dataset, previous_dats):
     if os.path.isfile(path):
         with open(path, "r") as f:
             data = json.load(f)
@@ -335,9 +335,13 @@ def update_dats(path, zenodo_dataset, datalad_dataset):
         }
         with open(path, "w") as f:
             json.dump(data, f, indent=4)
-        return True
     else:
-        return False
+        previous_dats["zenodo"] = {
+            "concept_doi": zenodo_dataset["concept_doi"],
+            "version": zenodo_dataset["latest_version"]
+        }
+        with open(path, "w") as f:
+            json.dump(previous_dats, f, indent=4)
 
 
 def create_new_dats(path, dataset):
@@ -366,12 +370,19 @@ def update_dataset(zenodo_dataset, conp_dataset, token):
     # so we have to remove all existing files and redownload all files
     # fresh from the latest version of that zenodo dataset
 
-    # Pull in case of change from remote
     dataset_dir = conp_dataset["directory"]
-    Repo(dataset_dir).git.pull()
+    dats_dir = os.path.join(dataset_dir, "DATS.json")
 
+    # Make sure DATS.json exists
+    if os.path.isfile(dats_dir):
+        with open(dats_dir, "r") as f:
+            dats = json.load(f)  # Save existing DATS.json in case it doesn't exist in the downloaded zip file
+    else:
+        raise Exception("No existing DATS.json in dataset, aborting")
+
+    # Remove all data and DATS.json files
     for file_name in os.listdir(dataset_dir):
-        if file_name[0] == "." or file_name == "DATS.json" or file_name == "README.md":
+        if file_name[0] == "." or file_name == "README.md":
             continue
         api.remove(os.path.join(dataset_dir, file_name), check=False)
 
@@ -381,10 +392,8 @@ def update_dataset(zenodo_dataset, conp_dataset, token):
         d.download_url(bucket["links"]["self"], archive=True if bucket["type"] == "zip" else False, overwrite=True)
 
     # Update DATS.json
-    if update_dats(os.path.join(dataset_dir, "DATS.json"), zenodo_dataset, d):
-        commit_push_file(dataset_dir, "DATS.json", "[conp-bot] Update DATS.json", token)
-    else:
-        raise Exception("No DATS.json file in existing dataset, aborting")
+    update_dats(dats_dir, zenodo_dataset, d, dats)
+    commit_push_file(dataset_dir, "DATS.json", "[conp-bot] Update DATS.json", token)
 
     d.publish(to="github")
 
