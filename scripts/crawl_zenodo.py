@@ -294,7 +294,7 @@ def create_new_dataset(dataset, token, force, username):
         d.download_url(bucket["links"]["self"], archive=True if bucket["type"] == "zip" else False)
 
     # Update DATS.json or create one if it doesn't exist
-    if update_dats(os.path.join(dataset_dir, "DATS.json"), dataset):
+    if update_dats(os.path.join(dataset_dir, "DATS.json"), dataset, d):
         commit_msg = "[conp-bot] Update DATS.json"
     else:
         create_new_dats(os.path.join(dataset_dir, "DATS.json"), dataset)
@@ -324,13 +324,14 @@ def update_gitmodules(directory, github_url):
 """.format(directory, github_url))
 
 
-def update_dats(path, dataset):
+def update_dats(path, zenodo_dataset, datalad_dataset):
     if os.path.isfile(path):
         with open(path, "r") as f:
             data = json.load(f)
+        datalad_dataset.remove("DATS.json")  # Remove DATS.json from git annex
         data["zenodo"] = {
-            "concept_doi": dataset["concept_doi"],
-            "version": dataset["latest_version"]
+            "concept_doi": zenodo_dataset["concept_doi"],
+            "version": zenodo_dataset["latest_version"]
         }
         with open(path, "w") as f:
             json.dump(data, f, indent=4)
@@ -377,10 +378,10 @@ def update_dataset(zenodo_dataset, conp_dataset, token):
     d = api.Dataset(dataset_dir)
 
     for bucket in zenodo_dataset["files"]:
-        d.download_url(bucket["links"]["self"], archive=True if bucket["type"] == "zip" else False)
+        d.download_url(bucket["links"]["self"], archive=True if bucket["type"] == "zip" else False, overwrite=True)
 
     # Update DATS.json
-    if update_dats(os.path.join(dataset_dir, "DATS.json"), zenodo_dataset):
+    if update_dats(os.path.join(dataset_dir, "DATS.json"), zenodo_dataset, d):
         commit_push_file(dataset_dir, "DATS.json", "[conp-bot] Update DATS.json", token)
     else:
         raise Exception("No DATS.json file in existing dataset, aborting")
