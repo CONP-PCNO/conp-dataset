@@ -147,7 +147,7 @@ def get_conp_dois(zenodo_dois, repo, verbose=False):
                         continue
                     if "zenodo" in dat.keys() and "title" in dat.keys():
                         new_dict = dat["zenodo"]
-                        new_dict.update({"title": dat["title"] if "title" in dat.keys() else "No Title"})
+                        new_dict.update({"title": dat["title"]})
                         new_dict.update({"directory": dir_path})
                         dats_list.append(new_dict)
 
@@ -324,7 +324,7 @@ def update_gitmodules(directory, github_url):
 """.format(directory, github_url))
 
 
-def update_dats(path, zenodo_dataset, datalad_dataset, previous_dats):
+def update_dats(path, zenodo_dataset, previous_dats):
     if os.path.isfile(path):
         with open(path, "r", encoding='utf-8') as f:
             data = json.load(f)
@@ -332,6 +332,7 @@ def update_dats(path, zenodo_dataset, datalad_dataset, previous_dats):
             "concept_doi": zenodo_dataset["concept_doi"],
             "version": zenodo_dataset["latest_version"]
         }
+        data["title"] = zenodo_dataset["original_title"]
         with open(path, "w") as f:
             json.dump(data, f, indent=4)
     else:
@@ -339,6 +340,7 @@ def update_dats(path, zenodo_dataset, datalad_dataset, previous_dats):
             "concept_doi": zenodo_dataset["concept_doi"],
             "version": zenodo_dataset["latest_version"]
         }
+        previous_dats["title"] = zenodo_dataset["original_title"]
         with open(path, "w") as f:
             json.dump(previous_dats, f, indent=4)
 
@@ -391,7 +393,7 @@ def update_dataset(zenodo_dataset, conp_dataset, token):
         d.download_url(bucket["links"]["self"], archive=True if bucket["type"] == "zip" else False, overwrite=True)
 
     # Update DATS.json
-    update_dats(dats_dir, zenodo_dataset, d, dats)
+    update_dats(dats_dir, zenodo_dataset, dats)
     commit_push_file(dataset_dir, "DATS.json", "[conp-bot] Update DATS.json", token)
 
     d.publish(to="github")
