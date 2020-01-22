@@ -15,16 +15,16 @@
   url = https://github.com/khanlab-datasets/HCPUR100-Template.git
 [submodule "projects/1000GenomesProject"]
   path = projects/1000GenomesProject
-  url = https://github.com/emmetaobrien/1000GenomesProject.git
+  url = https://github.com/conpdatasets/1000GenomesProject.git
 [submodule "projects/refseq"]
   path = projects/refseq
-  url = https://github.com/emmetaobrien/refseq.git
+  url = https://github.com/conpdatasets/refseq.git
 [submodule "projects/Brainspan"]
   path = projects/Brainspan
-  url = https://github.com/emmetaobrien/Brainspan.git
+  url = https://github.com/conpdatasets/Brainspan.git
 [submodule "projects/nhpatlas"]
   path = projects/nhpatlas
-  url = https://github.com/emmetaobrien/nhpatlas.git
+  url = https://github.com/conpdatasets/nhpatlas.git
 [submodule "investigators/Khanlab/BigBrainMRICoreg"]
   path = investigators/Khanlab/BigBrainMRICoreg
   url = https://github.com/khanlab-datasets/BigBrainMRICoreg
@@ -33,10 +33,10 @@
   url = https://github.com/khanlab-datasets/BigBrainHippoUnfold
 [submodule "projects/mm_neo_atlas"]
   path = projects/mm_neo_atlas
-  url = https://github.com/emmetaobrien/mm_neo_atlas.git
+  url = https://github.com/conpdatasets/mm_neo_atlas.git
 [submodule "projects/celltypes"]
   path = projects/celltypes
-  url = https://github.com/emmetaobrien/celltypes.git
+  url = https://github.com/conpdatasets/celltypes.git
 [submodule "openpain-thermal"]
 	path = projects/openpain/thermal
 	url = https://github.com/big-data-lab-team/openpain-thermal.git
