@@ -12,7 +12,7 @@
   url = https://github.com/conpdatasets/SIMON-dataset
 [submodule "investigators/Khanlab/HCPUR100-Template"]
   path = investigators/Khanlab/HCPUR100-Template
-  url = https://github.com/khanlab-datasets/HCPUR100-Template.git
+  url = https://github.com/emmetaobrien/HCPUR100-Template.git
 [submodule "projects/1000GenomesProject"]
   path = projects/1000GenomesProject
   url = https://github.com/conpdatasets/1000GenomesProject.git
@@ -27,10 +27,10 @@
   url = https://github.com/conpdatasets/nhpatlas.git
 [submodule "investigators/Khanlab/BigBrainMRICoreg"]
   path = investigators/Khanlab/BigBrainMRICoreg
-  url = https://github.com/khanlab-datasets/BigBrainMRICoreg
+  url = https://github.com/emmetaobrien/BigBrainMRICoreg
 [submodule "investigators/Khanlab/BigBrainHippoUnfold"]
   path = investigators/Khanlab/BigBrainHippoUnfold
-  url = https://github.com/khanlab-datasets/BigBrainHippoUnfold
+  url = https://github.com/emmetaobrien/BigBrainHippoUnfold
 [submodule "projects/mm_neo_atlas"]
   path = projects/mm_neo_atlas
   url = https://github.com/conpdatasets/mm_neo_atlas.git
