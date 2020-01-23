@@ -326,7 +326,7 @@ def update_gitmodules(directory, github_url):
 
 def update_dats(path, zenodo_dataset, previous_dats):
     if os.path.isfile(path):
-        with open(path, "r", encoding='utf-8') as f:
+        with open(path, "r") as f:
             data = json.load(f)
         data["zenodo"] = {
             "concept_doi": zenodo_dataset["concept_doi"],
