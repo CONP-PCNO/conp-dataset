@@ -63,3 +63,6 @@
 [submodule "scripts/dats_validator/conp-dats"]
 	path = scripts/dats_validator/conp-dats
 	url = https://github.com/CONP-PCNO/schema
+[submodule "projects/PERFORM_one_control"]
+	path = projects/PERFORM_one_control
+	url = https://github.com/glatard/PERFORM_one_control.git
