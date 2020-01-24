@@ -251,10 +251,6 @@ def get_zenodo_dois(stored_tokens, passed_tokens, verbose=False):
                 {
                     "category": "subjects",
                     "values": [{"value": None}]
-                },
-                {
-                    "category": "files",
-                    "values": [{"value": None}]
                 }
             ]
         })
@@ -364,6 +360,13 @@ def create_new_dats(path, dataset):
             "distributions": dataset["distributions"],
             "extraProperties": dataset["extraProperties"]
         }
+        data["extraProperties"].append({
+            "category": "files",
+            "values": {
+                # Count number of files in dataset while ignoring files starting with "."
+                "value": str(sum([len(list(filter(lambda x: x[0] != ".", files))) for r, d, files in os.walk(path)]))
+            }
+        })
         json.dump(data, f, indent=4)
 
 
