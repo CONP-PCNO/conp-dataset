@@ -2,6 +2,7 @@ import requests
 import os
 import json
 import argparse
+import traceback
 from argparse import RawTextHelpFormatter
 import datalad.api as api
 from re import sub, search
@@ -543,5 +544,12 @@ def add_description(token, repo_title, username, dataset):
 if __name__ == "__main__":
     try:
         crawl()
-    except Exception as e:
-        print("Unexpected exception: ", e)
+    except Exception:
+        traceback.print_exc()
+    finally:
+        # Always switch branch back to master and clear .crawling touchfile
+        repository = Repo()
+        if repository.active_branch.name != "master":
+            switch_branch(repository, "master")
+        if ".crawling" in os.listdir("."):
+            os.remove(".crawling")
