@@ -58,8 +58,6 @@
 [submodule "projects/bigbrain-datalad"]
 	path = projects/BigBrain
 	url = https://github.com/conpdatasets/bigbrain-datalad.git
-	branch = master
-	datalad-id = 466d6c6a-3509-11ea-9289-f0d5bf508098
 [submodule "projects/PERFORM_Dataset__one_control_subject"]
   path = projects/PERFORM_Dataset__one_control_subject
   url = https://github.com/conp-bot/conp-dataset-PERFORM_Dataset__one_control_subject.git
