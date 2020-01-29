@@ -39,27 +39,25 @@
   url = https://github.com/conpdatasets/celltypes.git
 [submodule "openpain-thermal"]
 	path = projects/openpain/thermal
-	url = https://github.com/big-data-lab-team/openpain-thermal.git
+	url = https://github.com/conpdatasets/openpain-thermal.git
 [submodule "openpain-placebo_1"]
 	path = projects/openpain/placebo_1
-	url = https://github.com/big-data-lab-team/openpain-placebo_1.git
+	url = https://github.com/conpdatasets/openpain-placebo_1.git
 [submodule "openpain-subacute_longitudinal_study"]
 	path = projects/openpain/subacute_longitudinal_study
-	url = https://github.com/big-data-lab-team/openpain-subacute_longitudinal_study.git
+	url = https://github.com/conpdatasets/openpain-subacute_longitudinal_study.git
 [submodule "openpain-placebo_predict_tetreault"]
 	path = projects/openpain/placebo_predict_tetreault
-	url = https://github.com/big-data-lab-team/openpain-placebo_predict_tetreault.git
+	url = https://github.com/conpdatasets/openpain-placebo_predict_tetreault.git
 [submodule "openpain-cbp_resting"]
 	path = projects/openpain/cbp_resting
-	url = https://github.com/big-data-lab-team/openpain-cbp_resting.git
+	url = https://github.com/conpdatasets/openpain-cbp_resting.git
 [submodule "openpain-BrainNetworkChange_Mano"]
 	path = projects/openpain/BrainNetworkChange_Mano
-	url = https://github.com/big-data-lab-team/openpain-BrainNetworkChange_Mano.git
+	url = https://github.com/conpdatasets/openpain-BrainNetworkChange_Mano.git
 [submodule "projects/bigbrain-datalad"]
 	path = projects/BigBrain
-	url = https://github.com/big-data-lab-team/bigbrain-datalad.git
-	branch = master
-	datalad-id = 466d6c6a-3509-11ea-9289-f0d5bf508098
+	url = https://github.com/conpdatasets/bigbrain-datalad.git
 [submodule "projects/PERFORM_Dataset__one_control_subject"]
   path = projects/PERFORM_Dataset__one_control_subject
   url = https://github.com/conp-bot/conp-dataset-PERFORM_Dataset__one_control_subject.git
