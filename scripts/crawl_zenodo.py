@@ -5,6 +5,7 @@ import argparse
 import traceback
 from argparse import RawTextHelpFormatter
 import datalad.api as api
+from datalad.support.annexrepo import AnnexRepo
 from re import sub, search
 from git import Repo
 
@@ -288,7 +289,7 @@ def create_new_dataset(dataset, token, force, username):
                                 github_passwd=token)
 
     for bucket in dataset["files"]:
-        d.download_url(bucket["links"]["self"], archive=True if bucket["type"] == "zip" else False)
+        download_file(bucket, d, dataset_dir)
 
     # Create DATS.json if it doesn't exist
     if not os.path.isfile(os.path.join(dataset_dir, "DATS.json")):
@@ -367,7 +368,7 @@ def update_dataset(zenodo_dataset, conp_dataset, token):
     d = api.Dataset(dataset_dir)
 
     for bucket in zenodo_dataset["files"]:
-        d.download_url(bucket["links"]["self"], archive=True if bucket["type"] == "zip" else False, overwrite=True)
+        download_file(bucket, d, dataset_dir)
 
     # If DATS.json isn't in downloaded files, create new DATS.json
     if not os.path.isfile(dats_dir):
@@ -532,6 +533,19 @@ def create_zenodo_tracker(path, dataset):
             "title": dataset["original_title"]
         }
         json.dump(data, f, indent=4)
+
+
+def download_file(bucket, d, dataset_dir):
+    link = bucket["links"]["self"]
+    if "access_token" not in link:
+        d.download_url(link, archive=True if bucket["type"] == "zip" else False)
+    else:  # Gotta remove URL from annex if it contains a private access token
+        file_path = d.download_url(link)[0]["path"]
+        annex = Repo(dataset_dir).git.annex
+        annex("rmurl", file_path, link)
+        annex("addurl", link.split("?")[0], "--file", file_path, "--relaxed")
+        if bucket["type"] == "zip":
+            api.add_archive_content(file_path, annex=AnnexRepo(dataset_dir), delete=True)
 
 
 if __name__ == "__main__":
