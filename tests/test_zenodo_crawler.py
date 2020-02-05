@@ -18,6 +18,9 @@ def mock_zenodo_query():
                     "conceptrecid": "1234567",
                     "metadata": {
                         "title": "Generic Title",
+                        "creators": ["Someone"],
+                        "description": "Generic description",
+
                         "relations": {
                             "version": [
                                 {
@@ -27,6 +30,9 @@ def mock_zenodo_query():
                                 }
                             ]
                         }
+                    },
+                    "links": {
+                        "html": "https://www.fake.link.com"
                     },
                     "files": [
                         {
@@ -45,11 +51,14 @@ def mock_get_empty_conp_dois():
 
 
 def mock_get_test_dataset_dir():
-    return [os.path.join("tests", "datasets")]
+    return os.path.join("tests", "datasets")
 
 
 class TestZenodoCrawler(TestCase):
 
+    @mock.patch("scripts.crawl_zenodo.create_zenodo_tracker")
+    @mock.patch("scripts.crawl_zenodo.add_description")
+    @mock.patch("scripts.crawl_zenodo.switch_branch")
     @mock.patch("scripts.crawl_zenodo.check_requirements", return_value="username")
     @mock.patch("scripts.crawl_zenodo.commit_push_file")
     @mock.patch("scripts.crawl_zenodo.store")
@@ -67,19 +76,23 @@ class TestZenodoCrawler(TestCase):
     def test_create_new_dataset(self, mock_datalad_add, mock_dataset, mock_repo, mock_verify_repo,
                                 mock_create_readme, mock_push_and_PR, mock_update_submodules,
                                 mock_create_new_dats, mock_empty_conp_dois, mock_zenodo_query, mock_input,
-                                mock_store, mock_commit_push_file, mock_check_requirements):
+                                mock_store, mock_commit_push_file, mock_check_requirements, mock_switch_branch,
+                                mock_add_description, mock_create_zenodo_tracker):
         try:
             crawl()
         except Exception as e:
             self.fail("Unexpected Exception raised: " + str(e))
 
+    @mock.patch("scripts.crawl_zenodo.create_zenodo_tracker")
+    @mock.patch("scripts.crawl_zenodo.create_new_dats")
+    @mock.patch("scripts.crawl_zenodo.add_description")
+    @mock.patch("scripts.crawl_zenodo.switch_branch")
     @mock.patch("scripts.crawl_zenodo.check_requirements", return_value="username")
     @mock.patch("scripts.crawl_zenodo.commit_push_file")
     @mock.patch("scripts.crawl_zenodo.store")
     @mock.patch("scripts.crawl_zenodo.parse_args", return_value=mock_input())
     @mock.patch("scripts.crawl_zenodo.query_zenodo", return_value=mock_zenodo_query())
-    @mock.patch("scripts.crawl_zenodo.get_dataset_container_dirs", return_value=mock_get_test_dataset_dir())
-    @mock.patch("scripts.crawl_zenodo.update_dats", return_value=True)
+    @mock.patch("scripts.crawl_zenodo.get_dataset_container_dir", return_value=mock_get_test_dataset_dir())
     @mock.patch("scripts.crawl_zenodo.update_gitmodules")
     @mock.patch("scripts.crawl_zenodo.push_and_pull_request")
     @mock.patch("scripts.crawl_zenodo.create_readme", return_value=False)
@@ -89,8 +102,10 @@ class TestZenodoCrawler(TestCase):
     @mock.patch("datalad.api.add")
     def test_update_existing_dataset(self, mock_datalad_add, mock_dataset, mock_repo, mock_verify_repo,
                                      mock_create_readme, mock_push_and_PR, mock_update_submodules,
-                                     mock_create_new_dats, mock_get_test_dataset_dir, mock_zenodo_query,
-                                     mock_input, mock_store, mock_commit_push_file, mock_check_requirements):
+                                     mock_get_test_dataset_dir, mock_zenodo_query,
+                                     mock_input, mock_store, mock_commit_push_file, mock_check_requirements,
+                                     mock_switch_branch, mock_add_description, mock_create_new_dats,
+                                     mock_create_zenodo_tracker):
         try:
             crawl()
         except Exception as e:
