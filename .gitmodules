@@ -57,16 +57,10 @@
 	url = https://github.com/CONP-PCNO/schema
 [submodule "projects/Khanlab/BigBrainHippoUnfold"]
 	path = projects/Khanlab/BigBrainHippoUnfold
-	url = https://github.com/emmetaobrien/BigBrainHippoUnfold
-	branch = master
-	datalad-id = c737ea98-d8d7-11e9-b349-000c299164f1
+	url = https://github.com/conpdatasets/BigBrainHippoUnfold
 [submodule "projects/Khanlab/BigBrainMRICoreg"]
 	path = projects/Khanlab/BigBrainMRICoreg
-	url = https://github.com/emmetaobrien/BigBrainMRICoreg
-	branch = master
-	datalad-id = 65391990-d8d5-11e9-b349-000c299164f1
+	url = https://github.com/conpdatasets/BigBrainMRICoreg
 [submodule "projects/Khanlab/HCPUR100-Template"]
 	path = projects/Khanlab/HCPUR100-Template
-	url = https://github.com/emmetaobrien/HCPUR100-Template.git
-	branch = master
-	datalad-id = 4df4b140-758e-11e9-9782-000c299164f1
+	url = https://github.com/conpdatasets/HCPUR100-Template
