@@ -283,6 +283,9 @@ def create_new_dataset(dataset, token, force, username):
     dataset_dir = os.path.join("projects", dataset["title"])
     d = api.Dataset(dataset_dir)
     d.create()
+    d.no_annex("DATS.json")
+    d.no_annex("README.md")
+    d.no_annex(".conp-zenodo-crawler.json")
 
     r = d.create_sibling_github(repo_title,
                                 github_login=token,
@@ -420,9 +423,6 @@ Functional checks:
     })
     if r.status_code != 201:
         raise Exception("Error while creating pull request: " + r.text)
-
-    # Go back to master branch when done
-    switch_branch(repo, "master")
 
 
 def create_readme(dataset, path):
