@@ -3,6 +3,7 @@ import os
 import json
 import argparse
 import traceback
+import html2markdown
 from argparse import RawTextHelpFormatter
 import datalad.api as api
 from datalad.support.annexrepo import AnnexRepo
@@ -11,7 +12,6 @@ from git import Repo
 
 
 def crawl():
-
     # Patch arguments to get token
     github_token, stored_z_tokens, passed_z_tokens, verbose, force = parse_args()
 
@@ -46,7 +46,8 @@ def crawl():
                 # Switch branch
                 switch_branch(repo, "conp-bot/" + dataset["title"])
                 update_dataset(dataset, conp_dois[index], github_token)
-                push_and_pull_request("Updated " + dataset["title"], conp_dois[index]["directory"], github_token, dataset["title"], repo)
+                push_and_pull_request("Updated " + dataset["title"], conp_dois[index]["directory"], github_token,
+                                      dataset["title"], repo)
                 switch_branch(repo, "master")  # Return to master branch
 
         else:
@@ -66,8 +67,8 @@ def crawl():
 
 def parse_args():
     parser = argparse.ArgumentParser(
-                                     formatter_class=RawTextHelpFormatter,
-                                     description=r'''
+        formatter_class=RawTextHelpFormatter,
+        description=r'''
     CONP Zenodo crawler.
     
     Performs the following steps:
@@ -241,17 +242,21 @@ def get_zenodo_dois(stored_tokens, passed_tokens, verbose=False):
             "types": [],
             "version": metadata["version"] if "version" in metadata.keys() else None,
             "licenses": [metadata["license"] if "license" in metadata.keys() else {}],
-            "keywords": metadata["keywords"]if "keywords" in metadata.keys() else [],
-            "distributions": {
-                "format": files[0]["type"] if len(files) > 0 and "type" in files[0].keys() else None,
-                "size": files[0]["size"] if len(files) > 0 and "size" in files[0].keys() else None,
-                "unit": {"value": "B"},
-                "access": dataset["links"]["html"]
-            },
+            "keywords": metadata["keywords"] if "keywords" in metadata.keys() else [],
+            "distributions": [
+                {
+                    "formats": list(set(map(lambda x: x["type"], files))) if len(files) > 0 else None,
+                    "size": sum(list(map(lambda x: x["size"], files))) if len(files) > 0 else None,
+                    "unit": {"value": "B"},
+                    "access": {
+                        "landingPage": dataset["links"]["html"]
+                    }
+                }
+            ],
             "extraProperties": [
                 {
-                    "category": "subjects",
-                    "values": [{"value": None}]
+                    "category": "logo",
+                    "values": [{"value": "https://about.zenodo.org/static/img/logos/zenodo-gradient-round.svg"}]
                 }
             ]
         })
@@ -269,7 +274,7 @@ def query_zenodo(verbose=False):
     return results
 
 
-clean = lambda x: sub('\W|^(?=\d)','_', x)
+clean = lambda x: sub('\W|^(?=\d)', '_', x)
 
 
 def create_new_dataset(dataset, token, force, username):
@@ -286,6 +291,8 @@ def create_new_dataset(dataset, token, force, username):
     d.no_annex("DATS.json")
     d.no_annex("README.md")
     d.no_annex(".conp-zenodo-crawler.json")
+    d.config.add("datalad.log.timestamp", "true")
+    d.save()
 
     r = d.create_sibling_github(repo_title,
                                 github_login=token,
@@ -293,6 +300,7 @@ def create_new_dataset(dataset, token, force, username):
 
     for bucket in dataset["files"]:
         download_file(bucket, d, dataset_dir)
+    d.save()
 
     # Create DATS.json if it doesn't exist
     if not os.path.isfile(os.path.join(dataset_dir, "DATS.json")):
@@ -342,8 +350,12 @@ def create_new_dats(dataset_dir, dats_path, dataset):
         # Count number of files in dataset
         num = 0
         for file in os.listdir(dataset_dir):
-            if os.path.isdir(file):
+            if file[0] == "." or file == "DATS.json" or file == "README.md":
+                continue
+            elif os.path.isdir(file):
                 num += sum([len(list(filter(lambda x: x[0] != ".", files))) for r, d, files in os.walk(file)])
+            else:
+                num += 1
         data["extraProperties"].append({
             "category": "files",
             "values": {
@@ -372,6 +384,7 @@ def update_dataset(zenodo_dataset, conp_dataset, token):
 
     for bucket in zenodo_dataset["files"]:
         download_file(bucket, d, dataset_dir)
+    d.save()
 
     # If DATS.json isn't in downloaded files, create new DATS.json
     if not os.path.isfile(dats_dir):
@@ -432,8 +445,15 @@ def create_readme(dataset, path):
 
 [![DOI](https://www.zenodo.org/badge/DOI/{1}.svg)](https://doi.org/{1})
 
-Crawled from Zenodo"""
-                    .format(dataset["title"], dataset["doi_badge"]))
+Crawled from Zenodo
+
+## Description
+
+{2}""".format(
+                dataset["title"],
+                dataset["doi_badge"],
+                html2markdown.convert(dataset["description"]).replace("\n", "<br />"))
+            )
         return True
     return False
 
@@ -537,15 +557,22 @@ def create_zenodo_tracker(path, dataset):
 
 def download_file(bucket, d, dataset_dir):
     link = bucket["links"]["self"]
+    annex = Repo(dataset_dir).git.annex
     if "access_token" not in link:
-        d.download_url(link, archive=True if bucket["type"] == "zip" else False)
-    else:  # Gotta remove URL from annex if it contains a private access token
-        file_path = d.download_url(link)[0]["path"]
-        annex = Repo(dataset_dir).git.annex
-        annex("rmurl", file_path, link)
-        annex("addurl", link.split("?")[0], "--file", file_path, "--relaxed")
         if bucket["type"] == "zip":
+            d.download_url(link, archive=True if bucket["type"] == "zip" else False)
+        else:
+            annex("addurl", link, "--fast")
+    else:  # Have to remove token from annex URL
+        if bucket["type"] == "zip":
+            file_path = d.download_url(link)[0]["path"]
+            annex("rmurl", file_path, link)
+            annex("addurl", link.split("?")[0], "--file", file_path, "--relaxed")
             api.add_archive_content(file_path, annex=AnnexRepo(dataset_dir), delete=True)
+        else:
+            file_name = json.load(annex("addurl", link, "--fast", "--json"))["file"]
+            annex("rmurl", file_name, link)
+            annex("addurl", link.split("?")[0], "--file", file_name, "--relaxed")
 
 
 if __name__ == "__main__":
