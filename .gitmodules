@@ -64,3 +64,6 @@
 [submodule "projects/Khanlab/HCPUR100-Template"]
 	path = projects/Khanlab/HCPUR100-Template
 	url = https://github.com/conpdatasets/HCPUR100-Template.git
+[submodule "projects/Learning_Naturalistic_Structure__Processed_fMRI_dataset"]
+  path = projects/Learning_Naturalistic_Structure__Processed_fMRI_dataset
+  url = https://github.com/conp-bot/conp-dataset-Learning_Naturalistic_Structure__Processed_fMRI_dataset.git
