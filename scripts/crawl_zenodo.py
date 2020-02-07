@@ -295,6 +295,7 @@ def create_new_dataset(dataset, token, force, username):
     d.save()
 
     r = d.create_sibling_github(repo_title,
+                                name="github",
                                 github_login=token,
                                 github_passwd=token)
 
