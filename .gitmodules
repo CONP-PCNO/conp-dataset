@@ -55,9 +55,6 @@
 [submodule "scripts/dats_validator/conp-dats"]
 	path = scripts/dats_validator/conp-dats
 	url = https://github.com/CONP-PCNO/schema
-[submodule "projects/Learning_Naturalistic_Structure__Processed_fMRI_dataset"]
-  path = projects/Learning_Naturalistic_Structure__Processed_fMRI_dataset
-  url = https://github.com/conp-bot/conp-dataset-Learning_Naturalistic_Structure__Processed_fMRI_dataset.git
 [submodule "projects/Khanlab/BigBrainHippoUnfold"]
 	path = projects/Khanlab/BigBrainHippoUnfold
 	url = https://github.com/conpdatasets/BigBrainHippoUnfold.git
