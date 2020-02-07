@@ -39,7 +39,8 @@ def mock_zenodo_query():
                             "links": {
                                 "self": "https://www.test.file.com/nofilehere"
                             },
-                            "type": "json"
+                            "type": "json",
+                            "size": 45346
                         }
                     ]
                 }
@@ -56,6 +57,7 @@ def mock_get_test_dataset_dir():
 
 class TestZenodoCrawler(TestCase):
 
+    @mock.patch("scripts.crawl_zenodo.download_file")
     @mock.patch("scripts.crawl_zenodo.create_zenodo_tracker")
     @mock.patch("scripts.crawl_zenodo.add_description")
     @mock.patch("scripts.crawl_zenodo.switch_branch")
@@ -77,12 +79,13 @@ class TestZenodoCrawler(TestCase):
                                 mock_create_readme, mock_push_and_PR, mock_update_submodules,
                                 mock_create_new_dats, mock_empty_conp_dois, mock_zenodo_query, mock_input,
                                 mock_store, mock_commit_push_file, mock_check_requirements, mock_switch_branch,
-                                mock_add_description, mock_create_zenodo_tracker):
+                                mock_add_description, mock_create_zenodo_tracker, mock_download_file):
         try:
             crawl()
         except Exception as e:
             self.fail("Unexpected Exception raised: " + str(e))
 
+    @mock.patch("scripts.crawl_zenodo.download_file")
     @mock.patch("scripts.crawl_zenodo.create_zenodo_tracker")
     @mock.patch("scripts.crawl_zenodo.create_new_dats")
     @mock.patch("scripts.crawl_zenodo.add_description")
@@ -105,7 +108,7 @@ class TestZenodoCrawler(TestCase):
                                      mock_get_test_dataset_dir, mock_zenodo_query,
                                      mock_input, mock_store, mock_commit_push_file, mock_check_requirements,
                                      mock_switch_branch, mock_add_description, mock_create_new_dats,
-                                     mock_create_zenodo_tracker):
+                                     mock_create_zenodo_tracker, mock_download_file):
         try:
             crawl()
         except Exception as e:
