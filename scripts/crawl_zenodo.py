@@ -383,7 +383,6 @@ def update_dataset(zenodo_dataset, conp_dataset, token):
 
     for bucket in zenodo_dataset["files"]:
         download_file(bucket, d, dataset_dir)
-    d.save()
 
     # If DATS.json isn't in downloaded files, create new DATS.json
     if not os.path.isfile(dats_dir):
@@ -392,6 +391,8 @@ def update_dataset(zenodo_dataset, conp_dataset, token):
     # Add/update .conp-zenodo-crawler.json tracker file
     create_zenodo_tracker(zenodo_tracker_path, zenodo_dataset)
 
+    # Save all changes and push to github
+    d.save()
     d.publish(to="github")
 
 
