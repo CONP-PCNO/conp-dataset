@@ -19,4 +19,4 @@ touch ${TOUCHFILE}
 
 (cd ${BASEDIR} && git pull --no-edit main master)
 
-python3 ./scripts/crawl_zenodo.py --verbose -z ${TOKEN_LIST} &>>${LOGFILE}
+python3 ./conp-dataset/scripts/crawl_zenodo.py --verbose -z ${TOKEN_LIST} &>>${LOGFILE}
