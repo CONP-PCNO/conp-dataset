@@ -300,22 +300,21 @@ def create_new_dataset(dataset, token, force, username):
 
     for bucket in dataset["files"]:
         download_file(bucket, d, dataset_dir)
-    d.save()
 
     # Create DATS.json if it doesn't exist
     if not os.path.isfile(os.path.join(dataset_dir, "DATS.json")):
         create_new_dats(dataset_dir, os.path.join(dataset_dir, "DATS.json"), dataset)
-        commit_push_file(dataset_dir, "DATS.json", "[conp-bot] Create DATS.json", token)
+
+    # Create README.md if doesn't exist
+    if not os.path.isfile(os.path.join(dataset_dir, "README.md")):
+        create_readme(dataset, dataset_dir)
 
     # Add .conp-zenodo-crawler.json tracker file
     create_zenodo_tracker(os.path.join(dataset_dir, ".conp-zenodo-crawler.json"), dataset)
-    commit_push_file(dataset_dir, ".conp-zenodo-crawler.json", "[conp-bot] Create .conp-zenodo-crawler.json", token)
 
+    # Save all changes and push to github
+    d.save()
     d.publish(to="github")
-
-    # Create and push README.md if doesn't exist to github repo
-    if create_readme(dataset, dataset_dir):
-        commit_push_file(dataset_dir, "README.md", "[conp-bot] Create README.md", token)
 
     # Add description to Github repo
     add_description(token, repo_title, username, dataset)
@@ -389,11 +388,9 @@ def update_dataset(zenodo_dataset, conp_dataset, token):
     # If DATS.json isn't in downloaded files, create new DATS.json
     if not os.path.isfile(dats_dir):
         create_new_dats(dataset_dir, dats_dir, zenodo_dataset)
-        commit_push_file(dataset_dir, "DATS.json", "[conp-bot] Create DATS.json", token)
 
     # Add/update .conp-zenodo-crawler.json tracker file
     create_zenodo_tracker(zenodo_tracker_path, zenodo_dataset)
-    commit_push_file(dataset_dir, ".conp-zenodo-crawler.json", "[conp-bot] Create .conp-zenodo-crawler.json", token)
 
     d.publish(to="github")
 
@@ -454,8 +451,6 @@ Crawled from Zenodo
                 dataset["doi_badge"],
                 html2markdown.convert(dataset["description"]).replace("\n", "<br />"))
             )
-        return True
-    return False
 
 
 def check_requirements(repo):
@@ -501,17 +496,6 @@ def verify_repository(username, full_repository, token, dataset, force):
 
 def prompt(msg):
     return input(msg)
-
-
-def commit_push_file(dataset_dir, file_name, msg, token):
-    repo = Repo(dataset_dir)
-    repo.git.add(file_name)
-    repo.git.commit("-m", msg)
-    origin = repo.remote("github")
-    origin_url = next(origin.urls)
-    if "@" not in origin_url:
-        origin.set_url(origin_url.replace("https://", "https://" + token + "@"))
-    repo.git.push("--set-upstream", "github", "master")
 
 
 def store(known_zenodo_tokens):
