@@ -8,7 +8,7 @@ template = Template("""from functions import examine
 
 
 def test_$clean_title():
-    assert examine('$path') == 'All good'
+    assert examine('$path')
 """)
 
 for dataset in submodules:
