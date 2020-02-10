@@ -226,6 +226,16 @@ def get_zenodo_dois(stored_tokens, passed_tokens, verbose=False):
             raise Exception("Unexpected multiple versions")
         latest_version_doi = metadata["relations"]["version"][0]["last_child"]["pid_value"]
 
+        # Retrieve and clean file formats/extensions
+        file_formats = list(set(map(lambda x: x["type"], files))) if len(files) > 0 else None
+        if "" in file_formats:
+            file_formats.remove("")
+
+        # Retrieve and clean file keywords
+        keywords = []
+        if "keywords" in metadata.keys():
+            keywords = list(map(lambda x: {"value": x}, metadata["keywords"]))
+
         zenodo_dois.append({
             "identifier": {
                 "identifier": "https://doi.org/{}".format(dataset["conceptdoi"]),
@@ -237,15 +247,15 @@ def get_zenodo_dois(stored_tokens, passed_tokens, verbose=False):
             "original_title": metadata["title"],
             "files": files,
             "doi_badge": dataset["conceptdoi"],
-            "creators": metadata["creators"],
+            "creators": list(map(lambda x: {"name": x["name"]}, metadata["creators"])),
             "description": metadata["description"],
-            "types": [],
+            "types": [{"information": {"value": "transcriptomics"}}],
             "version": metadata["version"] if "version" in metadata.keys() else None,
-            "licenses": [metadata["license"] if "license" in metadata.keys() else {}],
-            "keywords": metadata["keywords"] if "keywords" in metadata.keys() else [],
+            "licenses": [{"name": metadata["license"]["id"] if "license" in metadata.keys() else "None"}],
+            "keywords": keywords,
             "distributions": [
                 {
-                    "formats": list(set(map(lambda x: x["type"], files))) if len(files) > 0 else None,
+                    "formats": file_formats,
                     "size": sum(list(map(lambda x: x["size"], files))) if len(files) > 0 else None,
                     "unit": {"value": "B"},
                     "access": {
@@ -358,9 +368,11 @@ def create_new_dats(dataset_dir, dats_path, dataset):
                 num += 1
         data["extraProperties"].append({
             "category": "files",
-            "values": {
-                "value": str(num)
-            }
+            "values": [
+                {
+                    "value": str(num)
+                }
+            ]
         })
         json.dump(data, f, indent=4)
 
