@@ -18,7 +18,11 @@ def mock_zenodo_query():
                     "conceptrecid": "1234567",
                     "metadata": {
                         "title": "Generic Title",
-                        "creators": ["Someone"],
+                        "creators": [
+                            {
+                                "name": "Test"
+                            }
+                        ],
                         "description": "Generic description",
 
                         "relations": {
