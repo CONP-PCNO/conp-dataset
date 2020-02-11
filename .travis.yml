@@ -13,7 +13,7 @@ before_install:
 - sudo apt-get -q install -y git-annex-standalone
 
 install:
-- pip install datalad
+- pip install datalad html2markdown
 - pip install -r scripts/dats_validator/requirements.txt
 - pip freeze
 - datalad install -r .

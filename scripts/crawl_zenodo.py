@@ -3,14 +3,16 @@ import os
 import json
 import argparse
 import traceback
+import html2markdown
 from argparse import RawTextHelpFormatter
 import datalad.api as api
+from datalad.support.annexrepo import AnnexRepo
 from re import sub, search
 from git import Repo
+from git.exc import GitCommandError
 
 
 def crawl():
-
     # Patch arguments to get token
     github_token, stored_z_tokens, passed_z_tokens, verbose, force = parse_args()
 
@@ -45,7 +47,8 @@ def crawl():
                 # Switch branch
                 switch_branch(repo, "conp-bot/" + dataset["title"])
                 update_dataset(dataset, conp_dois[index], github_token)
-                push_and_pull_request("Updated " + dataset["title"], conp_dois[index]["directory"], github_token, dataset["title"], repo)
+                push_and_pull_request("Updated " + dataset["title"], conp_dois[index]["directory"], github_token,
+                                      dataset["title"], repo)
                 switch_branch(repo, "master")  # Return to master branch
 
         else:
@@ -65,8 +68,8 @@ def crawl():
 
 def parse_args():
     parser = argparse.ArgumentParser(
-                                     formatter_class=RawTextHelpFormatter,
-                                     description=r'''
+        formatter_class=RawTextHelpFormatter,
+        description=r'''
     CONP Zenodo crawler.
     
     Performs the following steps:
@@ -128,7 +131,7 @@ def get_conp_dois(zenodo_dois, repo, verbose=False):
     if verbose:
         print("\n\n******************** Retrieving CONP DOIs ********************")
 
-    dats_list = []
+    conp_doi_list = []
     dataset_container = get_dataset_container_dir()
     branches = repo.remotes.origin.refs
 
@@ -138,23 +141,23 @@ def get_conp_dois(zenodo_dois, repo, verbose=False):
             dir_path = os.path.join(dataset_container, doi["title"])
             api.install(dir_path)
             dir_list = os.listdir(dir_path)
-            if "DATS.json" in dir_list:
-                with open(os.path.join(dir_path, "DATS.json"), "r") as f:
+            if ".conp-zenodo-crawler.json" in dir_list:
+                with open(os.path.join(dir_path, ".conp-zenodo-crawler.json"), "r") as f:
                     try:
-                        dat = json.load(f)
+                        data = json.load(f)
                     except Exception as e:
-                        print(("Error while loading DATS file {}: {}. " +
+                        print(("Error while loading file {}: {}. " +
                                "Dataset will be ignored.").format(f.name, e))
                         continue
-                    if "zenodo" in dat.keys() and "title" in dat.keys():
-                        new_dict = dat["zenodo"]
-                        new_dict.update({"title": dat["title"]})
+                    if "zenodo" in data.keys() and "title" in data.keys():
+                        new_dict = data["zenodo"]
+                        new_dict.update({"title": data["title"]})
                         new_dict.update({"directory": dir_path})
-                        dats_list.append(new_dict)
+                        conp_doi_list.append(new_dict)
 
             switch_branch(repo, "master")  # Return to master branch
 
-    return dats_list
+    return conp_doi_list
 
 
 def get_dataset_container_dir():
@@ -224,6 +227,16 @@ def get_zenodo_dois(stored_tokens, passed_tokens, verbose=False):
             raise Exception("Unexpected multiple versions")
         latest_version_doi = metadata["relations"]["version"][0]["last_child"]["pid_value"]
 
+        # Retrieve and clean file formats/extensions
+        file_formats = list(set(map(lambda x: x["type"], files))) if len(files) > 0 else None
+        if "" in file_formats:
+            file_formats.remove("")
+
+        # Retrieve and clean file keywords
+        keywords = []
+        if "keywords" in metadata.keys():
+            keywords = list(map(lambda x: {"value": x}, metadata["keywords"]))
+
         zenodo_dois.append({
             "identifier": {
                 "identifier": "https://doi.org/{}".format(dataset["conceptdoi"]),
@@ -235,22 +248,26 @@ def get_zenodo_dois(stored_tokens, passed_tokens, verbose=False):
             "original_title": metadata["title"],
             "files": files,
             "doi_badge": dataset["conceptdoi"],
-            "creators": metadata["creators"],
+            "creators": list(map(lambda x: {"name": x["name"]}, metadata["creators"])),
             "description": metadata["description"],
-            "types": [],
+            "types": [{"information": {"value": "transcriptomics"}}],
             "version": metadata["version"] if "version" in metadata.keys() else None,
-            "licenses": [metadata["license"] if "license" in metadata.keys() else {}],
-            "keywords": metadata["keywords"]if "keywords" in metadata.keys() else [],
-            "distributions": {
-                "format": files[0]["type"] if len(files) > 0 and "type" in files[0].keys() else None,
-                "size": files[0]["size"] if len(files) > 0 and "size" in files[0].keys() else None,
-                "unit": {"value": "B"},
-                "access": dataset["links"]["html"]
-            },
+            "licenses": [{"name": metadata["license"]["id"] if "license" in metadata.keys() else "None"}],
+            "keywords": keywords,
+            "distributions": [
+                {
+                    "formats": file_formats,
+                    "size": sum(list(map(lambda x: x["size"], files))) if len(files) > 0 else None,
+                    "unit": {"value": "B"},
+                    "access": {
+                        "landingPage": dataset["links"]["html"]
+                    }
+                }
+            ],
             "extraProperties": [
                 {
-                    "category": "subjects",
-                    "values": [{"value": None}]
+                    "category": "logo",
+                    "values": [{"value": "https://about.zenodo.org/static/img/logos/zenodo-gradient-round.svg"}]
                 }
             ]
         })
@@ -268,7 +285,7 @@ def query_zenodo(verbose=False):
     return results
 
 
-clean = lambda x: sub('\W|^(?=\d)','_', x)
+clean = lambda x: sub('\W|^(?=\d)', '_', x)
 
 
 def create_new_dataset(dataset, token, force, username):
@@ -282,28 +299,34 @@ def create_new_dataset(dataset, token, force, username):
     dataset_dir = os.path.join("projects", dataset["title"])
     d = api.Dataset(dataset_dir)
     d.create()
+    d.no_annex("DATS.json")
+    d.no_annex("README.md")
+    d.no_annex(".conp-zenodo-crawler.json")
+    d.config.add("datalad.log.timestamp", "true")
+    d.save()
 
     r = d.create_sibling_github(repo_title,
+                                name="github",
                                 github_login=token,
                                 github_passwd=token)
 
     for bucket in dataset["files"]:
-        d.download_url(bucket["links"]["self"], archive=True if bucket["type"] == "zip" else False)
+        download_file(bucket, d, dataset_dir)
 
-    # Update DATS.json or create one if it doesn't exist
-    if update_dats(os.path.join(dataset_dir, "DATS.json"), dataset, d):
-        commit_msg = "[conp-bot] Update DATS.json"
-    else:
-        create_new_dats(os.path.join(dataset_dir, "DATS.json"), dataset)
-        commit_msg = "[conp-bot] Create DATS.json"
+    # Create DATS.json if it doesn't exist
+    if not os.path.isfile(os.path.join(dataset_dir, "DATS.json")):
+        create_new_dats(dataset_dir, os.path.join(dataset_dir, "DATS.json"), dataset)
 
-    commit_push_file(dataset_dir, "DATS.json", commit_msg, token)
+    # Create README.md if doesn't exist
+    if not os.path.isfile(os.path.join(dataset_dir, "README.md")):
+        create_readme(dataset, dataset_dir)
 
+    # Add .conp-zenodo-crawler.json tracker file
+    create_zenodo_tracker(os.path.join(dataset_dir, ".conp-zenodo-crawler.json"), dataset)
+
+    # Save all changes and push to github
+    d.save()
     d.publish(to="github")
-
-    # Create and push README.md if doesn't exist to github repo
-    if create_readme(dataset, dataset_dir):
-        commit_push_file(dataset_dir, "README.md", "[conp-bot] Create README.md", token)
 
     # Add description to Github repo
     add_description(token, repo_title, username, dataset)
@@ -321,34 +344,9 @@ def update_gitmodules(directory, github_url):
 """.format(directory, github_url))
 
 
-def update_dats(path, zenodo_dataset, previous_dats):
-    if os.path.isfile(path):
-        with open(path, "r") as f:
-            data = json.load(f)
-        data["zenodo"] = {
-            "concept_doi": zenodo_dataset["concept_doi"],
-            "version": zenodo_dataset["latest_version"]
-        }
-        data["title"] = zenodo_dataset["original_title"]
-        with open(path, "w") as f:
-            json.dump(data, f, indent=4)
-    else:
-        previous_dats["zenodo"] = {
-            "concept_doi": zenodo_dataset["concept_doi"],
-            "version": zenodo_dataset["latest_version"]
-        }
-        previous_dats["title"] = zenodo_dataset["original_title"]
-        with open(path, "w") as f:
-            json.dump(previous_dats, f, indent=4)
-
-
-def create_new_dats(path, dataset):
-    with open(path, "w") as f:
+def create_new_dats(dataset_dir, dats_path, dataset):
+    with open(dats_path, "w") as f:
         data = {
-            "zenodo": {
-                "concept_doi": dataset["concept_doi"],
-                "version": dataset["latest_version"]
-            },
             "title": dataset["original_title"],
             "identifier": dataset["identifier"],
             "creators": dataset["creators"],
@@ -360,12 +358,22 @@ def create_new_dats(path, dataset):
             "distributions": dataset["distributions"],
             "extraProperties": dataset["extraProperties"]
         }
+        # Count number of files in dataset
+        num = 0
+        for file in os.listdir(dataset_dir):
+            if file[0] == "." or file == "DATS.json" or file == "README.md":
+                continue
+            elif os.path.isdir(file):
+                num += sum([len(list(filter(lambda x: x[0] != ".", files))) for r, d, files in os.walk(file)])
+            else:
+                num += 1
         data["extraProperties"].append({
             "category": "files",
-            "values": {
-                # Count number of files in dataset while ignoring files starting with "."
-                "value": str(sum([len(list(filter(lambda x: x[0] != ".", files))) for r, d, files in os.walk(path)]))
-            }
+            "values": [
+                {
+                    "value": str(num)
+                }
+            ]
         })
         json.dump(data, f, indent=4)
 
@@ -377,13 +385,7 @@ def update_dataset(zenodo_dataset, conp_dataset, token):
 
     dataset_dir = conp_dataset["directory"]
     dats_dir = os.path.join(dataset_dir, "DATS.json")
-
-    # Make sure DATS.json exists
-    if os.path.isfile(dats_dir):
-        with open(dats_dir, "r") as f:
-            dats = json.load(f)  # Save existing DATS.json in case it doesn't exist in the downloaded zip file
-    else:
-        raise Exception("No existing DATS.json in dataset, aborting")
+    zenodo_tracker_path = os.path.join(dataset_dir, ".conp-zenodo-crawler.json")
 
     # Remove all data and DATS.json files
     for file_name in os.listdir(dataset_dir):
@@ -394,12 +396,17 @@ def update_dataset(zenodo_dataset, conp_dataset, token):
     d = api.Dataset(dataset_dir)
 
     for bucket in zenodo_dataset["files"]:
-        d.download_url(bucket["links"]["self"], archive=True if bucket["type"] == "zip" else False, overwrite=True)
+        download_file(bucket, d, dataset_dir)
 
-    # Update DATS.json
-    update_dats(dats_dir, zenodo_dataset, dats)
-    commit_push_file(dataset_dir, "DATS.json", "[conp-bot] Update DATS.json", token)
+    # If DATS.json isn't in downloaded files, create new DATS.json
+    if not os.path.isfile(dats_dir):
+        create_new_dats(dataset_dir, dats_dir, zenodo_dataset)
 
+    # Add/update .conp-zenodo-crawler.json tracker file
+    create_zenodo_tracker(zenodo_tracker_path, zenodo_dataset)
+
+    # Save all changes and push to github
+    d.save()
     d.publish(to="github")
 
 
@@ -442,9 +449,6 @@ Functional checks:
     if r.status_code != 201:
         raise Exception("Error while creating pull request: " + r.text)
 
-    # Go back to master branch when done
-    switch_branch(repo, "master")
-
 
 def create_readme(dataset, path):
     if "README.md" not in os.listdir(path):
@@ -453,10 +457,15 @@ def create_readme(dataset, path):
 
 [![DOI](https://www.zenodo.org/badge/DOI/{1}.svg)](https://doi.org/{1})
 
-Crawled from Zenodo"""
-                    .format(dataset["title"], dataset["doi_badge"]))
-        return True
-    return False
+Crawled from Zenodo
+
+## Description
+
+{2}""".format(
+                dataset["title"],
+                dataset["doi_badge"],
+                html2markdown.convert(dataset["description"]).replace("\n", "<br />"))
+            )
 
 
 def check_requirements(repo):
@@ -504,17 +513,6 @@ def prompt(msg):
     return input(msg)
 
 
-def commit_push_file(dataset_dir, file_name, msg, token):
-    repo = Repo(dataset_dir)
-    repo.git.add(file_name)
-    repo.git.commit("-m", msg)
-    origin = repo.remote("github")
-    origin_url = next(origin.urls)
-    if "@" not in origin_url:
-        origin.set_url(origin_url.replace("https://", "https://" + token + "@"))
-    repo.git.push("--set-upstream", "github", "master")
-
-
 def store(known_zenodo_tokens):
     token_path = os.path.join(os.path.expanduser('~'), ".tokens")
     with open(token_path, "r+") as f:
@@ -542,6 +540,47 @@ def add_description(token, repo_title, username, dataset):
     if not r.ok:
         print("Problem adding description to repository {}:".format(repo_title))
         print(r.content)
+
+
+def create_zenodo_tracker(path, dataset):
+    with open(path, "w") as f:
+        data = {
+            "zenodo": {
+                "concept_doi": dataset["concept_doi"],
+                "version": dataset["latest_version"]
+            },
+            "title": dataset["original_title"]
+        }
+        json.dump(data, f, indent=4)
+
+
+def download_file(bucket, d, dataset_dir):
+    link = bucket["links"]["self"]
+    annex = Repo(dataset_dir).git.annex
+    if "access_token" not in link:
+        if bucket["type"] == "zip":
+            d.download_url(link, archive=True if bucket["type"] == "zip" else False)
+        else:
+            try:  # Try to addurl twice as rarely it might not work on the first try
+                annex("addurl", link, "--fast")
+            except GitCommandError:
+                annex("addurl", link, "--fast")
+    else:  # Have to remove token from annex URL
+        if bucket["type"] == "zip":
+            file_path = d.download_url(link)[0]["path"]
+            annex("rmurl", file_path, link)
+            try:  # Try to addurl twice as rarely it might not work on the first try
+                annex("addurl", link.split("?")[0], "--file", file_path, "--relaxed")
+            except GitCommandError:
+                annex("addurl", link.split("?")[0], "--file", file_path, "--relaxed")
+            api.add_archive_content(file_path, annex=AnnexRepo(dataset_dir), delete=True)
+        else:
+            file_name = json.load(annex("addurl", link, "--fast", "--json"))["file"]
+            annex("rmurl", file_name, link)
+            try:  # Try to addurl twice as rarely it might not work on the first try
+                annex("addurl", link.split("?")[0], "--file", file_name, "--relaxed")
+            except GitCommandError:
+                annex("addurl", link.split("?")[0], "--file", file_name, "--relaxed")
 
 
 if __name__ == "__main__":
