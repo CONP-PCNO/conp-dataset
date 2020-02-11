@@ -66,7 +66,13 @@ def recurse(directory, odds):
     return "All good"
 
 
-def examine(dataset):
+def examine(dataset, *, username=None, password=None):
+
+    # If authentication is required, add credentials to the keyring.
+    # Note: Assume a loris-token authntification.
+    if username and password:
+        keyring.set_password("datalad-loris", "user", username)
+        keyring.set_password("datalad-loris", "password", password)
 
     # Check if dats.json and README.md are present in root of dataset
     file_names = [file_name for file_name in listdir(dataset)]
