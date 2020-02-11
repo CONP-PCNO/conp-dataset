@@ -40,7 +40,7 @@ def examine(dataset):
     if "README.md" not in file_names:
         return "Dataset " + dataset + " doesn't contain README.md in its root directory"
 
-    with open(join(dataset, "DATS.json"), "r") as f:
+    with open(os.path.join(dataset, "DATS.json"), "r") as f:
         if not validate_json(load(f)):
             return "Dataset " + dataset + " doesn't contain a valid DATS.json"
 
