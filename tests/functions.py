@@ -2,6 +2,8 @@ from contextlib import contextmanager
 from os import listdir, walk
 from os.path import isdir, exists, join, abspath, basename, dirname
 from random import random
+from scripts.dats_validator.validator import validate_json
+from json import load
 import signal
 
 import datalad.api as api
@@ -75,6 +77,10 @@ def examine(dataset):
 
     if "README.md" not in file_names:
         return "Dataset " + dataset + " doesn't contain README.md in its root directory"
+
+    with open(join(dataset, "DATS.json"), "r") as f:
+        if not validate_json(load(f)):
+            return "Dataset " + dataset + " doesn't contain a valid DATS.json"
 
     # Number of files to test in each dataset
     # with 100 files, the test is not completing before Travis timeout (about 10~12 minutes)
