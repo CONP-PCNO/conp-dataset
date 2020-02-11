@@ -9,6 +9,7 @@ import datalad.api as api
 from datalad.support.annexrepo import AnnexRepo
 from re import sub, search
 from git import Repo
+from git.exc import GitCommandError
 
 
 def crawl():
@@ -560,17 +561,26 @@ def download_file(bucket, d, dataset_dir):
         if bucket["type"] == "zip":
             d.download_url(link, archive=True if bucket["type"] == "zip" else False)
         else:
-            annex("addurl", link, "--fast")
+            try:  # Try to addurl twice as rarely it might not work on the first try
+                annex("addurl", link, "--fast")
+            except GitCommandError:
+                annex("addurl", link, "--fast")
     else:  # Have to remove token from annex URL
         if bucket["type"] == "zip":
             file_path = d.download_url(link)[0]["path"]
             annex("rmurl", file_path, link)
-            annex("addurl", link.split("?")[0], "--file", file_path, "--relaxed")
+            try:  # Try to addurl twice as rarely it might not work on the first try
+                annex("addurl", link.split("?")[0], "--file", file_path, "--relaxed")
+            except GitCommandError:
+                annex("addurl", link.split("?")[0], "--file", file_path, "--relaxed")
             api.add_archive_content(file_path, annex=AnnexRepo(dataset_dir), delete=True)
         else:
             file_name = json.load(annex("addurl", link, "--fast", "--json"))["file"]
             annex("rmurl", file_name, link)
-            annex("addurl", link.split("?")[0], "--file", file_name, "--relaxed")
+            try:  # Try to addurl twice as rarely it might not work on the first try
+                annex("addurl", link.split("?")[0], "--file", file_name, "--relaxed")
+            except GitCommandError:
+                annex("addurl", link.split("?")[0], "--file", file_name, "--relaxed")
 
 
 if __name__ == "__main__":
