@@ -28,6 +28,23 @@ def raise_timeout(signum, frame):
     raise TimeoutError
 
 
+def generate_datalad_provider(loris_api):
+    
+    # Regex for provider
+    re_loris_api = loris_api.replcae(".", "\.")
+
+    with open("~/.config/datalad/providers/loris.cfg", 'w') as fout:
+        fout.write(f"""[provider:loris]                                                                    
+url_re = {re_loris_api}/*                             
+authentication_type = loris-token                                                           
+credential = loris                                                                  
+                                                                                            
+[credential:loris]                                                                  
+url = {loris_api}/login                                           
+type = loris-token  
+""")
+
+
 def recurse(directory, odds):
     """
     recurse recursively checks each file in directory and sub-directories with odds chance.
@@ -66,13 +83,17 @@ def recurse(directory, odds):
     return "All good"
 
 
-def examine(dataset, *, username=None, password=None):
+def examine(dataset, *, username=None, password=None, loris_api=None):
 
-    # If authentication is required, add credentials to the keyring.
+    # If authentication is required, add credentials to the keyring
+    # and create a provider config file.
     # Note: Assume a loris-token authntification.
-    if username and password:
+    if username and password and loris_api:
         keyring.set_password("datalad-loris", "user", username)
         keyring.set_password("datalad-loris", "password", password)
+        generate_datalad_provider(loris_api)
+    elif username or password or loris_api:
+        raise Exception("Insuficient information for authetication.")
 
     # Check if dats.json and README.md are present in root of dataset
     file_names = [file_name for file_name in listdir(dataset)]
