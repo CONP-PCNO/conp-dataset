@@ -251,7 +251,7 @@ def get_zenodo_dois(stored_tokens, passed_tokens, verbose=False):
             "creators": list(map(lambda x: {"name": x["name"]}, metadata["creators"])),
             "description": metadata["description"],
             "types": [{"information": {"value": "transcriptomics"}}],
-            "version": metadata["version"] if "version" in metadata.keys() else None,
+            "version": metadata["version"] if "version" in metadata.keys() else "None",
             "licenses": [{"name": metadata["license"]["id"] if "license" in metadata.keys() else "None"}],
             "keywords": keywords,
             "distributions": [
