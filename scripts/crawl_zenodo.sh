@@ -17,7 +17,6 @@ test -f ${TOUCHFILE} && (echo "Another crawling process is still running (${TOUC
 # We are in the protected section
 touch ${TOUCHFILE}
 
-(cd ${BASEDIR} && git pull main master)
+(cd ${BASEDIR} && git pull --no-edit main master)
 
-docker run --rm -u $UID:$UID -v $HOME:$HOME -e HOME=$HOME -v ${BASEDIR}:/workdir -w /workdir bigdatalabteam/git-annex python3 ./scripts/crawl_zenodo.py --force --verbose -z ${TOKEN_LIST} &>>${LOGFILE}
-\rm ${TOUCHFILE}
+python3 ./scripts/crawl_zenodo.py --verbose -z ${TOKEN_LIST} &>>${LOGFILE}
