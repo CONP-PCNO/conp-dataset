@@ -251,7 +251,7 @@ def get_zenodo_dois(stored_tokens, passed_tokens, verbose=False):
             "creators": list(map(lambda x: {"name": x["name"]}, metadata["creators"])),
             "description": metadata["description"],
             "types": [{"information": {"value": "transcriptomics"}}],
-            "version": metadata["version"] if "version" in metadata.keys() else None,
+            "version": metadata["version"] if "version" in metadata.keys() else "None",
             "licenses": [{"name": metadata["license"]["id"] if "license" in metadata.keys() else "None"}],
             "keywords": keywords,
             "distributions": [
@@ -562,9 +562,9 @@ def download_file(bucket, d, dataset_dir):
             d.download_url(link, archive=True if bucket["type"] == "zip" else False)
         else:
             try:  # Try to addurl twice as rarely it might not work on the first try
-                annex("addurl", link, "--fast")
+                annex("addurl", link, "--fast", "--file", link.split("/")[-1])
             except GitCommandError:
-                annex("addurl", link, "--fast")
+                annex("addurl", link, "--fast", "--file", link.split("/")[-1])
     else:  # Have to remove token from annex URL
         if bucket["type"] == "zip":
             file_path = d.download_url(link)[0]["path"]
