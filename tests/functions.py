@@ -30,6 +30,8 @@ def raise_timeout(signum, frame):
 
 
 def generate_datalad_provider(loris_api):
+    if loris_api is None:
+        return
 
     # Regex for provider
     re_loris_api = loris_api.replace(".", "\.")
@@ -95,7 +97,7 @@ def recurse(directory, odds):
     return "All good"
 
 
-def examine(dataset, *, project=None):
+def examine(dataset, project):
 
     # If authentication is required, add credentials to the keyring
     # and create a provider config file.
