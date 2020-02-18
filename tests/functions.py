@@ -6,6 +6,7 @@ from random import random
 import signal
 
 import datalad.api as api
+import keyring
 
 
 @contextmanager
@@ -30,8 +31,6 @@ def raise_timeout(signum, frame):
 
 
 def generate_datalad_provider(loris_api):
-    if loris_api is None:
-        return
 
     # Regex for provider
     re_loris_api = loris_api.replace(".", "\.")
@@ -99,16 +98,17 @@ def recurse(directory, odds):
 
 def examine(dataset, project):
 
-    # If authentication is required, add credentials to the keyring
-    # and create a provider config file.
+    # If authentication is required and credentials are provided then add credentials
+    # to the keyring and create a provider config file.
     # Note: Assume a loris-token authntification.
-    if project:
+    username = os.getenv(project + "_USERNAME", None)
+    password = os.getenv(project + "_PASSWORD", None)
+    loris_api = os.getenv(project + "_LORIS_API", None)
 
-        keyring.set_password("datalad-loris", "user", os.environ[project + "_USERNAME"])
-        keyring.set_password(
-            "datalad-loris", "password", os.environ[project + "_PASSWORD"]
-        )
-        generate_datalad_provider(os.environ[project + "_LORIS_API"])
+    if username and password and loris_api:
+        keyring.set_password("datalad-loris", "user", username)
+        keyring.set_password("datalad-loris", "password", password)
+        generate_datalad_provider(loris_api)
 
     # Check if dats.json and README.md are present in root of dataset
     file_names = [file_name for file_name in listdir(dataset)]
