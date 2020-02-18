@@ -67,3 +67,6 @@
 [submodule "projects/Learning_Naturalistic_Structure__Processed_fMRI_dataset"]
   path = projects/Learning_Naturalistic_Structure__Processed_fMRI_dataset
   url = https://github.com/conp-bot/conp-dataset-Learning_Naturalistic_Structure__Processed_fMRI_dataset.git
+[submodule "projects/mcgill-emc-rna-seq-experiment"]
+	path = projects/mcgill-emc-rna-seq-experiment
+	url = https://github.com/zxenia/mcgill-emc-rna-seq-experiment.git
