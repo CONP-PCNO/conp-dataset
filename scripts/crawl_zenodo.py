@@ -581,6 +581,7 @@ def download_file(bucket, d, dataset_dir):
                 annex("addurl", link.split("?")[0], "--file", file_name, "--relaxed")
             except GitCommandError:
                 annex("addurl", link.split("?")[0], "--file", file_name, "--relaxed")
+    d.save()
 
 
 if __name__ == "__main__":
