@@ -376,7 +376,9 @@ def create_new_dats(dataset_dir, dats_path, dataset):
         })
 
         # Retrieve modalities from files
-        file_paths = Repo(dataset_dir).git.annex("list").split("\n____X ")[1:]  # Get file paths
+        file_paths = map(lambda x: x.spllit[" "][-1],
+                         filter(lambda x: " " in x,
+                                Repo(dataset_dir).git.annex("list").split("\n")))  # Get file paths
         file_names = list(map(lambda x: x.split("/")[-1] if "/" in x else x, file_paths))  # Get file names from path
         modalities = set([guess_modality(file_name) for file_name in file_names])
         if len(modalities) == 0:
