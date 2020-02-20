@@ -250,7 +250,6 @@ def get_zenodo_dois(stored_tokens, passed_tokens, verbose=False):
             "doi_badge": dataset["conceptdoi"],
             "creators": list(map(lambda x: {"name": x["name"]}, metadata["creators"])),
             "description": metadata["description"],
-            "types": [{"information": {"value": "transcriptomics"}}],
             "version": metadata["version"] if "version" in metadata.keys() else "None",
             "licenses": [{"name": metadata["license"]["id"] if "license" in metadata.keys() else "None"}],
             "keywords": keywords,
@@ -351,13 +350,13 @@ def create_new_dats(dataset_dir, dats_path, dataset):
             "identifier": dataset["identifier"],
             "creators": dataset["creators"],
             "description": dataset["description"],
-            "types": dataset["types"],
             "version": dataset["version"],
             "licenses": dataset["licenses"],
             "keywords": dataset["keywords"],
             "distributions": dataset["distributions"],
             "extraProperties": dataset["extraProperties"]
         }
+
         # Count number of files in dataset
         num = 0
         for file in os.listdir(dataset_dir):
@@ -375,6 +374,17 @@ def create_new_dats(dataset_dir, dats_path, dataset):
                 }
             ]
         })
+
+        # Retrieve modalities from files
+        file_paths = Repo(dataset_dir).git.annex("list").split("\n____X ")[1:]  # Get file paths
+        file_names = list(map(lambda x: x.split("/")[-1] if "/" in x else x, file_paths))  # Get file names from path
+        modalities = set([guess_modality(file_name) for file_name in file_names])
+        if len(modalities) == 0:
+            modalities.add("unknown")
+        elif len(modalities) > 1 and "unknown" in modalities:
+            modalities.remove("unknown")
+        data["types"] = [{"value": modality} for modality in modalities]
+
         json.dump(data, f, indent=4)
 
 
@@ -582,6 +592,25 @@ def download_file(bucket, d, dataset_dir):
             except GitCommandError:
                 annex("addurl", link.split("?")[0], "--file", file_name, "--relaxed")
     d.save()
+
+
+def guess_modality(file_name):
+    # Associate file types to substrings found in the file name
+    modalities = {
+        'fMRI': ['bold', 'func', 'cbv'],
+        'MRI': ['T1', 'T2', 'FLAIR', 'FLASH', 'PD', 'angio', 'anat', 'mask'],
+        'diffusion': ['dwi', 'dti', 'sbref'],
+        'meg': ['meg'],
+        'intracranial eeg': ['ieeg'],
+        'eeg': ['eeg'],
+        'field map': ['fmap', 'phasediff', 'magnitude'],
+        'imaging': ['nii', 'nii.gz']
+    }
+    for m in modalities:
+        for s in modalities[m]:
+            if s in file_name:
+                return m
+    return 'unknown'
 
 
 if __name__ == "__main__":
