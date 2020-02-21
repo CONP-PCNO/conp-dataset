@@ -606,7 +606,7 @@ def guess_modality(file_name):
         'intracranial eeg': ['ieeg'],
         'eeg': ['eeg'],
         'field map': ['fmap', 'phasediff', 'magnitude'],
-        'imaging': ['nii', 'nii.gz']
+        'imaging': ['nii', 'nii.gz', 'mnc']
     }
     for m in modalities:
         for s in modalities[m]:
