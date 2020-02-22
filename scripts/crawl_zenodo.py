@@ -350,7 +350,10 @@ def get_zenodo_dois(stored_tokens, passed_tokens, verbose=False):
                         "formats": file_formats,
                         "size": dataset_size,
                         "unit": {"value": dataset_unit},
-                        "access": {"landingPage": dataset["links"]["html"]},
+                        "access": {
+                            "landingPage": dataset["links"]["html"],
+                            "authorizations": [{"value": metadata["access_right"]}],
+                        },
                     }
                 ],
                 "extraProperties": [
