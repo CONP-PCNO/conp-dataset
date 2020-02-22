@@ -11,6 +11,8 @@ from re import sub, search
 from git import Repo
 from git.exc import GitCommandError
 
+import humanize
+
 
 def crawl():
     # Patch arguments to get token
@@ -311,6 +313,11 @@ def get_zenodo_dois(stored_tokens, passed_tokens, verbose=False):
         if "keywords" in metadata.keys():
             keywords = list(map(lambda x: {"value": x}, metadata["keywords"]))
 
+        dataset_size, dataset_unit = humanize.naturalsize(
+            sum([filename["size"] for filename in files])
+        ).split(" ")
+        dataset_size = float(dataset_size)
+
         zenodo_dois.append(
             {
                 "identifier": {
@@ -341,10 +348,8 @@ def get_zenodo_dois(stored_tokens, passed_tokens, verbose=False):
                 "distributions": [
                     {
                         "formats": file_formats,
-                        "size": sum(list(map(lambda x: x["size"], files)))
-                        if len(files) > 0
-                        else None,
-                        "unit": {"value": "B"},
+                        "size": dataset_size,
+                        "unit": {"value": dataset_unit},
                         "access": {"landingPage": dataset["links"]["html"]},
                     }
                 ],
