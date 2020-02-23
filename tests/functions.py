@@ -35,7 +35,12 @@ def generate_datalad_provider(loris_api):
     # Regex for provider
     re_loris_api = loris_api.replace(".", "\.")
 
-    with open("~/.config/datalad/providers/loris.cfg", "w") as fout:
+    with open(
+        os.path.join(
+            os.path.expanduser("~"), ".config", "datalad", "providers", "loris.cfg"
+        ),
+        "w",
+    ) as fout:
         fout.write(
             f"""[provider:loris]                                                                    
 url_re = {re_loris_api}/*                             
@@ -100,7 +105,7 @@ def examine(dataset, project):
 
     # If authentication is required and credentials are provided then add credentials
     # to the keyring and create a provider config file.
-    # Note: Assume a loris-token authntification.
+    # Note: Assume a loris-token authentication.
     username = os.getenv(project + "_USERNAME", None)
     password = os.getenv(project + "_PASSWORD", None)
     loris_api = os.getenv(project + "_LORIS_API", None)
