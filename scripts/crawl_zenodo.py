@@ -579,7 +579,8 @@ def download_file(bucket, d, dataset_dir):
                 annex("addurl", link, "--fast", "--file", link.split("/")[-1])
     else:  # Have to remove token from annex URL
         if bucket["type"] == "zip":
-            file_path = d.download_url(link, on_failure="ignore")[0]["path"]
+            file_path = os.path.join(dataset_dir, link.split("/")[-1].split("?")[0])
+            d.download_url(link, path=file_path)
             annex("rmurl", file_path, link)
             try:  # Try to addurl twice as rarely it might not work on the first try
                 annex("addurl", link.split("?")[0], "--file", file_path, "--relaxed")
