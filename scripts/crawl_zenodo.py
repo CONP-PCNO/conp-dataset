@@ -7,6 +7,7 @@ import html2markdown
 from argparse import RawTextHelpFormatter
 import datalad.api as api
 from datalad.support.annexrepo import AnnexRepo
+from datalad.support.exceptions import CommandError
 from re import sub, search
 from git import Repo
 from git.exc import GitCommandError
@@ -580,7 +581,10 @@ def download_file(bucket, d, dataset_dir):
     else:  # Have to remove token from annex URL
         if bucket["type"] == "zip":
             file_path = os.path.abspath(os.path.join(dataset_dir, link.split("/")[-1].split("?")[0]))
-            d.download_url(link, path=file_path)
+            try:
+                d.download_url(link, path=file_path)
+            except CommandError as e:
+                print(e)
             annex("rmurl", file_path, link)
             try:  # Try to addurl twice as rarely it might not work on the first try
                 annex("addurl", link.split("?")[0], "--file", file_path, "--relaxed")
