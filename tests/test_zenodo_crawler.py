@@ -24,7 +24,7 @@ def mock_zenodo_query():
                             }
                         ],
                         "description": "Generic description",
-
+                        "access_right": "open",
                         "relations": {
                             "version": [
                                 {

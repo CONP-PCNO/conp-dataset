@@ -352,7 +352,13 @@ def get_zenodo_dois(stored_tokens, passed_tokens, verbose=False):
                         "unit": {"value": dataset_unit},
                         "access": {
                             "landingPage": dataset["links"]["html"],
-                            "authorizations": [{"value": metadata["access_right"]}],
+                            "authorizations": [
+                                {
+                                    "value": "public"
+                                    if metadata["access_right"] == "open"
+                                    else "private"
+                                }
+                            ],
                         },
                     }
                 ],
