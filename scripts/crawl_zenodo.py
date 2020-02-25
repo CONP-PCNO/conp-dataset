@@ -347,7 +347,12 @@ def get_zenodo_dois(stored_tokens, passed_tokens, verbose=False):
                 "keywords": keywords,
                 "distributions": [
                     {
-                        "formats": file_formats,
+                        "formats": [
+                            file_format.upper()
+                            for file_format in file_formats
+                            # Do not modify specific file formats.
+                            if file_formats not in ["NIfTI", "BigWig"]
+                        ],
                         "size": dataset_size,
                         "unit": {"value": dataset_unit},
                         "access": {
