@@ -1,4 +1,5 @@
 from contextlib import contextmanager
+import json
 import os
 from os import listdir, walk
 from os.path import isdir, exists, join, abspath, basename, dirname
@@ -28,6 +29,39 @@ def timeout(time):
 
 def raise_timeout(signum, frame):
     raise TimeoutError
+
+
+def is_authentication_require(dataset):
+    """Verify in the dataset DATS file if authentication is required.
+    
+    Parameters
+    ----------
+    dataset : str
+        Relative path to the dataset root.
+    
+    Returns
+    -------
+    bool
+        Wether the dataset requires authentication.
+    """
+    with open(os.path.join(dataset, "DATS.json")) as fin:
+        metadata = json.load(fin)
+
+        try:
+            distributions = metadata["distributions"]
+            for distrubtion in distributions:
+                authorizations = distrubtion["access"]["authorizations"]
+                if any(
+                    [
+                        authorization["value"] != "public"
+                        for authorization in authorizations
+                    ]
+                ):
+                    return True
+
+            return False
+        except KeyError as e:
+            return str(e) + " DATS.json is invalid!"
 
 
 def generate_datalad_provider(loris_api):
@@ -114,6 +148,12 @@ def examine(dataset, project):
         keyring.set_password("datalad-loris", "user", username)
         keyring.set_password("datalad-loris", "password", password)
         generate_datalad_provider(loris_api)
+    elif is_authentication_require(dataset) == True:
+        return (
+            f"Cannot download file (dataset requires authentication, make sure "
+            + "that environment variables {project}_USERNAME, {prject}_PASSWORD, "
+            + "and {projet}_LORIS_API are defined in Travis)"
+        )
 
     # Check if dats.json and README.md are present in root of dataset
     file_names = [file_name for file_name in listdir(dataset)]
