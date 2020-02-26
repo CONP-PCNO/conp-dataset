@@ -116,16 +116,15 @@ def recurse(directory, odds):
         # If the file is a broken symlink and with odd chance
         elif not exists(full_path) and random() < odds:
             # Timeouts the download or a hanging authentification
-            response = dict()
+            responses = []
             with timeout(3):
-                response = api.get(
-                    path=full_path, on_failure="ignore", return_type="item-or-list"
-                )
+                responses = api.get(path=full_path, on_failure="ignore")
 
-            if response.get("status") in ["ok", "notneeded"]:
-                continue
-            if response.get("status") in ["impossible", "error"]:
-                return response.get("message") + full_path
+            for response in responses:
+                if response.get("status") in ["ok", "notneeded"]:
+                    continue
+                if response.get("status") in ["impossible", "error"]:
+                    return response.get("message") + full_path
 
     return "All good"
 
