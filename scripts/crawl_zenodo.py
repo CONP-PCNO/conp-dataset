@@ -9,6 +9,9 @@ import datalad.api as api
 from datalad.support.annexrepo import AnnexRepo
 from re import sub, search
 from git import Repo
+from git.exc import GitCommandError
+
+import humanize
 
 
 def crawl():
@@ -25,41 +28,73 @@ def crawl():
         print("\n\n******************** Listing DOIs ********************")
         print("Zenodo DOIs: ")
         for zenodo_doi in zenodo_dois:
-            print("- Title: {}, Concept DOI: {}, Latest version DOI: {}".format(
-                zenodo_doi["original_title"], zenodo_doi["concept_doi"], zenodo_doi["latest_version"]))
+            print(
+                "- Title: {}, Concept DOI: {}, Latest version DOI: {}".format(
+                    zenodo_doi["original_title"],
+                    zenodo_doi["concept_doi"],
+                    zenodo_doi["latest_version"],
+                )
+            )
         print("CONP DOIs: ")
         for conp_doi in conp_dois:
-            print("- Title: {}, Concept DOI: {}, Version DOI: {}".format(
-                conp_doi["title"], conp_doi["concept_doi"], conp_doi["version"]))
+            print(
+                "- Title: {}, Concept DOI: {}, Version DOI: {}".format(
+                    conp_doi["title"], conp_doi["concept_doi"], conp_doi["version"]
+                )
+            )
 
     for dataset in zenodo_dois:
-        index = next((i for (i, d) in enumerate(conp_dois) if d["concept_doi"] == dataset["concept_doi"]), None)
+        index = next(
+            (
+                i
+                for (i, d) in enumerate(conp_dois)
+                if d["concept_doi"] == dataset["concept_doi"]
+            ),
+            None,
+        )
 
         # If the zenodo dataset exists in conp datasets
         if index is not None:
             # If the conp dataset version isn't the latest, update
             if dataset["latest_version"] != conp_dois[index]["version"]:
                 if verbose:
-                    print("\n\n******************** Updating dataset {} ********************".format(
-                        dataset["original_title"]))
+                    print(
+                        "\n\n******************** Updating dataset {} ********************".format(
+                            dataset["original_title"]
+                        )
+                    )
 
                 # Switch branch
                 switch_branch(repo, "conp-bot/" + dataset["title"])
                 update_dataset(dataset, conp_dois[index], github_token)
-                push_and_pull_request("Updated " + dataset["title"], conp_dois[index]["directory"], github_token,
-                                      dataset["title"], repo)
+                push_and_pull_request(
+                    "Updated " + dataset["title"],
+                    conp_dois[index]["directory"],
+                    github_token,
+                    dataset["title"],
+                    repo,
+                )
                 switch_branch(repo, "master")  # Return to master branch
 
         else:
             if verbose:
-                print("\n\n******************** Creating dataset {} ********************".format(
-                    dataset["original_title"]))
+                print(
+                    "\n\n******************** Creating dataset {} ********************".format(
+                        dataset["original_title"]
+                    )
+                )
 
             # Switch branch
             switch_branch(repo, "conp-bot/" + dataset["title"], new=True)
             dataset_path = create_new_dataset(dataset, github_token, force, username)
             if dataset_path != "":
-                push_and_pull_request("Created " + dataset["title"], dataset_path, github_token, dataset["title"], repo)
+                push_and_pull_request(
+                    "Created " + dataset["title"],
+                    dataset_path,
+                    github_token,
+                    dataset["title"],
+                    repo,
+                )
             switch_branch(repo, "master")  # Return to master branch
 
     print("\n\n******************** Done ********************")
@@ -68,7 +103,7 @@ def crawl():
 def parse_args():
     parser = argparse.ArgumentParser(
         formatter_class=RawTextHelpFormatter,
-        description=r'''
+        description=r"""
     CONP Zenodo crawler.
     
     Performs the following steps:
@@ -84,15 +119,20 @@ def parse_args():
     * Git remote 'origin' of local Git clone must point to that fork. Warning: this script will 
       push dataset updates to 'origin'.
     * Local Git clone must be set to branch 'master' 
-    ''')
-    parser.add_argument("github_token", action="store", nargs="?", help="GitHub access token")
-    parser.add_argument('-z', nargs='*', help="Zenodo access tokens")
-    parser.add_argument("--verbose", action="store_true", help="Print debug information")
+    """,
+    )
+    parser.add_argument(
+        "github_token", action="store", nargs="?", help="GitHub access token"
+    )
+    parser.add_argument("-z", nargs="*", help="Zenodo access tokens")
+    parser.add_argument(
+        "--verbose", action="store_true", help="Print debug information"
+    )
     parser.add_argument("--force", action="store_true", help="Force updates")
     args = parser.parse_args()
 
     # If tokens aren't passed as arguments, check ~/.tokens else store tokens
-    token_path = os.path.join(os.path.expanduser('~'), ".tokens")
+    token_path = os.path.join(os.path.expanduser("~"), ".tokens")
     github_token = args.github_token
     passed_zenodo_tokens = args.z
     stored_zenodo_tokens = None
@@ -106,16 +146,20 @@ def parse_args():
             stored_tokens = json.load(f)
 
     if not github_token and "github_token" not in stored_tokens.keys():
-        raise Exception("Github token not passed by command line argument nor found in ~/.tokens file, "
-                        "please pass your github access token via the command line")
+        raise Exception(
+            "Github token not passed by command line argument nor found in ~/.tokens file, "
+            "please pass your github access token via the command line"
+        )
     elif github_token:
         stored_tokens["github_token"] = github_token
     else:
         github_token = stored_tokens["github_token"]
 
     if not passed_zenodo_tokens and "zenodo_tokens" not in stored_tokens.keys():
-        raise Exception("Zenodo tokens not passed by command line argument nor found in ~/.tokens file, "
-                        "please pass your zenodo access tokens via the command line")
+        raise Exception(
+            "Zenodo tokens not passed by command line argument nor found in ~/.tokens file, "
+            "please pass your zenodo access tokens via the command line"
+        )
     if "zenodo_tokens" in stored_tokens.keys():
         stored_zenodo_tokens = stored_tokens["zenodo_tokens"]
 
@@ -123,7 +167,13 @@ def parse_args():
     with open(token_path, "w") as f:
         json.dump(stored_tokens, f, indent=4)
 
-    return github_token, stored_zenodo_tokens, passed_zenodo_tokens, args.verbose, args.force
+    return (
+        github_token,
+        stored_zenodo_tokens,
+        passed_zenodo_tokens,
+        args.verbose,
+        args.force,
+    )
 
 
 def get_conp_dois(zenodo_dois, repo, verbose=False):
@@ -141,12 +191,18 @@ def get_conp_dois(zenodo_dois, repo, verbose=False):
             api.install(dir_path)
             dir_list = os.listdir(dir_path)
             if ".conp-zenodo-crawler.json" in dir_list:
-                with open(os.path.join(dir_path, ".conp-zenodo-crawler.json"), "r") as f:
+                with open(
+                    os.path.join(dir_path, ".conp-zenodo-crawler.json"), "r"
+                ) as f:
                     try:
                         data = json.load(f)
                     except Exception as e:
-                        print(("Error while loading file {}: {}. " +
-                               "Dataset will be ignored.").format(f.name, e))
+                        print(
+                            (
+                                "Error while loading file {}: {}. "
+                                + "Dataset will be ignored."
+                            ).format(f.name, e)
+                        )
                         continue
                     if "zenodo" in data.keys() and "title" in data.keys():
                         new_dict = data["zenodo"]
@@ -179,20 +235,31 @@ def get_zenodo_dois(stored_tokens, passed_tokens, verbose=False):
             # This means the Zenodo dataset files are restricted
             # Try to see if the dataset token is already known in stored tokens
             if stored_tokens is not None and title in stored_tokens.keys():
-                data = requests.get(dataset["links"]["latest"], params={'access_token': stored_tokens[title]}).json()
+                data = requests.get(
+                    dataset["links"]["latest"],
+                    params={"access_token": stored_tokens[title]},
+                ).json()
                 if "files" not in data.keys():
-                    print("Unable to access " + title + " using stored tokens, skipping this dataset")
+                    print(
+                        "Unable to access "
+                        + title
+                        + " using stored tokens, skipping this dataset"
+                    )
                     continue
                 else:
                     # Append access token to each file url
                     for bucket in data["files"]:
-                        bucket["links"]["self"] += "?access_token=" + stored_tokens[title]
+                        bucket["links"]["self"] += (
+                            "?access_token=" + stored_tokens[title]
+                        )
                         files.append(bucket)
             else:
                 # Try to retrieve file urls using the passed tokens
                 if passed_tokens is not None:
                     for token in passed_tokens:
-                        data = requests.get(dataset["links"]["latest"], params={'access_token': token}).json()
+                        data = requests.get(
+                            dataset["links"]["latest"], params={"access_token": token}
+                        ).json()
                         if "files" not in data.keys():
                             continue
                         else:
@@ -206,14 +273,20 @@ def get_zenodo_dois(stored_tokens, passed_tokens, verbose=False):
                             stored_tokens[title] = token
                             break
                     else:
-                        print("Unable to access files of dataset {} at url {} "
-                              "using the current Zenodo tokens, skipping this dataset"
-                              .format(metadata["title"], dataset["links"]["latest"]))
+                        print(
+                            "Unable to access files of dataset {} at url {} "
+                            "using the current Zenodo tokens, skipping this dataset".format(
+                                metadata["title"], dataset["links"]["latest"]
+                            )
+                        )
                         continue
                 else:
-                    print("No tokens available to access files of dataset"
-                          " {} at url {}, skipping this dataset"
-                          .format(metadata["title"], dataset["links"]["latest"]))
+                    print(
+                        "No tokens available to access files of dataset"
+                        " {} at url {}, skipping this dataset".format(
+                            metadata["title"], dataset["links"]["latest"]
+                        )
+                    )
                     continue
         else:
             for bucket in dataset["files"]:
@@ -224,57 +297,105 @@ def get_zenodo_dois(stored_tokens, passed_tokens, verbose=False):
 
         if len(metadata["relations"]["version"]) != 1:
             raise Exception("Unexpected multiple versions")
-        latest_version_doi = metadata["relations"]["version"][0]["last_child"]["pid_value"]
+        latest_version_doi = metadata["relations"]["version"][0]["last_child"][
+            "pid_value"
+        ]
 
-        zenodo_dois.append({
-            "identifier": {
-                "identifier": "https://doi.org/{}".format(dataset["conceptdoi"]),
-                "identifierSource": "DOI"
-            },
-            "concept_doi": dataset["conceptrecid"],
-            "latest_version": latest_version_doi,
-            "title": title,
-            "original_title": metadata["title"],
-            "files": files,
-            "doi_badge": dataset["conceptdoi"],
-            "creators": metadata["creators"],
-            "description": metadata["description"],
-            "types": [],
-            "version": metadata["version"] if "version" in metadata.keys() else None,
-            "licenses": [metadata["license"] if "license" in metadata.keys() else {}],
-            "keywords": metadata["keywords"] if "keywords" in metadata.keys() else [],
-            "distributions": [
-                {
-                    "formats": list(set(map(lambda x: x["type"], files))) if len(files) > 0 else None,
-                    "size": sum(list(map(lambda x: x["size"], files))) if len(files) > 0 else None,
-                    "unit": {"value": "B"},
-                    "access": {
-                        "landingPage": dataset["links"]["html"]
+        # Retrieve and clean file formats/extensions
+        file_formats = (
+            list(set(map(lambda x: x["type"], files))) if len(files) > 0 else None
+        )
+        if "" in file_formats:
+            file_formats.remove("")
+
+        # Retrieve and clean file keywords
+        keywords = []
+        if "keywords" in metadata.keys():
+            keywords = list(map(lambda x: {"value": x}, metadata["keywords"]))
+
+        dataset_size, dataset_unit = humanize.naturalsize(
+            sum([filename["size"] for filename in files])
+        ).split(" ")
+        dataset_size = float(dataset_size)
+
+        zenodo_dois.append(
+            {
+                "identifier": {
+                    "identifier": "https://doi.org/{}".format(dataset["conceptdoi"]),
+                    "identifierSource": "DOI",
+                },
+                "concept_doi": dataset["conceptrecid"],
+                "latest_version": latest_version_doi,
+                "title": title,
+                "original_title": metadata["title"],
+                "files": files,
+                "doi_badge": dataset["conceptdoi"],
+                "creators": list(
+                    map(lambda x: {"name": x["name"]}, metadata["creators"])
+                ),
+                "description": metadata["description"],
+                "version": metadata["version"]
+                if "version" in metadata.keys()
+                else "None",
+                "licenses": [
+                    {
+                        "name": metadata["license"]["id"]
+                        if "license" in metadata.keys()
+                        else "None"
                     }
-                }
-            ],
-            "extraProperties": [
-                {
-                    "category": "logo",
-                    "values": [{"value": "https://about.zenodo.org/static/img/logos/zenodo-gradient-round.svg"}]
-                }
-            ]
-        })
+                ],
+                "keywords": keywords,
+                "distributions": [
+                    {
+                        "formats": [
+                            file_format.upper()
+                            for file_format in file_formats
+                            # Do not modify specific file formats.
+                            if file_formats not in ["NIfTI", "BigWig"]
+                        ],
+                        "size": dataset_size,
+                        "unit": {"value": dataset_unit},
+                        "access": {
+                            "landingPage": dataset["links"]["html"],
+                            "authorizations": [
+                                {
+                                    "value": "public"
+                                    if metadata["access_right"] == "open"
+                                    else "private"
+                                }
+                            ],
+                        },
+                    }
+                ],
+                "extraProperties": [
+                    {
+                        "category": "logo",
+                        "values": [
+                            {
+                                "value": "https://about.zenodo.org/static/img/logos/zenodo-gradient-round.svg"
+                            }
+                        ],
+                    }
+                ],
+            }
+        )
 
     return zenodo_dois
 
 
 def query_zenodo(verbose=False):
-    query = ("https://zenodo.org/api/records/?"
-             "type=dataset&"
-             "q=keywords:\"canadian-open-neuroscience-platform\"")
+    query = (
+        "https://zenodo.org/api/records/?"
+        "type=dataset&"
+        'q=keywords:"canadian-open-neuroscience-platform"'
+    )
     results = requests.get(query).json()["hits"]["hits"]
     if verbose:
         print("Zenodo query: {}".format(query))
     return results
 
 
-clean = lambda x: sub('\W|^(?=\d)', '_', x)
+clean = lambda x: sub("\W|^(?=\d)", "_", x)
 
 
 def create_new_dataset(dataset, token, force, username):
@@ -294,10 +415,9 @@ def create_new_dataset(dataset, token, force, username):
     d.config.add("datalad.log.timestamp", "true")
     d.save()
 
-    r = d.create_sibling_github(repo_title,
-                                name="github",
-                                github_login=token,
-                                github_passwd=token)
+    r = d.create_sibling_github(
+        repo_title, name="github", github_login=token, github_passwd=token
+    )
 
     for bucket in dataset["files"]:
         download_file(bucket, d, dataset_dir)
@@ -311,7 +431,9 @@ def create_new_dataset(dataset, token, force, username):
         create_readme(dataset, dataset_dir)
 
     # Add .conp-zenodo-crawler.json tracker file
-    create_zenodo_tracker(os.path.join(dataset_dir, ".conp-zenodo-crawler.json"), dataset)
+    create_zenodo_tracker(
+        os.path.join(dataset_dir, ".conp-zenodo-crawler.json"), dataset
+    )
 
     # Save all changes and push to github
     d.save()
@@ -327,10 +449,14 @@ def create_new_dataset(dataset, token, force, username):
 
 def update_gitmodules(directory, github_url):
     with open(".gitmodules", "a") as f:
-        f.write("""[submodule "{0}"]
+        f.write(
+            """[submodule "{0}"]
   path = {0}
   url = {1}
-""".format(directory, github_url))
+""".format(
+                directory, github_url
+            )
+        )
 
 
 def create_new_dats(dataset_dir, dats_path, dataset):
@@ -340,28 +466,46 @@ def create_new_dats(dataset_dir, dats_path, dataset):
             "identifier": dataset["identifier"],
             "creators": dataset["creators"],
             "description": dataset["description"],
-            "types": dataset["types"],
             "version": dataset["version"],
             "licenses": dataset["licenses"],
             "keywords": dataset["keywords"],
             "distributions": dataset["distributions"],
-            "extraProperties": dataset["extraProperties"]
+            "extraProperties": dataset["extraProperties"],
         }
+
         # Count number of files in dataset
         num = 0
         for file in os.listdir(dataset_dir):
             if file[0] == "." or file == "DATS.json" or file == "README.md":
                 continue
             elif os.path.isdir(file):
-                num += sum([len(list(filter(lambda x: x[0] != ".", files))) for r, d, files in os.walk(file)])
+                num += sum(
+                    [
+                        len(list(filter(lambda x: x[0] != ".", files)))
+                        for r, d, files in os.walk(file)
+                    ]
+                )
             else:
                 num += 1
-        data["extraProperties"].append({
-            "category": "files",
-            "values": {
-                "value": str(num)
-            }
-        })
+        data["extraProperties"].append(
+            {"category": "files", "values": [{"value": str(num)}]}
+        )
+
+        # Retrieve modalities from files
+        file_paths = map(
+            lambda x: x.split(" ")[-1],
+            filter(lambda x: " " in x, Repo(dataset_dir).git.annex("list").split("\n")),
+        )  # Get file paths
+        file_names = list(
+            map(lambda x: x.split("/")[-1] if "/" in x else x, file_paths)
+        )  # Get file names from path
+        modalities = set([guess_modality(file_name) for file_name in file_names])
+        if len(modalities) == 0:
+            modalities.add("unknown")
+        elif len(modalities) > 1 and "unknown" in modalities:
+            modalities.remove("unknown")
+        data["types"] = [{"value": modality} for modality in modalities]
+
         json.dump(data, f, indent=4)
 
 
@@ -406,13 +550,16 @@ def push_and_pull_request(msg, dataset_dir, token, title, repo):
     if "@" not in origin_url:
         origin.set_url(origin_url.replace("https://", "https://" + token + "@"))
     repo.git.push("--set-upstream", "origin", "conp-bot/" + title)
-    username = search('github.com[/,:](.*)/conp-dataset.git', origin_url).group(1)
+    username = search("github.com[/,:](.*)/conp-dataset.git", origin_url).group(1)
 
     # Create PR
     print("Creating PR for " + title)
-    r = requests.post("https://api.github.com/repos/CONP-PCNO/conp-dataset/pulls?access_token=" + token, json={
-        "title": "Zenodo crawler result ({})".format(title),
-        "body": """## Description
+    r = requests.post(
+        "https://api.github.com/repos/CONP-PCNO/conp-dataset/pulls?access_token="
+        + token,
+        json={
+            "title": "Zenodo crawler result ({})".format(title),
+            "body": """## Description
 {}
 
 ## Checklist
@@ -429,10 +576,13 @@ Functional checks:
 - [x] Every data file can be retrieved or requires authentication
 - [ ] `DATS.json` is a valid DATs model
 - [ ] If dataset is derived data, raw data is a sub-dataset
-""".format(msg + "\n"),
-        "head": username + ":conp-bot/" + title,
-        "base": "master"
-    })
+""".format(
+                msg + "\n"
+            ),
+            "head": username + ":conp-bot/" + title,
+            "base": "master",
+        },
+    )
     if r.status_code != 201:
         raise Exception("Error while creating pull request: " + r.text)
 
@@ -440,7 +590,8 @@ Functional checks:
 def create_readme(dataset, path):
     if "README.md" not in os.listdir(path):
         with open(os.path.join(path, "README.md"), "w") as f:
-            f.write("""# {0}
+            f.write(
+                """# {0}
 
 [![DOI](https://www.zenodo.org/badge/DOI/{1}.svg)](https://doi.org/{1})
 
@@ -449,9 +600,12 @@ Crawled from Zenodo
 ## Description
 
 {2}""".format(
-                dataset["title"],
-                dataset["doi_badge"],
-                html2markdown.convert(dataset["description"]).replace("\n", "<br />"))
+                    dataset["title"],
+                    dataset["doi_badge"],
+                    html2markdown.convert(dataset["description"]).replace(
+                        "\n", "<br />"
+                    ),
+                )
             )
 
 
@@ -466,7 +620,7 @@ def check_requirements(repo):
     if "origin" not in repo.remotes:
         raise Exception("Remote 'origin' does not exist in current reposition")
     origin_url = next(repo.remote("origin").urls)
-    full_name = search('github.com[/,:](.*).git', origin_url).group(1)
+    full_name = search("github.com[/,:](.*).git", origin_url).group(1)
     r = requests.get("http://api.github.com/repos/" + full_name).json()
     if not r["fork"] or r["parent"]["full_name"] != "CONP-PCNO/conp-dataset":
         raise Exception("Current repository not a fork of CONP-PCNO/conp-dataset")
@@ -479,7 +633,12 @@ def check_requirements(repo):
 
 
 def verify_repository(username, full_repository, token, dataset, force):
-    if requests.get("http://api.github.com/repos/{}".format(full_repository)).status_code != 404:
+    if (
+        requests.get(
+            "http://api.github.com/repos/{}".format(full_repository)
+        ).status_code
+        != 404
+    ):
         print("Existing {} repository on github".format(full_repository))
         if force:
             print("--force specified, deleting and creating new github repository")
@@ -488,9 +647,14 @@ def verify_repository(username, full_repository, token, dataset, force):
             if prompt(msg).upper() != "Y":
                 print("Skipping " + dataset["title"])
                 return False
-        r = requests.delete("http://api.github.com/repos/{}".format(full_repository), auth=(username, token))
+        r = requests.delete(
+            "http://api.github.com/repos/{}".format(full_repository),
+            auth=(username, token),
+        )
         if not r.ok:
-            print("Failed to delete {}, please delete it manually or enable the delete_repo scope for the passed token")
+            print(
+                "Failed to delete {}, please delete it manually or enable the delete_repo scope for the passed token"
+            )
             print("Response: {}".format(str(r.content)))
             return False
     return True
@@ -501,7 +665,7 @@ def prompt(msg):
 
 
 def store(known_zenodo_tokens):
-    token_path = os.path.join(os.path.expanduser('~'), ".tokens")
+    token_path = os.path.join(os.path.expanduser("~"), ".tokens")
     with open(token_path, "r+") as f:
         data = json.load(f)
         f.seek(0)
@@ -520,9 +684,11 @@ def switch_branch(repo, name, new=False):
 def add_description(token, repo_title, username, dataset):
     url = "https://api.github.com/repos/{}/{}".format(username, repo_title)
     head = {"Authorization": "token {}".format(token)}
-    payload = {"description": "Please don't submit any PR to this repository. "
-                              "If you want to request modifications, "
-                              "please contact {}".format(dataset["creators"][0]["name"])}
+    payload = {
+        "description": "Please don't submit any PR to this repository. "
+        "If you want to request modifications, "
+        "please contact {}".format(dataset["creators"][0]["name"])
+    }
     r = requests.patch(url, data=json.dumps(payload), headers=head)
     if not r.ok:
         print("Problem adding description to repository {}:".format(repo_title))
@@ -534,9 +700,9 @@ def create_zenodo_tracker(path, dataset):
         data = {
             "zenodo": {
                 "concept_doi": dataset["concept_doi"],
-                "version": dataset["latest_version"]
+                "version": dataset["latest_version"],
             },
-            "title": dataset["original_title"]
+            "title": dataset["original_title"],
         }
         json.dump(data, f, indent=4)
 
@@ -548,17 +714,48 @@ def download_file(bucket, d, dataset_dir):
         if bucket["type"] == "zip":
             d.download_url(link, archive=True if bucket["type"] == "zip" else False)
         else:
-            annex("addurl", link, "--fast")
+            try:  # Try to addurl twice as rarely it might not work on the first try
+                annex("addurl", link, "--fast", "--file", link.split("/")[-1])
+            except GitCommandError:
+                annex("addurl", link, "--fast", "--file", link.split("/")[-1])
     else:  # Have to remove token from annex URL
         if bucket["type"] == "zip":
             file_path = d.download_url(link)[0]["path"]
             annex("rmurl", file_path, link)
-            annex("addurl", link.split("?")[0], "--file", file_path, "--relaxed")
-            api.add_archive_content(file_path, annex=AnnexRepo(dataset_dir), delete=True)
+            try:  # Try to addurl twice as rarely it might not work on the first try
+                annex("addurl", link.split("?")[0], "--file", file_path, "--relaxed")
+            except GitCommandError:
+                annex("addurl", link.split("?")[0], "--file", file_path, "--relaxed")
+            api.add_archive_content(
+                file_path, annex=AnnexRepo(dataset_dir), delete=True
+            )
         else:
             file_name = json.load(annex("addurl", link, "--fast", "--json"))["file"]
             annex("rmurl", file_name, link)
-            annex("addurl", link.split("?")[0], "--file", file_name, "--relaxed")
+            try:  # Try to addurl twice as rarely it might not work on the first try
+                annex("addurl", link.split("?")[0], "--file", file_name, "--relaxed")
+            except GitCommandError:
+                annex("addurl", link.split("?")[0], "--file", file_name, "--relaxed")
+    d.save()
+
+
+def guess_modality(file_name):
+    # Associate file types to substrings found in the file name
+    modalities = {
+        "fMRI": ["bold", "func", "cbv"],
+        "MRI": ["T1", "T2", "FLAIR", "FLASH", "PD", "angio", "anat", "mask"],
+        "diffusion": ["dwi", "dti", "sbref"],
+        "meg": ["meg"],
+        "intracranial eeg": ["ieeg"],
+        "eeg": ["eeg"],
+        "field map": ["fmap", "phasediff", "magnitude"],
+        "imaging": ["nii", "nii.gz", "mnc"],
+    }
+    for m in modalities:
+        for s in modalities[m]:
+            if s in file_name:
+                return m
+    return "unknown"
 
 
 if __name__ == "__main__":
