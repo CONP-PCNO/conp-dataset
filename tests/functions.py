@@ -144,9 +144,9 @@ def examine(dataset, project):
         generate_datalad_provider(loris_api)
     elif is_authentication_require(dataset) == True:
         return (
-            f"Cannot download file (dataset requires authentication, make sure "
-            + "that environment variables {project}_USERNAME, {prject}_PASSWORD, "
-            + "and {projet}_LORIS_API are defined in Travis)"
+            "Cannot download file (dataset requires authentication, make sure "
+            + f"that environment variables {project}_USERNAME, {project}_PASSWORD, "
+            + f"and {project}_LORIS_API are defined in Travis)"
         )
 
     # Check if dats.json and README.md are present in root of dataset
