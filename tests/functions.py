@@ -31,7 +31,7 @@ def raise_timeout(signum, frame):
     raise TimeoutError
 
 
-def is_authentication_require(dataset):
+def is_authentication_required(dataset):
     """Verify in the dataset DATS file if authentication is required.
     
     Parameters
@@ -142,7 +142,7 @@ def examine(dataset, project):
         keyring.set_password("datalad-loris", "user", username)
         keyring.set_password("datalad-loris", "password", password)
         generate_datalad_provider(loris_api)
-    elif is_authentication_require(dataset) == True:
+    elif is_authentication_required(dataset) == True:
         return (
             "Cannot download file (dataset requires authentication, make sure "
             + f"that environment variables {project}_USERNAME, {project}_PASSWORD, "
