@@ -61,6 +61,8 @@ def mock_get_test_dataset_dir():
 
 class TestZenodoCrawler(TestCase):
 
+    @mock.patch("scripts.crawl_zenodo.put_unlock_script")
+    @mock.patch("scripts.crawl_zenodo.get_unlock_script")
     @mock.patch("scripts.crawl_zenodo.download_file")
     @mock.patch("scripts.crawl_zenodo.create_zenodo_tracker")
     @mock.patch("scripts.crawl_zenodo.add_description")
@@ -82,12 +84,15 @@ class TestZenodoCrawler(TestCase):
                                 mock_create_readme, mock_push_and_PR, mock_update_submodules,
                                 mock_create_new_dats, mock_empty_conp_dois, mock_zenodo_query, mock_input,
                                 mock_store, mock_check_requirements, mock_switch_branch,
-                                mock_add_description, mock_create_zenodo_tracker, mock_download_file):
+                                mock_add_description, mock_create_zenodo_tracker, mock_download_file,
+                                mock_get_unlock_script, mock_put_unlock_script):
         try:
             crawl()
         except Exception as e:
             self.fail("Unexpected Exception raised: " + str(e))
 
+    @mock.patch("scripts.crawl_zenodo.put_unlock_script")
+    @mock.patch("scripts.crawl_zenodo.get_unlock_script")
     @mock.patch("scripts.crawl_zenodo.download_file")
     @mock.patch("scripts.crawl_zenodo.create_zenodo_tracker")
     @mock.patch("scripts.crawl_zenodo.create_new_dats")
@@ -110,7 +115,8 @@ class TestZenodoCrawler(TestCase):
                                      mock_get_test_dataset_dir, mock_zenodo_query,
                                      mock_input, mock_store, mock_check_requirements,
                                      mock_switch_branch, mock_add_description, mock_create_new_dats,
-                                     mock_create_zenodo_tracker, mock_download_file):
+                                     mock_create_zenodo_tracker, mock_download_file,
+                                     mock_get_unlock_script, mock_put_unlock_script):
         try:
             crawl()
         except Exception as e:
