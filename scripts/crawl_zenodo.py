@@ -6,11 +6,8 @@ import traceback
 import html2markdown
 from argparse import RawTextHelpFormatter
 import datalad.api as api
-from datalad.support.annexrepo import AnnexRepo
 from re import sub, search
 from git import Repo
-from git.exc import GitCommandError
-
 import humanize
 
 
@@ -412,6 +409,7 @@ def create_new_dataset(dataset, token, force, username):
     d.no_annex("DATS.json")
     d.no_annex("README.md")
     d.no_annex(".conp-zenodo-crawler.json")
+    d.no_annex("unlock.py")
     d.config.add("datalad.log.timestamp", "true")
     d.save()
 
@@ -419,8 +417,10 @@ def create_new_dataset(dataset, token, force, username):
         repo_title, name="github", github_login=token, github_passwd=token
     )
 
+    private_files = {"archive_links": [], "files": []}
     for bucket in dataset["files"]:
-        download_file(bucket, d, dataset_dir)
+        download_file(bucket, d, dataset_dir, private_files)
+    restricted_dataset = True if len(private_files["archive_links"]) > 0 or len(private_files["files"]) > 0 else False
 
     # Create DATS.json if it doesn't exist
     if not os.path.isfile(os.path.join(dataset_dir, "DATS.json")):
@@ -432,8 +432,12 @@ def create_new_dataset(dataset, token, force, username):
 
     # Add .conp-zenodo-crawler.json tracker file
     create_zenodo_tracker(
-        os.path.join(dataset_dir, ".conp-zenodo-crawler.json"), dataset
+        os.path.join(dataset_dir, ".conp-zenodo-crawler.json"), dataset, private_files, restricted_dataset
     )
+
+    # If dataset is a restricted dataset, create a script which allows to unlock downloading files in dataset
+    if restricted_dataset:
+        add_unlock_script(dataset_dir)
 
     # Save all changes and push to github
     d.save()
@@ -526,15 +530,21 @@ def update_dataset(zenodo_dataset, conp_dataset, token):
 
     d = api.Dataset(dataset_dir)
 
+    private_files = {"archive_links": [], "files": []}
     for bucket in zenodo_dataset["files"]:
-        download_file(bucket, d, dataset_dir)
+        download_file(bucket, d, dataset_dir, private_files)
+    restricted_dataset = True if len(private_files["archive_links"]) > 0 or len(private_files["files"]) > 0 else False
 
     # If DATS.json isn't in downloaded files, create new DATS.json
     if not os.path.isfile(dats_dir):
         create_new_dats(dataset_dir, dats_dir, zenodo_dataset)
 
     # Add/update .conp-zenodo-crawler.json tracker file
-    create_zenodo_tracker(zenodo_tracker_path, zenodo_dataset)
+    create_zenodo_tracker(zenodo_tracker_path, zenodo_dataset, private_files, restricted_dataset)
+
+    # If dataset is a restricted dataset, create a script which allows to unlock downloading files in dataset
+    if restricted_dataset:
+        add_unlock_script(dataset_dir)
 
     # Save all changes and push to github
     d.save()
@@ -695,47 +705,64 @@ def add_description(token, repo_title, username, dataset):
         print(r.content)
 
 
-def create_zenodo_tracker(path, dataset):
+def create_zenodo_tracker(path, dataset, private_files, restricted):
     with open(path, "w") as f:
         data = {
             "zenodo": {
                 "concept_doi": dataset["concept_doi"],
                 "version": dataset["latest_version"],
             },
+            "private_files": private_files,
+            "restricted": restricted,
             "title": dataset["original_title"],
         }
         json.dump(data, f, indent=4)
 
 
-def download_file(bucket, d, dataset_dir):
+def download_file(bucket, d, dataset_dir, private_files):
     link = bucket["links"]["self"]
-    annex = Repo(dataset_dir).git.annex
+    repo = Repo(dataset_dir)
+    annex = repo.git.annex
     if "access_token" not in link:
         if bucket["type"] == "zip":
-            d.download_url(link, archive=True if bucket["type"] == "zip" else False)
+            d.download_url(link, archive=True)
         else:
-            try:  # Try to addurl twice as rarely it might not work on the first try
-                annex("addurl", link, "--fast", "--file", link.split("/")[-1])
-            except GitCommandError:
-                annex("addurl", link, "--fast", "--file", link.split("/")[-1])
+            annex("addurl", link, "--fast", "--file", link.split("/")[-1])
     else:  # Have to remove token from annex URL
+        tokenless_link = link.split("?")[0]
         if bucket["type"] == "zip":
-            file_path = d.download_url(link)[0]["path"]
-            annex("rmurl", file_path, link)
-            try:  # Try to addurl twice as rarely it might not work on the first try
-                annex("addurl", link.split("?")[0], "--file", file_path, "--relaxed")
-            except GitCommandError:
-                annex("addurl", link.split("?")[0], "--file", file_path, "--relaxed")
-            api.add_archive_content(
-                file_path, annex=AnnexRepo(dataset_dir), delete=True
-            )
+            d.download_url(link, archive=True)
+            # Switch to git-annex branch to remove token from URL then switch back
+            original_branch = repo.active_branch.name
+            repo.git.checkout("git-annex")
+            changes = False
+            for dir_name, dirs, files in os.walk(dataset_dir):
+                for file_name in files:
+                    file_path = os.path.join(dir_name, file_name)
+                    if ".git" in file_path:
+                        continue
+                    with open(file_path, "r") as f:
+                        s = f.read()
+                    if link in s:
+                        s = s.replace(link, tokenless_link)
+                        with open(file_path, "w") as f:
+                            f.write(s)
+                        changes = True
+                        private_files["archive_links"].append(tokenless_link)
+                    elif "?access_token=" in s:
+                        s = s.split("?access_token=")[0]
+                        with open(file_path, "w") as f:
+                            f.write(s)
+                        changes = True
+            if changes:
+                repo.git.add(".")
+                repo.git.commit("-m", "update")
+            repo.git.checkout(original_branch)
         else:
             file_name = json.load(annex("addurl", link, "--fast", "--json"))["file"]
             annex("rmurl", file_name, link)
-            try:  # Try to addurl twice as rarely it might not work on the first try
-                annex("addurl", link.split("?")[0], "--file", file_name, "--relaxed")
-            except GitCommandError:
-                annex("addurl", link.split("?")[0], "--file", file_name, "--relaxed")
+            annex("addurl", tokenless_link, "--file", file_name, "--relaxed")
+            private_files["files"].append({"name": file_name, "link": tokenless_link})
     d.save()
 
 
@@ -756,6 +783,13 @@ def guess_modality(file_name):
             if s in file_name:
                 return m
     return "unknown"
+
+
+def add_unlock_script(dataset_dir):
+    with open(os.path.join("scripts", "unlock.py"), "r") as f:
+        f_content = f.read()
+    with open(os.path.join(dataset_dir, "unlock.py"), "w") as f:
+        f.write(f_content)
 
 
 if __name__ == "__main__":
