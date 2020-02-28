@@ -10,7 +10,7 @@ def unlock():
     parser = argparse.ArgumentParser(
         formatter_class=argparse.RawTextHelpFormatter,
         description=r"""
-        Script which allows to unlock a dataset given the correct token
+        Script which allows to unlock a restricted dataset given the correct token
 
         Requirements:
         * The token must be passed to the script via the command line
