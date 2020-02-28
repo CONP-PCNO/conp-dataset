@@ -21,6 +21,7 @@ def crawl():
 
     zenodo_dois = get_zenodo_dois(stored_z_tokens, passed_z_tokens, verbose)
     conp_dois = get_conp_dois(zenodo_dois, repo, verbose)
+    unlock_script = get_unlock_script()
     if verbose:
         print("\n\n******************** Listing DOIs ********************")
         print("Zenodo DOIs: ")
@@ -63,7 +64,7 @@ def crawl():
 
                 # Switch branch
                 switch_branch(repo, "conp-bot/" + dataset["title"])
-                update_dataset(dataset, conp_dois[index], github_token)
+                update_dataset(dataset, conp_dois[index], github_token, unlock_script)
                 push_and_pull_request(
                     "Updated " + dataset["title"],
                     conp_dois[index]["directory"],
@@ -83,7 +84,7 @@ def crawl():
 
             # Switch branch
             switch_branch(repo, "conp-bot/" + dataset["title"], new=True)
-            dataset_path = create_new_dataset(dataset, github_token, force, username)
+            dataset_path = create_new_dataset(dataset, github_token, force, username, unlock_script)
             if dataset_path != "":
                 push_and_pull_request(
                     "Created " + dataset["title"],
@@ -395,7 +396,7 @@ def query_zenodo(verbose=False):
 clean = lambda x: sub("\W|^(?=\d)", "_", x)
 
 
-def create_new_dataset(dataset, token, force, username):
+def create_new_dataset(dataset, token, force, username, unlock_script):
     repo_title = ("conp-dataset-" + dataset["title"])[0:100]
     full_repository = "{}/{}".format(username, repo_title)
 
@@ -430,14 +431,14 @@ def create_new_dataset(dataset, token, force, username):
     if not os.path.isfile(os.path.join(dataset_dir, "README.md")):
         create_readme(dataset, dataset_dir)
 
+    # If dataset is a restricted dataset, create a script which allows to unlock downloading files in dataset
+    if restricted_dataset:
+        put_unlock_script(dataset_dir, unlock_script)
+
     # Add .conp-zenodo-crawler.json tracker file
     create_zenodo_tracker(
         os.path.join(dataset_dir, ".conp-zenodo-crawler.json"), dataset, private_files, restricted_dataset
     )
-
-    # If dataset is a restricted dataset, create a script which allows to unlock downloading files in dataset
-    if restricted_dataset:
-        add_unlock_script(dataset_dir)
 
     # Save all changes and push to github
     d.save()
@@ -513,7 +514,7 @@ def create_new_dats(dataset_dir, dats_path, dataset):
         json.dump(data, f, indent=4)
 
 
-def update_dataset(zenodo_dataset, conp_dataset, token):
+def update_dataset(zenodo_dataset, conp_dataset, token, unlock_script):
     # To update a dataset, we don't know which files have been updated
     # so we have to remove all existing files and redownload all files
     # fresh from the latest version of that zenodo dataset
@@ -539,12 +540,12 @@ def update_dataset(zenodo_dataset, conp_dataset, token):
     if not os.path.isfile(dats_dir):
         create_new_dats(dataset_dir, dats_dir, zenodo_dataset)
 
-    # Add/update .conp-zenodo-crawler.json tracker file
-    create_zenodo_tracker(zenodo_tracker_path, zenodo_dataset, private_files, restricted_dataset)
-
     # If dataset is a restricted dataset, create a script which allows to unlock downloading files in dataset
     if restricted_dataset:
-        add_unlock_script(dataset_dir)
+        put_unlock_script(dataset_dir, unlock_script)
+
+    # Add/update .conp-zenodo-crawler.json tracker file
+    create_zenodo_tracker(zenodo_tracker_path, zenodo_dataset, private_files, restricted_dataset)
 
     # Save all changes and push to github
     d.save()
@@ -785,11 +786,14 @@ def guess_modality(file_name):
     return "unknown"
 
 
-def add_unlock_script(dataset_dir):
+def get_unlock_script():
     with open(os.path.join("scripts", "unlock.py"), "r") as f:
-        f_content = f.read()
+        return f.read()
+
+
+def put_unlock_script(dataset_dir, script):
     with open(os.path.join(dataset_dir, "unlock.py"), "w") as f:
-        f.write(f_content)
+        f.write(script)
 
 
 if __name__ == "__main__":
