@@ -1,13 +1,14 @@
 from contextlib import contextmanager
 import json
 import os
-from os import listdir, walk
-from os.path import isdir, exists, join, abspath, basename, dirname
-from random import random
+from random import sample
 import signal
 
 import datalad.api as api
+from git import Repo
 import keyring
+
+from scripts.dats_validator.validator import validate_json
 
 
 @contextmanager
@@ -88,47 +89,6 @@ type = loris-token
         )
 
 
-def recurse(directory, odds):
-    """
-    recurse recursively checks each file in directory and sub-directories with odds chance.
-    Odds is a positive decimal that dictates how likely a file is to be tested from 0 (no chance) to 1 or
-    above (100% chance). This function tests for if files can be retrieved with datalad and if they can't,
-    if there is an authentication setup for security.
-    """
-
-    # Get all file names in directory
-    files = listdir(directory)
-
-    # Loop through every file
-    for file_name in files:
-
-        # If the file name is .git or .datalad, ignore
-        if file_name == ".git" or file_name == ".datalad":
-            continue
-
-        full_path = join(directory, file_name)
-
-        # If the file is a directory
-        if isdir(full_path):
-
-            return recurse(full_path, odds)
-
-        # If the file is a broken symlink and with odd chance
-        elif not exists(full_path) and random() < odds:
-            # Timeouts the download or a hanging authentification
-            responses = []
-            with timeout(3):
-                responses = api.get(path=full_path, on_failure="ignore")
-
-            for response in responses:
-                if response.get("status") in ["ok", "notneeded"]:
-                    continue
-                if response.get("status") in ["impossible", "error"]:
-                    return response.get("message") + full_path
-
-    return "All good"
-
-
 def examine(dataset, project):
 
     # If authentication is required and credentials are provided then add credentials
@@ -150,27 +110,38 @@ def examine(dataset, project):
         )
 
     # Check if dats.json and README.md are present in root of dataset
-    file_names = [file_name for file_name in listdir(dataset)]
+    file_names = [file_name for file_name in os.listdir(dataset)]
     if "DATS.json" not in file_names:
         return "Dataset " + dataset + " doesn't contain DATS.json in its root directory"
 
     if "README.md" not in file_names:
         return "Dataset " + dataset + " doesn't contain README.md in its root directory"
 
+    with open(os.path.join(dataset, "DATS.json"), "r") as f:
+        if not validate_json(json.load(f)):
+            return "Dataset " + dataset + " doesn't contain a valid DATS.json"
+
     # Number of files to test in each dataset
     # with 100 files, the test is not completing before Travis timeout (about 10~12 minutes)
     num_files = 4
 
-    # Count the number of testable files while ignoring files in directories starting with "."
-    count = sum(
-        [
-            len(files) if basename(dirname(r))[0] != "." else 0
-            for r, d, files in walk(dataset)
-        ]
-    )
+    # Get list of all annexed files and choose randomly num_files of them to test
+    files = Repo(dataset).git.annex("list").split("\n____X ")[1:]
+    files = sample(files, min(num_files, len(files)))
 
-    # Calculate the odds to test a file
-    odds = num_files / count
+    # Test those randomly chose files
+    for file in files:
+        # Timeouts the download or a hanging authentification
+        full_path = os.path.join(dataset, file)
+        responses = []
+        with timeout(3):
+            responses = api.get(path=full_path, on_failure="ignore")
 
-    # Start to test dataset
-    return recurse(abspath(dataset), odds)
+        for response in responses:
+            if response.get("status") in ["ok", "notneeded"]:
+                continue
+            if response.get("status") in ["impossible", "error"]:
+                print(response.get("message") + full_path)
+                return False
+
+    return True

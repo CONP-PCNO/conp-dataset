@@ -37,7 +37,7 @@ template = Template(
 
 
 def test_$clean_title():
-    assert examine('$path', '$project') == 'All good'
+    assert examine('$path', '$project')
 """
 )
 
