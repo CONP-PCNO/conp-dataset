@@ -3,6 +3,7 @@ import json
 import os
 from random import sample
 import signal
+import sys
 
 import datalad.api as api
 from git import Repo
@@ -91,6 +92,18 @@ type = loris-token
 
 def examine(dataset, project):
 
+    file_names = [file_name for file_name in os.listdir(dataset)]
+
+    if "README.md" not in file_names:
+        return "Dataset " + dataset + " doesn't contain README.md in its root directory"
+
+    if "DATS.json" not in file_names:
+        return "Dataset " + dataset + " doesn't contain DATS.json in its root directory"
+
+    with open(os.path.join(dataset, "DATS.json"), "r") as f:
+        if not validate_json(json.load(f)):
+            return "Dataset " + dataset + " doesn't contain a valid DATS.json"
+
     # If authentication is required and credentials are provided then add credentials
     # to the keyring and create a provider config file.
     # Note: Assume a loris-token authentication.
@@ -103,23 +116,20 @@ def examine(dataset, project):
         keyring.set_password("datalad-loris", "password", password)
         generate_datalad_provider(loris_api)
     elif is_authentication_required(dataset) == True:
-        return (
+        if os.getenv("TRAVIS_EVENT_TYPE", None) == "pull_request":
+            print(
+                f"WARNING: {dataset} cannot be test on Pull Requests to protect secrets.",
+                file=sys.stderr,
+            )
+            return True
+
+        print(
             "Cannot download file (dataset requires authentication, make sure "
             + f"that environment variables {project}_USERNAME, {project}_PASSWORD, "
             + f"and {project}_LORIS_API are defined in Travis)"
         )
+        return False
 
-    # Check if dats.json and README.md are present in root of dataset
-    file_names = [file_name for file_name in os.listdir(dataset)]
-    if "DATS.json" not in file_names:
-        return "Dataset " + dataset + " doesn't contain DATS.json in its root directory"
-
-    if "README.md" not in file_names:
-        return "Dataset " + dataset + " doesn't contain README.md in its root directory"
-
-    with open(os.path.join(dataset, "DATS.json"), "r") as f:
-        if not validate_json(json.load(f)):
-            return "Dataset " + dataset + " doesn't contain a valid DATS.json"
 
     # Number of files to test in each dataset
     # with 100 files, the test is not completing before Travis timeout (about 10~12 minutes)
