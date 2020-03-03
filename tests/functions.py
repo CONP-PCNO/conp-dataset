@@ -155,12 +155,12 @@ def examine(dataset, project):
                 if response.get("status") in ["ok", "notneeded"]:
                     continue
                 if response.get("status") in ["impossible", "error"]:
-                    print(response.get("message") + full_path)
+                    print(response.get("message"), full_path)
                     return False
     if responses == []:
         print(
             "The dataset timed out before retrieving a file."
-            + "There is not way to tell is the download would be sucessful."
+            + "There is not way to tell if the download would be sucessful."
         )
         return False
 
