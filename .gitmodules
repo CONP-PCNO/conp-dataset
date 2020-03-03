@@ -10,9 +10,6 @@
 [submodule "projects/SIMON-dataset"]  
   path = projects/SIMON-dataset
   url = https://github.com/conpdatasets/SIMON-dataset
-[submodule "investigators/Khanlab/HCPUR100-Template"]
-  path = investigators/Khanlab/HCPUR100-Template
-  url = https://github.com/emmetaobrien/HCPUR100-Template.git
 [submodule "projects/1000GenomesProject"]
   path = projects/1000GenomesProject
   url = https://github.com/conpdatasets/1000GenomesProject.git
@@ -25,12 +22,6 @@
 [submodule "projects/nhpatlas"]
   path = projects/nhpatlas
   url = https://github.com/conpdatasets/nhpatlas.git
-[submodule "investigators/Khanlab/BigBrainMRICoreg"]
-  path = investigators/Khanlab/BigBrainMRICoreg
-  url = https://github.com/emmetaobrien/BigBrainMRICoreg
-[submodule "investigators/Khanlab/BigBrainHippoUnfold"]
-  path = investigators/Khanlab/BigBrainHippoUnfold
-  url = https://github.com/emmetaobrien/BigBrainHippoUnfold
 [submodule "projects/mm_neo_atlas"]
   path = projects/mm_neo_atlas
   url = https://github.com/conpdatasets/mm_neo_atlas.git
@@ -64,3 +55,24 @@
 [submodule "scripts/dats_validator/conp-dats"]
 	path = scripts/dats_validator/conp-dats
 	url = https://github.com/CONP-PCNO/schema
+[submodule "projects/Khanlab/BigBrainHippoUnfold"]
+	path = projects/Khanlab/BigBrainHippoUnfold
+	url = https://github.com/conpdatasets/BigBrainHippoUnfold.git
+[submodule "projects/Khanlab/BigBrainMRICoreg"]
+	path = projects/Khanlab/BigBrainMRICoreg
+	url = https://github.com/conpdatasets/BigBrainMRICoreg.git
+[submodule "projects/Khanlab/HCPUR100-Template"]
+	path = projects/Khanlab/HCPUR100-Template
+	url = https://github.com/conpdatasets/HCPUR100-Template.git
+[submodule "projects/Learning_Naturalistic_Structure__Processed_fMRI_dataset"]
+  path = projects/Learning_Naturalistic_Structure__Processed_fMRI_dataset
+  url = https://github.com/conp-bot/conp-dataset-Learning_Naturalistic_Structure__Processed_fMRI_dataset.git
+[submodule "projects/mcgill-emc-rna-seq-experiment"]
+	path = projects/mcgill-emc-rna-seq-experiment
+	url = https://github.com/zxenia/mcgill-emc-rna-seq-experiment.git
+[submodule "projects/VFA_T1_mapping___RTHawk__open__vs_Siemens__commercial_"]
+  path = projects/VFA_T1_mapping___RTHawk__open__vs_Siemens__commercial_
+  url = https://github.com/conp-bot/conp-dataset-VFA_T1_mapping___RTHawk__open__vs_Siemens__commercial_.git
+[submodule "projects/MRI_and_unbiased_averages_of_wild_muskrats__Ondatra_zibethicus__and_red_squirrels__Tamiasciurus_hudsonicus_"]
+  path = projects/MRI_and_unbiased_averages_of_wild_muskrats__Ondatra_zibethicus__and_red_squirrels__Tamiasciurus_hudsonicus_
+  url = https://github.com/conp-bot/conp-dataset-MRI_and_unbiased_averages_of_wild_muskrats__Ondatra_zibethicus__and_red_squirrels__Tami.git

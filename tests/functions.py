@@ -130,7 +130,6 @@ def examine(dataset, project):
         )
         return False
 
-
     # Number of files to test in each dataset
     # with 100 files, the test is not completing before Travis timeout (about 10~12 minutes)
     num_files = 4
