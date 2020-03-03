@@ -149,7 +149,7 @@ def examine(dataset, project):
         # Timeouts the download or a hanging authentification
         full_path = os.path.join(dataset, file)
         responses = []
-        with timeout(3):
+        with timeout(300):
             responses = api.get(path=full_path, on_failure="ignore")
 
         for response in responses:
