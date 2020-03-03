@@ -137,7 +137,7 @@ def examine(dataset, project):
 
     # Get list of all annexed files and choose randomly num_files of them to test
     annex_list: str = Repo(dataset).git.annex("list")
-    files: list = re.split(r"\n____.* ", annex_list)[1:]
+    files: list = re.split(r"\n.* ", annex_list)[1:]
     files: list = sample(files, min(num_files, len(files)))
 
     if len(files) == 0:
