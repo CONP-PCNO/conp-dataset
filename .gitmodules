@@ -13,9 +13,6 @@
 [submodule "projects/1000GenomesProject"]
   path = projects/1000GenomesProject
   url = https://github.com/conpdatasets/1000GenomesProject.git
-[submodule "projects/refseq"]
-  path = projects/refseq
-  url = https://github.com/conpdatasets/refseq.git
 [submodule "projects/Brainspan"]
   path = projects/Brainspan
   url = https://github.com/conpdatasets/Brainspan.git
