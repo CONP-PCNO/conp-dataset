@@ -2,6 +2,7 @@ from contextlib import contextmanager
 import json
 import os
 from random import sample
+import re
 import signal
 import sys
 
@@ -135,8 +136,13 @@ def examine(dataset, project):
     num_files = 4
 
     # Get list of all annexed files and choose randomly num_files of them to test
-    files = Repo(dataset).git.annex("list").split("\n____X ")[1:]
-    files = sample(files, min(num_files, len(files)))
+    annex_list: str = Repo(dataset).git.annex("list")
+    files: list = re.split(r"\n____.* ", annex_list)[1:]
+    files: list = sample(files, min(num_files, len(files)))
+
+    if len(files) == 0:
+        print("No files found in the annex.")
+        return False
 
     # Test those randomly chose files
     for file in files:
