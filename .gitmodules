@@ -90,4 +90,4 @@
 	datalad-id = 27e7f426-5d64-11ea-bba9-0800277806bd
 [submodule "projects/Reusing-Neuro-Data"]
 	path = projects/Reusing-Neuro-Data
-	url = https://github.com/gi114/Reusing-Neuro-Data
+	url = https://github.com/gi114/Reusing-Neuro-Data.git
