@@ -5,7 +5,7 @@ This function should return the minimal set of test to execute.
 import git
 import pytest
 
-from .create_tests import minimal_tests
+from tests.create_tests import minimal_tests
 
 
 @pytest.fixture(autouse=True)
@@ -15,31 +15,72 @@ def retrieve_submodule():
     yield
 
 
-def test_empty_pr():
+@pytest.mark.parametrize("pr_files", [[],])
+def test_empty_pr(pr_files):
     """Test pull requests that modify no file."""
-    pass
+    assert minimal_tests(pytest.datasets, pr_files) == []
 
 
-def test_modify_single_project():
+@pytest.mark.parametrize(
+    "pr_files",
+    [("projects/preventad-open",), ("projects/PERFORM_Dataset__one_control_subject",),],
+)
+def test_modify_single_project(pr_files):
     """Test pull requests that modify a single project."""
-    pass
+    pr_files = list(pr_files)
+    assert minimal_tests(pytest.datasets, pr_files) == pr_files
 
 
-def test_modify_multi_project():
+@pytest.mark.parametrize(
+    "pr_files",
+    [
+        ("projects/preventad-open", "projects/PERFORM_Dataset__one_control_subject"),
+        ("projects/openpain/BrainNetworkChange_Mano", "projects/preventad-open"),
+    ],
+)
+def test_modify_multi_project(pr_files):
     """Test pull requests that modify multiple project."""
-    pass
+    pr_files = list(pr_files)
+    assert minimal_tests(pytest.datasets, pr_files) == pr_files
 
 
-def test_modify_whitelist():
+@pytest.mark.parametrize(
+    "pr_files, valid",
+    [
+        (("projects/preventad-open", "README.md"), ("projects/preventad-open",)),
+        (("LICENSE",), []),
+    ],
+)
+def test_modify_whitelist(pr_files, valid):
     """Test pull requests that modify a file in the exact whitelist."""
-    pass
+    pr_files = list(pr_files)
+    valid = list(valid)
+    assert minimal_tests(pytest.datasets, pr_files) == valid
 
 
-def test_modify_whitelist_exact():
+@pytest.mark.parametrize(
+    "pr_files, valid",
+    [
+        (("projects/preventad-open", ".datalad"), ("projects/preventad-open",)),
+        (("metadata/examples",), []),
+    ],
+)
+def test_modify_whitelist_exact(pr_files, valid):
     """Test pull requests that modify a file in the whitelist."""
-    pass
+    pr_files = list(pr_files)
+    valid = list(valid)
+    assert minimal_tests(pytest.datasets, pr_files) == valid
 
 
-def test_run_all():
+@pytest.mark.parametrize(
+    "pr_files",
+    [
+        ("requirements.txt", "projects/preventad-open", "README.md"),
+        ("tests/functions.py", "projects/preventad-open"),
+        ("scripts/crawl_zenodo.py",),
+    ],
+)
+def test_run_all(pr_files):
     """Test pull request that need to execute all tests."""
-    pass
+    pr_files = list(pr_files)
+    assert minimal_tests(pytest.datasets, pr_files) == pytest.datasets
