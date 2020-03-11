@@ -88,3 +88,6 @@
 [submodule "projects/Reusing-Neuro-Data"]
 	path = projects/Reusing-Neuro-Data
 	url = http://github.com/gi114/Reusing-Neuro-Data
+[submodule "projects/1000GenomesProject"]
+	path = projects/1000GenomesProject
+	url = https://github.com/emmetaobrien/1000GenomesProject
