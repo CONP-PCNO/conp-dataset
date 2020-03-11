@@ -75,7 +75,7 @@ def test_modify_whitelist_exact(pr_files, valid):
 @pytest.mark.parametrize(
     "pr_files",
     [
-        ("requirements.txt", "projects/preventad-open", "README.md"),
+        (".travis.yml", "projects/preventad-open", "README.md"),
         ("tests/functions.py", "projects/preventad-open"),
         ("scripts/crawl_zenodo.py",),
     ],

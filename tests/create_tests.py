@@ -22,15 +22,14 @@ def minimal_tests(datasets: List[str], pr_files: List[str]):
     """
     WHITELIST_EXACT: List[str] = [
         ".datalad",
-        ".github",
         "docs",
         "metadata",
-        ".gitattributes",
     ]
     WHITELIST: List[str] = [
-        ".gitignore",
-        "README.md",
+        ".git",
+        "README",
         "LICENSE",
+        "requirements.txt"
     ]
 
     # No need to do tests when no modification are brought.
