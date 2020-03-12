@@ -309,6 +309,17 @@ class ZenodoCrawler(BaseCrawler):
                 }
             )
 
+        if self.verbose:
+            print("Retrieved Zenodo DOIs: ")
+            for zenodo_doi in zenodo_dois:
+                print(
+                    "- Title: {}, Concept DOI: {}, Latest version DOI: {}".format(
+                        zenodo_doi["original_title"],
+                        zenodo_doi["concept_doi"],
+                        zenodo_doi["latest_version"],
+                    )
+                )
+
         return zenodo_dois
 
     def add_new_dataset(self, metadata, dataset_dir):
@@ -349,9 +360,15 @@ class ZenodoCrawler(BaseCrawler):
             tracker = json.load(f)
         if tracker["zenodo"]["version"] == metadata["latest_version"]:
             # Same version, no need to update
+            if self.verbose:
+                print("{}, version {} same as Zenodo vesion DOI, no need to update"
+                      .format(metadata["original_title"], metadata["latest_version"]))
             return False
         else:
             # Update dataset
+            if self.verbose:
+                print("{}, version {} different from Zenodo vesion DOI {}, updating"
+                      .format(metadata["original_title"], tracker["zenodo"]["version"], metadata["latest_version"]))
             dats_dir = os.path.join(dataset_dir, "DATS.json")
 
             # Remove all data and DATS.json files

@@ -61,8 +61,7 @@ if __name__ == "__main__":
     github_token, config_path, verbose, force = parse_args()
     try:
         if verbose:
-            print("==================== Zenodo Crawler Running ====================")
-            print(os.linesep)
+            print("==================== Zenodo Crawler Running ====================" + os.linesep)
         ZenodoCrawler = ZenodoCrawler(github_token, config_path, verbose, force)
         ZenodoCrawler.run()
     except Exception:
