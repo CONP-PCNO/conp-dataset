@@ -1,10 +1,11 @@
-from scripts.Crawlers.ZenodoCrawler import ZenodoCrawler
 from git import Repo
 import json
 import argparse
 import os
+import sys
 import traceback
-
+sys.path.append(os.path.abspath(os.path.join(os.path.expanduser("~"), "conp-dataset")))
+from scripts.Crawlers.ZenodoCrawler import ZenodoCrawler
 
 def parse_args():
     parser = argparse.ArgumentParser(
