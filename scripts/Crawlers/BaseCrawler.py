@@ -109,7 +109,7 @@ class BaseCrawler:
                 modified = True
                 commit_msg = "Created " + metadata["title"]
             else:  # Dataset already existing locally
-                self.repo.git.checkout(branch_name)
+                self.repo.git.checkout("-f", branch_name)
                 modified = self.update_if_necessary(metadata, dataset_dir)
                 if modified:
                     d.save()
