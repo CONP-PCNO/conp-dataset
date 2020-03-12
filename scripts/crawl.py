@@ -87,3 +87,6 @@ if __name__ == "__main__":
     # Always clear .crawling touchfile
     if ".crawling" in os.listdir("."):
         os.remove(".crawling")
+
+    if verbose:
+        print(os.linesep + "==================== Done ====================")
