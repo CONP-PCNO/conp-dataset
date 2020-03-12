@@ -343,7 +343,8 @@ class ZenodoCrawler(BaseCrawler):
     def update_if_necessary(self, metadata, dataset_dir):
         tracker_path = os.path.join(dataset_dir, ".conp-zenodo-crawler.json")
         if not os.path.isfile(tracker_path):
-            raise Exception("{} does not exist in dataset".format(tracker_path))
+            print("{} does not exist in dataset, skipping".format(tracker_path))
+            return False
         with open(tracker_path, "r") as f:
             tracker = json.load(f)
         if tracker["zenodo"]["version"] == metadata["latest_version"]:
