@@ -223,6 +223,9 @@ class ZenodoCrawler(BaseCrawler):
                                     "?access_token=" + self.zenodo_tokens[clean_title]
                             )
                             files.append(bucket)
+                else:
+                    print("No available tokens to access files of {}".format(metadata["title"]))
+                    continue
             else:
                 for bucket in dataset["files"]:
                     files.append(bucket)
