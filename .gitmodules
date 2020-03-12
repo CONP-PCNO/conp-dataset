@@ -93,6 +93,6 @@
 	url = http://github.com/gi114/Reusing-Neuro-Data
 [submodule "projects/FRDR-multimodal-2"]
 	path = projects/FRDR-multimodal-2
-	url = ./projects/FRDR-multimodal-2
+	url = https://github.com/gi114/FRDR-multimodal-2.git
 	branch = master
 	datalad-id = ae022df8-647e-11ea-b299-5076afd7427c
