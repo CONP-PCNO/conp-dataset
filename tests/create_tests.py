@@ -39,12 +39,12 @@ def minimal_tests(datasets: List[str], pr_files: List[str]):
 
     modified_datasets: List[str] = []
     for pr_filename in pr_files:
-        for dataset in datasets:
-            if dataset in pr_filename:
-                modified_datasets.append(dataset)
-                break
+        if pr_filename.startswith("projects/"):
+            for dataset in datasets:
+                if dataset in pr_filename:
+                    modified_datasets.append(dataset)
+                    break
         else:
-            # This part is only executed when the file is not part of a dataset.
             if pr_filename.split("/")[0] in WHITELIST_EXACT:
                 continue
             if any([filename in pr_filename for filename in WHITELIST]):
