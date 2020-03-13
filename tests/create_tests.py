@@ -8,6 +8,12 @@ import requests
 def minimal_tests(datasets: List[str], pr_files: List[str]):
     """Return the minimal test set for a pull request.
 
+    To return the dataset affected by a pull request changes we verify if the pull 
+    request modifies a file from the dataset. Otherwise, we verify if the file is part
+    of a whitelist that does not require testing. If either are the case, we need to 
+    test all datasets.
+     
+
     Parameters
     ----------
     datasets : List[str]
@@ -17,20 +23,15 @@ def minimal_tests(datasets: List[str], pr_files: List[str]):
     
     Returns
     -------
-    [type]
-        [description]
+    list
+        List of dataset affected by the pull request cheanges.
     """
     WHITELIST_EXACT: List[str] = [
         ".datalad",
         "docs",
         "metadata",
     ]
-    WHITELIST: List[str] = [
-        ".git",
-        "README",
-        "LICENSE",
-        "requirements.txt"
-    ]
+    WHITELIST: List[str] = [".git", "README", "LICENSE", "requirements.txt"]
 
     # No need to do tests when no modification are brought.
     if len(pr_files) == 0:
@@ -43,6 +44,7 @@ def minimal_tests(datasets: List[str], pr_files: List[str]):
                 modified_datasets.append(dataset)
                 break
         else:
+            # This part is only executed when the file is not part of a dataset.
             if pr_filename.split("/")[0] in WHITELIST_EXACT:
                 continue
             if any([filename in pr_filename for filename in WHITELIST]):
