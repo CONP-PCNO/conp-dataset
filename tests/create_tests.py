@@ -1,3 +1,4 @@
+import os
 import re
 from string import Template
 
@@ -45,9 +46,12 @@ for dataset in submodules:
     if dataset.split("/")[0] == "projects" or dataset.split("/")[0] == "investigators":
         with open("tests/test_" + dataset.replace("/", "_") + ".py", "w") as f:
 
+            dataset_path = os.path.join(
+                os.getenv("TRAVIS_BUILD_DIR", os.getcwd()), dataset
+            )
             f.write(
                 template.substitute(
-                    path=dataset,
+                    path=dataset_path,
                     project=project_name2env(dataset.split("/")[-1]),
                     clean_title=dataset.replace("/", "_").replace("-", "_"),
                 )
