@@ -7,7 +7,7 @@ import signal
 import sys
 
 import datalad.api as api
-from git import Repo
+import git
 import keyring
 
 from scripts.dats_validator.validator import validate_json
@@ -32,6 +32,30 @@ def timeout(time):
 
 def raise_timeout(signum, frame):
     raise TimeoutError
+
+
+def get_annexed_file_size(dataset, file_path):
+    """Get the size of an annexed file in Bytes.
+    
+    Parameters
+    ----------
+    dataset : string
+        Path to the dataset containing the file.
+    file_path : str
+        Realative path of the file within a dataset
+    
+    Returns
+    -------
+    float
+        Size of the annexed file in Bytes.
+    """
+    metadata = json.loads(
+        git.Repo(dataset).git.annex(
+            "info", os.path.join(dataset, file_path), json=True, bytes=True,
+        )
+    )
+
+    return int(metadata["size"])
 
 
 def is_authentication_required(dataset):
@@ -131,24 +155,34 @@ def examine(dataset, project):
         )
         return False
 
-    # Number of files to test in each dataset
-    # with 100 files, the test is not completing before Travis timeout (about 10~12 minutes)
-    num_files = 4
-
     # Get list of all annexed files and choose randomly num_files of them to test
-    annex_list: str = Repo(dataset).git.annex("list")
-    files: list = re.split(r"\n[_X]+\s", annex_list)[1:]
-    files: list = sample(files, min(num_files, len(files)))
+    annex_list: str = git.Repo(dataset).git.annex("list")
+    filenames: list = re.split(r"\n[_X]+\s", annex_list)[1:]
 
-    if len(files) == 0:
+    if len(filenames) == 0:
         print("No files found in the annex.")
         return False
 
-    # Test those randomly chose files
+    # Sort files by size
+    filenames = [
+        x[0]
+        for x in sorted(
+            [
+                (filename, get_annexed_file_size(dataset, filename))
+                for filename in filenames
+            ],
+            key=lambda x: x[1],
+        )
+    ]
+
+    # Limit number of files to test in each dataset to avoid Travis to timeout.
+    num_files = 4
+    filenames = filenames[:num_files]
+
     responses = []
     TIMEOUT = 120
     with timeout(TIMEOUT):
-        for file in files:
+        for file in filenames:
             full_path = os.path.join(dataset, file)
             responses = api.get(path=full_path, on_failure="ignore")
 
