@@ -174,16 +174,13 @@ def examine(dataset, project):
         filenames = filenames[1:]
 
     # Sort files by size
-    filenames = [
-        x[0]
-        for x in sorted(
-            [
-                (filename, get_annexed_file_size(dataset, filename))
-                for filename in filenames
-            ],
-            key=lambda x: x[1],
-        )
-    ]
+    filenames = sorted(
+        [
+            (filename, get_annexed_file_size(dataset, filename))
+            for filename in filenames
+        ],
+        key=lambda x: x[1],
+    )
 
     # Limit number of files to test in each dataset to avoid Travis to timeout.
     num_files = 4
@@ -192,8 +189,8 @@ def examine(dataset, project):
     responses = []
     TIMEOUT = 120
     with timeout(TIMEOUT):
-        for file in filenames:
-            full_path = os.path.join(dataset, file)
+        for filename, file_size in filenames:
+            full_path = os.path.join(dataset, filename)
             responses = api.get(path=full_path, on_failure="ignore")
 
             for response in responses:
@@ -206,7 +203,10 @@ def examine(dataset, project):
         print(
             f"The dataset timed out after {TIMEOUT} seconds before retrieving a file."
             + "There is not way to tell if the download would be sucessful.",
-            file,
+            filename,
+            "has size of",
+            file_size,
+            "Bytes",
         )
         return False
 
