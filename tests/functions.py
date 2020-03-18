@@ -157,11 +157,19 @@ def examine(dataset, project):
 
     # Get list of all annexed files and choose randomly num_files of them to test
     annex_list: str = git.Repo(dataset).git.annex("list")
-    filenames: list = re.split(r"\n[_X]+\s", annex_list)[1:]
+    filenames: list = re.split(r"\n[_X]+\s", annex_list)
 
-    if len(filenames) == 0:
-        print("No files found in the annex.")
-        return False
+    # First element from git annex list is not a file.
+    if len(filenames) <= 1:
+        print("No files found in the annex.", end=" ")
+        if len(filenames) == 0:
+            print("This dataset does not look to be a datalad repository.")
+            return False
+        else:
+            print("This dataset does not contain annexed files.")
+            return True
+    else:
+        filenames = filenames[1:]
 
     # Sort files by size
     filenames = [
