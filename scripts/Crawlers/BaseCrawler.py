@@ -80,11 +80,15 @@ class BaseCrawler:
         Get relevant datasets' description from platform.
 
         Retrieves datasets' description that needs to be in CONP-datasets
-        from platform specific to each crawler like Zenodo, OSF, etc.
+        from platform specific to each crawler like Zenodo, OSF, etc. It is up 
+        to the crawler to identify which datasets on the platform should be crawled.
+        The Zenodo crawler uses keywords for this purpose, but other mechanisms
+        could work too.
+        
         Each description is required to have the necessary information in order
         to build a valid DATS file from it. The following keys are necessary in
         each description:
-            description["title"]: The name of the dataset, usually one sentece or short description of the dataset
+            description["title"]: The name of the dataset, usually one sentence or short description of the dataset
             description["identifier"]: The identifier of the dataset
             description["creators"]: The person(s) or organization(s) which contributed to the creation of the dataset
             description["description"]: A textual narrative comprised of one or more statements describing the dataset
@@ -92,11 +96,13 @@ class BaseCrawler:
             description["licenses"]: The terms of use of the dataset
             description["keywords"]: Tags associated with the dataset, which will help in its discovery
             description["types"]: A term, ideally from a controlled terminology, identifying the dataset type or nature of the data, placing it in a typology
-        More fields can be added as long as they comply with the DATS schema,
-        any fields/keys not in the schema will be ignored when creating the dataset's DATS
-        so it is fine to add more helpful information for other methods which will use them:
+        More fields can be added as long as they comply with the DATS schema available at
         https://github.com/CONP-PCNO/schema/blob/master/dataset_schema.json
-        Here are some examples of valid DATS.json:
+        
+        Any fields/keys not in the schema will be ignored when creating the dataset's DATS.
+        It is fine to add more helpful information for other methods which will use them.
+        
+        Here are some examples of valid DATS.json files:
         https://github.com/conp-bot/conp-dataset-Learning_Naturalistic_Structure__Processed_fMRI_dataset/blob/476a1ee3c4df59aca471499b2e492a65bd389a88/DATS.json
         https://github.com/conp-bot/conp-dataset-MRI_and_unbiased_averages_of_wild_muskrats__Ondatra_zibethicus__and_red_squirrels__Tami/blob/c9e9683fbfec71f44a5fc3576515011f6cd024fe/DATS.json
         https://github.com/conp-bot/conp-dataset-PERFORM_Dataset__one_control_subject/blob/0b1e271fb4dcc03f9d15f694cc3dfae5c7c2d358/DATS.json
