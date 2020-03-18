@@ -145,7 +145,7 @@ class BaseCrawler:
         Parameter:
         dataset_description (dict): Dictionary containing information on
                                     retrieved dataset from platform. Element of 
-                                    the list returned by get_all_dataset_description
+                                    the list returned by get_all_dataset_description.
         dataset_dir (str): Local directory path where the newly
                            created datalad dataset is located. 
         """
@@ -161,7 +161,9 @@ class BaseCrawler:
 
         Parameter:
         dataset_description (dict): Dictionary containing information on
-                                    retrieved dataset from platform
+                                    retrieved dataset from platform.
+                                    Element of the list returned by
+                                    get_all_dataset_description.
         dataset_dir (str): Directory path of the dataset
 
         Returns:
@@ -180,7 +182,9 @@ class BaseCrawler:
 
         Parameter:
         dataset_description (dict): Dictionary containing information on
-                                    retrieved dataset from platform
+                                    retrieved dataset from platform.
+                                    Element of the list returned by
+                                    get_all_dataset_description.
 
         Returns:
         string: Content of the README.md
