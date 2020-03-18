@@ -120,14 +120,17 @@ def examine(dataset, project):
     file_names = [file_name for file_name in os.listdir(dataset)]
 
     if "README.md" not in file_names:
-        return "Dataset " + dataset + " doesn't contain README.md in its root directory"
+        print("Dataset", dataset, "doesn't contain README.md in its root directory")
+        return False
 
     if "DATS.json" not in file_names:
-        return "Dataset " + dataset + " doesn't contain DATS.json in its root directory"
+        print("Dataset", dataset, "doesn't contain DATS.json in its root directory")
+        return False
 
     with open(os.path.join(dataset, "DATS.json"), "r") as f:
         if not validate_json(json.load(f)):
-            return "Dataset " + dataset + " doesn't contain a valid DATS.json"
+            print("Dataset", dataset, "doesn't contain a valid DATS.json")
+            return False
 
     # If authentication is required and credentials are provided then add credentials
     # to the keyring and create a provider config file.
@@ -143,8 +146,7 @@ def examine(dataset, project):
     elif is_authentication_required(dataset) == True:
         if os.getenv("TRAVIS_EVENT_TYPE", None) == "pull_request":
             print(
-                f"WARNING: {dataset} cannot be test on Pull Requests to protect secrets.",
-                file=sys.stderr,
+                f"WARNING: {dataset} cannot be test on Pull Requests to protect secrets."
             )
             return True
 
@@ -203,8 +205,8 @@ def examine(dataset, project):
     if responses == []:
         print(
             f"The dataset timed out after {TIMEOUT} seconds before retrieving a file."
-            + "There is not way to tell if the download would be sucessful."
-            + file
+            + "There is not way to tell if the download would be sucessful.",
+            file,
         )
         return False
 
