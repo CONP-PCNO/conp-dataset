@@ -9,58 +9,60 @@ import json
 
 class BaseCrawler:
     """
-    Interface to extend all conp-dataset crawlers.
+    Interface to extend conp-dataset crawlers.
 
+    ==================
+    Overview
+    ==================
 
-    Any Crawlers created from this interface will have most overhead to crawling
-    datasets from remote platforms handled. These overheads comprise of verifying
-    correct fork, branching, not annexing important files, creating datalad datasets,
-    publishing to repositories, creating pull requests, etc.
+    Any crawler created from this interface will have to crawl
+    datasets from a specific remote platforms. This base class
+    implements the functions common to all crawled backends, in particular:
+    (1) verify that correct fork of conp-dataset is used,
+    (2) create and switch to an new branch for each new dataset,
+    (3) ignore README and DATS files for the annex,
+    (4) create new datalad datasets,
+    (5) publish to GitHub repository,
+    (6) create pull requests.
 
-
-    How it works:
-    By instantiating this class, requirements such as verifying fork,
-    active branch and where the remote is pointing are checked.
-
-    Method run() is the entry point to any crawlers.
-    When it starts running, the crawler first retrieves from the remote platform
+    Method run(), implemented in the base class, is the entry point to any crawler.
+    It does the following things:
+    (1) It calls abstract method get_all_dataset_description(), that must be implemented
+    by the crawler in the child class. get_all_dataset_description()
+    retrieves from the remote platform
     all the necessary information about each dataset that is supposed to be added or
-    updated to conp-dataset using get_all_dataset_description(). The format will be a list
-    of conp-datasets. Each dataset will be a dictionary containing required and optional
-    keys in order to build the DATS.json. The required keys are "title", "types", "creators",
-    "licenses", "description", "keywords" and "version". The optional keys are "identifier",
-    "distributions", "extraProperties", "alternateIdentifiers", "relatedIdentifiers",
-    "dates", "storedIn", "spatialCoverage", "types" "availability", "refinement",
-    "aggregation", "privacy", "dimensions", "primaryPublications", "citations",
-    "citationCount", "producedBy", "isAbout", "hasPart" and "acknowledges".
-    See https://github.com/CONP-PCNO/schema/blob/master/dataset_schema.json for more information
-    about the schema and description of each fields.
+    updated to conp-dataset.
+    (2) It iterates through each dataset description, and switch to a dedicated git branch
+    for each dataset.
+       (2.a) If the dataset is new, the base class will create a new branch,
+             an empty datalad repository, unannex DATS.json and README.md and create an 
+             empty GitHub repository. It will then call abstract method add_new_dataset()
+             which will add/download all dataset files under given directory.
+             The crawler will then add a custom DATS.json and README.md if those weren't added.
+             Creating the README.md requires get_readme_content() to be implemented, which will
+             return the content of the README.md in markdown format. The crawler will then save and
+             publish all changes to the newly create repository. It will also handle adding a new submodule
+             to .gitmodules and creating a pull request to CONP-PCNO/conp-dataset.
+       (2.b) If the dataset already exists, verified by the existence of its corresponding branch,
+             the base class will call abstract method update_if_necessary() which will verify
+             if the dataset requires updating and update if so. If the dataset got updated, This method
+             will return True which will trigger saving, publishing new content to the dataset's respective
+             repository, creating a new DATS.json if it doesn't exist and creating a pull 
+             request to CONP-PCNO/conp-dataset.
 
-    Iterating through each dataset description, each dataset will have its own branch,
-    meaning we can tell if a dataset is new by verifying the presence of a branch with the title
-    of the dataset in its name. If the dataset is new, the crawler will create a new branch,
-    an empty datalad repository, unannex DATS.json and README.md and create an empty github repository.
-    It will then call add_new_dataset() which will add/download all dataset files under given directory.
-    The crawler will then add a custom DATS.json and README.md if those weren't added.
-    Creating the README.md requires get_readme_content() to be implemented, which will
-    return the content of the README.md in markdown format. The crawler will then save and
-    publish all changes to the newly create repository. It will also handle adding a new submodule
-    to .gitmodules and creating a pull request to CONP-PCNO/conp-dataset.
+    ==================
+    How to implement a new crawler
+    ==================
 
-    If a dataset is already existing, verified by its corresponding branch, the crawler
-    will call update_if_necessary() which will verify using its platform specific way, if the
-    dataset requires updating and update if so. If it got updated, This methods will return True
-    which will trigger saving, publishing new content to the dataset's respective repository,
-    creating a new DATS.json if it doesn't exist and creating a pull request to CONP-PCNO/conp-dataset.
-
-
-    How to implement a new Crawler:
-        - Create another class which extends from this one
-        - Implement the four abstract methods: get_all_dataset_description,
-        add_new_dataset, update_if_necessary and get_readme_content. See docstring
-        of each method for specifications.
-        - In crawl.py, at the comment where it says to instantiate new crawlers,
-        instantiate this new Crawler and call run() on it
+        (1) Create a class deriving from BaseCrawler
+        (2) Implement the four abstract methods:
+            * get_all_dataset_description,
+            * add_new_dataset
+            * update_if_necessary
+            * get_readme_content.
+            See docstrings of each method for specifications.
+        (3) In crawl.py, locate the comment where it says to instantiate new crawlers,
+            instantiate this new Crawler and call run() on it
     """
     def __init__(self, github_token, config_path, verbose, force):
         self.repo = git.Repo()
