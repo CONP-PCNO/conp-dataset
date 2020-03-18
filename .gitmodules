@@ -1,9 +1,6 @@
 [submodule "projects/multicenter-phantom"]
   path = projects/multicenter-phantom
   url = https://github.com/conpdatasets/multicenter-phantom.git
-[submodule "projects/visual-working-memory"]
-  path = projects/visual-working-memory
-  url = https://github.com/conpdatasets/visual-working-memory.git
 [submodule "projects/preventad-open"]
   path = projects/preventad-open
   url = https://github.com/conpdatasets/preventad-open.git
