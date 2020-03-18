@@ -1,5 +1,4 @@
 from scripts.Crawlers.BaseCrawler import BaseCrawler
-from git import Repo
 import os
 import json
 import requests
@@ -7,78 +6,9 @@ import humanize
 import html2markdown
 
 
-def _guess_modality(file_name):
-    # Associate file types to substrings found in the file name
-    modalities = {
-        "fMRI": ["bold", "func", "cbv"],
-        "MRI": ["T1", "T2", "FLAIR", "FLASH", "PD", "angio", "anat", "mask"],
-        "diffusion": ["dwi", "dti", "sbref"],
-        "meg": ["meg"],
-        "intracranial eeg": ["ieeg"],
-        "eeg": ["eeg"],
-        "field map": ["fmap", "phasediff", "magnitude"],
-        "imaging": ["nii", "nii.gz", "mnc"],
-    }
-    for m in modalities:
-        for s in modalities[m]:
-            if s in file_name:
-                return m
-    return "unknown"
-
-
 def _get_unlock_script():
     with open(os.path.join("scripts", "unlock.py"), "r") as f:
         return f.read()
-
-
-def _create_new_dats(dataset_dir, dats_path, dataset):
-    with open(dats_path, "w") as f:
-        data = {
-            "title": dataset["original_title"],
-            "identifier": dataset["identifier"],
-            "creators": dataset["creators"],
-            "description": dataset["description"],
-            "version": dataset["version"],
-            "licenses": dataset["licenses"],
-            "keywords": dataset["keywords"],
-            "distributions": dataset["distributions"],
-            "extraProperties": dataset["extraProperties"],
-        }
-
-        # Count number of files in dataset
-        num = 0
-        for file in os.listdir(dataset_dir):
-            if file[0] == "." or file == "DATS.json" or file == "README.md":
-                continue
-            elif os.path.isdir(file):
-                num += sum(
-                    [
-                        len(list(filter(lambda x: x[0] != ".", files)))
-                        for r, d, files in os.walk(file)
-                    ]
-                )
-            else:
-                num += 1
-        data["extraProperties"].append(
-            {"category": "files", "values": [{"value": str(num)}]}
-        )
-
-        # Retrieve modalities from files
-        file_paths = map(
-            lambda x: x.split(" ")[-1],
-            filter(lambda x: " " in x, Repo(dataset_dir).git.annex("list").split("\n")),
-        )  # Get file paths
-        file_names = list(
-            map(lambda x: x.split("/")[-1] if "/" in x else x, file_paths)
-        )  # Get file names from path
-        modalities = set([_guess_modality(file_name) for file_name in file_names])
-        if len(modalities) == 0:
-            modalities.add("unknown")
-        elif len(modalities) > 1 and "unknown" in modalities:
-            modalities.remove("unknown")
-        data["types"] = [{"value": modality} for modality in modalities]
-
-        json.dump(data, f, indent=4)
 
 
 def _create_zenodo_tracker(path, dataset, private_files, restricted):
@@ -90,31 +20,9 @@ def _create_zenodo_tracker(path, dataset, private_files, restricted):
             },
             "private_files": private_files,
             "restricted": restricted,
-            "title": dataset["original_title"],
+            "title": dataset["title"],
         }
         json.dump(data, f, indent=4)
-
-
-def _create_readme(dataset, dataset_dir):
-    if "README.md" not in os.listdir(dataset_dir):
-        with open(os.path.join(dataset_dir, "README.md"), "w") as f:
-            f.write(
-                """# {0}
-
-[![DOI](https://www.zenodo.org/badge/DOI/{1}.svg)](https://doi.org/{1})
-
-Crawled from Zenodo
-
-## Description
-
-{2}""".format(
-                    dataset["title"],
-                    dataset["doi_badge"],
-                    html2markdown.convert(dataset["description"]).replace(
-                        "\n", "<br />"
-                    ),
-                )
-            )
 
 
 class ZenodoCrawler(BaseCrawler):
@@ -193,7 +101,7 @@ class ZenodoCrawler(BaseCrawler):
         with open(os.path.join(dataset_dir, "unlock.py"), "w") as f:
             f.write(self.unlock_script)
 
-    def get_all_dataset_metadata(self):
+    def get_all_dataset_description(self):
         zenodo_dois = []
         datasets = self._query_zenodo()
         for dataset in datasets:
@@ -255,8 +163,7 @@ class ZenodoCrawler(BaseCrawler):
                     },
                     "concept_doi": dataset["conceptrecid"],
                     "latest_version": latest_version_doi,
-                    "title": clean_title,
-                    "original_title": metadata["title"],
+                    "title": metadata["title"],
                     "files": files,
                     "doi_badge": dataset["conceptdoi"],
                     "creators": list(
@@ -314,7 +221,7 @@ class ZenodoCrawler(BaseCrawler):
             for zenodo_doi in zenodo_dois:
                 print(
                     "- Title: {}, Concept DOI: {}, Latest version DOI: {}".format(
-                        zenodo_doi["original_title"],
+                        zenodo_doi["title"],
                         zenodo_doi["concept_doi"],
                         zenodo_doi["latest_version"],
                     )
@@ -322,25 +229,17 @@ class ZenodoCrawler(BaseCrawler):
 
         return zenodo_dois
 
-    def add_new_dataset(self, metadata, dataset_dir):
+    def add_new_dataset(self, dataset, dataset_dir):
         d = self.datalad.Dataset(dataset_dir)
         d.no_annex(".conp-zenodo-crawler.json")
         d.no_annex("unlock.py")
         d.save()
 
         private_files = {"archive_links": [], "files": []}
-        for bucket in metadata["files"]:
+        for bucket in dataset["files"]:
             self._download_file(bucket, d, dataset_dir, private_files)
         restricted_dataset = True if len(private_files["archive_links"]) > 0 or len(
             private_files["files"]) > 0 else False
-
-        # Create DATS.json if it doesn't exist
-        if not os.path.isfile(os.path.join(dataset_dir, "DATS.json")):
-            _create_new_dats(dataset_dir, os.path.join(dataset_dir, "DATS.json"), metadata)
-
-        # Create README.md if doesn't exist
-        if not os.path.isfile(os.path.join(dataset_dir, "README.md")):
-            _create_readme(metadata, dataset_dir)
 
         # If dataset is a restricted dataset, create a script which allows to unlock downloading files in dataset
         if restricted_dataset:
@@ -348,28 +247,27 @@ class ZenodoCrawler(BaseCrawler):
 
         # Add .conp-zenodo-crawler.json tracker file
         _create_zenodo_tracker(
-            os.path.join(dataset_dir, ".conp-zenodo-crawler.json"), metadata, private_files, restricted_dataset
+            os.path.join(dataset_dir, ".conp-zenodo-crawler.json"), dataset, private_files, restricted_dataset
         )
 
-    def update_if_necessary(self, metadata, dataset_dir):
+    def update_if_necessary(self, dataset_description, dataset_dir):
         tracker_path = os.path.join(dataset_dir, ".conp-zenodo-crawler.json")
         if not os.path.isfile(tracker_path):
             print("{} does not exist in dataset, skipping".format(tracker_path))
             return False
         with open(tracker_path, "r") as f:
             tracker = json.load(f)
-        if tracker["zenodo"]["version"] == metadata["latest_version"]:
+        if tracker["zenodo"]["version"] == dataset_description["latest_version"]:
             # Same version, no need to update
             if self.verbose:
                 print("{}, version {} same as Zenodo vesion DOI, no need to update"
-                      .format(metadata["original_title"], metadata["latest_version"]))
+                      .format(dataset_description["title"], dataset_description["latest_version"]))
             return False
         else:
             # Update dataset
             if self.verbose:
                 print("{}, version {} different from Zenodo vesion DOI {}, updating"
-                      .format(metadata["original_title"], tracker["zenodo"]["version"], metadata["latest_version"]))
-            dats_dir = os.path.join(dataset_dir, "DATS.json")
+                      .format(dataset_description["title"], tracker["zenodo"]["version"], dataset_description["latest_version"]))
 
             # Remove all data and DATS.json files
             for file_name in os.listdir(dataset_dir):
@@ -380,20 +278,30 @@ class ZenodoCrawler(BaseCrawler):
             d = self.datalad.Dataset(dataset_dir)
 
             private_files = {"archive_links": [], "files": []}
-            for bucket in metadata["files"]:
+            for bucket in dataset_description["files"]:
                 self._download_file(bucket, d, dataset_dir, private_files)
             restricted_dataset = True if len(private_files["archive_links"]) > 0 or len(
                 private_files["files"]) > 0 else False
-
-            # If DATS.json isn't in downloaded files, create new DATS.json
-            if not os.path.isfile(dats_dir):
-                _create_new_dats(dataset_dir, dats_dir, metadata)
 
             # If dataset is a restricted dataset, create a script which allows to unlock downloading files in dataset
             if restricted_dataset:
                 self._put_unlock_script(dataset_dir)
 
             # Add/update .conp-zenodo-crawler.json tracker file
-            _create_zenodo_tracker(tracker_path, metadata, private_files, restricted_dataset)
+            _create_zenodo_tracker(tracker_path, dataset_description, private_files, restricted_dataset)
 
             return True
+
+    def get_readme_content(self, dataset):
+        return """# {0}
+
+        [![DOI](https://www.zenodo.org/badge/DOI/{1}.svg)](https://doi.org/{1})
+
+        Crawled from Zenodo
+
+        ## Description
+
+        {2}""".format(dataset["title"], dataset["doi_badge"],
+                      html2markdown.convert(
+                          dataset["description"]).replace("\n", "<br />")
+        )

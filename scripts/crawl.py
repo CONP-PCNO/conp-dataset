@@ -7,6 +7,7 @@ import traceback
 sys.path.append(os.path.abspath(os.path.join(os.path.expanduser("~"), "conp-dataset")))
 from scripts.Crawlers.ZenodoCrawler import ZenodoCrawler
 
+
 def parse_args():
     parser = argparse.ArgumentParser(
         formatter_class=argparse.RawTextHelpFormatter,
@@ -65,17 +66,9 @@ if __name__ == "__main__":
             print("==================== Zenodo Crawler Running ====================" + os.linesep)
         ZenodoCrawler = ZenodoCrawler(github_token, config_path, verbose, force)
         ZenodoCrawler.run()
-    except Exception:
-        traceback.print_exc()
-    finally:
-        # Always switch branch back to master
-        repository = Repo()
-        if repository.active_branch.name != "master":
-            repository.git.checkout("master")
 
-    try:
         # INSTANTIATE NEW CRAWLERS AND RUN HERE
-        pass
+
     except Exception:
         traceback.print_exc()
     finally:
@@ -84,9 +77,9 @@ if __name__ == "__main__":
         if repository.active_branch.name != "master":
             repository.git.checkout("master")
 
-    # Always clear .crawling touchfile
-    if ".crawling" in os.listdir("."):
-        os.remove(".crawling")
+        # Always clear .crawling touchfile
+        if ".crawling" in os.listdir("."):
+            os.remove(".crawling")
 
-    if verbose:
-        print(os.linesep + "==================== Done ====================")
+        if verbose:
+            print(os.linesep + "==================== Done ====================")

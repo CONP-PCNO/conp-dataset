@@ -8,6 +8,60 @@ import json
 
 
 class BaseCrawler:
+    """
+    Interface to extend all conp-dataset crawlers.
+
+
+    Any Crawlers created from this interface will have most overhead to crawling
+    datasets from remote platforms handled. These overheads comprise of verifying
+    correct fork, branching, not annexing important files, creating datalad datasets,
+    publishing to repositories, creating pull requests, etc.
+
+
+    How it works:
+    By instantiating this class, requirements such as verifying fork,
+    active branch and where the remote is pointing are checked.
+
+    Method run() is the entry point to any crawlers.
+    When it starts running, the crawler first retrieves from the remote platform
+    all the necessary information about each dataset that is supposed to be added or
+    updated to conp-dataset using get_all_dataset_description(). The format will be a list
+    of conp-datasets. Each dataset will be a dictionary containing required and optional
+    keys in order to build the DATS.json. The required keys are "title", "types", "creators",
+    "licenses", "description", "keywords" and "version". The optional keys are "identifier",
+    "distributions", "extraProperties", "alternateIdentifiers", "relatedIdentifiers",
+    "dates", "storedIn", "spatialCoverage", "types" "availability", "refinement",
+    "aggregation", "privacy", "dimensions", "primaryPublications", "citations",
+    "citationCount", "producedBy", "isAbout", "hasPart" and "acknowledges".
+    See https://github.com/CONP-PCNO/schema/blob/master/dataset_schema.json for more information
+    about the schema and description of each fields.
+
+    Iterating through each dataset description, each dataset will have its own branch,
+    meaning we can tell if a dataset is new by verifying the presence of a branch with the title
+    of the dataset in its name. If the dataset is new, the crawler will create a new branch,
+    an empty datalad repository, unannex DATS.json and README.md and create an empty github repository.
+    It will then call add_new_dataset() which will add/download all dataset files under given directory.
+    The crawler will then add a custom DATS.json and README.md if those weren't added.
+    Creating the README.md requires get_readme_content() to be implemented, which will
+    return the content of the README.md in markdown format. The crawler will then save and
+    publish all changes to the newly create repository. It will also handle adding a new submodule
+    to .gitmodules and creating a pull request to CONP-PCNO/conp-dataset.
+
+    If a dataset is already existing, verified by its corresponding branch, the crawler
+    will call update_if_necessary() which will verify using its platform specific way, if the
+    dataset requires updating and update if so. If it got updated, This methods will return True
+    which will trigger saving, publishing new content to the dataset's respective repository,
+    creating a new DATS.json if it doesn't exist and creating a pull request to CONP-PCNO/conp-dataset.
+
+
+    How to implement a new Crawler:
+        - Create another class which extends from this one
+        - Implement the four abstract methods: get_all_dataset_description,
+        add_new_dataset, update_if_necessary and get_readme_content. See docstring
+        of each method for specifications.
+        - In crawl.py, at the comment where it says to instantiate new crawlers,
+        instantiate this new Crawler and call run() on it
+    """
     def __init__(self, github_token, config_path, verbose, force):
         self.repo = git.Repo()
         self.username = self._check_requirements()
@@ -19,25 +73,47 @@ class BaseCrawler:
         self.datalad = api
 
     @abc.abstractmethod
-    def get_all_dataset_metadata(self):
+    def get_all_dataset_description(self):
         """
-        Get relevant datasets' metadata from platform.
+        Get relevant datasets' description from platform.
 
-        Retrieves datasets' metadata that needs to be in CONP-datasets
+        Retrieves datasets' description that needs to be in CONP-datasets
         from platform specific to each crawler like Zenodo, OSF, etc.
+        Each description is required to have the necessary information in order
+        to build a valid DATS file from it. The following keys are necessary in
+        each description:
+            description["title"]: The name of the dataset, usually one sentece or short description of the dataset
+            description["identifier"]: The identifier of the dataset
+            description["creators"]: The person(s) or organization(s) which contributed to the creation of the dataset
+            description["description"]: A textual narrative comprised of one or more statements describing the dataset
+            description["version"]: A release point for the dataset when applicable
+            description["licenses"]: The terms of use of the dataset
+            description["keywords"]: Tags associated with the dataset, which will help in its discovery
+            description["types"]: A term, ideally from a controlled terminology, identifying the dataset type or nature of the data, placing it in a typology
+        More fields can be added as long as they comply with the DATS schema,
+        any fields/keys not in the schema will be ignored when creating the dataset's DATS
+        so it is fine to add more helpful information for other methods which will use them:
+        https://github.com/CONP-PCNO/schema/blob/master/dataset_schema.json
+        Here are some examples of valid DATS.json:
+        https://github.com/conp-bot/conp-dataset-Learning_Naturalistic_Structure__Processed_fMRI_dataset/blob/476a1ee3c4df59aca471499b2e492a65bd389a88/DATS.json
+        https://github.com/conp-bot/conp-dataset-MRI_and_unbiased_averages_of_wild_muskrats__Ondatra_zibethicus__and_red_squirrels__Tami/blob/c9e9683fbfec71f44a5fc3576515011f6cd024fe/DATS.json
+        https://github.com/conp-bot/conp-dataset-PERFORM_Dataset__one_control_subject/blob/0b1e271fb4dcc03f9d15f694cc3dfae5c7c2d358/DATS.json
 
         Returns:
-            List of metadata of relevant datasets. Each metadata is a
-            dictionary and requires the key "title" to be associated
-            with the dataset's title. For example:
+            List of description of relevant datasets. Each description is a
+            dictionary. For example:
 
             [{
                 "title": "PERFORM Dataset Example",
-                "creators: ["Joey", "Daniel", "Bob"]
+                "description": "PERFORM dataset description",
+                "version": "0.0.1",
+                ...
              },
              {
                 "title": "SIMON dataset example",
-                "version": 1.4.2
+                "description: "SIMON dataset description",
+                "version": "1.4.2",
+                ...
              },
              ...
             ]
@@ -45,61 +121,98 @@ class BaseCrawler:
         return []
 
     @abc.abstractmethod
-    def add_new_dataset(self, metadata, dataset_dir):
+    def add_new_dataset(self, dataset_description, dataset_dir):
         """
-        Configure and add newly created dataset.
+        Configure and add newly created dataset to the local CONP git repository.
 
         This is where newly crawled dataset which are not present locally are
         created. This is where a one time configuration such as modifying
         .gitignore, .gitattribute or no-annex some files can be done.
+        It is possible to add a tracker file in the repo in order
+        to track in future runs if there are any changes to the dataset.
+        For example, you can store a dataset version in '.version' file
+        so that if the dataset version changes on the remote platform,
+        update_if_necessary() will detect it and update the dataset.
 
         Parameter:
-        metadata (dict): Dictionary containing metadata on
-                         retrieved dataset from platform
-        dataset_dir (str): Directory path of where the newly
+        dataset_description (dict): Dictionary containing information on
+                                    retrieved dataset from platform
+        dataset_dir (str): Local directory path of where the newly
                            created datalad dataset is located
         """
         return
 
     @abc.abstractmethod
-    def update_if_necessary(self, metadata, dataset_dir):
+    def update_if_necessary(self, dataset_description, dataset_dir):
         """
-        Update dataset if needed.
+        Update dataset if it has been modified on the remote platform.
 
-        Determines if local dataset needs to be updated based on
-        metadata and updates dataset if that is the case.
+        Determines if local dataset identified by 'identifier'
+        needs to be updated. If so, update dataset.
 
         Parameter:
-        metadata (dict): Dictionary containing metadata on
-                         retrieved dataset from platform
+        dataset_description (dict): Dictionary containing information on
+                                    retrieved dataset from platform
         dataset_dir (str): Directory path of the dataset
 
         Returns:
-        bool: True if dataset got modified, else otherwise
+        bool: True if dataset got modified, False otherwise
         """
         return False
 
-    # DO NOT OVERRIDE THIS METHOD
+    @abc.abstractmethod
+    def get_readme_content(self, dataset_description):
+        """
+        Returns the content of the README.md in markdown.
+
+        Given the dataset description provided by
+        get_all_dataset_description(), return the content of the
+        README.md in markdown.
+
+        Parameter:
+        dataset_description (dict): Dictionary containing information on
+                                    retrieved dataset from platform
+
+        Returns:
+        string: Content of the README.md
+        """
+        return ""
+
     def run(self):
-        metadata_list = self.get_all_dataset_metadata()
-        for metadata in metadata_list:
-            clean_title = self._clean_dataset_title(metadata["title"])
+        """
+        DO NOT OVERRIDE THIS METHOD
+        This method is the entry point for all Crawler classes.
+        It will loop through dataset descriptions collected from get_all_dataset_description(),
+        verify if each of those dataset present locally, create a new dataset with add_new_dataset()
+        if not. If dataset is already existing locally, verify if dataset needs updating
+        with update_if_necessary() and update if so
+        """
+        dataset_description_list = self.get_all_dataset_description()
+        for dataset_description in dataset_description_list:
+            clean_title = self._clean_dataset_title(dataset_description["title"])
             branch_name = "conp-bot/" + clean_title
             dataset_dir = os.path.join("projects", clean_title)
             d = self.datalad.Dataset(dataset_dir)
             if branch_name not in self.repo.remotes.origin.refs:  # New dataset
                 self.repo.git.checkout("-b", branch_name)
-                repo_title = ("conp-dataset-" + metadata["title"])[0:100]
+                repo_title = ("conp-dataset-" + dataset_description["title"])[0:100]
                 d.create()
                 r = d.create_sibling_github(
                     repo_title,
                     name="origin",
                     github_login=self.github_token,
                     github_passwd=self.github_token)
-                self._add_github_repo_description(repo_title, metadata)
+                self._add_github_repo_description(repo_title, dataset_description)
                 d.no_annex("DATS.json")
                 d.no_annex("README.md")
-                self.add_new_dataset(metadata, dataset_dir)
+                self.add_new_dataset(dataset_description, dataset_dir)
+                # Create DATS.json if it doesn't exist
+                if not os.path.isfile(os.path.join(dataset_dir, "DATS.json")):
+                    self._create_new_dats(dataset_dir, os.path.join(dataset_dir, "DATS.json"), dataset_description)
+                # Create README.md if it doesn't exist
+                if not os.path.isfile(os.path.join(dataset_dir, "README.md")):
+                    readme = self.get_readme_content(dataset_description)
+                    self._create_readme(readme, os.path.join(dataset_dir, "README.md"))
                 d.save()
                 d.publish(to="origin")
                 self.repo.git.submodule(
@@ -107,31 +220,34 @@ class BaseCrawler:
                     r[0][1].replace(self.github_token + "@", ""),
                     dataset_dir)
                 modified = True
-                commit_msg = "Created " + metadata["title"]
+                commit_msg = "Created " + dataset_description["title"]
             else:  # Dataset already existing locally
                 self.repo.git.checkout("-f", branch_name)
-                modified = self.update_if_necessary(metadata, dataset_dir)
+                modified = self.update_if_necessary(dataset_description, dataset_dir)
                 if modified:
+                    # Create DATS.json if it doesn't exist
+                    if not os.path.isfile(os.path.join(dataset_dir, "DATS.json")):
+                        self._create_new_dats(dataset_dir, os.path.join(dataset_dir, "DATS.json"), dataset_description)
                     d.save()
                     d.publish(to="origin")
-                commit_msg = "Updated " + metadata["title"]
+                commit_msg = "Updated " + dataset_description["title"]
 
             # If modification detected in dataset, push to branch and create PR
             if modified:
-                self._push_and_pull_request(commit_msg, dataset_dir, metadata["title"])
+                self._push_and_pull_request(commit_msg, dataset_dir, dataset_description["title"])
 
             # Go back to master
             self.repo.git.checkout("master")
 
-    def _add_github_repo_description(self, repo_title, metadata):
+    def _add_github_repo_description(self, repo_title, dataset_description):
         url = "https://api.github.com/repos/{}/{}".format(
             self.username, repo_title)
         head = {"Authorization": "token {}".format(self.github_token)}
         description = "Please don't submit any PR to this repository. "
-        if "creators" in metadata.keys():
+        if "creators" in dataset_description.keys():
             description += "If you want to request modifications, " \
                            "please contact {}".format(
-                            metadata["creators"][0]["name"])
+                            dataset_description["creators"][0]["name"])
         payload = {"description": description}
         r = requests.patch(url, data=json.dumps(payload), headers=head)
         if not r.ok:
@@ -207,3 +323,88 @@ Functional checks:
 
     def _clean_dataset_title(self, title):
         return re.sub("\W|^(?=\d)", "_", title)
+
+    def _create_new_dats(self, dataset_dir, dats_path, dataset):
+        # Fields/properties that are acceptable in DATS schema according to
+        # https://github.com/CONP-PCNO/schema/blob/master/dataset_schema.json
+        dats_fields = ["title", "identifier", "creators", "description", "version", "licenses",
+                       "keywords", "distributions", "extraProperties", "alternateIdentifiers",
+                       "relatedIdentifiers", "dates", "storedIn", "spatialCoverage", "types",
+                       "availability", "refinement", "aggregation", "privacy", "dimensions",
+                       "primaryPublications", "citations", "citationCount", "producedBy",
+                       "isAbout", "hasPart", "acknowledges"]
+
+        # Check required properties
+        required_fields = ["title", "types", "creators", "licenses", "description", "keywords", "version"]
+        for field in required_fields:
+            if field not in dataset.keys():
+                print("Warning: required property {} not found in dataset description".format(field))
+
+        # Add all dats properties from dataset description
+        data = {key: value for key, value in dataset.items() if key in dats_fields}
+
+        # Add file count
+        num = 0
+        for file in os.listdir(dataset_dir):
+            if file[0] == "." or file == "DATS.json" or file == "README.md":
+                continue
+            elif os.path.isdir(file):
+                num += sum(
+                    [
+                        len(list(filter(lambda x: x[0] != ".", files)))
+                        for r, d, files in os.walk(file)
+                    ]
+                )
+            else:
+                num += 1
+        if "extraProperties" not in data.keys():
+            data["extraProperties"] = [{"category": "files", "values": [{"value": str(num)}]}]
+        else:
+            data["extraProperties"].append(
+                {"category": "files", "values": [{"value": str(num)}]}
+            )
+
+        # Retrieve modalities from files
+        file_paths = map(
+            lambda x: x.split(" ")[-1],
+            filter(lambda x: " " in x, git.Repo(dataset_dir).git.annex("list").split("\n")),
+        )  # Get file paths
+        file_names = list(
+            map(lambda x: x.split("/")[-1] if "/" in x else x, file_paths)
+        )  # Get file names from path
+        modalities = set([self._guess_modality(file_name) for file_name in file_names])
+        if len(modalities) == 0:
+            modalities.add("unknown")
+        elif len(modalities) > 1 and "unknown" in modalities:
+            modalities.remove("unknown")
+        if "types" not in data.keys():
+            data["types"] = [{"value": modality} for modality in modalities]
+        else:
+            for modality in modalities:
+                data["types"].append({"value": modality})
+
+        # Create file
+        with open(dats_path, "w") as f:
+            json.dump(data, f, indent=4)
+
+    def _guess_modality(self, file_name):
+        # Associate file types to substrings found in the file name
+        modalities = {
+            "fMRI": ["bold", "func", "cbv"],
+            "MRI": ["T1", "T2", "FLAIR", "FLASH", "PD", "angio", "anat", "mask"],
+            "diffusion": ["dwi", "dti", "sbref"],
+            "meg": ["meg"],
+            "intracranial eeg": ["ieeg"],
+            "eeg": ["eeg"],
+            "field map": ["fmap", "phasediff", "magnitude"],
+            "imaging": ["nii", "nii.gz", "mnc"],
+        }
+        for m in modalities:
+            for s in modalities[m]:
+                if s in file_name:
+                    return m
+        return "unknown"
+
+    def _create_readme(self, content, path):
+        with open(path, "w") as f:
+            f.write(content)
