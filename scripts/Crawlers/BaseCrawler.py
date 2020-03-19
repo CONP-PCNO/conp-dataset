@@ -133,14 +133,29 @@ class BaseCrawler:
         """
         Configure and add newly created dataset to the local CONP git repository.
 
-        This is where newly crawled dataset which are not present locally are
-        created. This is where a one time configuration such as modifying
-        .gitignore, .gitattribute or no-annex some files can be done.
-        It is possible to add a tracker file in the repo in order
-        to track in future runs if there are any changes to the dataset.
-        For example, you can store a dataset version in '.version' file
-        so that if the dataset version changes on the remote platform,
-        update_if_necessary() will detect it and update the dataset.
+        The BaseCrawler will take care of a few overhead tasks before
+        add_new_dataset() is called, namely:
+        (1) Creating and checkout a dedicated branch for this dataset
+        (2) Initialising a Github repo for this dataset
+        (3) Creating an empty datalad dataset for files to be added
+        (4) Annex ignoring README.md and DATS.json
+
+        After add_new_dataset() is called, BaseCrawler will:
+        (1) Create a custom DATS.json if it isn't added in add_new_dataset()
+        (2) Create a custom README.md with get_readme_content() if that file is non-existent
+        (3) Save and publish all changes
+        (4) Adding this dataset as a submodule
+        (5) Creating a pull request to CONP-PCNO/conp-dataset
+        (6) Switch back to the master branch
+
+        This means that add_new_dataset() will only have to implement a few tasks in the given
+        previously initialized datalad dataset directory:
+        (1) Adding any one time configuration such as annex ignoring files or adding dataset version tracker
+        (2) Downloading and unarchiving relevant archives using datalad.download_url(link, archive=True)
+        (3) Adding file links as symlinks using annex("addurl", link, "--fast", "--file", filename)
+
+        There is no need to save/push/publish/create pull request
+        as those will be done after this function has finished
 
         Parameter:
         dataset_description (dict): Dictionary containing information on
@@ -159,12 +174,22 @@ class BaseCrawler:
         Determines if local dataset identified by 'identifier'
         needs to be updated. If so, update dataset.
 
+        Similarily to add_new_dataset(), update_if_necessary() will need to
+        take care of updating the dataset if required:
+        (1) Downloading and unarchiving relevant archives using datalad.download_url(link, archive=True)
+        (2) Adding new file links as symlinks using annex("addurl", link, "--fast", "--file", filename)
+        (3) Updating any tracker files used to determine if the dataset needs to be updated
+
+        There is no need to save/push/publish/create pull request
+        as those will be done after this function has finished
+
         Parameter:
         dataset_description (dict): Dictionary containing information on
                                     retrieved dataset from platform.
                                     Element of the list returned by
                                     get_all_dataset_description.
-        dataset_dir (str): Directory path of the dataset
+        dataset_dir (str): Directory path of the
+                           previously created datalad dataset
 
         Returns:
         bool: True if dataset got modified, False otherwise
