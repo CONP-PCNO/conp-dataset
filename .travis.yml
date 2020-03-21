@@ -21,4 +21,4 @@ install:
 script:
   - find . -name config.sh | xargs bash
   - python tests/create_tests.py
-  - PYTHONPATH=$PWD pytest --verbose --tb=long tests/
+  - PYTHONPATH=$PWD pytest -v -rA tests/
