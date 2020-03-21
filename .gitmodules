@@ -1,18 +1,12 @@
 [submodule "projects/multicenter-phantom"]
   path = projects/multicenter-phantom
   url = https://github.com/conpdatasets/multicenter-phantom.git
-[submodule "projects/visual-working-memory"]
-  path = projects/visual-working-memory
-  url = https://github.com/conpdatasets/visual-working-memory.git
 [submodule "projects/preventad-open"]
   path = projects/preventad-open
   url = https://github.com/conpdatasets/preventad-open.git
 [submodule "projects/SIMON-dataset"]  
   path = projects/SIMON-dataset
   url = https://github.com/conpdatasets/SIMON-dataset
-[submodule "projects/1000GenomesProject"]
-  path = projects/1000GenomesProject
-  url = https://github.com/conpdatasets/1000GenomesProject.git
 [submodule "projects/Brainspan"]
   path = projects/Brainspan
   url = https://github.com/conpdatasets/Brainspan.git
@@ -96,3 +90,6 @@
 	url = https://github.com/gi114/FRDR-multimodal-2.git
 	branch = master
 	datalad-id = ae022df8-647e-11ea-b299-5076afd7427c
+[submodule "projects/1000GenomesProject"]
+	path = projects/1000GenomesProject
+	url = https://github.com/emmetaobrien/1000GenomesProject
