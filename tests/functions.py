@@ -59,6 +59,42 @@ def get_annexed_file_size(dataset, file_path):
     return int(metadata["size"])
 
 
+def remove_ftp_files(dataset: str, filenames: list) -> list:
+    """Remove files that only use ftp as a remote.
+    
+    Parameters
+    ----------
+    dataset : str
+        Path to the dataset containing the files.
+    filenames : List[str]
+        List of filenames path in the dataset.
+    
+    Returns
+    -------
+    files_without_ftp : list
+        List of filenames path not using ftp.
+    """
+    files_without_ftp = []
+    for filename in filenames:
+        whereis = json.loads(
+            git.Repo(dataset).git.annex(
+                "whereis", os.path.join(dataset, filename), json=True
+            )
+        )
+
+        urls_without_ftp = [
+            url
+            for x in whereis["whereis"]
+            for url in x["urls"]
+            if not url.startswith("ftp://")
+        ]
+
+        if len(urls_without_ftp) > 0:
+            files_without_ftp.append(filename)
+
+    return files_without_ftp
+
+
 def is_authentication_required(dataset):
     """Verify in the dataset DATS file if authentication is required.
     
@@ -168,6 +204,16 @@ def examine(dataset, project):
         )
     else:
         filenames = filenames[1:]
+
+    # Remove files using FTP as it is unstable in travis.
+    if os.getenv("TRAVIS", False):
+        filenames = remove_ftp_files(dataset, filenames)
+
+        if len(filenames) == 0:
+            pytest.skip(
+                "The dataset only contains files using FTP."
+                + " Due to Travis limitation we cannot test this dataset."
+            )
 
     # Sort files by size
     filenames = sorted(
