@@ -9,6 +9,7 @@ import sys
 import datalad.api as api
 import git
 import keyring
+import pytest
 
 from scripts.dats_validator.validator import validate_json
 
@@ -120,17 +121,18 @@ def examine(dataset, project):
     file_names = [file_name for file_name in os.listdir(dataset)]
 
     if "README.md" not in file_names:
-        print("Dataset", dataset, "doesn't contain README.md in its root directory")
-        return False
+        pytest.fail(
+            f"Dataset {dataset} doesn't contain README.md in its root directory."
+        )
 
     if "DATS.json" not in file_names:
-        print("Dataset", dataset, "doesn't contain DATS.json in its root directory")
-        return False
+        pytest.fail(
+            f"Dataset {dataset} doesn't contain DATS.json in its root directory."
+        )
 
     with open(os.path.join(dataset, "DATS.json"), "r") as f:
         if not validate_json(json.load(f)):
-            print("Dataset", dataset, "doesn't contain a valid DATS.json")
-            return False
+            pytest.fail(f"Dataset {dataset} doesn't contain a valid DATS.json.")
 
     # If authentication is required and credentials are provided then add credentials
     # to the keyring and create a provider config file.
@@ -145,17 +147,15 @@ def examine(dataset, project):
         generate_datalad_provider(loris_api)
     elif is_authentication_required(dataset) == True:
         if os.getenv("TRAVIS_EVENT_TYPE", None) == "pull_request":
-            print(
+            pytest.skip(
                 f"WARNING: {dataset} cannot be test on Pull Requests to protect secrets."
             )
-            return True
 
-        print(
+        pytest.fail(
             "Cannot download file (dataset requires authentication, make sure "
             + f"that environment variables {project}_USERNAME, {project}_PASSWORD, "
-            + f"and {project}_LORIS_API are defined in Travis)"
+            + f"and {project}_LORIS_API are defined in Travis)."
         )
-        return False
 
     # Get list of all annexed files and choose randomly num_files of them to test
     annex_list: str = git.Repo(dataset).git.annex("list")
@@ -163,13 +163,9 @@ def examine(dataset, project):
 
     # First element from git annex list is not a file.
     if len(filenames) <= 1:
-        print("No files found in the annex.", end=" ")
-        if len(filenames) == 0:
-            print("This dataset does not look to be a datalad repository.")
-            return False
-        else:
-            print("This dataset does not contain annexed files.")
-            return True
+        pytest.fail(
+            "No files found in the annex. This dataset does not contain annexed files."
+        )
     else:
         filenames = filenames[1:]
 
@@ -197,17 +193,13 @@ def examine(dataset, project):
                 if response.get("status") in ["ok", "notneeded"]:
                     continue
                 if response.get("status") in ["impossible", "error"]:
-                    print(response.get("message"), full_path)
-                    return False
+                    pytest.fail(f"{full_path}\n{response.get('message')}")
+
     if responses == []:
-        print(
+        pytest.fail(
             f"The dataset timed out after {TIMEOUT} seconds before retrieving a file."
-            + "There is not way to tell if the download would be sucessful.",
-            filename,
-            "has size of",
-            file_size,
-            "Bytes",
+            + " There is not way to tell if the download would be sucessful."
+            + f"\n{filename} has size of {file_size} Bytes."
         )
-        return False
 
     return True
