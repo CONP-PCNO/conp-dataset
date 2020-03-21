@@ -158,17 +158,21 @@ def examine(dataset, project):
 
     if "README.md" not in file_names:
         pytest.fail(
-            f"Dataset {dataset} doesn't contain README.md in its root directory."
+            f"Dataset {dataset} doesn't contain README.md in its root directory.",
+            pytrace=False,
         )
 
     if "DATS.json" not in file_names:
         pytest.fail(
-            f"Dataset {dataset} doesn't contain DATS.json in its root directory."
+            f"Dataset {dataset} doesn't contain DATS.json in its root directory.",
+            pytrace=False,
         )
 
     with open(os.path.join(dataset, "DATS.json"), "r") as f:
         if not validate_json(json.load(f)):
-            pytest.fail(f"Dataset {dataset} doesn't contain a valid DATS.json.")
+            pytest.fail(
+                f"Dataset {dataset} doesn't contain a valid DATS.json.", pytrace=False
+            )
 
     # If authentication is required and credentials are provided then add credentials
     # to the keyring and create a provider config file.
@@ -190,7 +194,8 @@ def examine(dataset, project):
         pytest.fail(
             "Cannot download file (dataset requires authentication, make sure "
             + f"that environment variables {project}_USERNAME, {project}_PASSWORD, "
-            + f"and {project}_LORIS_API are defined in Travis)."
+            + f"and {project}_LORIS_API are defined in Travis).",
+            pytrace=False,
         )
 
     # Get list of all annexed files and choose randomly num_files of them to test
@@ -200,7 +205,8 @@ def examine(dataset, project):
     # First element from git annex list is not a file.
     if len(filenames) <= 1:
         pytest.fail(
-            "No files found in the annex. This dataset does not contain annexed files."
+            "No files found in the annex. This dataset does not contain annexed files.",
+            pytrace=False,
         )
     else:
         filenames = filenames[1:]
@@ -239,13 +245,16 @@ def examine(dataset, project):
                 if response.get("status") in ["ok", "notneeded"]:
                     continue
                 if response.get("status") in ["impossible", "error"]:
-                    pytest.fail(f"{full_path}\n{response.get('message')}")
+                    pytest.fail(
+                        f"{full_path}\n{response.get('message')}", pytrace=False
+                    )
 
     if responses == []:
         pytest.fail(
             f"The dataset timed out after {TIMEOUT} seconds before retrieving a file."
             + " There is not way to tell if the download would be sucessful."
-            + f"\n{filename} has size of {file_size} Bytes."
+            + f"\n{filename} has size of {file_size} Bytes.",
+            pytrace=False,
         )
 
     return True
