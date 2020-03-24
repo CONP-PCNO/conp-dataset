@@ -1,0 +1,25 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/conp-dataset
+    docker:
+      - image: mathdugre/conp-dataset
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            pip install -r requirements.txt 
+            pip install -r tests/requirements.txt
+            pip install -r scripts/dats_validator/requirements.txt
+            pip freeze
+      - run:
+          name: Install dataset
+          command: datalad install -r .
+      - run:
+          name: Create test file for each datasets
+          command: python tests/create_tests.py
+      - run:
+          name: Run test suite
+          no_output_timeout: 10m
+          command: PYTHONPATH=$PWD pytest tests/
