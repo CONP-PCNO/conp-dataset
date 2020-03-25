@@ -6,6 +6,10 @@ jobs:
       - image: mathdugre/conp-dataset
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - conda-dependencies-v0.0.2-{{ .Branch }}
+            - conda-dependencies-v0.0.2-
       - run:
           name: Install dependencies
           command: |
@@ -13,6 +17,12 @@ jobs:
             pip install -r tests/requirements.txt
             pip install -r scripts/dats_validator/requirements.txt
             pip freeze
+      - save_cache:
+          paths:
+            - /opt/conda/bin
+            - /opt/conda/lib/python3.7/site-packages/
+          key: conda-dependencies-v0.0.2-{{ .Branch }}
+
       - run:
           name: Install dataset
           command: datalad install -r .
