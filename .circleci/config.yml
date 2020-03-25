@@ -4,6 +4,8 @@ jobs:
     working_directory: ~/conp-dataset
     docker:
       - image: mathdugre/conp-dataset
+    parallelism: 2
+
     steps:
       - checkout
       - restore_cache:
@@ -44,6 +46,7 @@ jobs:
           command: |
             mkdir test-results
             export PYTHONPATH=$PWD
-            pytest --junitxml=test-results/junit.xml -v -rfEs tests/
+            circleci tests glob tests/test_* | circleci tests split --split-by=timings > /tmp/tests-to-run 
+            pytest --junitxml=test-results/junit.xml -v -rfEs $(cat /tmp/tests-to-run)
       - store_test_results:
           path: test-results
