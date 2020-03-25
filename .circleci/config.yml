@@ -41,4 +41,9 @@ jobs:
       - run:
           name: Run test suite
           no_output_timeout: 10m
-          command: PYTHONPATH=$PWD pytest tests/
+          command: |
+            mkdir test-results
+            export PYTHONPATH=$PWD
+            pytest --junitxml=test-results/junit.xml -v -rfEs tests/
+      - store_test_results:
+          path: test-results
