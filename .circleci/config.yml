@@ -23,9 +23,18 @@ jobs:
             - /opt/conda/lib/python3.7/site-packages/
           key: conda-dependencies-v0.0.2-{{ .Branch }}
 
+      - restore_cache:
+          keys:
+            - conp-dataset-v0.0.1-{{ .Branch }}
+            - conp-dataset-v0.0.1-
       - run:
           name: Install dataset
           command: datalad install -r .
+      - save_cache:
+          paths:
+            - ~/conp-dataset
+          key: conp-dataset-v0.0.1-{{ .Branch }}
+
       - run:
           name: Create test file for each datasets
           command: python tests/create_tests.py
