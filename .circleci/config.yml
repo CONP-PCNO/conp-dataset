@@ -13,13 +13,6 @@ aliases:
         - v1.1-conda-{{ .Branch }}
         - v1.1-conda-
 
-  - &restore_dataset
-    restore_cache:
-      name: Restore dataset installation
-      keys:
-        - v1.1-dataset-{{ .Branch }}
-        - v1.1-dataset-
-
 jobs:
   build:
     working_directory: *workdir
@@ -29,7 +22,6 @@ jobs:
       - checkout:
           path: *workdir
       - *restore_python_cache
-      - *restore_dataset
       - run:
           name: Install dependencies
           command: |
@@ -45,11 +37,11 @@ jobs:
       - run:
           name: Install dataset
           command: datalad install -r .
-      - save_cache:
-          name: Save dataset installation
+      - persist_to_workspace:
+          root: *workdir
           paths:
-            - /src/conp-dataset
-          key: v1.1-dataset-{{ .Branch }}
+            - .
+      
 
   test:
     working_directory: *workdir
@@ -57,8 +49,9 @@ jobs:
     parallelism: 2
 
     steps:
+      - attach_workspace:
+          at: *workdir
       - *restore_python_cache
-      - *restore_dataset
       - run:
           name: Run tests
           no_output_timeout: 10m
