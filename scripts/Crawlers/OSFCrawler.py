@@ -129,8 +129,7 @@ class OSFCrawler(BaseCrawler):
         d.save()
         annex = Repo(dataset_dir).git.annex
 
-        for file in dataset["files"]:
-            self._download_files(file, dataset_dir, "", d, annex)
+        self._download_files(dataset["files"], dataset_dir, "", d, annex)
 
         # Add .conp-osf-crawler.json tracker file
         _create_osf_tracker(
