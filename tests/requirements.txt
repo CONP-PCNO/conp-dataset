@@ -2,3 +2,4 @@ html2markdown
 humanize
 mock
 pytest
+pytest-xdist

@@ -10,15 +10,15 @@ aliases:
     restore_cache:
       name: Restore conda cache
       keys:
-        - v1-conda-{{ .Branch }}
-        - v1-conda-
+        - v1.1-conda-{{ .Branch }}
+        - v1.1-conda-
 
   - &restore_dataset
     restore_cache:
       name: Restore dataset installation
       keys:
-        - v1-dataset-{{ .Branch }}
-        - v1-dataset-
+        - v1.1-dataset-{{ .Branch }}
+        - v1.1-dataset-
 
 jobs:
   build:
@@ -41,7 +41,7 @@ jobs:
           paths:
             - /src/miniconda/bin
             - /src/miniconda/lib/python3.7/site-packages
-          key: v1-conda-{{ .Branch }}
+          key: v1.1-conda-{{ .Branch }}
       - run:
           name: Install dataset
           command: datalad install -r .
@@ -49,7 +49,7 @@ jobs:
           name: Save dataset installation
           paths:
             - /src/conp-dataset
-          key: v1-dataset-{{ .Branch }}
+          key: v1.1-dataset-{{ .Branch }}
 
   test:
     working_directory: *workdir
@@ -66,7 +66,7 @@ jobs:
             python tests/create_tests.py
             mkdir test-results
             circleci tests glob tests/test_* | circleci tests split --split-by=timings > /tmp/tests-to-run 
-            PYTHONPATH=$PWD pytest --junitxml=test-results/junit.xml -v -rfEs $(cat /tmp/tests-to-run)
+            PYTHONPATH=$PWD pytest -n 2 --junitxml=test-results/junit.xml -v -rfEs $(cat /tmp/tests-to-run)
       - store_test_results:
           path: test-results
 
