@@ -1,17 +1,18 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/conp-dataset
+    working_directory: /src/conp-dataset
     docker:
-      - image: mathdugre/conp-dataset
-    parallelism: 2
+      - image: mathdugre/conp-dataset:2.0
 
     steps:
-      - checkout
+      - checkout:
+          path: /src/conp-dataset
+
       - restore_cache:
           keys:
-            - conda-dependencies-v0.0.2-{{ .Branch }}
-            - conda-dependencies-v0.0.2-
+            - conda-dependencies-v0.0.5-{{ .Branch }}
+            - conda-dependencies-v0.0.5-
       - run:
           name: Install dependencies
           command: |
@@ -21,9 +22,9 @@ jobs:
             pip freeze
       - save_cache:
           paths:
-            - /opt/conda/bin
-            - /opt/conda/lib/python3.7/site-packages/
-          key: conda-dependencies-v0.0.2-{{ .Branch }}
+            - /src/miniconda/bin
+            - /src/miniconda/lib/python3.7/site-packages
+          key: conda-dependencies-v0.0.5-{{ .Branch }}
 
       - restore_cache:
           keys:
@@ -34,8 +35,25 @@ jobs:
           command: datalad install -r .
       - save_cache:
           paths:
-            - ~/conp-dataset
+            - /src/conp-dataset
           key: conp-dataset-v0.0.1-{{ .Branch }}
+
+      - persist_to_workspace:
+          root: /src
+          paths:
+            - miniconda/bin
+            - miniconda/lib
+            - conp-dataset
+
+  test:
+    working_directory: /src/conp-dataset
+    docker:
+      - image: mathdugre/conp-dataset:2.0
+    parallelism: 2
+
+    steps:
+      - attach_workspace:
+          at: /src
 
       - run:
           name: Create test file for each datasets
@@ -50,3 +68,12 @@ jobs:
             pytest --junitxml=test-results/junit.xml -v -rfEs $(cat /tmp/tests-to-run)
       - store_test_results:
           path: test-results
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
