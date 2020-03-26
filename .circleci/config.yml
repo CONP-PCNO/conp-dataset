@@ -38,13 +38,6 @@ jobs:
             - /src/conp-dataset
           key: conp-dataset-v0.0.1-{{ .Branch }}
 
-      - persist_to_workspace:
-          root: /src
-          paths:
-            - miniconda/bin
-            - miniconda/lib
-            - conp-dataset
-
   test:
     working_directory: /src/conp-dataset
     docker:
@@ -52,8 +45,14 @@ jobs:
     parallelism: 2
 
     steps:
-      - attach_workspace:
-          at: /src
+      - restore_cache:
+          keys:
+            - conda-dependencies-v0.0.5-{{ .Branch }}
+            - conda-dependencies-v0.0.5-
+      - restore_cache:
+          keys:
+            - conp-dataset-v0.0.1-{{ .Branch }}
+            - conp-dataset-v0.0.1-
 
       - run:
           name: Create test file for each datasets
