@@ -6,6 +6,7 @@ import sys
 import traceback
 sys.path.append(os.path.abspath(os.path.join(os.path.expanduser("~"), "conp-dataset")))
 from scripts.Crawlers.ZenodoCrawler import ZenodoCrawler
+from scripts.Crawlers.OSFCrawler import OSFCrawler
 
 
 def parse_args():
@@ -66,6 +67,11 @@ if __name__ == "__main__":
             print("==================== Zenodo Crawler Running ====================" + os.linesep)
         ZenodoCrawler = ZenodoCrawler(github_token, config_path, verbose, force)
         ZenodoCrawler.run()
+
+        if verbose:
+            print("==================== OSF Crawler Running ====================" + os.linesep)
+        OSFCrawler = OSFCrawler(github_token, config_path, verbose, force)
+        OSFCrawler.run()
 
         # INSTANTIATE NEW CRAWLERS AND RUN HERE
 
