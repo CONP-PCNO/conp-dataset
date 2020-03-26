@@ -1,70 +1,72 @@
 version: 2
+
+aliases:
+  - &workdir /src/conp-dataset
+
+  - &docker
+    - image: mathdugre/conp-dataset:2.0
+
+  - &restore_python_cache
+    restore_cache:
+      name: Restore conda cache
+      keys:
+        - v1-conda-{{ .Branch }}
+        - v1-conda-
+
+  - &restore_dataset
+    restore_cache:
+      name: Restore dataset installation
+      keys:
+        - v1-dataset-{{ .Branch }}
+        - v1-dataset-
+
 jobs:
   build:
-    working_directory: /src/conp-dataset
-    docker:
-      - image: mathdugre/conp-dataset:2.0
+    working_directory: *workdir
+    docker: *docker
 
     steps:
       - checkout:
-          path: /src/conp-dataset
-
-      - restore_cache:
-          keys:
-            - conda-dependencies-v0.0.5-{{ .Branch }}
-            - conda-dependencies-v0.0.5-
+          path: *workdir
+      - *restore_python_cache
+      - *restore_dataset
       - run:
           name: Install dependencies
           command: |
             pip install -r requirements.txt 
             pip install -r tests/requirements.txt
             pip install -r scripts/dats_validator/requirements.txt
-            pip freeze
       - save_cache:
+          name: Save conda cache
           paths:
             - /src/miniconda/bin
             - /src/miniconda/lib/python3.7/site-packages
-          key: conda-dependencies-v0.0.5-{{ .Branch }}
-
-      - restore_cache:
-          keys:
-            - conp-dataset-v0.0.1-{{ .Branch }}
-            - conp-dataset-v0.0.1-
+          key: v1-conda-{{ .Branch }}
       - run:
           name: Install dataset
           command: datalad install -r .
       - save_cache:
+          name: Save dataset installation
           paths:
             - /src/conp-dataset
-          key: conp-dataset-v0.0.1-{{ .Branch }}
+          key: v1-dataset-{{ .Branch }}
 
   test:
-    working_directory: /src/conp-dataset
-    docker:
-      - image: mathdugre/conp-dataset:2.0
+    working_directory: *workdir
+    docker: *docker
     parallelism: 2
 
     steps:
-      - restore_cache:
-          keys:
-            - conda-dependencies-v0.0.5-{{ .Branch }}
-            - conda-dependencies-v0.0.5-
-      - restore_cache:
-          keys:
-            - conp-dataset-v0.0.1-{{ .Branch }}
-            - conp-dataset-v0.0.1-
-
+      - *restore_python_cache
+      - *restore_dataset
       - run:
-          name: Create test file for each datasets
-          command: python tests/create_tests.py
-      - run:
-          name: Run test suite
+          name: Run tests
           no_output_timeout: 10m
           command: |
+            python tests/create_tests.py
             mkdir test-results
-            export PYTHONPATH=$PWD
             circleci tests glob tests/test_* | circleci tests split --split-by=timings > /tmp/tests-to-run 
-            pytest --junitxml=test-results/junit.xml -v -rfEs $(cat /tmp/tests-to-run)
+            PYTHONPATH=$PWD pytest --junitxml=test-results/junit.xml -v -rfEs $(cat /tmp/tests-to-run)
       - store_test_results:
           path: test-results
 
