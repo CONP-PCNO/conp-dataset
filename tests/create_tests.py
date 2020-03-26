@@ -67,8 +67,8 @@ datasets: List[str] = list(map(lambda x: x.path, Repo(".").submodules))
 
 # Detect if we should skip tests for a dataset.
 # This prevent all dataset to be tested on every PR build.
-pull_number = os.getenv("TRAVIS_PULL_REQUEST")  # False if not a PR
-if pull_number:
+pull_number = os.getenv("TRAVIS_PULL_REQUEST")  # "false" if not a PR
+if pull_number != "false":
     response = requests.get(
         f"https://api.github.com/repos/CONP-PCNO/conp-dataset/pulls/{pull_number}/files"
     )
