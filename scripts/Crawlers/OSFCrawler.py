@@ -88,7 +88,7 @@ class OSFCrawler(BaseCrawler):
                     "title": attributes["title"],
                     "files": dataset["relationships"]["files"]["links"]["related"]["href"],
                     "creators": list(
-                        map(lambda x: {"name": x["name"]}, contributors)
+                        map(lambda x: {"name": x}, contributors)
                     ),
                     "description": attributes["description"],
                     "version": attributes["date_modified"],
