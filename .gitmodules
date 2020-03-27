@@ -88,3 +88,6 @@
 [submodule "projects/1000GenomesProject"]
 	path = projects/1000GenomesProject
 	url = https://github.com/emmetaobrien/1000GenomesProject
+[submodule "projects/Test"]
+	path = projects/Test
+	url = https://github.com/conp-bot/conp-dataset-Test.git
