@@ -69,7 +69,7 @@ if __name__ == "__main__":
         ZenodoCrawler.run()
 
         if verbose:
-            print("==================== OSF Crawler Running ====================" + os.linesep)
+            print(os.linesep + "==================== OSF Crawler Running ====================" + os.linesep)
         OSFCrawler = OSFCrawler(github_token, config_path, verbose, force)
         OSFCrawler.run()
 
