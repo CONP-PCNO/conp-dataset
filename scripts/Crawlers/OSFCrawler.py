@@ -38,8 +38,9 @@ class OSFCrawler(BaseCrawler):
                 os.mkdir(folder_path)
                 self._download_files(
                     file["relationships"]["files"]["links"]["related"]["href"],
+                    folder_path,
                     os.path.join(inner_path, file["attributes"]["name"]),
-                    folder_path, d, annex
+                    d, annex
                 )
             # Handle single files
             elif file["attributes"]["kind"] == "file":
