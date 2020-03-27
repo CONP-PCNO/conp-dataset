@@ -89,3 +89,6 @@
 	path = projects/1000GenomesProject
 	url = https://github.com/emmetaobrien/1000GenomesProject
 
+[submodule "projects/visual-working-memory"]
+	path = projects/visual-working-memory
+	url = https://github.com/conpdatasets/visual-working-memory
