@@ -91,3 +91,6 @@
 [submodule "projects/Reusing-Neuro-Data"]
 	path = projects/Reusing-Neuro-Data
 	url = http://github.com/gi114/Reusing-Neuro-Data
+[submodule "projects/Test"]
+	path = projects/Test
+	url = https://github.com/conp-bot/conp-dataset-Test.git
