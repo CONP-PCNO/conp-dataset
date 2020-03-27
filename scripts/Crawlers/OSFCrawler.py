@@ -174,8 +174,8 @@ class OSFCrawler(BaseCrawler):
     def get_readme_content(self, dataset):
         return """# {}
 
-        Crawled from OSF
+Crawled from OSF
 
-        ## Description
+## Description
 
-        {}""".format(dataset["title"], dataset["description"])
+{}""".format(dataset["title"], dataset["description"])
