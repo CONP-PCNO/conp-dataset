@@ -16,6 +16,6 @@ test -f ${TOUCHFILE} && (echo "Another crawling process is still running (${TOUC
 # We are in the protected section
 touch ${TOUCHFILE}
 
-cd ${BASEDIR} && git pull --no-edit main master
+cd ${BASEDIR}
 
 python3 ./scripts/crawl.py --verbose &>>${LOGFILE}
