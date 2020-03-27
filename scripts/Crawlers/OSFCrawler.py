@@ -70,10 +70,8 @@ class OSFCrawler(BaseCrawler):
         for dataset in datasets:
             attributes = dataset["attributes"]
 
-            # Retrieve and clean file keywords
-            keywords = []
-            if "keywords" in attributes:
-                keywords = list(map(lambda x: {"value": x}, attributes["tags"]))
+            # Retrieve keywords/tags
+            keywords = list(map(lambda x: {"value": x}, attributes["tags"]))
 
             # Retrieve contributors/creators
             contributors = self._get_contributors(
