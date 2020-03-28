@@ -1,61 +1,63 @@
 version: 2
 
 aliases:
-  - &workdir /src/conp-dataset
-
   - &docker
-    - image: mathdugre/conp-dataset:2.0
+    - image: mathdugre/conp-dataset:3.0
 
   - &restore_python_cache
     restore_cache:
-      name: Restore conda cache
+      name: Restore python cache
       keys:
-        - v1.1-conda-{{ .Branch }}
-        - v1.1-conda-
+        - v1-python-{{ .Branch }}
+        - v1-python-
 
 jobs:
   build:
-    working_directory: *workdir
     docker: *docker
 
     steps:
-      - checkout:
-          path: *workdir
+      - checkout
       - *restore_python_cache
       - run:
           name: Install dependencies
           command: |
+            python -m venv venv
+            . venv/bin/activate
             pip install -r requirements.txt 
             pip install -r tests/requirements.txt
             pip install -r scripts/dats_validator/requirements.txt
       - save_cache:
-          name: Save conda cache
+          name: Save python cache
           paths:
-            - /src/miniconda/bin
-            - /src/miniconda/lib/python3.7/site-packages
-          key: v1.1-conda-{{ .Branch }}
+            - venv
+          key: v1-python-{{ .Branch }}
       - run:
           name: Install dataset
-          command: datalad install -r .
-      - persist_to_workspace:
-          root: *workdir
+          command: |
+            . venv/bin/activate
+              datalad install -r .
+      - save_cache:
           paths:
-            - .
-      
+            - ~/project
+          key: v1-dataset-{{ .Branch }}
 
   test:
-    working_directory: *workdir
     docker: *docker
     parallelism: 2
 
     steps:
-      - attach_workspace:
-          at: *workdir
       - *restore_python_cache
+      - restore_cache:
+          name: Restore dataset installation
+          keys:
+            - v1-dataset-{{ .Branch }}
+            - v1-dataset-
+      
       - run:
           name: Run tests
           no_output_timeout: 10m
           command: |
+            . venv/bin/activate
             python tests/create_tests.py
             mkdir test-results
             circleci tests glob tests/test_* | circleci tests split --split-by=timings > /tmp/tests-to-run 
