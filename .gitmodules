@@ -1,21 +1,12 @@
 [submodule "projects/multicenter-phantom"]
   path = projects/multicenter-phantom
   url = https://github.com/conpdatasets/multicenter-phantom.git
-[submodule "projects/visual-working-memory"]
-  path = projects/visual-working-memory
-  url = https://github.com/conpdatasets/visual-working-memory.git
 [submodule "projects/preventad-open"]
   path = projects/preventad-open
   url = https://github.com/conpdatasets/preventad-open.git
 [submodule "projects/SIMON-dataset"]  
   path = projects/SIMON-dataset
   url = https://github.com/conpdatasets/SIMON-dataset
-[submodule "projects/1000GenomesProject"]
-  path = projects/1000GenomesProject
-  url = https://github.com/conpdatasets/1000GenomesProject.git
-[submodule "projects/refseq"]
-  path = projects/refseq
-  url = https://github.com/conpdatasets/refseq.git
 [submodule "projects/Brainspan"]
   path = projects/Brainspan
   url = https://github.com/conpdatasets/Brainspan.git
@@ -76,3 +67,24 @@
 [submodule "projects/MRI_and_unbiased_averages_of_wild_muskrats__Ondatra_zibethicus__and_red_squirrels__Tamiasciurus_hudsonicus_"]
   path = projects/MRI_and_unbiased_averages_of_wild_muskrats__Ondatra_zibethicus__and_red_squirrels__Tamiasciurus_hudsonicus_
   url = https://github.com/conp-bot/conp-dataset-MRI_and_unbiased_averages_of_wild_muskrats__Ondatra_zibethicus__and_red_squirrels__Tami.git
+[submodule "projects/refseq/refseq_Callithrix_jacchus"]
+	path = projects/refseq/refseq_Callithrix_jacchus
+	url = https://github.com/emmetaobrien/refseq_Callithrix_jacchus.git
+	branch = master
+	datalad-id = 1b374678-5d64-11ea-bba9-0800277806bd
+[submodule "projects/refseq/refseq_Homo_sapiens"]
+	path = projects/refseq/refseq_Homo_sapiens
+	url = https://github.com/emmetaobrien/refseq_Homo_sapiens.git
+	branch = master
+	datalad-id = 201d6d0c-5d64-11ea-bba9-0800277806bd
+[submodule "projects/refseq/refseq_Mus_musculus"]
+	path = projects/refseq/refseq_Mus_musculus
+	url = https://github.com/emmetaobrien/refseq_Mus_musculus.git
+	branch = master
+	datalad-id = 27e7f426-5d64-11ea-bba9-0800277806bd
+[submodule "projects/Reusing-Neuro-Data"]
+	path = projects/Reusing-Neuro-Data
+	url = http://github.com/gi114/Reusing-Neuro-Data
+[submodule "projects/1000GenomesProject"]
+	path = projects/1000GenomesProject
+	url = https://github.com/emmetaobrien/1000GenomesProject

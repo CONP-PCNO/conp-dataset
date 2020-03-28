@@ -70,7 +70,7 @@ datalad get <file_name>
 
 This may require authentication depending on the data owner's configuration.
 
-You can also search for relevant files and sub-datasets as follows:
+You can also search for relevant files and sub-datasets:
 
 ```console
 datalad search T1
