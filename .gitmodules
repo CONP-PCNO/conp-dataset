@@ -97,3 +97,8 @@
 	url = ./projects/bigbrain_mni_icbm152
 	branch = master
 	datalad-id = 8e2b4790-7288-11ea-a364-0800277806bd
+[submodule "projects/BigBrain_3DClassifiedVolumes"]
+	path = projects/BigBrain_3DClassifiedVolumes
+	url = ./projects/BigBrain_3DClassifiedVolumes
+	branch = master
+	datalad-id = 8323efe2-72aa-11ea-a364-0800277806bd
