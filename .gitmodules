@@ -92,3 +92,8 @@
 [submodule "projects/visual-working-memory"]
 	path = projects/visual-working-memory
 	url = https://github.com/conpdatasets/visual-working-memory
+[submodule "projects/bigbrain_mni_icbm152"]
+	path = projects/bigbrain_mni_icbm152
+	url = ./projects/bigbrain_mni_icbm152
+	branch = master
+	datalad-id = 8e2b4790-7288-11ea-a364-0800277806bd
