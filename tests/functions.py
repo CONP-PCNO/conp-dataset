@@ -206,7 +206,7 @@ def examine(dataset, project):
 
     if len(filenames) == 0:
         pytest.skip(
-            "No files found in the annex. This dataset does not contain annexed files."
+            f"WARNING: {dataset} No files found in the annex."
         )
 
     # Remove files using FTP as it is unstable in travis.
@@ -215,7 +215,7 @@ def examine(dataset, project):
 
         if len(filenames) == 0:
             pytest.skip(
-                "The dataset only contains files using FTP."
+                f"WARNING: {dataset} only contains files using FTP."
                 + " Due to Travis limitation we cannot test this dataset."
             )
 
@@ -250,7 +250,7 @@ def examine(dataset, project):
     if responses == []:
         pytest.fail(
             f"The dataset timed out after {TIMEOUT} seconds before retrieving a file."
-            + " There is not way to tell if the download would be sucessful."
+            + " Cannot to tell if the download would be sucessful."
             + f"\n{filename} has size of {file_size} Bytes.",
             pytrace=False,
         )
