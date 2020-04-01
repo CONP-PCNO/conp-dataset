@@ -108,7 +108,7 @@ def is_authentication_required(dataset):
     bool
         Wether the dataset requires authentication.
     """
-    with open(os.path.join(dataset, "DATS.json")) as fin:
+    with open(os.path.join(dataset, "DATS.json"), "rb") as fin:
         metadata = json.load(fin)
 
         try:
@@ -168,7 +168,7 @@ def examine(dataset, project):
             pytrace=False,
         )
 
-    with open(os.path.join(dataset, "DATS.json"), "r") as f:
+    with open(os.path.join(dataset, "DATS.json"), "rb") as f:
         if not validate_json(json.load(f)):
             pytest.fail(
                 f"Dataset {dataset} doesn't contain a valid DATS.json.", pytrace=False
