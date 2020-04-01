@@ -200,16 +200,12 @@ def examine(dataset, project):
 
     # Get list of all annexed files and choose randomly num_files of them to test
     annex_list: str = git.Repo(dataset).git.annex("list")
-    filenames: list = re.split(r"\n[_X]+\s", annex_list)
+    filenames: list = re.split(r"\n[_X]+\s", annex_list)[1:]
 
-    # First element from git annex list is not a file.
-    if len(filenames) <= 1:
-        pytest.fail(
-            "No files found in the annex. This dataset does not contain annexed files.",
-            pytrace=False,
+    if len(filenames) == 0:
+        pytest.skip(
+            "No files found in the annex. This dataset does not contain annexed files."
         )
-    else:
-        filenames = filenames[1:]
 
     # Remove files using FTP as it is unstable in travis.
     if os.getenv("TRAVIS", False):
