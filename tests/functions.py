@@ -186,7 +186,9 @@ def examine(dataset, project):
         keyring.set_password("datalad-loris", "password", password)
         generate_datalad_provider(loris_api)
     elif is_authentication_required(dataset) == True:
-        if os.getenv("TRAVIS_EVENT_TYPE", None) == "pull_request":
+        if os.getenv("TRAVIS_EVENT_TYPE", None) == "pull_request" or os.getenv(
+            "CIRCLE_PR_NUMBER", False
+        ):
             pytest.skip(
                 f"WARNING: {dataset} cannot be test on Pull Requests to protect secrets."
             )
