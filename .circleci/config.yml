@@ -2,58 +2,65 @@ version: 2
 
 aliases:
   - &docker
-    - image: mathdugre/conp-dataset:3.0
+    - image: mathdugre/conp-dataset:v1
+
+  - &workdir ~/conp-dataset
 
   - &restore_python_cache
     restore_cache:
-      name: Restore python cache
+      name: Restore Python Cache
       keys:
-        - v1-python-{{ .Branch }}
-        - v1-python-
+        - v1.3-python-{{ .Branch }}
+        - v1.3-python-
 
 jobs:
   build:
+    working_directory: *workdir
     docker: *docker
 
     steps:
-      - checkout
+      - checkout:
+          path: *workdir
       - *restore_python_cache
       - run:
-          name: Install dependencies
+          name: Install Dependencies
           command: |
-            python -m venv venv
-            . venv/bin/activate
-            pip install -r requirements.txt 
-            pip install -r tests/requirements.txt
-            pip install -r scripts/dats_validator/requirements.txt
+            python -m venv ~/venv
+            . ~/venv/bin/activate
+            pip install -r ~/conp-dataset/requirements.txt 
+            pip install -r ~/conp-dataset/tests/requirements.txt
+            pip install -r ~/conp-dataset/scripts/dats_validator/requirements.txt
       - save_cache:
-          name: Save python cache
+          name: Save Python Cache
           paths:
-            - venv
-          key: v1-python-{{ .Branch }}
+            - ~/venv
+          key: v1.3-python-{{ .Branch }}
       - run:
-          name: Install dataset
+          name: Install Dataset
           command: |
-            . venv/bin/activate
+              . ~/venv/bin/activate
+              export PATH=~/git-annex.linux:$PATH
               datalad install -r .
       - persist_to_workspace:
-          root: ~/project
+          root: *workdir
           paths:
             - .
 
   test:
+    working_directory: *workdir
     docker: *docker
     parallelism: 2
 
     steps:
       - attach_workspace:
-          at: ~/project
+          at: *workdir
       - *restore_python_cache
       - run:
-          name: Run tests
+          name: Run Tests
           no_output_timeout: 10m
           command: |
-            . venv/bin/activate
+            . ~/venv/bin/activate
+            export PATH=~/git-annex.linux:$PATH
             python tests/create_tests.py
             mkdir test-results
             circleci tests glob tests/test_* | circleci tests split --split-by=timings > /tmp/tests-to-run 

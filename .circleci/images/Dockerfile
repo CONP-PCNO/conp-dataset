@@ -1,10 +1,6 @@
-FROM neurodebian:bionic
+FROM circleci/python:3.6
 
-RUN apt-get -qq update \
-    && apt-get -qq -y install git-annex-standalone python3-pip python3-venv \
-    && apt-get -qq -y autoremove \
-    && apt-get autoclean \
-    && rm -rf /var/lib/apt/lists/* /var/log/dpkg.log
+WORKDIR /home/circleci
 
-RUN ln -s /usr/bin/python3 /usr/bin/python \
-    && ln -s /usr/bin/pip3 /usr/bin/pip
+RUN curl https://downloads.kitenet.net/git-annex/linux/current/git-annex-standalone-amd64.tar.gz | tar -zxvf - \
+    && sh ~/git-annex.linux/runshell
