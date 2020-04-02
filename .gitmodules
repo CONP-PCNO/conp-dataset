@@ -96,8 +96,3 @@
 	url = https://github.com/emmetaobrien/BigBrain_3DClassifiedVolumes.git
 	branch = master
 	datalad-id = 8323efe2-72aa-11ea-a364-0800277806bd
-[submodule "projects/BigBrain_3DSurfaces"]
-	path = projects/BigBrain_3DSurfaces
-	url = https://githb.com/emmetaobrien/BigBrain_3DSurfaces.git
-	branch = master
-	datalad-id = 0bf60dce-74f8-11ea-a364-0800277806bd
