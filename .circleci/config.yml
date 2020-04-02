@@ -36,23 +36,19 @@ jobs:
           command: |
             . venv/bin/activate
               datalad install -r .
-      - save_cache:
+      - persist_to_workspace:
+          root: ~/project
           paths:
-            - ~/project
-          key: v1-dataset-{{ .Branch }}
+            - .
 
   test:
     docker: *docker
     parallelism: 2
 
     steps:
+      - attach_workspace:
+          at: ~/project
       - *restore_python_cache
-      - restore_cache:
-          name: Restore dataset installation
-          keys:
-            - v1-dataset-{{ .Branch }}
-            - v1-dataset-
-      
       - run:
           name: Run tests
           no_output_timeout: 10m
