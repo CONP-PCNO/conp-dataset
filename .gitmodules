@@ -88,3 +88,14 @@
 [submodule "projects/1000GenomesProject"]
 	path = projects/1000GenomesProject
 	url = https://github.com/emmetaobrien/1000GenomesProject
+[submodule "projects/visual-working-memory"]
+	path = projects/visual-working-memory
+	url = https://github.com/conpdatasets/visual-working-memory
+[submodule "projects/BigBrain_3DClassifiedVolumes"]
+	path = projects/BigBrain_3DClassifiedVolumes
+	url = https://github.com/emmetaobrien/BigBrain_3DClassifiedVolumes.git
+	branch = master
+	datalad-id = 8323efe2-72aa-11ea-a364-0800277806bd
+[submodule "projects/BigBrain_3DSurfaces"]
+	path = projects/BigBrain_3DSurfaces
+	url = https://github.com/emmetaobrien/BigBrain_3DSurfaces
