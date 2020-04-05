@@ -50,11 +50,19 @@ def get_annexed_file_size(dataset, file_path):
     float
         Size of the annexed file in Bytes.
     """
-    metadata = json.loads(
-        git.Repo(dataset).git.annex(
-            "info", os.path.join(dataset, file_path), json=True, bytes=True,
+    attempt = 0
+    while attempt < 3:
+        metadata = json.loads(
+            git.Repo(dataset).git.annex(
+                "info", os.path.join(dataset, file_path), json=True, bytes=True,
+            )
         )
-    )
+        if "size" in metadata:
+            break
+        attempt += 1
+    else:
+        # Failed all attempt
+        return float("inf")
 
     return int(metadata["size"])
 
@@ -205,9 +213,7 @@ def examine(dataset, project):
     filenames: list = re.split(r"\n[_X]+\s", annex_list)[1:]
 
     if len(filenames) == 0:
-        pytest.skip(
-            f"WARNING: {dataset} No files found in the annex."
-        )
+        pytest.skip(f"WARNING: {dataset} No files found in the annex.")
 
     # Remove files using FTP as it is unstable in travis.
     if os.getenv("TRAVIS", False):
