@@ -5,6 +5,7 @@ from random import sample
 import re
 import signal
 import sys
+from typing import List, Tuple
 
 import datalad.api as api
 import git
@@ -65,6 +66,79 @@ def get_annexed_file_size(dataset, file_path):
         return float("inf")
 
     return int(metadata["size"])
+
+
+def get_small_files(
+    dataset: str, filenames: List[str], num_files: int
+) -> List[Tuple[str, int]]:
+    """Retrieve a list of small files from the given list.
+    
+    We want to download small files to prevent timeout, however, we cannot find the 
+    n smallest files as this would also result in timeout for dataset with a large
+    amount of files.
+
+    This greedy method allows to retrieve small files rapidly and fall back on returning
+    any file size in the worst case.
+
+    Parameters
+    ----------
+    dataset : str
+        Path to the dataset.
+    filenames : List[str]
+        Path of the dataset files.
+    num_files : int
+        Maximum number of files to test.
+    
+    Returns
+    -------
+    List[Tuple[str, int]]
+        Files of small size.
+    """
+    small_files: List[Tuple[str, int]] = []
+    SMALL_SIZE: int = 2 ** 7  # 10 MB
+
+    medium_files: List[Tuple[str, int]] = []
+    MEDIUM_SIZE: int = 2 ** 8  # 100 MB
+
+    large_files: List[Tuple[str, int]] = []
+    LARGE_SIZE: int = 2 ** 9  # 1 GB
+
+    other_files: List[Tuple[str, int]] = []
+
+    for filename in filenames:
+        file_size: int = get_annexed_file_size(dataset, filename)
+
+        if file_size < SMALL_SIZE:
+            small_files.append((filename, file_size))
+            if len(small_files) == num_files:
+                return sorted(small_files, key=lambda x: x[1])
+        elif file_size < MEDIUM_SIZE:
+            medium_files.append((filename, file_size))
+            if len(small_files) + len(medium_files) == num_files:
+                return sorted(small_files, key=lambda x: x[1]) + sorted(
+                    medium_files, key=lambda x: x[1]
+                )
+        elif file_size < LARGE_SIZE:
+            large_files.append((filename, file_size))
+            if len(small_files) + len(medium_files) + len(large_files) == num_files:
+                return (
+                    sorted(small_files, key=lambda x: x[1])
+                    + sorted(medium_files, key=lambda x: x[1])
+                    + sorted(large_files, key=lambda x: x[1])
+                )
+        else:
+            other_files.append((filename, file_size))
+
+    # Not enough small file at this point
+    nb_file_missing: int = num_files - (
+        len(small_files) + len(medium_files) + len(large_files)
+    )
+    return (
+        sorted(small_files)
+        + sorted(medium_files)
+        + sorted(large_files)
+        + other_files[:nb_file_missing]
+    )
 
 
 def remove_ftp_files(dataset: str, filenames: list) -> list:
@@ -228,19 +302,7 @@ def examine(dataset, project):
                 + " Due to Travis limitation we cannot test this dataset."
             )
 
-    # Sort files by size
-    filenames = sorted(
-        [
-            (filename, get_annexed_file_size(dataset, filename))
-            for filename in filenames
-        ],
-        key=lambda x: x[1],
-    )
-
-    # Limit number of files to test in each dataset to avoid Travis to timeout.
-    num_files = 4
-    filenames = filenames[:num_files]
-
+    filenames = get_small_files(dataset, filenames, 4)
     responses = []
     TIMEOUT = 120
     with timeout(TIMEOUT):
