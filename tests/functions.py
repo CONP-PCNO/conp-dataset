@@ -161,6 +161,10 @@ type = loris-token
 
 
 def examine(dataset, project):
+    repo = git.Repo(dataset)
+
+    # Make sure the dataset is sync to latest version.
+    repo.git.pull("origin", "master")
 
     file_names = [file_name for file_name in os.listdir(dataset)]
 
@@ -209,7 +213,7 @@ def examine(dataset, project):
         )
 
     # Get list of all annexed files and choose randomly num_files of them to test
-    annex_list: str = git.Repo(dataset).git.annex("list")
+    annex_list: str = repo.git.annex("list")
     filenames: list = re.split(r"\n[_X]+\s", annex_list)[1:]
 
     if len(filenames) == 0:
