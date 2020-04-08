@@ -5,6 +5,7 @@ import os
 import random
 import re
 import signal
+import subprocess
 import sys
 from typing import List, Set, Union
 
@@ -225,6 +226,7 @@ def examine(dataset, project):
     username = os.getenv(project + "_USERNAME", None)
     password = os.getenv(project + "_PASSWORD", None)
     loris_api = os.getenv(project + "_LORIS_API", None)
+    zenodo_token = os.getenv(project + "_ZENODO_TOKEN", None)
 
     if username and password and loris_api:
         keyring.set_password("datalad-loris", "user", username)
