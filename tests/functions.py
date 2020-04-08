@@ -212,7 +212,6 @@ def examine(dataset, project):
             pytrace=False,
         )
 
-    # Get list of all annexed files and choose randomly num_files of them to test
     annex_list: str = repo.git.annex("list")
     filenames: list = re.split(r"\n[_X]+\s", annex_list)[1:]
 
