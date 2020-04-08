@@ -4,6 +4,7 @@ import os
 from random import sample
 import re
 import signal
+import subprocess
 import sys
 
 import datalad.api as api
@@ -192,11 +193,15 @@ def examine(dataset, project):
     username = os.getenv(project + "_USERNAME", None)
     password = os.getenv(project + "_PASSWORD", None)
     loris_api = os.getenv(project + "_LORIS_API", None)
+    zenodo_token = os.getenv(project + "_ZENODO_TOKEN", None)
 
     if username and password and loris_api:
         keyring.set_password("datalad-loris", "user", username)
         keyring.set_password("datalad-loris", "password", password)
         generate_datalad_provider(loris_api)
+    elif zenodo_token:
+        # Inject zenodo token into git-annex urls.
+        subprocess.run(["python", "unlock.py", zenodo_token])
     elif is_authentication_required(dataset) == True:
         if os.getenv("TRAVIS_EVENT_TYPE", None) == "pull_request" or os.getenv(
             "CIRCLE_PR_NUMBER", False
