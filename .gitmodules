@@ -104,3 +104,8 @@
 [submodule "projects/BigBrain_3DSurfaces"]
 	path = projects/BigBrain_3DSurfaces
 	url = https://github.com/emmetaobrien/BigBrain_3DSurfaces
+[submodule "projects/FRDR-Multimodal-1"]
+	path = projects/FRDR-Multimodal-1
+	url = ./projects/FRDR-Multimodal-1
+	branch = master
+	datalad-id = 62d36da0-6fa6-11ea-9979-5076afd7427c
