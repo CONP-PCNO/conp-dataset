@@ -1,8 +1,35 @@
 import os
+import re
 from string import Template
 from typing import List
 from git import Repo
 import requests
+
+
+def project_name2env(project_name: str) -> str:
+    """Convert the project name to a valid ENV var name.
+
+    The ENV name for the project must match the regex `[a-zA-Z_]+[a-zA-Z0-9_]*`.
+
+    Parameters
+    ----------
+    project_name: str
+        Name of the project.
+
+    Return
+    ------
+    project_env: str
+        A valid ENV name for the project.
+    """
+    project_name = project_name.replace("-", "_")
+    project_env = re.sub("[_]+", "_", project_name)  # Remove consecutive `_`
+    project_env = re.sub("[^a-zA-Z0-9_]", "", project_env)
+
+    # Env var cannot start with number
+    if re.compile("[0-9]").match(project_env[0]):
+        project_env = "_" + project_env
+
+    return project_env.upper()
 
 
 def minimal_tests(datasets: List[str], pr_files: List[str]):
@@ -59,7 +86,7 @@ template = Template(
 
 
 def test_$clean_title():
-    assert examine('$path') == 'All good'
+    assert examine('$path', '$project')
 """
 )
 
@@ -67,8 +94,15 @@ datasets: List[str] = list(map(lambda x: x.path, Repo(".").submodules))
 
 # Detect if we should skip tests for a dataset.
 # This prevent all dataset to be tested on every PR build.
-pull_number = os.getenv("TRAVIS_PULL_REQUEST")  # "false" if not a PR
-if pull_number != "false":
+if os.getenv("TRAVIS", False):
+    pull_number = os.getenv("TRAVIS_PULL_REQUEST")
+    pull_number = False if pull_number == "false" else pull_number
+elif os.getenv("CIRCLECI", False):
+    pull_number = os.getenv("CIRCLE_PR_NUMBER", False)
+else:
+    pull_number = False
+
+if pull_number:
     response = requests.get(
         f"https://api.github.com/repos/CONP-PCNO/conp-dataset/pulls/{pull_number}/files"
     )
@@ -80,9 +114,13 @@ for dataset in datasets:
     if dataset.split("/")[0] == "projects" or dataset.split("/")[0] == "investigators":
         with open("tests/test_" + dataset.replace("/", "_") + ".py", "w") as f:
 
+            dataset_path = os.path.join(
+                os.getenv("TRAVIS_BUILD_DIR", os.getcwd()), dataset
+            )
             f.write(
                 template.substitute(
-                    path=dataset,
+                    path=dataset_path,
+                    project=project_name2env(dataset.split("/")[-1]),
                     clean_title=dataset.replace("/", "_").replace("-", "_"),
                 )
             )
