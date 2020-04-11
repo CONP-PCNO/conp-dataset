@@ -1,7 +1,7 @@
 from contextlib import contextmanager
 import json
 import os
-from random import sample
+import random
 import re
 import signal
 import subprocess
@@ -142,11 +142,14 @@ def generate_datalad_provider(loris_api):
     # Regex for provider
     re_loris_api = loris_api.replace(".", "\.")
 
+    os.makedirs(
+        os.path.join(os.path.expanduser("~"), ".config", "datalad", "providers")
+    )
     with open(
         os.path.join(
             os.path.expanduser("~"), ".config", "datalad", "providers", "loris.cfg"
         ),
-        "w",
+        "w+",
     ) as fout:
         fout.write(
             f"""[provider:loris]                                                                    
@@ -231,6 +234,15 @@ def examine(dataset, project):
                 f"WARNING: {dataset} only contains files using FTP."
                 + " Due to Travis limitation we cannot test this dataset."
             )
+
+    # Take random sample of the filenames to avoid timeout or long test runs.
+    #
+    # Setting the seed to the concatenation of filenames allow to have randomness when
+    # the dataset is updated, while keeping consistency when the state of the dataset
+    # stays the same.
+    random.seed("".join(filenames))
+    SAMPLE_SIZE: int = 200
+    filenames = random.sample(filenames, min(SAMPLE_SIZE, len(filenames)))
 
     # Sort files by size
     filenames = sorted(
