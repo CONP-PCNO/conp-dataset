@@ -98,7 +98,7 @@ class ZenodoCrawler(BaseCrawler):
         d.save()
 
     def _put_unlock_script(self, dataset_dir):
-        with open(os.path.join(dataset_dir, "unlock.py"), "w") as f:
+        with open(os.path.join(dataset_dir, "config"), "w") as f:
             f.write(self.unlock_script)
 
     def get_all_dataset_description(self):
