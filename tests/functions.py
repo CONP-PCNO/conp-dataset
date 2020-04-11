@@ -230,6 +230,8 @@ def examine(dataset, project):
         keyring.set_password("datalad-loris", "user", username)
         keyring.set_password("datalad-loris", "password", password)
         generate_datalad_provider(loris_api)
+    elif zenodo_token:
+        pass
     elif is_authentication_required(dataset) == True:
         if os.getenv("TRAVIS_EVENT_TYPE", None) == "pull_request" or os.getenv(
             "CIRCLE_PR_NUMBER", False
