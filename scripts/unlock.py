@@ -1,7 +1,8 @@
 import argparse
-import traceback
 import os
 import json
+import traceback
+
 from git import Repo
 from datalad import api
 
@@ -19,9 +20,7 @@ def unlock():
         * Dataset git repository must be set on branch 'master'
         """,
     )
-    parser.add_argument(
-        "token", help="Zenodo access token"
-    )
+    parser.add_argument("token", help="Zenodo access token")
     args = parser.parse_args()
     token = args.token
 
@@ -39,7 +38,10 @@ def unlock():
     # Ensure correct data
     if not metadata["restricted"]:
         raise Exception("Dataset not restricted, no need to unlock")
-    if len(metadata["private_files"]["archive_links"]) == 0 and len(metadata["private_files"]["files"]) == 0:
+    if (
+        len(metadata["private_files"]["archive_links"]) == 0
+        and len(metadata["private_files"]["files"]) == 0
+    ):
         raise Exception("No restricted files to unlock")
 
     # Set token in archive link URLs
@@ -69,7 +71,13 @@ def unlock():
         datalad = api.Dataset(".")
         for file in metadata["private_files"]["files"]:
             annex("rmurl", file["name"], file["link"])
-            annex("addurl", file["link"] + "?access_token=" + token, "--file", file["name"], "--relaxed")
+            annex(
+                "addurl",
+                file["link"] + "?access_token=" + token,
+                "--file",
+                file["name"],
+                "--relaxed",
+            )
             datalad.save()
 
     print("Done")
