@@ -5,7 +5,6 @@ import os
 import random
 import re
 import signal
-import subprocess
 import sys
 from typing import List, Set, Union
 
