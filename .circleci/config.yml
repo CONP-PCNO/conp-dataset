@@ -79,7 +79,7 @@ workflows:
   monitoring:
     triggers:
       - schedule:
-          cron: "0 0-23/4 * * *"
+          cron: "0 0,4,8,12,16,20 * * *"
           filters:
             branches:
               only:
