@@ -62,11 +62,10 @@ jobs:
             . ~/venv/bin/activate
             export PATH=~/git-annex.linux:$PATH
             python tests/create_tests.py
-            mkdir test-results
             circleci tests glob tests/test_* | circleci tests split --split-by=timings > /tmp/tests-to-run 
-            PYTHONPATH=$PWD pytest -n 2 --junitxml=test-results/junit.xml -v -rfEs $(cat /tmp/tests-to-run)
+            PYTHONPATH=$PWD pytest -n 2 --junitxml=tests/junit.xml -v -rfEs $(cat /tmp/tests-to-run)
       - store_test_results:
-          path: test-results
+          path: tests
 
 workflows:
   version: 2
