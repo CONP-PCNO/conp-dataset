@@ -141,15 +141,12 @@ def generate_datalad_provider(loris_api):
     # Regex for provider
     re_loris_api = loris_api.replace(".", "\.")
 
-    os.makedirs(
-        os.path.join(os.path.expanduser("~"), ".config", "datalad", "providers")
+    datalad_provider_path = os.path.join(
+        os.path.expanduser("~"), ".config", "datalad", "providers"
     )
-    with open(
-        os.path.join(
-            os.path.expanduser("~"), ".config", "datalad", "providers", "loris.cfg"
-        ),
-        "w+",
-    ) as fout:
+    if not os.path.exists(datalad_provider_path):
+        os.makedirs(datalad_provider_path)
+    with open(os.path.join(datalad_provider_path, "loris.cfg"), "w+",) as fout:
         fout.write(
             f"""[provider:loris]                                                                    
 url_re = {re_loris_api}/*                             
