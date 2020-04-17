@@ -232,7 +232,7 @@ class ZenodoCrawler(BaseCrawler):
     def add_new_dataset(self, dataset, dataset_dir):
         d = self.datalad.Dataset(dataset_dir)
         d.no_annex(".conp-zenodo-crawler.json")
-        d.no_annex("unlock.py")
+        d.no_annex("config")
         d.save()
 
         private_files = {"archive_links": [], "files": []}
