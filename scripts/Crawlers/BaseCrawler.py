@@ -319,11 +319,12 @@ class BaseCrawler:
         self.repo.git.add(dataset_dir)
         self.repo.git.add(".gitmodules")
         self.repo.git.commit("-m", "[conp-bot] " + msg)
+        clean_title = self._clean_dataset_title(title)
         origin = self.repo.remote("origin")
         origin_url = next(origin.urls)
         if "@" not in origin_url:
             origin.set_url(origin_url.replace("https://", "https://" + self.github_token + "@"))
-        self.repo.git.push("--set-upstream", "origin", "conp-bot/" + title)
+        self.repo.git.push("--set-upstream", "origin", "conp-bot/" + clean_title)
 
         # Create PR
         print("Creating PR for " + title)
@@ -352,7 +353,7 @@ Functional checks:
 """.format(
                     msg + "\n"
                 ),
-                "head": self.username + ":conp-bot/" + title,
+                "head": self.username + ":conp-bot/" + clean_title,
                 "base": "master",
             },
         )

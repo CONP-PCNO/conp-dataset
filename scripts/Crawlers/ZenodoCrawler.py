@@ -233,7 +233,7 @@ class ZenodoCrawler(BaseCrawler):
     def add_new_dataset(self, dataset, dataset_dir):
         d = self.datalad.Dataset(dataset_dir)
         d.no_annex(".conp-zenodo-crawler.json")
-        d.no_annex("unlock.py")
+        d.no_annex("config")
         d.save()
 
         private_files = {"archive_links": [], "files": []}
@@ -296,13 +296,13 @@ class ZenodoCrawler(BaseCrawler):
     def get_readme_content(self, dataset):
         return """# {0}
 
-        [![DOI](https://www.zenodo.org/badge/DOI/{1}.svg)](https://doi.org/{1})
+[![DOI](https://www.zenodo.org/badge/DOI/{1}.svg)](https://doi.org/{1})
 
-        Crawled from Zenodo
+Crawled from Zenodo
 
-        ## Description
+## Description
 
-        {2}""".format(dataset["title"], dataset["doi_badge"],
-                      html2markdown.convert(
-                          dataset["description"]).replace("\n", "<br />")
-        )
+{2}""".format(dataset["title"], dataset["doi_badge"],
+              html2markdown.convert(
+                  dataset["description"]).replace("\n", "<br />")
+              )
