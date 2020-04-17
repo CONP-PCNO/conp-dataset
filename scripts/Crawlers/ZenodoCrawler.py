@@ -295,13 +295,13 @@ class ZenodoCrawler(BaseCrawler):
     def get_readme_content(self, dataset):
         return """# {0}
 
-        [![DOI](https://www.zenodo.org/badge/DOI/{1}.svg)](https://doi.org/{1})
+[![DOI](https://www.zenodo.org/badge/DOI/{1}.svg)](https://doi.org/{1})
 
-        Crawled from Zenodo
+Crawled from Zenodo
 
-        ## Description
+## Description
 
-        {2}""".format(dataset["title"], dataset["doi_badge"],
-                      html2markdown.convert(
-                          dataset["description"]).replace("\n", "<br />")
-        )
+{2}""".format(dataset["title"], dataset["doi_badge"],
+              html2markdown.convert(
+                  dataset["description"]).replace("\n", "<br />")
+              )
