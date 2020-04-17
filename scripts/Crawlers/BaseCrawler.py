@@ -323,7 +323,7 @@ class BaseCrawler:
         origin_url = next(origin.urls)
         if "@" not in origin_url:
             origin.set_url(origin_url.replace("https://", "https://" + self.github_token + "@"))
-        self.repo.git.push("--set-upstream", "origin", "conp-bot/" + title)
+        self.repo.git.push("--set-upstream", "origin", "conp-bot/" + self._clean_dataset_title(title))
 
         # Create PR
         print("Creating PR for " + title)
