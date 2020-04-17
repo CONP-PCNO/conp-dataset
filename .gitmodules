@@ -100,3 +100,6 @@
 [submodule "projects/BigBrain_3DSurfaces"]
 	path = projects/BigBrain_3DSurfaces
 	url = https://github.com/emmetaobrien/BigBrain_3DSurfaces
+[submodule "projects/Comparing_Perturbation_Modes_for_Evaluating_Instabilities_in_Neuroimaging__Processed_NKI_RS_Subset__08_2019_"]
+	path = projects/Comparing_Perturbation_Modes_for_Evaluating_Instabilities_in_Neuroimaging__Processed_NKI_RS_Subset__08_2019_
+	url = https://github.com/conp-bot/conp-dataset-Comparing-Perturbation-Modes-for-Evaluating-Instabilities-in-Neuroimaging-Processed-NK.git
