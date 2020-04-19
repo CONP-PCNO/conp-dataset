@@ -3,7 +3,6 @@ import argparse
 import traceback
 import os
 import json
-import traceback
 
 from git import Repo
 from datalad import api
