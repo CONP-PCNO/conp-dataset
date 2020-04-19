@@ -63,7 +63,7 @@ jobs:
           command: |
             . ~/venv/bin/activate
             export PATH=~/git-annex.linux:$PATH
-            find projects -name config -type f | grep -v "\/\..*\/config$" | xargs bash
+            find projects -name config -type f | grep -v "\/\..*\/config$" | bash
             python tests/create_tests.py
             mkdir test-results
             circleci tests glob tests/test_* | circleci tests split --split-by=timings > /tmp/tests-to-run 
