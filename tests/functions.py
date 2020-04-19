@@ -203,9 +203,6 @@ def get_all_submodules(root: str) -> set:
 def examine(dataset, project):
     repo = git.Repo(dataset)
 
-    # Make sure the dataset is sync to latest version.
-    repo.git.pull("origin", "master")
-
     file_names = [file_name for file_name in os.listdir(dataset)]
 
     if "README.md" not in file_names:
