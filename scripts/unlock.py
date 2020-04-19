@@ -1,17 +1,18 @@
 #!/usr/bin/env python
 import json
 import os
+import sys
 import traceback
 
 from git import Repo
 from datalad import api
 
+sys.path.append(os.getcwd())
 from tests.create_tests import project_name2env
 
 
 def unlock():
     repo = Repo()
-
     project: str = project_name2env(repo.working_dir.split("/")[-1])
     token: (str | None) = os.getenv(project + "_ZENODO_TOKEN", None)
 
@@ -71,6 +72,7 @@ def unlock():
 
 
 if __name__ == "__main__":
+    os.chdir(os.path.dirname(__file__))
     try:
         unlock()
     except Exception as e:
