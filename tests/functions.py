@@ -264,7 +264,7 @@ def examine(dataset, project):
         ]
 
     if len(filenames) == 0:
-        pytest.skip(f"WARNING: {dataset} No files found in the annex.")
+        return True
 
     # Remove files using FTP as it is unstable in travis.
     if os.getenv("TRAVIS", False):
