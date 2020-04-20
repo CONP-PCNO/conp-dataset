@@ -206,7 +206,7 @@ def check_file_integrity(dataset: str, filenames: List[str]) -> None:
                 os.path.join(dataset, filename),
                 json=True,
                 json_error_messages=True,
-                jobs=2,
+                fast=True,
             )
             if fsck_output == "":
                 raise Exception("WARNING: git-annex fsck output is empty.")
