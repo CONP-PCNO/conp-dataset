@@ -96,3 +96,6 @@
 [submodule "projects/BigBrain_3DSurfaces"]
 	path = projects/BigBrain_3DSurfaces
 	url = https://github.com/emmetaobrien/BigBrain_3DSurfaces
+[submodule "projects/ds001634"]
+	path = projects/visual-working-memory
+	url = https://github.com/emmetaobrien/ds001634
