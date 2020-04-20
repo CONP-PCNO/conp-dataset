@@ -6,7 +6,7 @@ import random
 import re
 import signal
 import sys
-from typing import List, Set, Union
+from typing import List, Set, Tuple, Union
 
 import datalad.api as api
 import git
@@ -196,6 +196,29 @@ def get_all_submodules(root: str) -> set:
         return set()
 
 
+def check_file_integrity(dataset: str, filenames: List[str]) -> None:
+
+    failures: List[str] = list()
+    for filename in filenames:
+        try:
+            fsck_output = git.Repo(dataset).git.annex(
+                "fsck",
+                os.path.join(dataset, filename),
+                json=True,
+                json_error_messages=True,
+                jobs=2,
+            )
+            fsck = json.loads(fsck_output)
+            if not fsck["success"]:
+                failures.append(fsck["error-messages"])
+
+        except Exception as e:
+            failures.append(f"{filename}\n{str(e)}")
+
+    if len(failures) > 0:
+        pytest.fail("\n".join(failures), pytrace=False)
+
+
 def examine(dataset, project):
     repo = git.Repo(dataset)
 
@@ -255,6 +278,8 @@ def examine(dataset, project):
             os.path.join(submodule, filename)
             for filename in re.split(r"\n[_X]+\s", annex_list)[1:]
         ]
+
+    check_file_integrity(dataset, filenames)
 
     if len(filenames) == 0:
         return True
