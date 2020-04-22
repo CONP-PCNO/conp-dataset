@@ -14,6 +14,7 @@ from git.exc import InvalidGitRepositoryError
 import keyring
 import pytest
 
+from tests.create_tests import project_name2env
 from scripts.dats_validator.validator import validate_json
 
 
@@ -196,12 +197,12 @@ def get_all_submodules(root: str) -> set:
         return set()
 
 
-def examine(dataset, project):
-    repo = git.Repo(dataset)
-    
+def authenticate(dataset):
     # If authentication is required and credentials are provided then add credentials
     # to the keyring and create a provider config file.
     # Note: Assume a loris-token authentication.
+    project = project_name2env(dataset)
+
     username = os.getenv(project + "_USERNAME", None)
     password = os.getenv(project + "_PASSWORD", None)
     loris_api = os.getenv(project + "_LORIS_API", None)
@@ -228,6 +229,10 @@ def examine(dataset, project):
             pytrace=False,
         )
 
+def examine(dataset, project):
+    authenticate(dataset)
+
+    repo = git.Repo(dataset)
     annex_list: str = repo.git.annex("list")
     filenames: List[str] = re.split(r"\n[_X]+\s", annex_list)[1:]
 
