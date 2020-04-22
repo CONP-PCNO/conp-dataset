@@ -225,11 +225,14 @@ def examine(dataset, project):
     username = os.getenv(project + "_USERNAME", None)
     password = os.getenv(project + "_PASSWORD", None)
     loris_api = os.getenv(project + "_LORIS_API", None)
+    zenodo_token = os.getenv(project + "_ZENODO_TOKEN", None)
 
     if username and password and loris_api:
         keyring.set_password("datalad-loris", "user", username)
         keyring.set_password("datalad-loris", "password", password)
         generate_datalad_provider(loris_api)
+    elif zenodo_token:
+        pass
     elif is_authentication_required(dataset) == True:
         if os.getenv("TRAVIS_EVENT_TYPE", None) == "pull_request" or os.getenv(
             "CIRCLE_PR_NUMBER", False
