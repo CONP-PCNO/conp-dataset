@@ -198,21 +198,7 @@ def get_all_submodules(root: str) -> set:
 
 def examine(dataset, project):
     repo = git.Repo(dataset)
-
-    file_names = [file_name for file_name in os.listdir(dataset)]
-
-    if "DATS.json" not in file_names:
-        pytest.fail(
-            f"Dataset {dataset} doesn't contain DATS.json in its root directory.",
-            pytrace=False,
-        )
-
-    with open(os.path.join(dataset, "DATS.json"), "rb") as f:
-        if not validate_json(json.load(f)):
-            pytest.fail(
-                f"Dataset {dataset} doesn't contain a valid DATS.json.", pytrace=False
-            )
-
+    
     # If authentication is required and credentials are provided then add credentials
     # to the keyring and create a provider config file.
     # Note: Assume a loris-token authentication.
