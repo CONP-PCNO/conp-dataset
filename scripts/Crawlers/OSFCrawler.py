@@ -3,7 +3,6 @@ from git import Repo
 import os
 import json
 import requests
-import html2markdown
 
 
 def _create_osf_tracker(path, dataset):
@@ -21,7 +20,7 @@ class OSFCrawler(BaseCrawler):
 
     def _query_osf(self):
         query = (
-            'https://api.osf.io/v2/search/projects/?q=(tags:"canadian-open-neuroscience-platform")'
+            'https://api.osf.io/v2/nodes/?filter[tags]=canadian-open-neuroscience-platform'
         )
         results = requests.get(query).json()["data"]
         if self.verbose:
@@ -78,9 +77,11 @@ class OSFCrawler(BaseCrawler):
                 dataset["relationships"]["contributors"]["links"]["related"]["href"])
 
             # Retrieve license
-            license_ = self._get_license(
-                                dataset["relationships"]
-                                ["license"]["links"]["related"]["href"])
+            license_ = "None"
+            if "license" in dataset["relationships"].keys():
+                license_ = self._get_license(
+                                    dataset["relationships"]
+                                    ["license"]["links"]["related"]["href"])
 
             osf_dois.append(
                 {
