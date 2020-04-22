@@ -19,8 +19,9 @@ jobs:
     docker: *docker
 
     steps:
-      - checkout:
-          path: *workdir
+      - run:
+          name: Clone Repository
+          command: git clone https://github.com/CONP-PCNO/conp-dataset.git ~/conp-dataset
       - *restore_python_cache
       - run:
           name: Install Dependencies
@@ -38,9 +39,9 @@ jobs:
       - run:
           name: Install Dataset
           command: |
-              . ~/venv/bin/activate
-              export PATH=~/git-annex.linux:$PATH
-              datalad install -r .
+            . ~/venv/bin/activate
+            export PATH=~/git-annex.linux:$PATH
+            datalad install -r .
       - persist_to_workspace:
           root: *workdir
           paths:
