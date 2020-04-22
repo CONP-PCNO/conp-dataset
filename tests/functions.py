@@ -229,11 +229,9 @@ def authenticate(dataset):
             pytrace=False,
         )
 
-def examine(dataset, project):
-    authenticate(dataset)
 
-    repo = git.Repo(dataset)
-    annex_list: str = repo.git.annex("list")
+def get_filenames(dataset):
+    annex_list: str = git.Repo(dataset).git.annex("list")
     filenames: List[str] = re.split(r"\n[_X]+\s", annex_list)[1:]
 
     submodules: Set[str] = get_all_submodules(dataset)
@@ -243,7 +241,13 @@ def examine(dataset, project):
             os.path.join(submodule, filename)
             for filename in re.split(r"\n[_X]+\s", annex_list)[1:]
         ]
+    return filenames
 
+
+def examine(dataset, project):
+    authenticate(dataset)
+
+    filenames = get_filenames(dataset)
     if len(filenames) == 0:
         return True
 
