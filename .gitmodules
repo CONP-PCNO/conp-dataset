@@ -102,3 +102,6 @@
 [submodule "projects/Comparing_Perturbation_Modes_for_Evaluating_Instabilities_in_Neuroimaging__Processed_NKI_RS_Subset__08_2019_"]
 	path = projects/Comparing_Perturbation_Modes_for_Evaluating_Instabilities_in_Neuroimaging__Processed_NKI_RS_Subset__08_2019_
 	url = https://github.com/conp-bot/conp-dataset-Comparing-Perturbation-Modes-for-Evaluating-Instabilities-in-Neuroimaging-Processed-NK.git
+[submodule "projects/Intracellular_Recordings_of_Murine_Neocortical_Neurons"]
+	path = projects/Intracellular_Recordings_of_Murine_Neocortical_Neurons
+	url = https://github.com/conp-bot/conp-dataset-Intracellular-Recordings-of-Murine-Neocortical-Neurons.git
