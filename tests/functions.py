@@ -244,6 +244,30 @@ def get_filenames(dataset):
     return filenames
 
 
+def download_files(dataset, filenames, time_limit=120):
+    responses = []
+    with timeout(time_limit):
+        for filename, file_size in filenames:
+            full_path = os.path.join(dataset, filename)
+            responses = api.get(path=full_path, on_failure="ignore")
+
+            for response in responses:
+                if response.get("status") in ["ok", "notneeded"]:
+                    continue
+                if response.get("status") in ["impossible", "error"]:
+                    pytest.fail(
+                        f"{full_path}\n{response.get('message')}", pytrace=False
+                    )
+
+    if responses == []:
+        pytest.fail(
+            f"The dataset timed out after {time_limit} seconds before retrieving a file."
+            + " Cannot to tell if the download would be sucessful."
+            + f"\n{filename} has size of {file_size} Bytes.",
+            pytrace=False,
+        )
+
+
 def examine(dataset, project):
     authenticate(dataset)
 
@@ -283,27 +307,6 @@ def examine(dataset, project):
     num_files = 4
     filenames = filenames[:num_files]
 
-    responses = []
-    TIMEOUT = 120
-    with timeout(TIMEOUT):
-        for filename, file_size in filenames:
-            full_path = os.path.join(dataset, filename)
-            responses = api.get(path=full_path, on_failure="ignore")
-
-            for response in responses:
-                if response.get("status") in ["ok", "notneeded"]:
-                    continue
-                if response.get("status") in ["impossible", "error"]:
-                    pytest.fail(
-                        f"{full_path}\n{response.get('message')}", pytrace=False
-                    )
-
-    if responses == []:
-        pytest.fail(
-            f"The dataset timed out after {TIMEOUT} seconds before retrieving a file."
-            + " Cannot to tell if the download would be sucessful."
-            + f"\n{filename} has size of {file_size} Bytes.",
-            pytrace=False,
-        )
+    download_files(filenames)
 
     return True
