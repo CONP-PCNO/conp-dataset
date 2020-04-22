@@ -268,31 +268,14 @@ def download_files(dataset, filenames, time_limit=120):
         )
 
 
-def examine(dataset, project):
-    authenticate(dataset)
-
-    filenames = get_filenames(dataset)
-    if len(filenames) == 0:
-        return True
-
-    # Remove files using FTP as it is unstable in travis.
-    if os.getenv("TRAVIS", False):
-        filenames = remove_ftp_files(dataset, filenames)
-
-        if len(filenames) == 0:
-            pytest.skip(
-                f"WARNING: {dataset} only contains files using FTP."
-                + " Due to Travis limitation we cannot test this dataset."
-            )
-
+def get_approx_ksmallests(dataset, filenames, k=4, sample_size=200):
     # Take random sample of the filenames to avoid timeout or long test runs.
     #
     # Setting the seed to the concatenation of filenames allow to have randomness when
     # the dataset is updated, while keeping consistency when the state of the dataset
     # stays the same.
     random.seed("".join(filenames))
-    SAMPLE_SIZE: int = 200
-    filenames = random.sample(filenames, min(SAMPLE_SIZE, len(filenames)))
+    filenames = random.sample(filenames, min(sample_size, len(filenames)))
 
     # Sort files by size
     filenames = sorted(
@@ -304,9 +287,4 @@ def examine(dataset, project):
     )
 
     # Limit number of files to test in each dataset to avoid Travis to timeout.
-    num_files = 4
-    filenames = filenames[:num_files]
-
-    download_files(filenames)
-
-    return True
+    return filenames[:k]
