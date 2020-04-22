@@ -201,12 +201,6 @@ def examine(dataset, project):
 
     file_names = [file_name for file_name in os.listdir(dataset)]
 
-    if "README.md" not in file_names:
-        pytest.fail(
-            f"Dataset {dataset} doesn't contain README.md in its root directory.",
-            pytrace=False,
-        )
-
     if "DATS.json" not in file_names:
         pytest.fail(
             f"Dataset {dataset} doesn't contain DATS.json in its root directory.",
