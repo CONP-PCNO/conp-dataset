@@ -94,28 +94,8 @@ class TestDataset(Template):
 """
 )
 
-datasets: List[str] = list(map(lambda x: x.path, Repo(".").submodules))
-
-# Detect if we should skip tests for a dataset.
-# This prevent all dataset to be tested on every PR build.
-if os.getenv("TRAVIS", False):
-    pull_number = os.getenv("TRAVIS_PULL_REQUEST")
-    pull_number = False if pull_number == "false" else pull_number
-elif os.getenv("CIRCLECI", False):
-    pull_number = os.getenv("CIRCLE_PR_NUMBER", False)
-else:
-    pull_number = False
-
-if pull_number:
-    response = requests.get(
-        f"https://api.github.com/repos/CONP-PCNO/conp-dataset/pulls/{pull_number}/files"
-    )
-    pr_files: List[str] = [data["filename"] for data in response.json()]
-
-    datasets = minimal_tests(datasets, pr_files)
-
-for dataset in datasets:
-    if dataset.split("/")[0] == "projects" or dataset.split("/")[0] == "investigators":
+for dataset in get_datasets():
+    if dataset.split("/")[0] in ["projects", "investigators"]:
         with open("tests/test_" + dataset.replace("/", "_") + ".py", "w") as f:
 
             dataset_path = os.path.join(
