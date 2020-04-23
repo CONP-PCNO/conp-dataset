@@ -247,7 +247,7 @@ def get_filenames(dataset):
 def download_files(dataset, filenames, time_limit=120):
     responses = []
     with timeout(time_limit):
-        for filename, file_size in filenames:
+        for filename in filenames:
             full_path = os.path.join(dataset, filename)
             responses = api.get(path=full_path, on_failure="ignore")
 
@@ -263,7 +263,7 @@ def download_files(dataset, filenames, time_limit=120):
         pytest.fail(
             f"The dataset timed out after {time_limit} seconds before retrieving a file."
             + " Cannot to tell if the download would be sucessful."
-            + f"\n{filename} has size of {file_size} Bytes.",
+            + f"\n{filename} has size of {get_annexed_file_size(dataset, full_path)} Bytes.",
             pytrace=False,
         )
 
@@ -275,16 +275,10 @@ def get_approx_ksmallests(dataset, filenames, k=4, sample_size=200):
     # the dataset is updated, while keeping consistency when the state of the dataset
     # stays the same.
     random.seed("".join(filenames))
-    filenames = random.sample(filenames, min(sample_size, len(filenames)))
+    sample_files = random.sample(filenames, min(sample_size, len(filenames)))
 
-    # Sort files by size
-    filenames = sorted(
-        [
-            (filename, get_annexed_file_size(dataset, filename))
-            for filename in filenames
-        ],
-        key=lambda x: x[1],
-    )
-
-    # Limit number of files to test in each dataset to avoid Travis to timeout.
-    return filenames[:k]
+    # Return the k smallest files from sample
+    return sorted(
+        [filename for filename in sample_files],
+        key=lambda x: get_annexed_file_size(dataset, x),
+    )[:k]
