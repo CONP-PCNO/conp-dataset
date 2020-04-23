@@ -98,7 +98,7 @@
 	url = https://github.com/emmetaobrien/BigBrain_3DSurfaces
 [submodule "projects/ds001634"]
 	path = projects/visual-working-memory
-	url = https://github.com/emmetaobrien/ds001634
+	url = https://github.com/conpdatasets/ds001634
 [submodule "projects/Comparing_Perturbation_Modes_for_Evaluating_Instabilities_in_Neuroimaging__Processed_NKI_RS_Subset__08_2019_"]
 	path = projects/Comparing_Perturbation_Modes_for_Evaluating_Instabilities_in_Neuroimaging__Processed_NKI_RS_Subset__08_2019_
 	url = https://github.com/conp-bot/conp-dataset-Comparing-Perturbation-Modes-for-Evaluating-Instabilities-in-Neuroimaging-Processed-NK.git
