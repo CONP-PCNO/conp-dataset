@@ -197,6 +197,7 @@ def get_all_submodules(root: str) -> set:
 
 
 def examine(dataset, project):
+    api.install(dataset)
     repo = git.Repo(dataset)
 
     file_names = [file_name for file_name in os.listdir(dataset)]
