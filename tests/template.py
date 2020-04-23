@@ -56,5 +56,6 @@ class Template(object):
 
         download_files(dataset, get_approx_ksmallests(dataset, filenames))
 
+    @pytest.mark.xfail
     def test_files_integrity(self, dataset):
         raise NotImplemented
