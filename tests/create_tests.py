@@ -1,6 +1,6 @@
 import os
 import re
-from string import Template
+import string
 from typing import List
 from git import Repo
 import requests
@@ -81,12 +81,16 @@ def minimal_tests(datasets: List[str], pr_files: List[str]):
     return modified_datasets
 
 
-template = Template(
-    """from functions import examine
+template = string.Template(
+    """import pytest
+
+from tests.template import Template
 
 
-def test_$clean_title():
-    assert examine('$path', '$project')
+@pytest.mark.parametrize('dataset', ['$dataset'])
+class TestDataset(Template):
+    pass
+
 """
 )
 
@@ -117,10 +121,4 @@ for dataset in datasets:
             dataset_path = os.path.join(
                 os.getenv("TRAVIS_BUILD_DIR", os.getcwd()), dataset
             )
-            f.write(
-                template.substitute(
-                    path=dataset_path,
-                    project=project_name2env(dataset.split("/")[-1]),
-                    clean_title=dataset.replace("/", "_").replace("-", "_"),
-                )
-            )
+            f.write(template.substitute(dataset=dataset_path,))
