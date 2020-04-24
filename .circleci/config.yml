@@ -1,0 +1,80 @@
+version: 2
+
+aliases:
+  - &docker
+    - image: mathdugre/conp-dataset:v1
+
+  - &workdir ~/conp-dataset
+
+  - &restore_python_cache
+    restore_cache:
+      name: Restore Python Cache
+      keys:
+        - v1.3-python-{{ .Branch }}
+        - v1.3-python-
+
+jobs:
+  build:
+    working_directory: *workdir
+    docker: *docker
+
+    steps:
+      - checkout:
+          path: *workdir
+      - *restore_python_cache
+      - run:
+          name: Install Dependencies
+          command: |
+            python -m venv ~/venv
+            . ~/venv/bin/activate
+            pip install -r ~/conp-dataset/requirements.txt 
+            pip install -r ~/conp-dataset/tests/requirements.txt
+            pip install -r ~/conp-dataset/scripts/dats_validator/requirements.txt
+      - save_cache:
+          name: Save Python Cache
+          paths:
+            - ~/venv
+          key: v1.3-python-{{ .Branch }}
+      - run:
+          name: Install CONP-DATS Validator
+          command: |
+            . ~/venv/bin/activate
+            export PATH=~/git-annex.linux:$PATH
+            datalad install scripts/dats_validator/conp-dats
+      - persist_to_workspace:
+          root: *workdir
+          paths:
+            - .
+
+  test:
+    working_directory: *workdir
+    docker: *docker
+    parallelism: 2
+
+    steps:
+      - checkout:
+          path: *workdir
+      - attach_workspace:
+          at: *workdir
+      - *restore_python_cache
+      - run:
+          name: Run Tests
+          no_output_timeout: 10m
+          command: |
+            . ~/venv/bin/activate
+            export PATH=~/git-annex.linux:$PATH
+            python tests/create_tests.py
+            mkdir test-results
+            circleci tests glob tests/test_* | circleci tests split --split-by=timings > /tmp/tests-to-run 
+            PYTHONPATH=$PWD pytest -n 2 --junitxml=test-results/junit.xml -v -rfEs $(cat /tmp/tests-to-run)
+      - store_test_results:
+          path: test-results
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
