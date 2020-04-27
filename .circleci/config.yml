@@ -10,8 +10,8 @@ aliases:
     restore_cache:
       name: Restore Python Cache
       keys:
-        - v1.3-python-{{ .Branch }}
-        - v1.3-python-
+        - v1.4-python-{{ .Branch }}
+        - v1.4-python-
 
 jobs:
   build:
@@ -34,7 +34,7 @@ jobs:
           name: Save Python Cache
           paths:
             - ~/venv
-          key: v1.3-python-{{ .Branch }}
+          key: v1.4-python-{{ .Branch }}
       - run:
           name: Install CONP-DATS Validator
           command: |

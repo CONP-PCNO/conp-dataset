@@ -4,6 +4,7 @@ import json
 import os
 
 from datalad import api
+from flaky import flaky
 import pytest
 
 from scripts.dats_validator.validator import validate_json
@@ -16,6 +17,7 @@ from tests.functions import (
 )
 
 
+@flaky(max_runs=3)
 class Template(object):
     @pytest.fixture(autouse=True)
     def install_dataset(self, dataset):
