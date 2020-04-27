@@ -3,6 +3,7 @@
 import json
 import os
 
+from datalad import api
 import pytest
 
 from scripts.dats_validator.validator import validate_json
@@ -16,6 +17,11 @@ from tests.functions import (
 
 
 class Template(object):
+    @pytest.fixture(autouse=True)
+    def install_dataset(self, dataset):
+        api.install(dataset)
+        yield
+
     def test_has_readme(self, dataset):
         if "README.md" not in os.listdir(dataset):
             pytest.fail(
