@@ -144,13 +144,13 @@ def is_authentication_required(dataset):
     bool
         Wether the dataset requires authentication.
     """
-    with open(os.path.join(dataset, "DATS.json"), "rb") as fin:
-        metadata = json.load(fin)
-
-        try:
+    try:
+        with open(os.path.join(dataset, "DATS.json"), "rb") as fin:
+            metadata = json.load(fin)
             distributions = metadata["distributions"]
             for distrubtion in distributions:
                 authorizations = distrubtion["access"]["authorizations"]
+
                 if any(
                     [
                         authorization["value"] != "public"
@@ -160,8 +160,13 @@ def is_authentication_required(dataset):
                     return True
 
             return False
-        except KeyError as e:
-            return str(e) + " DATS.json is invalid!"
+
+    except KeyError as e:
+        pytest.fail(f"DATS.json is invalid!\n{str(e)}", pytrace=False)
+    except FileNotFoundError as e:
+        pytest.fail(f"DATS.json was not found!\n{str(e)}", pytrace=False)
+    except Exeception as e:
+        pytest.fail(f"Authentiaction error!\n{str(e)}", pytrace=False)
 
 
 def generate_datalad_provider(loris_api):
