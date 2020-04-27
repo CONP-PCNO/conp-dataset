@@ -147,22 +147,24 @@ def is_authentication_required(dataset):
     try:
         with open(os.path.join(dataset, "DATS.json"), "rb") as fin:
             metadata = json.load(fin)
-            distributions = metadata["distributions"]
-            for distrubtion in distributions:
-                authorizations = distrubtion["access"]["authorizations"]
 
-                if any(
-                    [
-                        authorization["value"] != "public"
-                        for authorization in authorizations
-                    ]
-                ):
-                    return True
+            try:
+                distributions = metadata["distributions"]
+                for distrubtion in distributions:
+                    authorizations = distrubtion["access"]["authorizations"]
 
-            return False
+                    if any(
+                        [
+                            authorization["value"] != "public"
+                            for authorization in authorizations
+                        ]
+                    ):
+                        return True
 
-    except KeyError as e:
-        pytest.fail(f"DATS.json is invalid!\n{str(e)}", pytrace=False)
+                return False
+            except KeyError as e:
+                print(f"{str(e)} field not found in DATS.json")
+
     except FileNotFoundError as e:
         pytest.fail(f"DATS.json was not found!\n{str(e)}", pytrace=False)
     except Exeception as e:
