@@ -1,6 +1,7 @@
 # CONP dataset
 
 [![Build Status](https://travis-ci.org/CONP-PCNO/conp-dataset.svg?branch=master)](https://travis-ci.org/CONP-PCNO/conp-dataset)
+[![CircleCI](https://circleci.com/gh/CONP-PCNO/conp-dataset.svg?style=shield)](https://circleci.com/gh/CONP-PCNO/conp-dataset)
 
 CONP dataset is a repository containing the datasets available in the 
 Canadian Open Neuroscience Platform. It leverages 
@@ -70,7 +71,7 @@ datalad get <file_name>
 
 This may require authentication depending on the data owner's configuration.
 
-You can also search for relevant files and sub-datasets as follows:
+You can also search for relevant files and sub-datasets:
 
 ```console
 datalad search T1
