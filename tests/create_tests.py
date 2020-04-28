@@ -68,7 +68,7 @@ def minimal_tests(datasets: List[str], pr_files: List[str]):
     for pr_filename in pr_files:
         if pr_filename.startswith("projects/"):
             for dataset in datasets:
-                if dataset in pr_filename:
+                if re.match(f"{dataset}\/", pr_filename) or pr_filename == dataset:
                     modified_datasets.append(dataset)
                     break
         else:
