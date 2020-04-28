@@ -21,7 +21,7 @@ from tests.functions import (
 class Template(object):
     @pytest.fixture(autouse=True)
     def install_dataset(self, dataset):
-        api.install(dataset)
+        api.install(dataset, recursive=True)
         yield
 
     def test_has_readme(self, dataset):
