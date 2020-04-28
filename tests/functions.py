@@ -230,7 +230,7 @@ def authenticate(dataset):
     # If authentication is required and credentials are provided then add credentials
     # to the keyring and create a provider config file.
     # Note: Assume a loris-token authentication.
-    project = project_name2env(dataset)
+    project = project_name2env(dataset.split("/")[-1])
 
     username = os.getenv(project + "_USERNAME", None)
     password = os.getenv(project + "_PASSWORD", None)
