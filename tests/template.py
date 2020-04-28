@@ -17,7 +17,7 @@ from tests.functions import (
 )
 
 
-@flaky(max_runs=3)
+@pytest.mark.flaky(max_runs=3)
 class Template(object):
     @pytest.fixture(autouse=True)
     def install_dataset(self, dataset):
@@ -64,6 +64,6 @@ class Template(object):
 
         download_files(dataset, get_approx_ksmallests(dataset, filenames))
 
-    @pytest.mark.xfail
+    @pytest.mark.skip
     def test_files_integrity(self, dataset):
         raise NotImplemented
