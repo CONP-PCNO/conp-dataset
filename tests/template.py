@@ -5,6 +5,7 @@ import os
 
 from datalad import api
 from flaky import flaky
+import git
 import pytest
 
 from scripts.dats_validator.validator import validate_json
@@ -21,7 +22,13 @@ from tests.functions import (
 class Template(object):
     @pytest.fixture(autouse=True)
     def install_dataset(self, dataset):
-        api.install(dataset, recursive=True)
+        submodule = [
+            submodule
+            for submodule in git.Repo().submodules
+            if dataset.endswith(submodule.path)
+        ][0]
+
+        api.install(path=submodule.path, source=submodule.url, recursive=True)
         yield
 
     def test_has_readme(self, dataset):
