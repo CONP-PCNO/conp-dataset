@@ -3,6 +3,7 @@
 import json
 import os
 from threading import Lock
+import time
 
 from datalad import api
 from flaky import flaky
@@ -18,22 +19,31 @@ from tests.functions import (
     remove_ftp_files,
 )
 
+
+def delay_rerun(*args):
+    time.sleep(5)
+    return True
+
+
 lock = Lock()
 
 
-@pytest.mark.flaky(max_runs=3)
+@pytest.mark.flaky(max_runs=3, rerun_filter=delay_rerun)
 class Template(object):
     @pytest.fixture(autouse=True)
     def install_dataset(self, dataset):
-        submodule = [
-            submodule
-            for submodule in git.Repo().submodules
-            if dataset.endswith(submodule.path)
-        ][0]
+        try:
+            submodule = [
+                submodule
+                for submodule in git.Repo().submodules
+                if dataset.endswith(submodule.path)
+            ][0]
 
-        with lock:
-            if len(os.listdir(dataset)) == 0:
-                api.install(path=dataset, source=submodule.url, recursive=True)
+            with lock:
+                if len(os.listdir(dataset)) == 0:
+                    api.install(path=dataset, source=submodule.url, recursive=True)
+        except Exception as e:
+            pytest.fail(str(e))
         yield
 
     def test_has_readme(self, dataset):
