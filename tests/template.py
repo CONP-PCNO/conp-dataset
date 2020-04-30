@@ -2,6 +2,7 @@
 """
 import json
 import os
+from threading import Lock
 
 from datalad import api
 from flaky import flaky
@@ -17,6 +18,8 @@ from tests.functions import (
     remove_ftp_files,
 )
 
+lock = Lock()
+
 
 @pytest.mark.flaky(max_runs=3)
 class Template(object):
@@ -28,7 +31,9 @@ class Template(object):
             if dataset.endswith(submodule.path)
         ][0]
 
-        api.install(path=submodule.path, source=submodule.url, recursive=True)
+        with lock:
+            if len(os.listdir(dataset)) == 0:
+                api.install(path=dataset, source=submodule.url, recursive=True)
         yield
 
     def test_has_readme(self, dataset):
