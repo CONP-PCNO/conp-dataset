@@ -43,7 +43,9 @@ class Template(object):
                 if len(os.listdir(dataset)) == 0:
                     api.install(path=dataset, source=submodule.url, recursive=True)
         except Exception as e:
-            pytest.fail(str(e))
+            pytest.fail(
+                f"Failed to install {dataset} using datalad install.", pytrace=False
+            )
         yield
 
     def test_has_readme(self, dataset):
