@@ -1,12 +1,9 @@
-[submodule "projects/multicenter-phantom"]
-  path = projects/multicenter-phantom
-  url = https://github.com/conpdatasets/multicenter-phantom.git
 [submodule "projects/preventad-open"]
   path = projects/preventad-open
   url = https://github.com/conpdatasets/preventad-open.git
 [submodule "projects/SIMON-dataset"]  
   path = projects/SIMON-dataset
-  url = https://github.com/conpdatasets/SIMON-dataset
+  url = https://github.com/conpdatasets/SIMON-dataset.git
 [submodule "projects/Brainspan"]
   path = projects/Brainspan
   url = https://github.com/conpdatasets/Brainspan.git
@@ -45,16 +42,13 @@
   url = https://github.com/conp-bot/conp-dataset-PERFORM_Dataset__one_control_subject.git
 [submodule "scripts/dats_validator/conp-dats"]
 	path = scripts/dats_validator/conp-dats
-	url = https://github.com/CONP-PCNO/schema
+	url = https://github.com/CONP-PCNO/schema.git
 [submodule "projects/Khanlab/BigBrainHippoUnfold"]
 	path = projects/Khanlab/BigBrainHippoUnfold
 	url = https://github.com/conpdatasets/BigBrainHippoUnfold.git
 [submodule "projects/Khanlab/BigBrainMRICoreg"]
 	path = projects/Khanlab/BigBrainMRICoreg
 	url = https://github.com/conpdatasets/BigBrainMRICoreg.git
-[submodule "projects/Khanlab/HCPUR100-Template"]
-	path = projects/Khanlab/HCPUR100-Template
-	url = https://github.com/conpdatasets/HCPUR100-Template.git
 [submodule "projects/Learning_Naturalistic_Structure__Processed_fMRI_dataset"]
   path = projects/Learning_Naturalistic_Structure__Processed_fMRI_dataset
   url = https://github.com/conp-bot/conp-dataset-Learning_Naturalistic_Structure__Processed_fMRI_dataset.git
@@ -84,10 +78,10 @@
 	datalad-id = 27e7f426-5d64-11ea-bba9-0800277806bd
 [submodule "projects/Reusing-Neuro-Data"]
 	path = projects/Reusing-Neuro-Data
-	url = http://github.com/gi114/Reusing-Neuro-Data
+	url = http://github.com/gi114/Reusing-Neuro-Data.git
 [submodule "projects/1000GenomesProject"]
 	path = projects/1000GenomesProject
-	url = https://github.com/emmetaobrien/1000GenomesProject
+	url = https://github.com/emmetaobrien/1000GenomesProject.git
 [submodule "projects/BigBrain_3DClassifiedVolumes"]
 	path = projects/BigBrain_3DClassifiedVolumes
 	url = https://github.com/emmetaobrien/BigBrain_3DClassifiedVolumes.git
@@ -95,13 +89,19 @@
 	datalad-id = 8323efe2-72aa-11ea-a364-0800277806bd
 [submodule "projects/BigBrain_3DSurfaces"]
 	path = projects/BigBrain_3DSurfaces
-	url = https://github.com/emmetaobrien/BigBrain_3DSurfaces
+	url = https://github.com/emmetaobrien/BigBrain_3DSurfaces.git
 [submodule "projects/ds001634"]
 	path = projects/visual-working-memory
-	url = https://github.com/conpdatasets/ds001634
+	url = https://github.com/conpdatasets/ds001634.git
 [submodule "projects/Comparing_Perturbation_Modes_for_Evaluating_Instabilities_in_Neuroimaging__Processed_NKI_RS_Subset__08_2019_"]
 	path = projects/Comparing_Perturbation_Modes_for_Evaluating_Instabilities_in_Neuroimaging__Processed_NKI_RS_Subset__08_2019_
 	url = https://github.com/conp-bot/conp-dataset-Comparing-Perturbation-Modes-for-Evaluating-Instabilities-in-Neuroimaging-Processed-NK.git
+[submodule "projects/multicenter-phantom"]
+	path = projects/multicenter-phantom
+	url = https://github.com/emmetaobrien/multicenter-phantom.git
+[submodule "projects/Khanlab/HCPUR100-Template"]
+	path = projects/Khanlab/HCPUR100-Template
+	url = https://github.com/emmetaobrien/HCPUR100-Template.git
 [submodule "projects/Intracellular_Recordings_of_Murine_Neocortical_Neurons"]
 	path = projects/Intracellular_Recordings_of_Murine_Neocortical_Neurons
 	url = https://github.com/conp-bot/conp-dataset-Intracellular-Recordings-of-Murine-Neocortical-Neurons.git
