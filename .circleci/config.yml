@@ -44,7 +44,7 @@ jobs:
       - persist_to_workspace:
           root: *workdir
           paths:
-            - .
+            - scripts/dats_validator/conp-dats
 
   test:
     working_directory: *workdir
