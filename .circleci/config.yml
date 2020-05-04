@@ -36,11 +36,11 @@ jobs:
             - ~/venv
           key: v1.3-python-{{ .Branch }}
       - run:
-          name: Install Dataset
+          name: Install CONP-DATS Validator
           command: |
             . ~/venv/bin/activate
             export PATH=~/git-annex.linux:$PATH
-            datalad install -r .
+            datalad install scripts/dats_validator/conp-dats
       - persist_to_workspace:
           root: *workdir
           paths:
@@ -52,6 +52,8 @@ jobs:
     parallelism: 2
 
     steps:
+      - checkout:
+          path: *workdir
       - attach_workspace:
           at: *workdir
       - *restore_python_cache

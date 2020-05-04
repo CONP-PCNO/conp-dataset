@@ -1,13 +1,16 @@
 from contextlib import contextmanager
+from functools import reduce
 import json
 import os
 import random
 import re
 import signal
 import sys
+from typing import List, Set, Union
 
 import datalad.api as api
 import git
+from git.exc import InvalidGitRepositoryError
 import keyring
 import pytest
 
@@ -50,21 +53,16 @@ def get_annexed_file_size(dataset, file_path):
     float
         Size of the annexed file in Bytes.
     """
-    attempt = 0
-    while attempt < 3:
-        metadata = json.loads(
-            git.Repo(dataset).git.annex(
-                "info", os.path.join(dataset, file_path), json=True, bytes=True,
-            )
+    try:
+        info_output = git.Repo(dataset).git.annex(
+            "info", os.path.join(dataset, file_path), json=True, bytes=True,
         )
-        if "size" in metadata:
-            break
-        attempt += 1
-    else:
-        # Failed all attempt
-        return float("inf")
-
-    return int(metadata["size"])
+        metadata = json.loads(info_output)
+        return int(metadata["size"])
+    except Exception as e:
+        print(e)
+    # Failed to retrieve file size.
+    return float("inf")
 
 
 def remove_ftp_files(dataset: str, filenames: list) -> list:
@@ -84,11 +82,14 @@ def remove_ftp_files(dataset: str, filenames: list) -> list:
     """
     files_without_ftp = []
     for filename in filenames:
-        whereis = json.loads(
-            git.Repo(dataset).git.annex(
+        try:
+            whereis_output = git.Repo(dataset).git.annex(
                 "whereis", os.path.join(dataset, filename), json=True
             )
-        )
+            whereis = json.loads(whereis_output)
+
+        except Exception as e:
+            print(e)
 
         urls_without_ftp = [
             url
@@ -141,15 +142,11 @@ def generate_datalad_provider(loris_api):
     # Regex for provider
     re_loris_api = loris_api.replace(".", "\.")
 
-    os.makedirs(
-        os.path.join(os.path.expanduser("~"), ".config", "datalad", "providers")
+    datalad_provider_path = os.path.join(
+        os.path.expanduser("~"), ".config", "datalad", "providers"
     )
-    with open(
-        os.path.join(
-            os.path.expanduser("~"), ".config", "datalad", "providers", "loris.cfg"
-        ),
-        "w+",
-    ) as fout:
+    os.makedirs(datalad_provider_path, exist_ok=True)
+    with open(os.path.join(datalad_provider_path, "loris.cfg"), "w+",) as fout:
         fout.write(
             f"""[provider:loris]                                                                    
 url_re = {re_loris_api}/*                             
@@ -163,11 +160,43 @@ type = loris-token
         )
 
 
-def examine(dataset, project):
-    repo = git.Repo(dataset)
+def get_all_submodules(root: str) -> set:
+    """Return recursively all submodule of a dataset.
+    
+    Parameters
+    ----------
+    root : str
+        Absolute path of the submodule root.
+    
+    Returns
+    -------
+    set
+        All submodules path of a dataset.
+    """
+    try:
+        submodules: Union[Set[str], None] = {
+            os.path.join(root, submodule.path)
+            for submodule in git.Repo(root).submodules
+        }
+    except InvalidGitRepositoryError as e:
+        submodules = None
 
-    # Make sure the dataset is sync to latest version.
-    repo.git.pull("origin", "master")
+    if submodules:
+        rv = reduce(
+            lambda x, y: x.union(y),
+            [
+                get_all_submodules(os.path.join(root, str(submodule)))
+                for submodule in submodules
+            ],
+        )
+        return rv | submodules
+    else:
+        return set()
+
+
+def examine(dataset, project):
+    api.install(dataset)
+    repo = git.Repo(dataset)
 
     file_names = [file_name for file_name in os.listdir(dataset)]
 
@@ -195,11 +224,14 @@ def examine(dataset, project):
     username = os.getenv(project + "_USERNAME", None)
     password = os.getenv(project + "_PASSWORD", None)
     loris_api = os.getenv(project + "_LORIS_API", None)
+    zenodo_token = os.getenv(project + "_ZENODO_TOKEN", None)
 
     if username and password and loris_api:
         keyring.set_password("datalad-loris", "user", username)
         keyring.set_password("datalad-loris", "password", password)
         generate_datalad_provider(loris_api)
+    elif zenodo_token:
+        pass
     elif is_authentication_required(dataset) == True:
         if os.getenv("TRAVIS_EVENT_TYPE", None) == "pull_request" or os.getenv(
             "CIRCLE_PR_NUMBER", False
@@ -216,10 +248,18 @@ def examine(dataset, project):
         )
 
     annex_list: str = repo.git.annex("list")
-    filenames: list = re.split(r"\n[_X]+\s", annex_list)[1:]
+    filenames: List[str] = re.split(r"\n[_X]+\s", annex_list)[1:]
+
+    submodules: Set[str] = get_all_submodules(dataset)
+    for submodule in submodules:
+        annex_list = git.Repo(submodule).git.annex("list")
+        filenames += [
+            os.path.join(submodule, filename)
+            for filename in re.split(r"\n[_X]+\s", annex_list)[1:]
+        ]
 
     if len(filenames) == 0:
-        pytest.skip(f"WARNING: {dataset} No files found in the annex.")
+        return True
 
     # Remove files using FTP as it is unstable in travis.
     if os.getenv("TRAVIS", False):
