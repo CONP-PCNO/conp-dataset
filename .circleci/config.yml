@@ -68,6 +68,14 @@ jobs:
             PYTHONPATH=$PWD pytest -n 2 --junitxml=tests/junit.xml -v -rfEs $(cat /tmp/tests-to-run)
       - store_test_results:
           path: tests
+      - run:
+          when: always
+          name: Parse Test Results
+          command: |
+            . ~/venv/bin/activate
+            PYTHONPATH=$PWD python tests/parse_results.py
+      - store_artifacts:
+          path: tests/test-status.json
 
 workflows:
   version: 2
