@@ -39,6 +39,22 @@ all of the Python dependencies.
 find . -name requirements.txt | xargs -I{} pip install -r {}
 ```
 
+# Executing the test suite
+
+Once all dependencies are installed, you will be ready to run the test suite.
+You can run them using this command at the root of the repository:
+
+```bash
+PYTHONPATH=$PWD pytest tests/test_*
+```
+
+### Optinal flags
+
+- -v : Verbose mode.
+- -s : Display print statement from in the output.
+- -rfEs : Show extra summary for (f)ailed, (E)rror, and (s)kipped.
+- -n=N : Run N tests in parallel.
+
 # Test suite Structure
 
 ## Code base
