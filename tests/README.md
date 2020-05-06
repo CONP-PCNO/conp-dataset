@@ -2,27 +2,52 @@
 
 [![CircleCI](https://circleci.com/gh/CONP-PCNO/conp-dataset.svg?style=shield)](https://circleci.com/gh/CONP-PCNO/conp-dataset)
 
-## Executing the test
+# Dependencies
 
-### Dependencies
+## git-annex
 
-<!-- Git-annex -->
-<!-- Python requirements -->
+We recommend using git-annex version 8.20200330 and above.
+You can get git-annex by usign our CircleCI container, getting the latest
+binaries, or using your package manager ([see here](https://git-annex.branchable.com/install/)). We favor using our CircleCI container to improve reproducibility of
+the test suite.
 
-### Containerized dependencies
+#### CircleCI container
 
-<!-- Link -->
-<!-- Steps to buidl python dependencies -->
+The latest version of the container used for testing can be obtained from Docker
+Hub:
 
-## Test suite Structure
+```bash
+docker pull mathdugre/conp-dataset:latest
+```
 
-### Code base
+#### Get latest binaries
+
+The latest version can be obtained using the following command:
+
+```bash
+curl https://downloads.kitenet.net/git-annex/linux/current/git-annex-standalone-amd64.tar.gz | tar -zxvf -
+```
+
+## Python modules
+
+To run the test suite you will need to install the project module requirements
+for Pyhton. Since there are multiple location for the _requirements.txt_ files
+we recommend to use the below command at the root of the repository to install
+all of the Python dependencies.
+
+```bash
+find . -name requirements.txt | xargs -I{} pip install -r {}
+```
+
+# Test suite Structure
+
+## Code base
 
 <!-- Utility functions -->
 <!-- Template -->
 <!-- Test generation -->
 
-### Circle CI
+## Circle CI
 
 <!-- Workflow structure -->
 <!-- Level of parallism -->
