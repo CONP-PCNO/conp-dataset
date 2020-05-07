@@ -20,12 +20,20 @@ Hub:
 docker pull mathdugre/conp-dataset:latest
 ```
 
-#### Get latest binaries
+#### Latest binaries
 
-The latest version can be obtained using the following command:
+The latest version _git-annex_ binaires can be obtained using the following command:
 
 ```bash
 curl https://downloads.kitenet.net/git-annex/linux/current/git-annex-standalone-amd64.tar.gz | tar -zxvf -
+```
+
+You will then need to add the folder to your path.
+
+```bash
+# .bashrc
+
+export PATH="/path/to/git-annex/folder":$PATH
 ```
 
 ## Python modules
