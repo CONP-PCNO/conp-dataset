@@ -13,6 +13,7 @@ import pytest
 from scripts.dats_validator.validator import validate_json
 from tests.functions import (
     authenticate,
+    check_file_integrity,
     download_files,
     get_approx_ksmallests,
     get_filenames,
@@ -88,6 +89,6 @@ class Template(object):
 
         download_files(dataset, get_approx_ksmallests(dataset, filenames))
 
-    @pytest.mark.skip
     def test_files_integrity(self, dataset):
-        raise NotImplemented
+        filenames = get_filenames(dataset)
+        check_file_integrity(dataset, filenames)
