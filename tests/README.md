@@ -198,10 +198,9 @@ The test results are parsed and save to CircleCI artifacts.
 
 ## Flaky test
 
-<!-- Motivation () -->
-<!-- Maximum retry -->
-<!-- Lock datalad install -->
-<!-- Delay between retrys -->
+The current test suite cover a broad range of components for dataset to work properly. Unfortunately, there are components that are hard to test in real environment such as downloading files from live servers.
+<br/>
+For this reason, we opted to allow test to be flaky. That is, when a test fail it will rerun up to 3 times. There is a 5 seconds delay between rerun of failures. Furthermore, to avoid datalad command to conflict during a dataset installation, an instruction to install a dataset will be queue if this dataset is already installing.
 
 ## Empty dataset
 
