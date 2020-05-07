@@ -2,7 +2,7 @@ version: 2
 
 aliases:
   - &docker
-    - image: mathdugre/conp-dataset:v1
+    - image: mathdugre/conp-dataset:v1.1
 
   - &workdir ~/conp-dataset
 
@@ -10,8 +10,8 @@ aliases:
     restore_cache:
       name: Restore Python Cache
       keys:
-        - v1.4.1-python-{{ .Branch }}
-        - v1.4.1-python-
+        - v1.4.2-python-{{ .Branch }}
+        - v1.4.2-python-
 
 jobs:
   build:
@@ -32,7 +32,7 @@ jobs:
           name: Save Python Cache
           paths:
             - ~/venv
-          key: v1.4.1-python-{{ .Branch }}
+          key: v1.4.2-python-{{ .Branch }}
       - run:
           name: Install CONP-DATS Validator
           command: |

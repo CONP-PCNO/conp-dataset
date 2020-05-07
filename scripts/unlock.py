@@ -8,7 +8,7 @@ from git import Repo
 from datalad import api
 
 sys.path.append(os.getcwd())
-from tests.create_tests import project_name2env
+from tests.functions import project_name2env
 
 
 def unlock():
