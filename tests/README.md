@@ -127,23 +127,36 @@ The test results are parsed and save to CircleCI artifacts.
 
 # Life of a dataset test
 
+This section describe the different steps a dataset test will perform to validate the proper functioning of datasets.
+
 ## Test creation
 
-### Minimal testing
+At the start of the test job, the `template.py` file is used to generate a test file for each dataset.
+Changes made to a dataset should not influence the behavior of other datasets while changes to the test suite potentially impacts every datasets.
+To solve this, the test suite will start by retrieving all files modified during a pull request.
+Then, it will only test on the minimal set of datasets.
+This strategy aims at saving computing resources as well as time.
 
-<!-- Motivation (Only test required dataset) -->
-<!-- Describe implementation and consequences-->
+To select wether a dataset should be tested or not, we follow this heuristic:
 
-#### Whitelist Exact
+1. File modified is **not** part of a dataset:
+   - is part of a whitelist (see below), then **ignore**.
+   - otherwise, **full rerun** of the test suite.
+2. File is part of a dataset, then **partial rerun** test for this dataset.
 
-<!-- Exact whitelist files -->
-
-#### Whitelist
-
-<!-- Whitelist files -->
+```
+Whitelist
+┌─────────────┬────────────────────┐
+│ Exact match │ Contains pattern   │
+├─────────────┼────────────────────┤
+│  .datalad   │  .git              │
+│  docs       │  README            │
+│  metadata   │  LICENSE           │
+│             │  requirements.txt  │
+└─────────────┴────────────────────┘
+```
 
 ## Set up
-
 <!-- Motivation (Avoid global test failure + reduce execution time) -->
 <!-- Autouse fixture -->
 
