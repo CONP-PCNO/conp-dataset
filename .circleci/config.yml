@@ -2,7 +2,7 @@ version: 2
 
 aliases:
   - &docker
-    - image: mathdugre/conp-dataset:v1
+    - image: mathdugre/conp-dataset:v1.1
 
   - &workdir ~/conp-dataset
 
@@ -10,8 +10,8 @@ aliases:
     restore_cache:
       name: Restore Python Cache
       keys:
-        - v1.3-python-{{ .Branch }}
-        - v1.3-python-
+        - v1.4-python-{{ .Branch }}
+        - v1.4-python-
 
 jobs:
   build:
@@ -34,13 +34,13 @@ jobs:
           name: Save Python Cache
           paths:
             - ~/venv
-          key: v1.3-python-{{ .Branch }}
+          key: v1.4-python-{{ .Branch }}
       - run:
-          name: Install Dataset
+          name: Install CONP-DATS Validator
           command: |
-              . ~/venv/bin/activate
-              export PATH=~/git-annex.linux:$PATH
-              datalad install -r .
+            . ~/venv/bin/activate
+            export PATH=~/git-annex.linux:$PATH
+            datalad install scripts/dats_validator/conp-dats
       - persist_to_workspace:
           root: *workdir
           paths:
@@ -52,6 +52,8 @@ jobs:
     parallelism: 2
 
     steps:
+      - checkout:
+          path: *workdir
       - attach_workspace:
           at: *workdir
       - *restore_python_cache

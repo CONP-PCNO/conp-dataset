@@ -1,32 +1,27 @@
 #!/usr/bin/env python
-import argparse
-import traceback
-import os
 import json
+import os
+import sys
+import traceback
+
 from git import Repo
 from datalad import api
 
+sys.path.append(os.getcwd())
+from tests.functions import project_name2env
+
 
 def unlock():
-    parser = argparse.ArgumentParser(
-        formatter_class=argparse.RawTextHelpFormatter,
-        description=r"""
-        Script which allows to unlock a restricted dataset given the correct token
-
-        Requirements:
-        * The token must be passed to the script via the command line
-        * Script must be run in the base directory of the dataset
-        * File '.conp-zenodo-crawler.json' must exist
-        * Dataset git repository must be set on branch 'master'
-        """,
-    )
-    parser.add_argument(
-        "token", help="Zenodo access token"
-    )
-    args = parser.parse_args()
-    token = args.token
-
     repo = Repo()
+    project: str = project_name2env(repo.working_dir.split("/")[-1])
+    token: (str | None) = os.getenv(project + "_ZENODO_TOKEN", None)
+
+    if not token:
+        raise Exception(
+            f"{project}_ZENODO_TOKEN not found."
+            + "Cannot inject the Zenodo token into the git-annex urls."
+        )
+
     annex = repo.git.annex
     if repo.active_branch.name != "master":
         raise Exception("Dataset repository not set to branch 'master'")
@@ -77,6 +72,7 @@ def unlock():
 
 
 if __name__ == "__main__":
+    os.chdir(os.path.dirname(__file__))
     try:
         unlock()
     except Exception as e:

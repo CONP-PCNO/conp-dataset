@@ -19,6 +19,9 @@ from scripts.dats_validator.validator import validate_json
 
 @contextmanager
 def timeout(time):
+    def raise_timeout(signum, frame):
+        raise TimeoutError
+
     # Register a function to raise a TimeoutError on the signal.
     signal.signal(signal.SIGALRM, raise_timeout)
     # Schedule the signal to be sent after ``time``.
@@ -34,8 +37,30 @@ def timeout(time):
         signal.signal(signal.SIGALRM, signal.SIG_IGN)
 
 
-def raise_timeout(signum, frame):
-    raise TimeoutError
+def project_name2env(project_name: str) -> str:
+    """Convert the project name to a valid ENV var name.
+
+    The ENV name for the project must match the regex `[a-zA-Z_]+[a-zA-Z0-9_]*`.
+
+    Parameters
+    ----------
+    project_name: str
+        Name of the project.
+
+    Return
+    ------
+    project_env: str
+        A valid ENV name for the project.
+    """
+    project_name = project_name.replace("-", "_")
+    project_env = re.sub("[_]+", "_", project_name)  # Remove consecutive `_`
+    project_env = re.sub("[^a-zA-Z0-9_]", "", project_env)
+
+    # Env var cannot start with number
+    if re.compile("[0-9]").match(project_env[0]):
+        project_env = "_" + project_env
+
+    return project_env.upper()
 
 
 def get_annexed_file_size(dataset, file_path):
@@ -53,21 +78,16 @@ def get_annexed_file_size(dataset, file_path):
     float
         Size of the annexed file in Bytes.
     """
-    attempt = 0
-    while attempt < 3:
-        metadata = json.loads(
-            git.Repo(dataset).git.annex(
-                "info", os.path.join(dataset, file_path), json=True, bytes=True,
-            )
+    try:
+        info_output = git.Repo(dataset).git.annex(
+            "info", os.path.join(dataset, file_path), json=True, bytes=True,
         )
-        if "size" in metadata:
-            break
-        attempt += 1
-    else:
-        # Failed all attempt
-        return float("inf")
-
-    return int(metadata["size"])
+        metadata = json.loads(info_output)
+        return int(metadata["size"])
+    except Exception as e:
+        print(e)
+    # Failed to retrieve file size.
+    return float("inf")
 
 
 def remove_ftp_files(dataset: str, filenames: list) -> list:
@@ -87,11 +107,14 @@ def remove_ftp_files(dataset: str, filenames: list) -> list:
     """
     files_without_ftp = []
     for filename in filenames:
-        whereis = json.loads(
-            git.Repo(dataset).git.annex(
+        try:
+            whereis_output = git.Repo(dataset).git.annex(
                 "whereis", os.path.join(dataset, filename), json=True
             )
-        )
+            whereis = json.loads(whereis_output)
+
+        except Exception as e:
+            print(e)
 
         urls_without_ftp = [
             url
@@ -119,24 +142,31 @@ def is_authentication_required(dataset):
     bool
         Wether the dataset requires authentication.
     """
-    with open(os.path.join(dataset, "DATS.json"), "rb") as fin:
-        metadata = json.load(fin)
+    try:
+        with open(os.path.join(dataset, "DATS.json"), "rb") as fin:
+            metadata = json.load(fin)
 
-        try:
-            distributions = metadata["distributions"]
-            for distrubtion in distributions:
-                authorizations = distrubtion["access"]["authorizations"]
-                if any(
-                    [
-                        authorization["value"] != "public"
-                        for authorization in authorizations
-                    ]
-                ):
-                    return True
+            try:
+                distributions = metadata["distributions"]
+                for distrubtion in distributions:
+                    authorizations = distrubtion["access"]["authorizations"]
 
-            return False
-        except KeyError as e:
-            return str(e) + " DATS.json is invalid!"
+                    if any(
+                        [
+                            authorization["value"] != "public"
+                            for authorization in authorizations
+                        ]
+                    ):
+                        return True
+
+                return False
+            except KeyError as e:
+                print(f"{str(e)} field not found in DATS.json")
+
+    except FileNotFoundError as e:
+        pytest.fail(f"DATS.json was not found!\n{str(e)}", pytrace=False)
+    except Exeception as e:
+        pytest.fail(f"Authentiaction error!\n{str(e)}", pytrace=False)
 
 
 def generate_datalad_provider(loris_api):
@@ -222,40 +252,23 @@ def check_file_integrity(dataset: str, filenames: List[str]) -> None:
         pytest.fail("\n".join(failures), pytrace=False)
 
 
-def examine(dataset, project):
-    repo = git.Repo(dataset)
-
-    file_names = [file_name for file_name in os.listdir(dataset)]
-
-    if "README.md" not in file_names:
-        pytest.fail(
-            f"Dataset {dataset} doesn't contain README.md in its root directory.",
-            pytrace=False,
-        )
-
-    if "DATS.json" not in file_names:
-        pytest.fail(
-            f"Dataset {dataset} doesn't contain DATS.json in its root directory.",
-            pytrace=False,
-        )
-
-    with open(os.path.join(dataset, "DATS.json"), "rb") as f:
-        if not validate_json(json.load(f)):
-            pytest.fail(
-                f"Dataset {dataset} doesn't contain a valid DATS.json.", pytrace=False
-            )
-
+def authenticate(dataset):
     # If authentication is required and credentials are provided then add credentials
     # to the keyring and create a provider config file.
     # Note: Assume a loris-token authentication.
+    project = project_name2env(dataset.split("/")[-1])
+
     username = os.getenv(project + "_USERNAME", None)
     password = os.getenv(project + "_PASSWORD", None)
     loris_api = os.getenv(project + "_LORIS_API", None)
+    zenodo_token = os.getenv(project + "_ZENODO_TOKEN", None)
 
     if username and password and loris_api:
         keyring.set_password("datalad-loris", "user", username)
         keyring.set_password("datalad-loris", "password", password)
         generate_datalad_provider(loris_api)
+    elif zenodo_token:
+        pass
     elif is_authentication_required(dataset) == True:
         if os.getenv("TRAVIS_EVENT_TYPE", None) == "pull_request" or os.getenv(
             "CIRCLE_PR_NUMBER", False
@@ -271,7 +284,9 @@ def examine(dataset, project):
             pytrace=False,
         )
 
-    annex_list: str = repo.git.annex("list")
+
+def get_filenames(dataset):
+    annex_list: str = git.Repo(dataset).git.annex("list")
     filenames: List[str] = re.split(r"\n[_X]+\s", annex_list)[1:]
 
     submodules: Set[str] = get_all_submodules(dataset)
@@ -281,48 +296,13 @@ def examine(dataset, project):
             os.path.join(submodule, filename)
             for filename in re.split(r"\n[_X]+\s", annex_list)[1:]
         ]
+    return filenames
 
-    check_file_integrity(dataset, filenames)
 
-    if len(filenames) == 0:
-        return True
-
-    # Remove files using FTP as it is unstable in travis.
-    if os.getenv("TRAVIS", False):
-        filenames = remove_ftp_files(dataset, filenames)
-
-        if len(filenames) == 0:
-            pytest.skip(
-                f"WARNING: {dataset} only contains files using FTP."
-                + " Due to Travis limitation we cannot test this dataset."
-            )
-
-    # Take random sample of the filenames to avoid timeout or long test runs.
-    #
-    # Setting the seed to the concatenation of filenames allow to have randomness when
-    # the dataset is updated, while keeping consistency when the state of the dataset
-    # stays the same.
-    random.seed("".join(filenames))
-    SAMPLE_SIZE: int = 200
-    filenames = random.sample(filenames, min(SAMPLE_SIZE, len(filenames)))
-
-    # Sort files by size
-    filenames = sorted(
-        [
-            (filename, get_annexed_file_size(dataset, filename))
-            for filename in filenames
-        ],
-        key=lambda x: x[1],
-    )
-
-    # Limit number of files to test in each dataset to avoid Travis to timeout.
-    num_files = 4
-    filenames = filenames[:num_files]
-
+def download_files(dataset, filenames, time_limit=120):
     responses = []
-    TIMEOUT = 120
-    with timeout(TIMEOUT):
-        for filename, file_size in filenames:
+    with timeout(time_limit):
+        for filename in filenames:
             full_path = os.path.join(dataset, filename)
             responses = api.get(path=full_path, on_failure="ignore")
 
@@ -336,10 +316,24 @@ def examine(dataset, project):
 
     if responses == []:
         pytest.fail(
-            f"The dataset timed out after {TIMEOUT} seconds before retrieving a file."
+            f"The dataset timed out after {time_limit} seconds before retrieving a file."
             + " Cannot to tell if the download would be sucessful."
-            + f"\n{filename} has size of {file_size} Bytes.",
+            + f"\n{filename} has size of {get_annexed_file_size(dataset, full_path)} Bytes.",
             pytrace=False,
         )
 
-    return True
+
+def get_approx_ksmallests(dataset, filenames, k=4, sample_size=200):
+    # Take random sample of the filenames to avoid timeout or long test runs.
+    #
+    # Setting the seed to the concatenation of filenames allow to have randomness when
+    # the dataset is updated, while keeping consistency when the state of the dataset
+    # stays the same.
+    random.seed("".join(filenames))
+    sample_files = random.sample(filenames, min(sample_size, len(filenames)))
+
+    # Return the k smallest files from sample
+    return sorted(
+        [filename for filename in sample_files],
+        key=lambda x: get_annexed_file_size(dataset, x),
+    )[:k]
