@@ -53,6 +53,8 @@ Once all dependencies are installed, you will be ready to run the test suite.
 You can run them using this command at the root of the repository:
 
 ```bash
+python -m venv venv
+. venv/bin/activate
 PYTHONPATH=$PWD pytest tests/test_*
 ```
 
@@ -63,18 +65,65 @@ PYTHONPATH=$PWD pytest tests/test_*
 - -rfEs : Show extra summary for (f)ailed, (E)rror, and (s)kipped.
 - -n=N : Run N tests in parallel.
 
-# Test suite Structure
+# Test Suite Structure
 
-## Code base
+## Relevant code base components
+
+```
+.
+├── scripts
+│ ├── Crawlers
+│ ├── dats_validator
+│ │ └── requirements.txt
+│ └── unlock.py             # Inject zenodo token into annex urls.
+├── tests
+│ ├── create_tests.py       # Generate a test file for each dataset, when required.
+│ ├── functions.py          # Contains all the utility functions for testing.
+│ ├── parse_results.py      # Parse the test results into a json file.
+│ ├── requirements.txt
+│ └── template.py           # Regroup the test methods for dataset.
+└── requirements.txt
+```
 
 <!-- Utility functions -->
 <!-- Template -->
 <!-- Test generation -->
 
-## Circle CI
+## Workflow in CircleCI
 
-<!-- Workflow structure -->
-<!-- Level of parallism -->
+```
+                                         (x2)
+                                ┌──────────────────────┐
+                                │         Test         │
+                                ╞══════════════════════╡
+     (x1)         split test    │      has_readme      │   Parse test results
+┌───────────┐  suite by timing  ├──────────────────────┤      & save them
+│   Build   ├────────>>>────────┤    has_valid_dats    ├──────────>>>────────── END
+└───────────┘                   ├──────────────────────┤
+                                │     datalas_get      │
+                                ├──────────────────────┤
+                                │   files_integrity    │
+                                └──────────────────────┘
+```
+
+The workflow is composed of two job: build and test.
+
+**Build job:**
+
+- No parallelism
+- Install the dependencies and save them to the workspace for subsequent jobs.
+
+Before test job:<br/>
+The test suite is split by historical timing to run on multiple worker. This aims at reducing the total execution time.
+
+**Test job:**
+
+- Parallelism on 2 workers
+- Execute the dataset template test suite
+
+After test job: (WIP)<br/>
+The test results are parsed and save to CircleCI artifacts.
+#TODO Send them to a monitoring GitHub Repository
 
 # Life of a dataset test
 
