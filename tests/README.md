@@ -157,19 +157,24 @@ Whitelist
 ```
 
 ## Set up
+
 <!-- Motivation (Avoid global test failure + reduce execution time) -->
 <!-- Autouse fixture -->
 
 ## Dataset validation
 
+During this phase of the test suite, the a dataset will be subjected to the different tests below. This is to ensure that their content is valid with the CONP portal convention. Once a dataset passes the whole test suite, we can be more confident that it will be functional for other users.
+
 ### Has `README.md`
 
-<!-- Motivation -->
-<!-- Contains file -->
+Every dataset is required to have a `README.md` file to describe its content. This test will validate that this file exist.
 
 ### Has a valid `DATS.json` file
 
 <!-- Motivation -->
+
+Every dataset must have a `DATS.json` that follows that [dats model convention](https://datatagsuite.github.io/docs/html/dats.html).
+
 <!-- Contains file -->
 <!-- DATS validator -->
 
