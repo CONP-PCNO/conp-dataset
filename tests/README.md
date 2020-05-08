@@ -92,11 +92,11 @@ PYTHONPATH=$PWD pytest tests/test_*
 ## Workflow in CircleCI
 
 ```
-                                         (x2)
+                                       worker x2
                                 ┌──────────────────────┐
                                 │         Test         │
                                 ╞══════════════════════╡
-     (x1)         split test    │      has_readme      │   Parse test results
+  worker x1       split test    │      has_readme      │   Parse test results
 ┌───────────┐  suite by timing  ├──────────────────────┤      & save them
 │   Build   ├────────>>>────────┤    has_valid_dats    ├──────────>>>────────── END
 └───────────┘                   ├──────────────────────┤
