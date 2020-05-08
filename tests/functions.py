@@ -53,21 +53,16 @@ def get_annexed_file_size(dataset, file_path):
     float
         Size of the annexed file in Bytes.
     """
-    attempt = 0
-    while attempt < 3:
-        metadata = json.loads(
-            git.Repo(dataset).git.annex(
-                "info", os.path.join(dataset, file_path), json=True, bytes=True,
-            )
+    try:
+        info_output = git.Repo(dataset).git.annex(
+            "info", os.path.join(dataset, file_path), json=True, bytes=True,
         )
-        if "size" in metadata:
-            break
-        attempt += 1
-    else:
-        # Failed all attempt
-        return float("inf")
-
-    return int(metadata["size"])
+        metadata = json.loads(info_output)
+        return int(metadata["size"])
+    except Exception as e:
+        print(e)
+    # Failed to retrieve file size.
+    return float("inf")
 
 
 def remove_ftp_files(dataset: str, filenames: list) -> list:
@@ -87,11 +82,14 @@ def remove_ftp_files(dataset: str, filenames: list) -> list:
     """
     files_without_ftp = []
     for filename in filenames:
-        whereis = json.loads(
-            git.Repo(dataset).git.annex(
+        try:
+            whereis_output = git.Repo(dataset).git.annex(
                 "whereis", os.path.join(dataset, filename), json=True
             )
-        )
+            whereis = json.loads(whereis_output)
+
+        except Exception as e:
+            print(e)
 
         urls_without_ftp = [
             url
@@ -197,6 +195,7 @@ def get_all_submodules(root: str) -> set:
 
 
 def examine(dataset, project):
+    api.install(dataset)
     repo = git.Repo(dataset)
 
     file_names = [file_name for file_name in os.listdir(dataset)]
@@ -225,11 +224,14 @@ def examine(dataset, project):
     username = os.getenv(project + "_USERNAME", None)
     password = os.getenv(project + "_PASSWORD", None)
     loris_api = os.getenv(project + "_LORIS_API", None)
+    zenodo_token = os.getenv(project + "_ZENODO_TOKEN", None)
 
     if username and password and loris_api:
         keyring.set_password("datalad-loris", "user", username)
         keyring.set_password("datalad-loris", "password", password)
         generate_datalad_provider(loris_api)
+    elif zenodo_token:
+        pass
     elif is_authentication_required(dataset) == True:
         if os.getenv("TRAVIS_EVENT_TYPE", None) == "pull_request" or os.getenv(
             "CIRCLE_PR_NUMBER", False

@@ -102,3 +102,6 @@
 [submodule "projects/Khanlab/HCPUR100-Template"]
 	path = projects/Khanlab/HCPUR100-Template
 	url = https://github.com/emmetaobrien/HCPUR100-Template.git
+[submodule "projects/Intracellular_Recordings_of_Murine_Neocortical_Neurons"]
+	path = projects/Intracellular_Recordings_of_Murine_Neocortical_Neurons
+	url = https://github.com/conp-bot/conp-dataset-Intracellular-Recordings-of-Murine-Neocortical-Neurons.git
