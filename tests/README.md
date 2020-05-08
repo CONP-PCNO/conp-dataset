@@ -156,45 +156,53 @@ Whitelist
 └─────────────┴────────────────────┘
 ```
 
-## Set up
-
-<!-- Motivation (Avoid global test failure + reduce execution time) -->
-<!-- Autouse fixture -->
-
 ## Dataset validation
 
-During this phase of the test suite, the a dataset will be subjected to the different tests below. This is to ensure that their content is valid with the CONP portal convention. Once a dataset passes the whole test suite, we can be more confident that it will be functional for other users.
+During this phase of the test suite, the a dataset will be subjected to the different tests below to ensure that their content is valid with the CONP portal convention.
+Once a dataset passes the whole test suite, we can be more confident that it will be functional for other users.
+
+### Datalad Install **(Setup)**
+
+This steps runs before every test case mentioned below.
+To prevent concurent execution of the command to cause issue, test case for a dataset are queued when the dataset is already being installed.
 
 ### Has `README.md`
 
-Every dataset is required to have a `README.md` file to describe its content. This test will validate that this file exist.
+Every dataset is required to have a `README.md` file to describe its content.
+This test validates that this file exist.
 
 ### Has a valid `DATS.json` file
 
-<!-- Motivation -->
-
-Every dataset must have a `DATS.json` that follows that [dats model convention](https://datatagsuite.github.io/docs/html/dats.html).
-
-<!-- Contains file -->
-<!-- DATS validator -->
+Every dataset must have a `DATS.json` that follows that [DATS model convention](https://datatagsuite.github.io/docs/html/dats.html).
+This test makes sure that the `DATS.json` file exist and that its content is conform to the DATS Model.
 
 ### Datalad Get
 
-<!-- Motivation -->
-<!-- authentication (Secret limitations) (Section on authenticated dataset) -->
-<!-- n files form sub-sample to avoid timeout -->
-<!-- datalad get %FILENAME -->
+The ability to download a dataset is a critical component for its proper function.
+This test goes through the process of downloading files from a dataset to valid its validity.
+That is, the test case executes those steps:
+
+1. Authenicate the dataset (see [Authenticated Dataset](#authenticated-dataset) section).
+1. (**Travis specific**) Remove files using FTP due to issue on travis; more detail [here](https://blog.travis-ci.com/2018-07-23-the-tale-of-ftp-at-travis-ci).
+1. Select a k files from sample of n files. This aims at saving computing resources (see [Timeout](#timeout) section).
+1. Use `datalad get` to download each of the k files formt the sample.
 
 ### Files Integrity
 
-<!-- Motivation -->
-<!-- git-annex fsck on all files -->
+Downloading every files in a dataset to assure the proper functioning of a dataset would be rather unpractical, however, verifying the integrity of files is more rational approach.
+This test uses `git annex fsck` to verify the integrity of files. If any file is not validated then the test fails.
+
+### Saving Test Results **(Post Test)**
+
+Once every tests are done, the test suite saves the test results in two location: the CircleCi dashboard and as a CircleCI artifact.
+This allows to easily see which test fails.
 
 ## Monitoring
 
-### Motivation
+Work in progress !
 
 <!-- Dataset still work -->
+
 <!-- Last time dataset worked -->
 <!-- Integration in CONP-Portal -->
 
