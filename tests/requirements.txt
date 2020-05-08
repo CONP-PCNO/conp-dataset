@@ -3,3 +3,4 @@ humanize
 mock
 pytest
 pytest-xdist
+flaky
