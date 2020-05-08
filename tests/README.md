@@ -184,7 +184,7 @@ That is, the test case executes those steps:
 
 1. Authenicate the dataset (see [Authenticated Dataset](#authenticated-dataset) section).
 1. (**Travis specific**) Remove files using FTP due to issue on travis; more detail [here](https://blog.travis-ci.com/2018-07-23-the-tale-of-ftp-at-travis-ci).
-1. Select a k files from sample of n files. This aims at saving computing resources (see [Timeout](#timeout) section).
+1. Select a k files, with samllest size, from a sample of n files. This aims at saving computing resources (see [Timeout](#timeout) and [Size of Annexed File](#size-of-annexed-file) sections).
 1. Use `datalad get` to download each of the k files formt the sample.
 
 ### Files Integrity
@@ -237,7 +237,10 @@ For this reason, we opted to allow test to be flaky. That is, when a test fail i
 <!-- CircleCI timeout -->
 <!-- Download timeout -->
 
-## Size of annexed file
+## Size of Annexed File
 
-<!-- Motivation -->
-<!-- INFINITY if not able to retrieve -->
+Dataset files vary in size.
+This can be and issue when testing the download of a dataset as downloading a large file might result in timeout and test failure.
+To prevent this problem to happen, the test suite sorts the files based on their size; if a file size cannot be retrieved it sets it to infinity.
+Then, it downloads the files in incresing order of their size.
+This as the potential to speedup the test suite considerably.
