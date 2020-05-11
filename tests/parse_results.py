@@ -15,7 +15,7 @@ def parse_test_results():
     except Exception as e:
         prev_test_result = {}
 
-    with open(os.path.join(output_path, "tests-status.json"), "w") as fout:
+    with open(os.path.join(output_path, "test-status.json"), "w") as fout:
         output_result = {}
 
         xml = JUnitXml.fromfile(os.path.join(output_path, "junit.xml"))

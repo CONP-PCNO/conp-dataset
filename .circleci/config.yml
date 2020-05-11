@@ -73,7 +73,7 @@ jobs:
             . ~/venv/bin/activate
             PYTHONPATH=$PWD python tests/parse_results.py
       - store_artifacts:
-          path: tests/tests-status.json
+          path: tests/test-status.json
 
 workflows:
   version: 2
