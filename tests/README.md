@@ -89,21 +89,44 @@ PYTHONPATH=$PWD pytest tests/test_*
 <!-- Template -->
 <!-- Test generation -->
 
-## Workflow in CircleCI
+## CircleCI Workflow
 
 ```
-                                       worker x2
-                                ┌──────────────────────┐
-                                │         Test         │
-                                ╞══════════════════════╡
-  worker x1       split test    │      has_readme      │   Parse test results
-┌───────────┐  suite by timing  ├──────────────────────┤      & save them
-│   Build   ├────────>>>────────┤    has_valid_dats    ├──────────>>>────────── END
-└───────────┘                   ├──────────────────────┤
-                                │     datalas_get      │
-                                ├──────────────────────┤
-                                │   files_integrity    │
-                                └──────────────────────┘
+                                               worker x1
+                                          ╔════════════════╗
+                                          ║     Build      ║
+                                          ╠════════════════╣
+                                          ║     Python     ║
+                                          ║  Dependencies  ║
+                                          ╠────────────────╣
+                                          ║ DATS validator ║
+                                          ╚═══════╤════════╝
+        ┌──────────────────◄──────────────────────┘
+        │
+        ▼
+        │                                                    worker x2
+┌───────┴───────┐         ┌──────────────────┐         ╔═════════════════╗         ┌───────────────────┐
+│ Create Tests  ├────►────┤    Split Tests   ├────►────╢       Test      ╟────►────┤   Tests Results   │
+╞═══════════════╡         ╞══════════════════╡         ╠═════════════════╣         ╞═══════════════════╡
+│ Generate test │         │ Distribute tests │         ║ datalad_install ║         │ Show on dashboard │
+│   files from  │         │  equally amongs  │         ║     (Setup)     ║         ├───────────────────┤
+│    Template   │         │     workers      │         ╟─────────────────╢         │ Save to artifacts │
+└───────────────┘         └──────────────────┘         ║    has_readme   ║         └─────────┬─────────┘
+                                                       ╟─────────────────╢                   │
+                                                       ║ has_valid_dats  ║                   │
+                                                       ╟─────────────────╢                   │
+                                                       ║   datalas_get   ║                   ▼
+                                                       ╟─────────────────╢                   │
+                                                       ║ files_integrity ║                   │
+                                                       ╚═════════════════╝                   │
+                                                                                             │
+                                                  ┌─────────────────◄────────────────────────┘
+                                                  │
+                                                  ▼
+                                                  │
+                                               ╔══╧══╗
+                                               ║ END ║
+                                               ╚═════╝
 ```
 
 The workflow is composed of two job: build and test.
