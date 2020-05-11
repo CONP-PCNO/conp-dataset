@@ -7,11 +7,11 @@
 ## git-annex
 
 We recommend using git-annex version 8.20200330 and above.
-You can get git-annex by usign our CircleCI container, getting the latest
+You can get git-annex by using our CircleCI container, getting the latest
 binaries, or using your package manager ([see here](https://git-annex.branchable.com/install/)). We favor using our CircleCI container to improve reproducibility of
 the test suite.
 
-#### CircleCI container
+### CircleCI container
 
 The latest version of the container used for testing can be obtained from Docker
 Hub:
@@ -20,21 +20,24 @@ Hub:
 docker pull mathdugre/conp-dataset:latest
 ```
 
-#### Latest binaries
+### Dockerfile
 
-The latest version _git-annex_ binaires can be obtained using the following command:
-
-```bash
-curl https://downloads.kitenet.net/git-annex/linux/current/git-annex-standalone-amd64.tar.gz | tar -zxvf -
-```
-
-You will then need to add the folder to your path.
+The image can also be built directly from our [Dockerfile](https://github.com/CONP-PCNO/conp-dataset/blob/master/.circleci/images/Dockerfile).
 
 ```bash
-# .bashrc
-
-export PATH="/path/to/git-annex/folder":$PATH
+cd conp-dataset/.circleci/images
+docker build -t mathdugre/conp-dataset:latest .
 ```
+
+### Docker usage
+
+The Docker container can be run using this command:
+
+```bash
+docker run -it --name="conp-dataset" mathdugre/conp-dataset:latest
+```
+
+For more information on Docker we recommend reading [Docker getting started guide](https://docs.docker.com/get-started/).
 
 ## Python modules
 
