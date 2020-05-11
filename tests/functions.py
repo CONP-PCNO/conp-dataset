@@ -230,7 +230,7 @@ def get_all_submodules(root: str) -> set:
 def eval_config(dataset: str) -> None:
 
     if "config" in os.listdir(dataset):
-        subprocess.run(["config"])
+        subprocess.run([os.path.join(dataset, "config")])
 
 
 def authenticate(dataset):
