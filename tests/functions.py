@@ -5,6 +5,7 @@ import os
 import random
 import re
 import signal
+import subprocess
 import sys
 from typing import List, Set, Union
 
@@ -224,6 +225,12 @@ def get_all_submodules(root: str) -> set:
         return rv | submodules
     else:
         return set()
+
+
+def eval_config(dataset: str) -> None:
+
+    if "config" in os.listdir(dataset):
+        subprocess.run(["config"])
 
 
 def authenticate(dataset):

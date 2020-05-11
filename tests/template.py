@@ -14,6 +14,7 @@ from scripts.dats_validator.validator import validate_json
 from tests.functions import (
     authenticate,
     download_files,
+    eval_config,
     get_approx_ksmallests,
     get_filenames,
     remove_ftp_files,
@@ -70,6 +71,7 @@ class Template(object):
                 )
 
     def test_download(self, dataset):
+        eval_config(dataset)
         authenticate(dataset)
 
         filenames = get_filenames(dataset)
