@@ -88,7 +88,12 @@ class Template(object):
                     + " Due to Travis limitation we cannot test this dataset."
                 )
 
-        download_files(dataset, get_approx_ksmallests(dataset, filenames))
+        k_smallest = get_approx_ksmallests(dataset, filenames)
+        try:
+            download_files(dataset, k_smallest)
+        except:
+            api.get(dataset)
+            download_files(dataset, k_smallest)
 
     @pytest.mark.skip
     def test_files_integrity(self, dataset):
