@@ -286,8 +286,8 @@ When a dataset has no files contained in its annex, the test suite assume the da
 
 ## Timeout
 
-<!-- CircleCI timeout -->
-<!-- Download timeout -->
+Since the test suite involves downloading data from external servers, the runtime of the test suite can vary considerably when there is network issues.
+To mitigate bad connection to server, the test suite imposes a 10 minutes timeout for each test as well as a a 2 minutes timeout specific to each dataset download.
 
 ## Size of Annexed File
 
