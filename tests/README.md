@@ -236,15 +236,41 @@ Work in progress !
 
 <!-- What should be done prior the tests -->
 
+The test suite currently supports restricted dataset with authentication through Loris or Zenodo, however, it requires prior setup described below. For completing the setup, please contact the CircleCI administrator: Tristan Glatard.
+
 ## Secret creation
 
-<!-- useing project_name2env -->
-<!-- Add them into CircleCI/TravisCI -->
+To create the secrets in CircleCI you will need to generate a standarized \${PROJECT_NAME} as done below:
+
+```python
+from tests.functions import project_name2env
+project_name2env("projects/datatset_name".split("/")[-1])
+# DATATSET_NAME
+```
+
+### Loris
+
+1. Create a Loris account to be used on CircleCI.
+1. With the help of the CircleCI administrator create the following secrets:
+   - `${PROJECT_NAME}_USERNAME`
+   - `${PROJECT_NAME}_PASSWORD`
+   - `${PROJECT_NAME}_LORIS_API`; e.g. `https://example.loris.ca/api/v0.0.0`
+
+### Zenodo
+
+1.  [Create a new Zenodo token](https://zenodo.org/account/settings/applications/tokens/new/)
+1.  With the help of the CircleCI administrator, create a secret named `${PROJECT_NAME}_ZENODO_TOKEN`.
 
 ## Limitations with secrets
 
-<!-- Limitations -->
-<!-- Work around by setting up secret in your personnal CircleCI -->
+A major limitation of secrets is that authenticated datasets cannot be tested on pull requests due to privacy issues.
+Indeed, malicioous users could easily retrieve secrets by making a pull requests.
+
+To avoid this problematic, the user making a pull request on an authenticated dataset can setup secrets for the dataset in its own CircleCI account.
+
+#TODO
+Otherwise, the pull requests for authenticated datasets should be merged into a devel branch to assure their proper functioning.
+Then, when everything is working, it can merged into the master branch.
 
 # Implementation keypoints
 
