@@ -49,7 +49,7 @@ The version of git-annex installed can be verified with:
 
 `git annex version`
 
-As of August 14 2019, this installs git annex v 7.20190730, which works with CONP datasets. Earlier versions of git-annex may not.
+As of May 12 2020, this installs git annex v 8.20200330, which works with CONP datasets. Earlier versions of git-annex may not.
 
 ### DataLad:
 
