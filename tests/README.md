@@ -282,7 +282,7 @@ For this reason, we opted to allow test to be flaky. That is, when a test fail i
 
 ## Empty dataset
 
-<!-- No file in annex -->
+When a dataset has no files contained in its annex, the test suite assume the dataset works properly and pass the test.
 
 ## Timeout
 
