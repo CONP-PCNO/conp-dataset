@@ -2,16 +2,16 @@
 
 [![CircleCI](https://circleci.com/gh/CONP-PCNO/conp-dataset.svg?style=shield)](https://circleci.com/gh/CONP-PCNO/conp-dataset)
 
-# Dependencies
+## Dependencies
 
-## git-annex
+### git-annex
 
 We recommend using git-annex version 8.20200330 and above.
 You can get git-annex by using our CircleCI container, getting the latest
 binaries, or using your package manager ([see here](https://git-annex.branchable.com/install/)). We favor using our CircleCI container to improve reproducibility of
 the test suite.
 
-### CircleCI container
+#### CircleCI container
 
 The latest version of the container used for testing can be obtained from Docker
 Hub:
@@ -20,7 +20,7 @@ Hub:
 docker pull mathdugre/conp-dataset:latest
 ```
 
-### Dockerfile
+#### Dockerfile
 
 The image can also be built directly from our [Dockerfile](https://github.com/CONP-PCNO/conp-dataset/blob/master/.circleci/images/Dockerfile).
 
@@ -29,7 +29,7 @@ cd conp-dataset/.circleci/images
 docker build -t mathdugre/conp-dataset:latest .
 ```
 
-### Docker usage
+#### Docker usage
 
 The Docker container can be run using this command:
 
@@ -39,7 +39,7 @@ docker run -it --name="conp-dataset" mathdugre/conp-dataset:latest
 
 For more information on Docker we recommend reading [Docker getting started guide](https://docs.docker.com/get-started/).
 
-## Python modules
+### Python modules
 
 To run the test suite you will need to install the project module requirements
 for Pyhton. Since there are multiple location for the _requirements.txt_ files
@@ -50,7 +50,7 @@ all of the Python dependencies.
 find . -name requirements.txt | xargs -I{} pip install -r {}
 ```
 
-# Executing the test suite
+## Executing the Test Suite
 
 Once all dependencies are installed, you will be ready to run the test suite.
 You can run them using this command at the root of the repository:
@@ -61,16 +61,16 @@ python -m venv venv
 PYTHONPATH=$PWD pytest tests/test_*
 ```
 
-### Optinal flags
+#### Optinal flags
 
 - -v : Verbose mode.
 - -s : Display print statement from in the output.
 - -rfEs : Show extra summary for (f)ailed, (E)rror, and (s)kipped.
 - -n=N : Run N tests in parallel.
 
-# Test Suite Structure
+## Test Suite Structure
 
-## Relevant code base components
+### Relevant code base components
 
 ```
 .
@@ -92,7 +92,7 @@ PYTHONPATH=$PWD pytest tests/test_*
 <!-- Template -->
 <!-- Test generation -->
 
-## CircleCI Workflow
+### CircleCI workflow
 
 ```
                                                worker x1
@@ -151,11 +151,11 @@ After test job: (WIP)<br/>
 The test results are parsed and save to CircleCI artifacts.
 #TODO Send them to a monitoring GitHub Repository
 
-# Life of a dataset test
+## Life of a Dataset Test
 
 This section describe the different steps a dataset test will perform to validate the proper functioning of datasets.
 
-## Test creation
+### Test creation
 
 At the start of the test job, the `template.py` file is used to generate a test file for each dataset.
 Changes made to a dataset should not influence the behavior of other datasets while changes to the test suite potentially impacts every datasets.
@@ -182,27 +182,27 @@ Whitelist
 └─────────────┴────────────────────┘
 ```
 
-## Dataset validation
+### Dataset validation
 
 During this phase of the test suite, the a dataset will be subjected to the different tests below to ensure that their content is valid with the CONP portal convention.
 Once a dataset passes the whole test suite, we can be more confident that it will be functional for other users.
 
-### Datalad Install **(Setup)**
+#### Datalad install **(Setup)**
 
 This steps runs before every test case mentioned below.
 To prevent concurent execution of the command to cause issue, test case for a dataset are queued when the dataset is already being installed.
 
-### Has `README.md`
+#### Has `README.md`
 
 Every dataset is required to have a `README.md` file to describe its content.
 This test validates that this file exist.
 
-### Has a valid `DATS.json` file
+#### Has a valid `DATS.json` file
 
 Every dataset must have a `DATS.json` that follows that [DATS model convention](https://datatagsuite.github.io/docs/html/dats.html).
 This test makes sure that the `DATS.json` file exist and that its content is conform to the DATS Model.
 
-### Datalad Get
+#### Datalad get
 
 The ability to download a dataset is a critical component for its proper function.
 This test goes through the process of downloading files from a dataset to valid its validity.
@@ -213,17 +213,17 @@ That is, the test case executes those steps:
 1. Select a k files, with samllest size, from a sample of n files. This aims at saving computing resources (see [Timeout](#timeout) and [Size of Annexed File](#size-of-annexed-file) sections).
 1. Use `datalad get` to download each of the k files formt the sample.
 
-### Files Integrity
+#### Files integrity
 
 Downloading every files in a dataset to assure the proper functioning of a dataset would be rather unpractical, however, verifying the integrity of files is more rational approach.
 This test uses `git annex fsck` to verify the integrity of files. If any file is not validated then the test fails.
 
-### Saving Test Results **(Post Test)**
+#### Saving test results **(Post Test)**
 
 Once every tests are done, the test suite saves the test results in two location: the CircleCi dashboard and as a CircleCI artifact.
 This allows to easily see which test fails.
 
-## Monitoring
+### Monitoring
 
 Work in progress !
 
@@ -232,13 +232,13 @@ Work in progress !
 <!-- Last time dataset worked -->
 <!-- Integration in CONP-Portal -->
 
-# Authenticated Dataset
+## Authenticated Dataset
 
 <!-- What should be done prior the tests -->
 
 The test suite currently supports restricted dataset with authentication through Loris or Zenodo, however, it requires prior setup described below. For completing the setup, please contact the CircleCI administrator: Tristan Glatard.
 
-## Secret creation
+### Secret creation
 
 To create the secrets in CircleCI you will need to generate a standarized \${PROJECT_NAME} as done below:
 
@@ -248,7 +248,7 @@ project_name2env("projects/datatset_name".split("/")[-1])
 # DATATSET_NAME
 ```
 
-### Loris
+#### Loris
 
 1. Create a Loris account to be used on CircleCI.
 1. With the help of the CircleCI administrator create the following secrets:
@@ -256,12 +256,12 @@ project_name2env("projects/datatset_name".split("/")[-1])
    - `${PROJECT_NAME}_PASSWORD`
    - `${PROJECT_NAME}_LORIS_API`; e.g. `https://example.loris.ca/api/v0.0.0`
 
-### Zenodo
+#### Zenodo
 
 1.  [Create a new Zenodo token](https://zenodo.org/account/settings/applications/tokens/new/)
 1.  With the help of the CircleCI administrator, create a secret named `${PROJECT_NAME}_ZENODO_TOKEN`.
 
-## Limitations with secrets
+### Limitations with secrets
 
 A major limitation of secrets is that authenticated datasets cannot be tested on pull requests due to privacy issues.
 Indeed, malicioous users could easily retrieve secrets by making a pull requests.
@@ -272,24 +272,24 @@ To avoid this problematic, the user making a pull request on an authenticated da
 Otherwise, the pull requests for authenticated datasets should be merged into a devel branch to assure their proper functioning.
 Then, when everything is working, it can merged into the master branch.
 
-# Implementation keypoints
+## Implementation Keypoints
 
-## Flaky test
+### Flaky test
 
 The current test suite cover a broad range of components for dataset to work properly. Unfortunately, there are components that are hard to test in real environment such as downloading files from live servers.
 <br/>
 For this reason, we opted to allow test to be flaky. That is, when a test fail it will rerun up to 3 times. There is a 5 seconds delay between rerun of failures. Furthermore, to avoid datalad command to conflict during a dataset installation, an instruction to install a dataset will be queue if this dataset is already installing.
 
-## Empty dataset
+### Empty dataset
 
 When a dataset has no files contained in its annex, the test suite assume the dataset works properly and pass the test.
 
-## Timeout
+### Timeout
 
 Since the test suite involves downloading data from external servers, the runtime of the test suite can vary considerably when there is network issues.
 To mitigate bad connection to server, the test suite imposes a 10 minutes timeout for each test as well as a a 2 minutes timeout specific to each dataset download.
 
-## Size of Annexed File
+### Size of annexed file
 
 Dataset files vary in size.
 This can be and issue when testing the download of a dataset as downloading a large file might result in timeout and test failure.
