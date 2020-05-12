@@ -2,6 +2,15 @@
 
 [![CircleCI](https://circleci.com/gh/CONP-PCNO/conp-dataset.svg?style=shield)](https://circleci.com/gh/CONP-PCNO/conp-dataset)
 
+### Table of content:
+
+- [Dependencies](#Dependencies)
+- [Executing the Test Suite](#Executing-the-Test-Suite)
+- [Test Suite Structure](#Test-Suite-Structure)
+- [Life of a Dataset Test](#Life-of-a-Dataset-Test)
+- [Authenticated Dataset](#Authenticated-Dataset)
+- [Implementation Keypoints](#Implementation-Keypoints)
+
 ## Dependencies
 
 ### git-annex
