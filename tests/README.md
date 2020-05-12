@@ -5,11 +5,24 @@
 ### Table of content:
 
 - [Dependencies](#Dependencies)
+  - [git-annex](#git-annex)
+  - [Python modules](#Python-modules)
 - [Executing the Test Suite](#Executing-the-Test-Suite)
 - [Test Suite Structure](#Test-Suite-Structure)
+   * [Relevant code base components](#Relevant-code-base-components)
+   * [CircleCI workflow](#CircleCI-workflow)
 - [Life of a Dataset Test](#Life-of-a-Dataset-Test)
+   * [Test creation](#Test-creation)
+   * [Dataset validation](#Dataset-validation)
+   * [Monitoring](#Monitoring)
 - [Authenticated Dataset](#Authenticated-Dataset)
+   * [Secrets creation](#Secrets-creation)
+   * [Limitations of secrets](#Limitations-of-secrets)
 - [Implementation Keypoints](#Implementation-Keypoints)
+   * [Flaky test](#Flaky-test)
+   * [Empty dataset](#Empty-dataset)
+   * [Timeout](#Timeout)
+   * [Size of annexed file](#Size-of-annexed-file)
 
 ## Dependencies
 
