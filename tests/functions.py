@@ -228,7 +228,6 @@ def get_all_submodules(root: str) -> set:
 
 def check_file_integrity(dataset: str, filenames: List[str]) -> None:
 
-    failures: List[str] = list()
     for filename in filenames:
         try:
             fsck_output = git.Repo(dataset).git.annex(
@@ -237,19 +236,12 @@ def check_file_integrity(dataset: str, filenames: List[str]) -> None:
                 json=True,
                 json_error_messages=True,
                 fast=True,
+                quiet=True,
             )
-            if fsck_output == "":
-                raise Exception("WARNING: git-annex fsck output is empty.")
-
-            fsck = json.loads(fsck_output)
-            if not fsck["success"]:
-                failures.append(fsck["error-messages"])
-
+            if fsck_output:
+                pytest.fail(fsck_output, pytrace=False)
         except Exception as e:
-            failures.append(f"{filename}\n{str(e)}")
-
-    if len(failures) > 0:
-        pytest.fail("\n".join(failures), pytrace=False)
+            pytest.fail(str(e), pytrace=False)
 
 
 def authenticate(dataset):
