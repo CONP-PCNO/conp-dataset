@@ -190,7 +190,8 @@ To select whether a dataset should be tested or not, we follow this heuristic:
 1. File modified is **not** part of a dataset:
    - is part of a whitelist (see below), then **ignore**;
    - otherwise, **full rerun** of the test suite.
-2. File is part of a dataset, then **partial rerun** test for this dataset.
+1. File is part of a dataset, then **partial rerun** test for this dataset.
+1. Outside of pull request, **full rerun** of the test suite.
 
 ```
 Whitelist
