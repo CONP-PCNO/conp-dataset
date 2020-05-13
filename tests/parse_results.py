@@ -21,10 +21,10 @@ def parse_test_results():
         xml = JUnitXml.fromfile(os.path.join(output_path, "junit.xml"))
         for suite in xml:
             for case in suite:
-                if not case.name.startswith("test_projects_"):
+                if not case.classname.startswith("tests.test_projects_"):
                     continue
 
-                dataset = case.name.replace("test_projects_", "", 1)
+                dataset = "".join(case.classname.split(".")[1:-1])
                 runtime = case.time
 
                 if case.result:
