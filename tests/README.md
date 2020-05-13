@@ -9,20 +9,20 @@
   - [Python modules](#Python-modules)
 - [Executing the Test Suite](#Executing-the-Test-Suite)
 - [Test Suite Structure](#Test-Suite-Structure)
-   * [Relevant code base components](#Relevant-code-base-components)
-   * [CircleCI workflow](#CircleCI-workflow)
+  - [Relevant code base components](#Relevant-code-base-components)
+  - [CircleCI workflow](#CircleCI-workflow)
 - [Life of a Dataset Test](#Life-of-a-Dataset-Test)
-   * [Test creation](#Test-creation)
-   * [Dataset validation](#Dataset-validation)
-   * [Monitoring](#Monitoring)
+  - [Test creation](#Test-creation)
+  - [Dataset validation](#Dataset-validation)
+  - [Monitoring](#Monitoring)
 - [Authenticated Dataset](#Authenticated-Dataset)
-   * [Secrets creation](#Secrets-creation)
-   * [Limitations of secrets](#Limitations-of-secrets)
+  - [Secrets creation](#Secrets-creation)
+  - [Limitations of secrets](#Limitations-of-secrets)
 - [Implementation Keypoints](#Implementation-Keypoints)
-   * [Flaky test](#Flaky-test)
-   * [Empty dataset](#Empty-dataset)
-   * [Timeout](#Timeout)
-   * [Size of annexed file](#Size-of-annexed-file)
+  - [Flaky test](#Flaky-test)
+  - [Empty dataset](#Empty-dataset)
+  - [Timeout](#Timeout)
+  - [Size of annexed file](#Size-of-annexed-file)
 
 ## Dependencies
 
@@ -85,10 +85,10 @@ PYTHONPATH=$PWD pytest tests/test_*
 
 #### Optinal flags
 
-- -v : Verbose mode.
-- -s : Display print statement from in the output.
-- -rfEs : Show extra summary for (f)ailed, (E)rror, and (s)kipped.
-- -n=N : Run N tests in parallel.
+- `-v` : Verbose mode.
+- `-s` : Display print statement from in the output.
+- `-rfEs` : Show extra summary for (f)ailed, (E)rror, and (s)kipped.
+- `-n=N` : Run N tests in parallel.
 
 ## Test Suite Structure
 
@@ -212,7 +212,7 @@ Once a dataset passes the whole test suite, we can be more confident that it wil
 #### Datalad install **(Setup)**
 
 This step runs before every test case mentioned below.
-To prevent concurrent execution of the command to cause issue, test case for a dataset are queued when the dataset is already being installed.
+To prevent concurrent execution of the command to cause issue, test cases for a dataset are queued when the dataset is already being installed.
 
 #### Has `README.md`
 
@@ -242,7 +242,7 @@ This test uses `git annex fsck` to verify the integrity of files. If any file is
 
 #### Saving test results **(Post Test)**
 
-Once every test are done, the test suite saves the test results in two locations: the CircleCI dashboard and as a CircleCI artifact.
+Once every test is completed, the test suite saves the test results in two locations: the CircleCI dashboard and as a CircleCI artifact.
 This allows to easily see which test failed.
 
 ### Monitoring
@@ -266,7 +266,7 @@ To create the secrets in CircleCI you will need to generate a standardized \${PR
 
 ```python
 from tests.functions import project_name2env
-project_name2env("projects/datatset_name".split("/")[-1])
+project_name2env("projects/dataset_name".split("/")[-1])
 # DATASET_NAME
 ```
 
