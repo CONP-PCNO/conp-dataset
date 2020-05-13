@@ -24,58 +24,63 @@ def get_previous_test_results():
     return previous_test_results
 
 
-def parse_test_results():
-    current_time = str(datetime.now().astimezone())
+def get_test_case_output(case, previous_test_results):
+    dataset = case2datasetname(case)
 
+    if case.result:
+        message = case.result.message
+        last_passed = (
+            previous_test_results[dataset]["Last passed"]
+            if dataset in previous_test_results
+            else "Never passed"
+        )
+
+        if isinstance(case.result, Failure):
+            status = "Failure"
+        elif isinstance(case.result, Skipped):
+            status = "Skipped"
+        elif isinstance(case.result, Error):
+            status = "Error"
+    else:
+        message = None
+        last_passed = current_time
+        status = "Success"
+
+    return {
+        "status": status,
+        "Last passed": last_passed,
+        "Runtime": case.time,
+        "Message": message,
+    }
+
+
+def case2datasetname(case):
+    return "".join(case.classname.split(".")[1:-1])
+
+
+def parse_test_results():
     output_path = os.path.join(os.getcwd(), "tests")
     if not os.path.exists(output_path):
         os.mkdir(output_path)
 
     previous_test_results = get_previous_test_results()
 
-    # Register new test results.
+    # Retrieve new test results.
     with open(os.path.join(output_path, "test-status.json"), "w") as fout:
-        output_result = {}
-
         xml = JUnitXml.fromfile(os.path.join(output_path, "junit.xml"))
-        for suite in xml:
-            for case in suite:
-                if not case.classname.startswith("tests.test_projects_"):
-                    continue
 
-                dataset = "".join(case.classname.split(".")[1:-1])
-                runtime = case.time
-
-                if case.result:
-                    message = case.result.message
-                    last_passed = (
-                        prev_test_result[dataset]["Last passed"]
-                        if dataset in prev_test_result
-                        else "Never passed"
-                    )
-
-                    if isinstance(case.result, Failure):
-                        status = "Failure"
-                    elif isinstance(case.result, Skipped):
-                        status = "Skipped"
-                    elif isinstance(case.result, Error):
-                        status = "Error"
-                else:
-                    status = "Success"
-                    message = None
-                    last_passed = current_time
-
-                output_result[dataset] = {
-                    "status": status,
-                    "Last passed": last_passed,
-                    "Runtime": runtime,
-                    "Message": message,
-                }
+        output_result = {
+            case2datasetname(case): get_test_case_output(case, previous_test_results)
+            for suite in xml
+            for case in suite
+            if case.classname.startswith("tests.test_projects_")
+        }
 
         json.dump(
             output_result, fout, indent=4,
         )
 
 
+current_time = str(datetime.now().astimezone())
 if __name__ == "__main__":
     parse_test_results()
