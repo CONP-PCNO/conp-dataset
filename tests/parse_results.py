@@ -3,18 +3,37 @@ import json
 import os
 
 from junitparser import JUnitXml, Failure, Skipped, Error
+import requests
+
+
+def get_previous_test_results():
+    project_slug = "github/mathdugre/conp-dataset"
+    branch = "monitoring"
+    url = f"https://circleci.com/api/v1.1/project/{project_slug}/latest/artifacts?branch={branch}&filter=completed"
+
+    artifacts = requests.get(url).json()
+
+    previous_test_results = {}
+    for artifact in artifacts:
+        # Merge dictionnaries together.
+        previous_test_results = {
+            **previous_test_results,
+            **requests.get(artifact["url"]).json(),
+        }
+
+    return previous_test_results
 
 
 def parse_test_results():
     current_time = str(datetime.now().astimezone())
+
     output_path = os.path.join(os.getcwd(), "tests")
+    if not os.path.exists(output_path):
+        os.mkdir(output_path)
 
-    try:
-        with open(os.path.join(output_path, "tests-status.json")) as fin:
-            prev_test_result = json.load(fin)
-    except Exception as e:
-        prev_test_result = {}
+    previous_test_results = get_previous_test_results()
 
+    # Register new test results.
     with open(os.path.join(output_path, "test-status.json"), "w") as fout:
         output_result = {}
 
