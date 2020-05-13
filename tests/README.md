@@ -140,7 +140,7 @@ PYTHONPATH=$PWD pytest tests/test_*
                                                        ╟─────────────────╢                   │
                                                        ║ has_valid_dats  ║                   │
                                                        ╟─────────────────╢                   │
-                                                       ║   datalas_get   ║                   ▼
+                                                       ║   datalad_get   ║                   ▼
                                                        ╟─────────────────╢                   │
                                                        ║ files_integrity ║                   │
                                                        ╚═════════════════╝                   │
@@ -232,7 +232,7 @@ That is, the test case executes those steps:
 
 1. Authenticate the dataset (see [Authenticated Dataset](#authenticated-dataset) section).
 1. (**Travis specific**) Remove files using FTP due to issue on travis; more detail [here](https://blog.travis-ci.com/2018-07-23-the-tale-of-ftp-at-travis-ci).
-1. Select a k files, with smallest size, from a sample of n files. This aims at saving computing resources (see [Timeout](#timeout) and [Size of Annexed File](#size-of-annexed-file) sections).
+1. From a sample of n files, the k smallest files are selected. This aims at saving computing resources (see [Timeout](#timeout) and [Size of Annexed File](#size-of-annexed-file) sections).
 1. Use `datalad get` to download each of the k files form the sample.
 
 #### Files integrity
@@ -288,7 +288,7 @@ project_name2env("projects/dataset_name".split("/")[-1])
 A major limitation of secrets is that authenticated datasets cannot be tested on pull requests due to privacy issues.
 Indeed, malicious users could easily retrieve secrets by making a pull requests.
 
-To avoid this problematic, the user making a pull request on an authenticated dataset can set up secrets for the dataset in its CircleCI account.
+To avoid this problem, the user making a pull request on an authenticated dataset can set up secrets for the dataset in its CircleCI account.
 
 #TODO
 Otherwise, the pull requests for authenticated datasets should be merged into a devel branch to assure their proper functioning.
