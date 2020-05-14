@@ -7,8 +7,8 @@ import requests
 
 
 def get_previous_test_results():
-    project_slug = "github/mathdugre/conp-dataset"
-    branch = "monitoring"
+    project_slug = "github/CONP-PCNO/conp-dataset"
+    branch = "master"
     url = f"https://circleci.com/api/v1.1/project/{project_slug}/latest/artifacts?branch={branch}&filter=completed"
 
     artifacts = requests.get(url).json()
