@@ -226,24 +226,6 @@ def get_all_submodules(root: str) -> set:
         return set()
 
 
-def check_file_integrity(dataset: str, filenames: List[str]) -> None:
-
-    for filename in filenames:
-        try:
-            fsck_output = git.Repo(dataset).git.annex(
-                "fsck",
-                os.path.join(dataset, filename),
-                json=True,
-                json_error_messages=True,
-                fast=True,
-                quiet=True,
-            )
-            if fsck_output:
-                pytest.fail(fsck_output, pytrace=False)
-        except Exception as e:
-            pytest.fail(str(e), pytrace=False)
-
-
 def authenticate(dataset):
     # If authentication is required and credentials are provided then add credentials
     # to the keyring and create a provider config file.
