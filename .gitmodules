@@ -107,6 +107,4 @@
 	url = https://github.com/conp-bot/conp-dataset-Intracellular-Recordings-of-Murine-Neocortical-Neurons.git
 [submodule "projects/Multimodal-data-with-GCaMP-imaging-sub-cortical-recording"]
 	path = projects/Multimodal-data-with-GCaMP-imaging-sub-cortical-recording
-	url = ./projects/Multimodal-data-with-GCaMP-imaging-sub-cortical-recording
-	branch = master
-	datalad-id = c14785ae-9618-11ea-a519-5076afd7427c
+	url = https://github.com/gi114/Multimodal-data-with-GCaMP-imaging-sub-cortical-recording.git
