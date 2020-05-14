@@ -32,7 +32,7 @@ def get_test_case_output(case, previous_test_results):
         last_passed = (
             previous_test_results[dataset]["Last passed"]
             if dataset in previous_test_results
-            else "Never passed"
+            else "Unknown"
         )
 
         if isinstance(case.result, Failure):
