@@ -88,6 +88,16 @@ class Template(object):
 
         download_files(dataset, get_approx_ksmallests(dataset, filenames))
 
-    @pytest.mark.skip
     def test_files_integrity(self, dataset):
-        raise NotImplemented
+        try:
+            fsck_output = git.Repo(dataset).git.annex(
+                "fsck",
+                json=True,
+                json_error_messages=True,
+                fast=True,
+                quiet=True,
+            )
+            if fsck_output:
+                pytest.fail(fsck_output, pytrace=False)
+        except Exception as e:
+            pytest.fail(str(e), pytrace=False)
