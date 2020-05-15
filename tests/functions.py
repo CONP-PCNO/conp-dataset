@@ -6,7 +6,7 @@ import random
 import re
 import signal
 import sys
-from typing import List, Set, Tuple, Union
+from typing import List, Set, Union
 
 import datalad.api as api
 import git
