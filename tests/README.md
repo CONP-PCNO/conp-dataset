@@ -170,8 +170,12 @@ The test suite is split by historical timing to run on multiple worker. This aim
 - Execute the dataset template test suite.
 
 After test job: (WIP)<br/>
-The test results are parsed and save to CircleCI artifacts.
-#TODO Send them to a monitoring GitHub Repository
+The test results are parsed and saved as a CircleCI artifacts.
+Those artifacts are easily accessible through the CircleCI API:
+
+```bash
+curl -L https://circleci.com/api/v1.1/project/github/CONP-PCNO/conp-dataset/latest/artifacts?branch=master&filter=completed
+```
 
 ## Life of a Dataset Test
 
@@ -248,12 +252,45 @@ This allows to easily see which test failed.
 
 ### Monitoring
 
-Work in progress !
+To allow users to quickly know if a dataset is properly working at a point in time, we implemented a monitoring system.
+Additionally of running the tests when changes occur, we rerun the test suite on the master branch every 4 hours.
 
-<!-- Dataset still work -->
+The monioring system first retrieve the previous test results, if any.
+Then it parses the new test results for each dataset.
+When a previous test result exists, it gets updated, otherwise, it is merely added.
 
-<!-- Last time dataset worked -->
-<!-- Integration in CONP-Portal -->
+The following dataset' components are being monitored for each dataset test:
+
+- `status:` Any of _Success_, _Failure_, _Skipped_, or _Error_
+- `Last Passed:` Most recent datetime when the dataset passed the test sucessfully.
+- `Runtime:` Execution time of the test.
+- `Message:` When not successful, shows information on the source of failure.
+
+e.g.
+
+```
+{
+    "ProjectName:TestName": {
+        "status": "Error",
+        "Last passed": "Unknown",
+        "Runtime": 0.5,
+        "Message": "test setup failure"
+    },
+    "ProjectName:TestName2": {
+        "status": "Success",
+        "Last passed": "2020-05-19 12:13:28.342326+00:00",
+        "Runtime": 3.2,
+        "Message": null
+    },
+
+}
+```
+
+To quickly retrieve the last test results you can use the following command at the root of the project:
+
+```bash
+python -c 'from tests.parse_results import get_previous_test_results; print(get_previous_test_results())'
+```
 
 ## Authenticated Dataset
 
