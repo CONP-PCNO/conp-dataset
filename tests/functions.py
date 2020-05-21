@@ -90,45 +90,6 @@ def get_annexed_file_size(dataset, file_path):
     return float("inf")
 
 
-def remove_ftp_files(dataset: str, filenames: list) -> list:
-    """Remove files that only use ftp as a remote.
-    
-    Parameters
-    ----------
-    dataset : str
-        Path to the dataset containing the files.
-    filenames : List[str]
-        List of filenames path in the dataset.
-    
-    Returns
-    -------
-    files_without_ftp : list
-        List of filenames path not using ftp.
-    """
-    files_without_ftp = []
-    for filename in filenames:
-        try:
-            whereis_output = git.Repo(dataset).git.annex(
-                "whereis", os.path.join(dataset, filename), json=True
-            )
-            whereis = json.loads(whereis_output)
-
-        except Exception as e:
-            print(e)
-
-        urls_without_ftp = [
-            url
-            for x in whereis["whereis"]
-            for url in x["urls"]
-            if not url.startswith("ftp://")
-        ]
-
-        if len(urls_without_ftp) > 0:
-            files_without_ftp.append(filename)
-
-    return files_without_ftp
-
-
 def is_authentication_required(dataset):
     """Verify in the dataset DATS file if authentication is required.
     
@@ -244,9 +205,7 @@ def authenticate(dataset):
     elif zenodo_token:
         pass
     elif is_authentication_required(dataset) == True:
-        if os.getenv("TRAVIS_EVENT_TYPE", None) == "pull_request" or os.getenv(
-            "CIRCLE_PR_NUMBER", False
-        ):
+        if os.getenv("CIRCLE_PR_NUMBER", False):
             pytest.skip(
                 f"WARNING: {dataset} cannot be test on Pull Requests to protect secrets."
             )
@@ -254,7 +213,7 @@ def authenticate(dataset):
         pytest.fail(
             "Cannot download file (dataset requires authentication, make sure "
             + f"that environment variables {project}_USERNAME, {project}_PASSWORD, "
-            + f"and {project}_LORIS_API are defined in Travis).",
+            + f"and {project}_LORIS_API are defined in CircleCI).",
             pytrace=False,
         )
 

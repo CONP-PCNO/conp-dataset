@@ -16,7 +16,6 @@ from tests.functions import (
     download_files,
     get_approx_ksmallests,
     get_filenames,
-    remove_ftp_files,
 )
 
 
@@ -75,16 +74,6 @@ class Template(object):
         filenames = get_filenames(dataset)
         if len(filenames) == 0:
             return True
-
-        # Remove files using FTP as it is unstable in travis.
-        if os.getenv("TRAVIS", False):
-            filenames = remove_ftp_files(dataset, filenames)
-
-            if len(filenames) == 0:
-                pytest.skip(
-                    f"WARNING: {dataset} only contains files using FTP."
-                    + " Due to Travis limitation we cannot test this dataset."
-                )
 
         download_files(dataset, get_approx_ksmallests(dataset, filenames))
 
