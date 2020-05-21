@@ -2,8 +2,8 @@
 """
 import json
 import os
-from threading import Lock
 import time
+from threading import Lock
 
 from datalad import api
 from flaky import flaky
@@ -33,20 +33,9 @@ lock = Lock()
 class Template(object):
     @pytest.fixture(autouse=True)
     def install_dataset(self, dataset):
-        try:
-            submodule = [
-                submodule
-                for submodule in git.Repo().submodules
-                if dataset.endswith(submodule.path)
-            ][0]
-
-            with lock:
-                if len(os.listdir(dataset)) == 0:
-                    api.install(path=dataset, source=submodule.url, recursive=True)
-        except Exception as e:
-            pytest.fail(
-                f"Failed to install {dataset} using datalad install.", pytrace=False
-            )
+        with lock:
+            if len(os.listdir(dataset)) == 0:
+                api.install(path=dataset, recursive=True)
         yield
 
     def test_has_readme(self, dataset):
