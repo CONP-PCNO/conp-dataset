@@ -81,8 +81,14 @@ class Template(object):
         completed = False
         with timeout(TIME_LIMIT):
             try:
+                # Currently some dataset have DataLad metadata, however, those are
+                # out-of-date. Since the datasets are still functional but this leads can
+                # lead to test failure, the DataLad metadata are ignore when running fsck.
+                #
+                # In the future, those metadata are likely to be removed. When this occurs,
+                # this the `exclude=".datalad/metadata/**"` argument should be removed.
                 fsck_output = git.Repo(dataset).git.annex(
-                    "fsck", fast=True, quiet=True,
+                    "fsck", fast=True, quiet=True, exclude=".datalad/metadata/**",
                 )
                 if fsck_output:
                     pytest.fail(fsck_output, pytrace=False)
