@@ -162,7 +162,8 @@ The workflow is composed of two jobs: build and test.
 - Install the dependencies and save them to the workspace for subsequent jobs.
 
 Before test job:<br/>
-The test suite is split by historical timing to run on multiple worker. This aims at reducing the total execution time.
+The test suite is split equally amongs the workers.
+This aims at speeding up the tests execution.
 
 **Test job:**
 
@@ -350,7 +351,7 @@ When a dataset has no file contained in its annex, the test suite assumes the da
 ### Timeout
 
 Since the test suite involves downloading data from external servers, the runtime of the test suite can vary considerably when there is network issues.
-To mitigate bad connection to server, the test suite imposes a 10-minute timeout for each test as well as a 2-minute timeout specific to each dataset download.
+To mitigate bad connection to server, the test suite imposes a 10-minute timeout for the validation of files integrity as well as a 2-minute timeout specific for the download of each dataset.
 
 ### Size of annexed file
 

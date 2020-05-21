@@ -17,6 +17,7 @@ from tests.functions import (
     get_approx_ksmallests,
     get_filenames,
     remove_ftp_files,
+    timeout,
 )
 
 
@@ -89,15 +90,22 @@ class Template(object):
         download_files(dataset, get_approx_ksmallests(dataset, filenames))
 
     def test_files_integrity(self, dataset):
-        try:
-            fsck_output = git.Repo(dataset).git.annex(
-                "fsck",
-                json=True,
-                json_error_messages=True,
-                fast=True,
-                quiet=True,
+        TIME_LIMIT = 600
+        completed = False
+        with timeout(TIME_LIMIT):
+            try:
+                fsck_output = git.Repo(dataset).git.annex(
+                    "fsck", json=True, json_error_messages=True, fast=True, quiet=True,
+                )
+                if fsck_output:
+                    pytest.fail(fsck_output, pytrace=False)
+            except Exception as e:
+                pytest.fail(str(e), pytrace=False)
+
+            completed = True
+
+        if not completed:
+            pytest.fail(
+                f"The dataset timed out after {TIME_LIMIT} seconds before retrieving a file."
+                + "\nCannot determine if the test is valid."
             )
-            if fsck_output:
-                pytest.fail(fsck_output, pytrace=False)
-        except Exception as e:
-            pytest.fail(str(e), pytrace=False)

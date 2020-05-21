@@ -57,7 +57,6 @@ jobs:
       - *restore_python_cache
       - run:
           name: Run Tests
-          no_output_timeout: 10m
           command: |
             . ~/venv/bin/activate
             export PATH=~/git-annex.linux:$PATH
