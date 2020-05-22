@@ -71,7 +71,7 @@ class Template(object):
         with timeout(TIME_LIMIT):
             try:
                 fsck_output = git.Repo(dataset).git.annex(
-                    "fsck", json=True, json_error_messages=True, fast=True, quiet=True,
+                    "fsck", fast=True, quiet=True,
                 )
                 if fsck_output:
                     pytest.fail(fsck_output, pytrace=False)
