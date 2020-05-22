@@ -6,7 +6,6 @@ import time
 from threading import Lock
 
 from datalad import api
-from flaky import flaky
 import git
 import pytest
 
@@ -29,7 +28,6 @@ def delay_rerun(*args):
 lock = Lock()
 
 
-@pytest.mark.flaky(max_runs=3, rerun_filter=delay_rerun)
 class Template(object):
     @pytest.fixture(autouse=True)
     def install_dataset(self, dataset):
