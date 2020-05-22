@@ -66,7 +66,7 @@ class Template(object):
         download_files(dataset, get_approx_ksmallests(dataset, filenames))
 
     def test_files_integrity(self, dataset):
-        TIME_LIMIT = 600
+        TIME_LIMIT = 300
         completed = False
         with timeout(TIME_LIMIT):
             try:
