@@ -17,7 +17,6 @@ from tests.functions import (
     eval_config,
     get_approx_ksmallests,
     get_filenames,
-    remove_ftp_files,
 )
 
 
@@ -78,23 +77,18 @@ class Template(object):
         if len(filenames) == 0:
             return True
 
-        # Remove files using FTP as it is unstable in travis.
-        if os.getenv("TRAVIS", False):
-            filenames = remove_ftp_files(dataset, filenames)
+        download_files(dataset, get_approx_ksmallests(dataset, filenames))
 
-            if len(filenames) == 0:
-                pytest.skip(
-                    f"WARNING: {dataset} only contains files using FTP."
-                    + " Due to Travis limitation we cannot test this dataset."
-                )
-
-        k_smallest = get_approx_ksmallests(dataset, filenames)
-        try:
-            download_files(dataset, k_smallest)
-        except:
-            api.get(dataset)
-            download_files(dataset, k_smallest)
-
-    @pytest.mark.skip
     def test_files_integrity(self, dataset):
-        raise NotImplemented
+        try:
+            fsck_output = git.Repo(dataset).git.annex(
+                "fsck",
+                json=True,
+                json_error_messages=True,
+                fast=True,
+                quiet=True,
+            )
+            if fsck_output:
+                pytest.fail(fsck_output, pytrace=False)
+        except Exception as e:
+            pytest.fail(str(e), pytrace=False)
