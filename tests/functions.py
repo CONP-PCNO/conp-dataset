@@ -79,10 +79,10 @@ def get_annexed_file_size(dataset, file_path):
         Size of the annexed file in Bytes.
     """
     info_output = git.Repo(dataset).git.annex(
-        "info", os.path.join(dataset, file_path), json=True, bytes=True,
+        "info", file_path, json=True, bytes=True,
     )
     metadata = json.loads(info_output)
-    
+
     try:
         return int(metadata["size"])
     except Exception as e:
