@@ -153,7 +153,7 @@ type = loris-token
         )
 
 
-def get_all_submodules(root: str) -> set:
+def get_submodules(root: str) -> set:
     """Return recursively all submodule of a dataset.
     
     Parameters
@@ -168,8 +168,7 @@ def get_all_submodules(root: str) -> set:
     """
     try:
         submodules: Union[Set[str], None] = {
-            os.path.join(root, submodule.path)
-            for submodule in git.Repo(root).submodules
+            submodule.path for submodule in git.Repo(root).submodules
         }
     except InvalidGitRepositoryError as e:
         submodules = None
@@ -177,10 +176,10 @@ def get_all_submodules(root: str) -> set:
     if submodules:
         rv = reduce(
             lambda x, y: x.union(y),
-            [
-                get_all_submodules(os.path.join(root, str(submodule)))
-                for submodule in submodules
-            ],
+            map(
+                lambda submodule: get_submodules(os.path.join(root, submodule)),
+                submodules,
+            ),
         )
         return rv | submodules
     else:
@@ -222,9 +221,9 @@ def get_filenames(dataset):
     annex_list: str = git.Repo(dataset).git.annex("list")
     filenames: List[str] = re.split(r"\n[_X]+\s", annex_list)[1:]
 
-    submodules: Set[str] = get_all_submodules(dataset)
+    submodules: Set[str] = get_submodules(dataset)
     for submodule in submodules:
-        annex_list = git.Repo(submodule).git.annex("list")
+        annex_list = git.Repo(os.path.join(dataset, submodule)).git.annex("list")
         filenames += [
             os.path.join(submodule, filename)
             for filename in re.split(r"\n[_X]+\s", annex_list)[1:]
