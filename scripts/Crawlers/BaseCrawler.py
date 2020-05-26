@@ -396,12 +396,7 @@ Functional checks:
             if file[0] == "." or file == "DATS.json" or file == "README.md":
                 continue
             elif os.path.isdir(file):
-                num += sum(
-                    [
-                        len(list(filter(lambda x: x[0] != ".", files)))
-                        for r, d, files in os.walk(file)
-                    ]
-                )
+                num += sum([len(files) for r, d, files in os.walk(file)])
             else:
                 num += 1
         if "extraProperties" not in data.keys():
