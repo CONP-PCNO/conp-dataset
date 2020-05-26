@@ -5,6 +5,7 @@ import os
 import sys
 import traceback
 sys.path.append(os.path.abspath(os.path.join(os.path.expanduser("~"), "conp-dataset")))
+sys.path.append(os.path.join("/tmp", "conp-dataset"))
 from scripts.Crawlers.ZenodoCrawler import ZenodoCrawler
 from scripts.Crawlers.OSFCrawler import OSFCrawler
 
