@@ -393,10 +393,11 @@ Functional checks:
         # Add file count
         num = 0
         for file in os.listdir(dataset_dir):
+            file_path = os.path.join(dataset_dir, file)
             if file[0] == "." or file == "DATS.json" or file == "README.md":
                 continue
-            elif os.path.isdir(file):
-                num += sum([len(files) for r, d, files in os.walk(file)])
+            elif os.path.isdir(file_path):
+                num += sum([len(files) for r, d, files in os.walk(file_path)])
             else:
                 num += 1
         if "extraProperties" not in data.keys():
