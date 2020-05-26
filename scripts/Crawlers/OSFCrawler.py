@@ -40,7 +40,7 @@ class OSFCrawler(BaseCrawler):
                     file["relationships"]["files"]["links"]["related"]["href"],
                     folder_path,
                     os.path.join(inner_path, file["attributes"]["name"]),
-                    d, annex
+                    d, annex, sizes
                 )
             # Handle single files
             elif file["attributes"]["kind"] == "file":
