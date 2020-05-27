@@ -14,6 +14,7 @@ from scripts.dats_validator.validator import validate_json
 from tests.functions import (
     authenticate,
     download_files,
+    eval_config,
     get_approx_ksmallests,
     get_filenames,
 )
@@ -69,13 +70,20 @@ class Template(object):
                 )
 
     def test_download(self, dataset):
+        eval_config(dataset)
         authenticate(dataset)
 
         filenames = get_filenames(dataset)
         if len(filenames) == 0:
             return True
 
-        download_files(dataset, get_approx_ksmallests(dataset, filenames))
+        k_smallest = get_approx_ksmallests(dataset, filenames)
+
+        try:
+            download_files(dataset, k_smallest)
+        except:
+            api.get(path=dataset, on_failure="ignore")
+            download_files(dataset, k_smallest)
 
     def test_files_integrity(self, dataset):
         try:
