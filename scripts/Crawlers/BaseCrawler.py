@@ -231,6 +231,14 @@ class BaseCrawler:
             branch_name = "conp-bot/" + clean_title
             dataset_dir = os.path.join("projects", clean_title)
             d = self.datalad.Dataset(dataset_dir)
+            # Add github token to individual dataset remote urls
+            try:
+                origin = git.Repo(dataset_dir).remote("origin")
+                origin_url = next(origin.urls)
+                if "@" not in origin_url:
+                    origin.set_url(origin_url.replace("https://", "https://" + self.github_token + "@"))
+            except git.exc.NoSuchPathError:
+                pass
             if branch_name not in self.repo.remotes.origin.refs:  # New dataset
                 self.repo.git.checkout("-b", branch_name)
                 repo_title = ("conp-dataset-" + dataset_description["title"])[0:100]
@@ -385,15 +393,11 @@ Functional checks:
         # Add file count
         num = 0
         for file in os.listdir(dataset_dir):
+            file_path = os.path.join(dataset_dir, file)
             if file[0] == "." or file == "DATS.json" or file == "README.md":
                 continue
-            elif os.path.isdir(file):
-                num += sum(
-                    [
-                        len(list(filter(lambda x: x[0] != ".", files)))
-                        for r, d, files in os.walk(file)
-                    ]
-                )
+            elif os.path.isdir(file_path):
+                num += sum([len(files) for r, d, files in os.walk(file_path)])
             else:
                 num += 1
         if "extraProperties" not in data.keys():
