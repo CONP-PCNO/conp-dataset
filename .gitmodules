@@ -46,9 +46,6 @@
 [submodule "projects/Khanlab/BigBrainHippoUnfold"]
 	path = projects/Khanlab/BigBrainHippoUnfold
 	url = https://github.com/conpdatasets/BigBrainHippoUnfold.git
-[submodule "projects/Khanlab/BigBrainMRICoreg"]
-	path = projects/Khanlab/BigBrainMRICoreg
-	url = https://github.com/conpdatasets/BigBrainMRICoreg.git
 [submodule "projects/Learning_Naturalistic_Structure__Processed_fMRI_dataset"]
   path = projects/Learning_Naturalistic_Structure__Processed_fMRI_dataset
   url = https://github.com/conp-bot/conp-dataset-Learning_Naturalistic_Structure__Processed_fMRI_dataset.git
