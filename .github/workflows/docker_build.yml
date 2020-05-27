@@ -1,0 +1,20 @@
+on:
+  push:
+    paths:
+      - "projects/**"
+    branches:
+      - master
+
+jobs:
+  build_push:
+    runs-on: ubuntu-latest
+    name: Build a Docker image for conp-dataset and Push it to DockerHub.
+    steps:
+      - name: Docker build and push.
+        id: build_push
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          repository: mathdugre/conp-dataset
+          tags: latest
