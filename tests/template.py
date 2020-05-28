@@ -2,11 +2,10 @@
 """
 import json
 import os
-from threading import Lock
 import time
+from threading import Lock
 
 from datalad import api
-from flaky import flaky
 import git
 import pytest
 
@@ -17,6 +16,7 @@ from tests.functions import (
     eval_config,
     get_approx_ksmallests,
     get_filenames,
+    timeout,
 )
 
 
@@ -28,24 +28,12 @@ def delay_rerun(*args):
 lock = Lock()
 
 
-@pytest.mark.flaky(max_runs=3, rerun_filter=delay_rerun)
 class Template(object):
     @pytest.fixture(autouse=True)
     def install_dataset(self, dataset):
-        try:
-            submodule = [
-                submodule
-                for submodule in git.Repo().submodules
-                if dataset.endswith(submodule.path)
-            ][0]
-
-            with lock:
-                if len(os.listdir(dataset)) == 0:
-                    api.install(path=dataset, source=submodule.url, recursive=True)
-        except Exception as e:
-            pytest.fail(
-                f"Failed to install {dataset} using datalad install.", pytrace=False
-            )
+        with lock:
+            if len(os.listdir(dataset)) == 0:
+                api.install(path=dataset, recursive=True)
         yield
 
     def test_has_readme(self, dataset):
@@ -86,15 +74,22 @@ class Template(object):
             download_files(dataset, k_smallest)
 
     def test_files_integrity(self, dataset):
-        try:
-            fsck_output = git.Repo(dataset).git.annex(
-                "fsck",
-                json=True,
-                json_error_messages=True,
-                fast=True,
-                quiet=True,
+        TIME_LIMIT = 300
+        completed = False
+        with timeout(TIME_LIMIT):
+            try:
+                fsck_output = git.Repo(dataset).git.annex(
+                    "fsck", fast=True, quiet=True,
+                )
+                if fsck_output:
+                    pytest.fail(fsck_output, pytrace=False)
+            except Exception as e:
+                pytest.fail(str(e), pytrace=False)
+
+            completed = True
+
+        if not completed:
+            pytest.fail(
+                f"The dataset timed out after {TIME_LIMIT} seconds before retrieving a file."
+                + "\nCannot determine if the test is valid."
             )
-            if fsck_output:
-                pytest.fail(fsck_output, pytrace=False)
-        except Exception as e:
-            pytest.fail(str(e), pytrace=False)
