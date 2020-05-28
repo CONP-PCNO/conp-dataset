@@ -57,13 +57,12 @@ jobs:
       - *restore_python_cache
       - run:
           name: Run Tests
-          no_output_timeout: 10m
           command: |
             . ~/venv/bin/activate
             export PATH=~/git-annex.linux:$PATH
             python tests/create_tests.py
-            circleci tests glob tests/test_* | circleci tests split --split-by=timings > /tmp/tests-to-run 
-            PYTHONPATH=$PWD pytest -n 2 --junitxml=tests/junit.xml -v -rfEs $(cat /tmp/tests-to-run)
+            circleci tests glob tests/test_* | circleci tests split > /tmp/tests-to-run 
+            PYTHONPATH=$PWD pytest --junitxml=tests/junit.xml -v -rfEs $(cat /tmp/tests-to-run)
       - store_test_results:
           path: tests
       - run:
