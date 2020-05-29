@@ -102,6 +102,4 @@
 [submodule "projects/Intracellular_Recordings_of_Murine_Neocortical_Neurons"]
 	path = projects/Intracellular_Recordings_of_Murine_Neocortical_Neurons
 	url = https://github.com/conp-bot/conp-dataset-Intracellular-Recordings-of-Murine-Neocortical-Neurons.git
-[submodule "projects/Khanlab/BigBrainMRICoreg"]
-	path = projects/Khanlab/BigBrainMRICoreg
-	url = https://github.com/emmetaobrien/BigBrainMRICoreg
+
