@@ -16,6 +16,7 @@ from tests.functions import (
     eval_config,
     get_approx_ksmallests,
     get_filenames,
+    project_name2env,
     timeout,
 )
 
@@ -67,11 +68,13 @@ class Template(object):
 
         k_smallest = get_approx_ksmallests(dataset, filenames)
 
-        try:
-            download_files(dataset, k_smallest)
-        except:
-            api.get(path=dataset, on_failure="ignore")
-            download_files(dataset, k_smallest)
+        # Restricted Zenodo datasets require to download the whole archive before
+        # downloading individual files.
+        project = project_name2env(dataset.split("/")[-1])
+        if os.getenv(project + "_ZENODO_TOKEN", None):
+            with timeout(300):
+                api.get(path=dataset, on_failure="ignore")
+        download_files(dataset, k_smallest)
 
     def test_files_integrity(self, dataset):
         TIME_LIMIT = 300
