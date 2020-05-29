@@ -2,7 +2,7 @@ version: 2
 
 aliases:
   - &docker
-    - image: mathdugre/conp-dataset:v1.1
+    - image: mathdugre/ci-conp-dataset:v1
 
   - &workdir ~/conp-dataset
 
