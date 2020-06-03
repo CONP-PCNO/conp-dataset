@@ -2,6 +2,7 @@ on:
   push:
     paths:
       - "projects/**"
+      - "tests/**"
     branches:
       - master
 
