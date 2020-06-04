@@ -148,7 +148,7 @@ class OSFCrawler(BaseCrawler):
         dataset_size = []
         self._download_files(dataset["files"], dataset_dir, "", d, annex, dataset_size)
         dataset_size, dataset_unit = humanize.naturalsize(sum(dataset_size)).split(" ")
-        dataset["distributions"][0]["size"] = dataset_size
+        dataset["distributions"][0]["size"] = float(dataset_size)
         dataset["distributions"][0]["unit"]["value"] = dataset_unit
 
         # Add .conp-osf-crawler.json tracker file
