@@ -3,6 +3,7 @@ from git import Repo
 import os
 import json
 import requests
+import humanize
 
 
 def _create_osf_tracker(path, dataset):
@@ -27,7 +28,7 @@ class OSFCrawler(BaseCrawler):
             print("OSF query: {}".format(query))
         return results
 
-    def _download_files(self, link, current_dir, inner_path, d, annex):
+    def _download_files(self, link, current_dir, inner_path, d, annex, sizes):
         r = requests.get(link)
         files = r.json()["data"]
         for file in files:
@@ -39,10 +40,12 @@ class OSFCrawler(BaseCrawler):
                     file["relationships"]["files"]["links"]["related"]["href"],
                     folder_path,
                     os.path.join(inner_path, file["attributes"]["name"]),
-                    d, annex
+                    d, annex, sizes
                 )
             # Handle single files
             elif file["attributes"]["kind"] == "file":
+                # Remember file size
+                sizes.append(file["attributes"]["size"])
                 # Handle zip files
                 if file["attributes"]["name"].split(".")[-1] == "zip":
                     d.download_url(file["links"]["download"], path=os.path.join(inner_path, ""), archive=True)
@@ -98,6 +101,20 @@ class OSFCrawler(BaseCrawler):
                         }
                     ],
                     "keywords": keywords,
+                    "distributions": [
+                        {
+                            "size": 0,
+                            "unit": {"value": "B"},
+                            "access": {
+                                "landingPage": dataset["links"]["html"],
+                                "authorizations": [
+                                    {
+                                        "value": "public"
+                                    }
+                                ],
+                            },
+                        }
+                    ],
                     "extraProperties": [
                         {
                             "category": "logo",
@@ -128,8 +145,11 @@ class OSFCrawler(BaseCrawler):
         d.no_annex(".conp-osf-crawler.json")
         d.save()
         annex = Repo(dataset_dir).git.annex
-
-        self._download_files(dataset["files"], dataset_dir, "", d, annex)
+        dataset_size = []
+        self._download_files(dataset["files"], dataset_dir, "", d, annex, dataset_size)
+        dataset_size, dataset_unit = humanize.naturalsize(sum(dataset_size)).split(" ")
+        dataset["distributions"][0]["size"] = dataset_size
+        dataset["distributions"][0]["unit"]["value"] = dataset_unit
 
         # Add .conp-osf-crawler.json tracker file
         _create_osf_tracker(
@@ -163,8 +183,11 @@ class OSFCrawler(BaseCrawler):
             d = self.datalad.Dataset(dataset_dir)
             annex = Repo(dataset_dir).git.annex
 
-            for file in dataset_description["files"]:
-                self._download_files(file, dataset_dir, "", d, annex)
+            dataset_size = []
+            self._download_files(dataset_description["files"], dataset_dir, "", d, annex, dataset_size)
+            dataset_size, dataset_unit = humanize.naturalsize(sum(dataset_size)).split(" ")
+            dataset_description["distributions"][0]["size"] = dataset_size
+            dataset_description["distributions"][0]["unit"]["value"] = dataset_unit
 
             # Add .conp-osf-crawler.json tracker file
             _create_osf_tracker(
