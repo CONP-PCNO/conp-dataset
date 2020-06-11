@@ -20,5 +20,5 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-          repository: mathdugre/conp-dataset
+          repository: ${{ secrets.DOCKERHUB_USERNAME }}/conp-dataset
           tags: latest
