@@ -9,6 +9,7 @@ RUN : \
         python3-pip \
         curl \
         openssh-client \
+        netbase \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && :
