@@ -11,6 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     name: Build a Docker image for conp-dataset and Push it to DockerHub.
     steps:
+      - name: Checkout repository
+        id: checkout
+        uses: actions/checkout@v2
       - name: Docker build and push.
         id: build_push
         uses: docker/build-push-action@v1
