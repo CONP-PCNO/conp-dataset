@@ -12,6 +12,8 @@ RUN : \
         netbase \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
+    && ln -s /usr/bin/python3 /usr/bin/python \
+    && ln -s /usr/bin/pip3 /usr/bin/pip \
     && :
 
 # Retrieve the binaries for the latest version of git-annex.
@@ -22,6 +24,12 @@ RUN : \
     && sh /git-annex.linux/runshell \
     && :
 ENV PATH="/git-annex.linux:${PATH}"
+
+# Setup Git for GitHub Actions
+RUN : \
+    && git config --global user.email "action@github.com" \
+    && git config --global user.name "GitHub Action" \
+    && :
 
 # Retrieve lastest version of conp-dataset.
 RUN : \
