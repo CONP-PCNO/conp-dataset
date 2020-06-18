@@ -9,7 +9,8 @@ import requests
 def get_datasets():
     datasets: List[str] = list(map(lambda x: x.path, Repo(".").submodules))
 
-    if os.getenv("CIRCLE_PR_NUMBER", False):
+    pull_number = os.getenv("CIRCLE_PR_NUMBER", False)
+    if pull_number:
         response = requests.get(
             f"https://api.github.com/repos/CONP-PCNO/conp-dataset/pulls/{pull_number}/files"
         )

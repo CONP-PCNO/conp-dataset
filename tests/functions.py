@@ -5,6 +5,7 @@ import os
 import random
 import re
 import signal
+import subprocess
 import sys
 from typing import List, Set, Union
 
@@ -78,16 +79,16 @@ def get_annexed_file_size(dataset, file_path):
     float
         Size of the annexed file in Bytes.
     """
+    info_output = git.Repo(dataset).git.annex(
+        "info", file_path, json=True, bytes=True,
+    )
+    metadata = json.loads(info_output)
+
     try:
-        info_output = git.Repo(dataset).git.annex(
-            "info", os.path.join(dataset, file_path), json=True, bytes=True,
-        )
-        metadata = json.loads(info_output)
         return int(metadata["size"])
     except Exception as e:
-        print(e)
-    # Failed to retrieve file size.
-    return float("inf")
+        print(file_path)
+        return float("inf")
 
 
 def is_authentication_required(dataset):
@@ -184,6 +185,12 @@ def get_submodules(root: str) -> set:
         return rv | submodules
     else:
         return set()
+
+
+def eval_config(dataset: str) -> None:
+
+    if "config" in os.listdir(dataset):
+        subprocess.run([os.path.join(dataset, "config")])
 
 
 def authenticate(dataset):
