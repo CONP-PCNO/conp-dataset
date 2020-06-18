@@ -112,3 +112,6 @@
 	path = projects/preventad-open-bids
 	url = https://github.com/conpdatasets/preventad-open-bids.git
 
+[submodule "projects/cneuromod"]
+	path = projects/cneuromod
+	url = https://github.com/glatard/cneuromod.git
