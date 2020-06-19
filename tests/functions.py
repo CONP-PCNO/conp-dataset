@@ -227,14 +227,11 @@ def authenticate(dataset):
 def get_filenames(dataset):
     annex_list: str = git.Repo(dataset).git.annex("list")
     filenames: List[str] = re.split(r"\n[_X]+\s", annex_list)[1:]
-
-    submodules: Set[str] = get_submodules(dataset)
-    for submodule in submodules:
-        annex_list = git.Repo(os.path.join(dataset, submodule)).git.annex("list")
-        filenames += [
-            os.path.join(submodule, filename)
+    annex_list = git.Repo(dataset).git.annex("list")
+    filenames += [
+            os.path.join(dataset, filename)
             for filename in re.split(r"\n[_X]+\s", annex_list)[1:]
-        ]
+    ]
     return filenames
 
 
