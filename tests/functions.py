@@ -227,6 +227,11 @@ def authenticate(dataset):
 def get_filenames(dataset):
     annex_list: str = git.Repo(dataset).git.annex("list")
     filenames: List[str] = re.split(r"\n[_X]+\s", annex_list)[1:]
+    filenames += [
+            os.path.join(dataset, filename)
+            for filename in re.split(r"\n[_X]+\s", annex_list)[1:]
+    ]
+    return filenames
 
 
 def download_files(dataset, filenames, time_limit=120):
