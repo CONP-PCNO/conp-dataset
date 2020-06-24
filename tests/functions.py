@@ -5,6 +5,7 @@ import os
 import random
 import re
 import signal
+import subprocess
 import sys
 from typing import List, Set, Union
 
@@ -78,55 +79,16 @@ def get_annexed_file_size(dataset, file_path):
     float
         Size of the annexed file in Bytes.
     """
+    info_output = git.Repo(dataset).git.annex(
+        "info", file_path, json=True, bytes=True,
+    )
+    metadata = json.loads(info_output)
+
     try:
-        info_output = git.Repo(dataset).git.annex(
-            "info", os.path.join(dataset, file_path), json=True, bytes=True,
-        )
-        metadata = json.loads(info_output)
         return int(metadata["size"])
     except Exception as e:
-        print(e)
-    # Failed to retrieve file size.
-    return float("inf")
-
-
-def remove_ftp_files(dataset: str, filenames: list) -> list:
-    """Remove files that only use ftp as a remote.
-    
-    Parameters
-    ----------
-    dataset : str
-        Path to the dataset containing the files.
-    filenames : List[str]
-        List of filenames path in the dataset.
-    
-    Returns
-    -------
-    files_without_ftp : list
-        List of filenames path not using ftp.
-    """
-    files_without_ftp = []
-    for filename in filenames:
-        try:
-            whereis_output = git.Repo(dataset).git.annex(
-                "whereis", os.path.join(dataset, filename), json=True
-            )
-            whereis = json.loads(whereis_output)
-
-        except Exception as e:
-            print(e)
-
-        urls_without_ftp = [
-            url
-            for x in whereis["whereis"]
-            for url in x["urls"]
-            if not url.startswith("ftp://")
-        ]
-
-        if len(urls_without_ftp) > 0:
-            files_without_ftp.append(filename)
-
-    return files_without_ftp
+        print(file_path)
+        return float("inf")
 
 
 def is_authentication_required(dataset):
@@ -192,7 +154,7 @@ type = loris-token
         )
 
 
-def get_all_submodules(root: str) -> set:
+def get_submodules(root: str) -> set:
     """Return recursively all submodule of a dataset.
     
     Parameters
@@ -207,8 +169,7 @@ def get_all_submodules(root: str) -> set:
     """
     try:
         submodules: Union[Set[str], None] = {
-            os.path.join(root, submodule.path)
-            for submodule in git.Repo(root).submodules
+            submodule.path for submodule in git.Repo(root).submodules
         }
     except InvalidGitRepositoryError as e:
         submodules = None
@@ -216,14 +177,20 @@ def get_all_submodules(root: str) -> set:
     if submodules:
         rv = reduce(
             lambda x, y: x.union(y),
-            [
-                get_all_submodules(os.path.join(root, str(submodule)))
-                for submodule in submodules
-            ],
+            map(
+                lambda submodule: get_submodules(os.path.join(root, submodule)),
+                submodules,
+            ),
         )
         return rv | submodules
     else:
         return set()
+
+
+def eval_config(dataset: str) -> None:
+
+    if "config" in os.listdir(dataset):
+        subprocess.run([os.path.join(dataset, "config")])
 
 
 def authenticate(dataset):
@@ -244,9 +211,7 @@ def authenticate(dataset):
     elif zenodo_token:
         pass
     elif is_authentication_required(dataset) == True:
-        if os.getenv("TRAVIS_EVENT_TYPE", None) == "pull_request" or os.getenv(
-            "CIRCLE_PR_NUMBER", False
-        ):
+        if os.getenv("CIRCLE_PR_NUMBER", False):
             pytest.skip(
                 f"WARNING: {dataset} cannot be test on Pull Requests to protect secrets."
             )
@@ -254,7 +219,7 @@ def authenticate(dataset):
         pytest.fail(
             "Cannot download file (dataset requires authentication, make sure "
             + f"that environment variables {project}_USERNAME, {project}_PASSWORD, "
-            + f"and {project}_LORIS_API are defined in Travis).",
+            + f"and {project}_LORIS_API are defined in CircleCI).",
             pytrace=False,
         )
 
@@ -263,9 +228,9 @@ def get_filenames(dataset):
     annex_list: str = git.Repo(dataset).git.annex("list")
     filenames: List[str] = re.split(r"\n[_X]+\s", annex_list)[1:]
 
-    submodules: Set[str] = get_all_submodules(dataset)
+    submodules: Set[str] = get_submodules(dataset)
     for submodule in submodules:
-        annex_list = git.Repo(submodule).git.annex("list")
+        annex_list = git.Repo(os.path.join(dataset, submodule)).git.annex("list")
         filenames += [
             os.path.join(submodule, filename)
             for filename in re.split(r"\n[_X]+\s", annex_list)[1:]

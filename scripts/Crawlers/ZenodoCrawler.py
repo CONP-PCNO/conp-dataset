@@ -156,6 +156,22 @@ class ZenodoCrawler(BaseCrawler):
             ).split(" ")
             dataset_size = float(dataset_size)
 
+            # Get creators and assign roles if it exists
+            creators = list(map(lambda x: {"name": x["name"]}, metadata["creators"]))
+            if "contributors" in metadata.keys():
+                for contributor in metadata["contributors"]:
+                    if contributor["type"] == "ProjectLeader":
+                        for creator in creators:
+                            if creator["name"].lower() == contributor["name"].lower():
+                                creator["roles"] = [{"value": "Principal Investigator"}]
+                                break
+                        else:
+                            creators.append(
+                                {
+                                    "name": contributor["name"],
+                                    "roles": [{"value": "Principal Investigator"}]}
+                            )
+
             zenodo_dois.append(
                 {
                     "identifier": {
@@ -167,9 +183,7 @@ class ZenodoCrawler(BaseCrawler):
                     "title": metadata["title"],
                     "files": files,
                     "doi_badge": dataset["conceptdoi"],
-                    "creators": list(
-                        map(lambda x: {"name": x["name"]}, metadata["creators"])
-                    ),
+                    "creators": creators,
                     "description": metadata["description"],
                     "version": metadata["version"]
                     if "version" in metadata.keys()
