@@ -1,0 +1,551 @@
+{
+	"identifier": {
+		"identifier": "https://doi.org/10.5281/zenodo.3405490",
+		"identifierSource": "DOI"
+	},
+	"version": "1.0.0",
+	"privacy": "public open",
+	"licenses": [
+		{
+			"name": "https://alleninstitute.org/legal/terms-use/"
+		}
+	],
+	"creators": [
+		{
+			"name": "The Allen Institute for Brain Science"
+		}
+	],
+	"types": [
+		{
+			"information": {
+				"value": "transcriptomics"
+			}
+		}
+	],
+	"title": "NIH Blueprint Non-Human Primate Atlas",
+	"description": "The NIH Blueprint Non-Human Primate (NHP) Atlas consists of a suite of gene expression and neuroanatomical data for exploring the cellular and molecular architecture of the developing rhesus macaque brain.",
+	"storedIn": {
+		"name" : "The Allen Institute for Brain Science"
+	},
+	"primaryPublications" : [
+		{
+			"identifier": {
+				"identifier": "https://dx.doi.org/10.1093%2Fnar%2Fgks1042"
+			},
+			"title": "Allen Brain Atlas: an integrated spatio-temporal portal for exploring the central nervous system",
+			"dates": [
+				{
+					"type": {
+						"value":"Primary reference publication date"
+					},
+					"date": "2012-11-27 00:00:00"
+				}
+			],
+			"authors": [
+				{
+				"name":"Susan M. Sunkin, Lydia Ng, Chris Lau, Tim Dolbeare, Terri L. Gilbert, Carol L. Thompson, Michael Hawrylycz, and Chinh Dang"
+				}
+			]
+		}
+	],
+	"isAbout": [
+		{
+			"identifier": {
+				"identifier": "9483",
+				"identifierSource":"https://www.ncbi.nlm.nih.gov/taxonomy/9483"
+			},
+			"name":"Callithrix jacchus"
+		}
+	],
+	"dates": [
+		{
+			"type": {
+				"value":"CONP DATS JSON fileset creation date"
+			},
+			"date": "2019-09-06 13:54:24"
+		}
+	],
+	"distributions": [
+	        {
+			"formats": [
+				".CEL",
+				".JPG",
+				"DICOM"
+            		],
+			"size" : 7,
+		        "unit" : {
+            			"value": "GB"
+		        },
+			"access": {
+				"landingPage": "http://www.blueprintatlas.org/static/download/",
+				"authorizations": [
+					{
+						"value": "public"
+					}
+				]
+			}
+		}
+	],
+	"keywords": [
+		{
+			"value" : "transcriptomics"
+		}
+	],
+	"hasPart": [
+		{
+			"title":"Normalised LMD microarray expression values + probe and sample metadata",
+			"creators": [
+				{
+					"name": "The Allen Institute for Brain Science"
+				}
+			],
+			"types": [
+				{
+					"information": {
+						"value": "developmental transcriptome"
+					}
+				}
+			],
+			"licenses": [
+				{
+					"name": "https://alleninstitute.org/legal/terms-use/"
+				}
+			],
+			"description": "Normalised LMD microarray expression values + probe and sample metadata",
+		"distributions": [
+		        {
+				"formats": [
+					".CEL",
+					".JPG",
+					"DICOM"
+            			],
+				"size" : 744,
+		        "unit" : {
+            				"value": "MB"
+		       	},
+				"access": {
+					"landingPage": "http://www.blueprintatlas.org/static/download/",
+					"authorizations": [
+						{
+							"value": "public"
+						}
+					]
+				}
+			}
+		],
+			"keywords": [
+				{
+					"value" : "transcriptomics"
+				}
+			],
+			"version": "1.0.0",
+			"storedIn": {
+				"name": "http://blueprintnhpatlas.org/api/v2/well_known_file_download/298764404",
+				"description": "Zipped file archive"
+			}
+		},
+		{
+			"title":"Normalised macrodissection microarray expression values + probe and sample metadata",
+			"creators": [
+				{
+					"name": "The Allen Institute for Brain Science"
+				}
+			],
+			"types": [
+				{
+					"information": {
+						"value": "developmental transcriptome"
+					}
+				}
+			],
+			"licenses": [
+				{
+					"name": "https://alleninstitute.org/legal/terms-use/"
+				}
+			],
+			"description": "Normalised macrodissection microarray expression values + probe and sample metadata",
+			"keywords": [
+				{
+					"value" : "transcriptomics"
+				}
+			],
+	"distributions": [
+	        {
+			"formats": [
+				".CEL",
+				".JPG",
+				"DICOM"
+            ],
+			"size" : 25,
+		        "unit" : {
+            			"value": "MB"
+		        },
+			"access": {
+				"landingPage": "http://www.blueprintatlas.org/static/download/",
+				"authorizations": [
+					{
+						"value": "public"
+					}
+				]
+			}
+		}
+	],
+
+			"version": "1.0.0",
+			"storedIn": {
+				"name": "http://blueprintnhpatlas.org/api/v2/well_known_file_download/298764384",
+				"description": "Zipped file archive"
+			}
+		},
+		{
+			"title":"Meta-information and URLs for downloading raw microarray files",
+			"creators": [
+				{
+					"name": "The Allen Institute for Brain Science"
+				}
+			],
+			"types": [
+				{
+					"information": {
+						"value": "developmental transcriptome"
+					}
+				}
+			],
+			"licenses": [
+				{
+					"name": "https://alleninstitute.org/legal/terms-use/"
+				}
+			],
+			"description": "Meta-information and URLs for downloading raw microarray files",
+			"keywords": [
+				{
+					"value" : "transcriptomics"
+				}
+			],
+	"distributions": [
+	        {
+			"formats": [
+				".CEL",
+				".JPG",
+				"DICOM"
+            		],
+			"size" : 1.67,
+		        "unit" : {
+            			"value": "MB"
+		        },
+			"access": {
+				"landingPage": "http://www.blueprintatlas.org/static/download/",
+				"authorizations": [
+					{
+						"value": "public"
+					}
+				]
+			}
+		}
+	],
+
+			"version": "1.0.0",
+			"storedIn": {
+				"name": "http://blueprintnhpatlas.org/microarray/well_data_files.xml",
+				"description": "xml file"
+			}
+		},
+		{
+			"title":"Neuroanatomical guides for prenatal LMD sample isolation",
+			"creators": [
+				{
+					"name": "The Allen Institute for Brain Science"
+				}
+			],
+			"types": [
+				{
+					"information": {
+						"value": "neuroanatomical images"
+					}
+				}
+			],
+			"licenses": [
+				{
+					"name": "https://alleninstitute.org/legal/terms-use/"
+				}
+			],
+			"description": "Neuroanatomical guides for prenatal LMD sample isolation",
+			"keywords": [
+				{
+					"value" : "transcriptomics"
+				}
+			],
+	"distributions": [
+	        {
+			"formats": [
+				".CEL",
+				".JPG",
+				"DICOM"
+            		],
+			"size" : 1,
+		        "unit" : {
+            			"value": "KB"
+		        },
+			"access": {
+				"landingPage": "http://www.blueprintatlas.org/static/download/",
+				"authorizations": [
+					{
+						"value": "public"
+					}
+				]
+			}
+		}
+	],
+
+			"version": "1.0.0",
+			"storedIn": {
+				"name": "http://download.alleninstitute.org/nhp/Prenatal_Macaque_LMD_Microarray/neuroanatomical_guides_for_LMD_sampling/",
+				"description": "Directory containing 144 .JPG files + 1 summary document"
+			}
+		},
+		{
+			"title":"Transcriptional architecture of the primate neocortex",
+			"creators": [
+				{
+					"name": "The Allen Institute for Brain Science"
+				}
+			],
+			"types": [
+				{
+					"information": {
+						"value": "neuroanatomical images"
+					}
+				}
+			],
+			"licenses": [
+				{
+					"name": "https://alleninstitute.org/legal/terms-use/"
+				}
+			],
+			"description": "Transcriptional architecture of the primate neocortex",
+			"keywords": [
+				{
+					"value" : "transcriptomics"
+				}
+			],
+	"distributions": [
+	        {
+			"formats": [
+				".CEL",
+				".JPG",
+				"DICOM"
+            		],
+			"size" : 52,
+		        "unit" : {
+            			"value": "KB"
+		        },
+			"access": {
+				"landingPage": "http://www.blueprintatlas.org/static/download/",
+				"authorizations": [
+					{
+						"value": "public"
+					}
+				]
+			}
+		}
+	],
+
+			"version": "1.0.0",
+			"storedIn": {
+				"name": "http://download.alleninstitute.org/nhp/Transcriptional_Architecture_of_the_Primate_Neocortex/",
+				"description": "Directory containing 226 .CEL files + 3 summary/metadata documents"
+			}
+		},
+		{
+			"title":"14349_MRI.zip",
+			"creators": [
+				{
+					"name": "The Allen Institute for Brain Science"
+				}
+			],
+			"types": [
+				{
+					"information": {
+						"value": "neuroanatomical images"
+					}
+				}
+			],
+			"licenses": [
+				{
+					"name": "https://alleninstitute.org/legal/terms-use/"
+				}
+			],
+			"description": "Zipped cerebral MRI images from adult (48 months) rhesus macaque, specimen 1",
+			"keywords": [
+				{
+					"value" : "transcriptomics"
+				}
+			],
+	"distributions": [
+	        {
+			"formats": [
+				".CEL",
+				".JPG",
+				"DICOM"
+            		],
+			"size" : 4.5,
+		        "unit" : {
+            			"value": "MB"
+		        },
+			"access": {
+				"landingPage": "http://www.blueprintatlas.org/static/download/",
+				"authorizations": [
+					{
+						"value": "public"
+					}
+				]
+			}
+		}
+	],
+
+			"version": "1.0.0",
+			"storedIn": {
+				"name": "http://blueprintnhpatlas.org/api/v2/well_known_file_download/147139113",
+				"description": "Zipped cerebral MRI images from adult (48 months) rhesus macaque, specimen 1"
+			}
+		},
+		{
+			"title":"14447_MRI.zip",
+			"creators": [
+				{
+					"name": "The Allen Institute for Brain Science"
+				}
+			],
+			"types": [
+				{
+					"information": {
+						"value": "neuroanatomical images"
+					}
+				}
+			],
+			"licenses": [
+				{
+					"name": "https://alleninstitute.org/legal/terms-use/"
+				}
+			],
+			"description": "Zipped cerebral MRI images from adult (48 months) rhesus macaque, specimen 2",
+			"keywords": [
+				{
+					"value" : "transcriptomics"
+				}
+			],	"distributions": [
+	        {
+			"formats": [
+				".CEL",
+				".JPG",
+				"DICOM"
+            		],
+			"size" : 4.0,
+		        "unit" : {
+            			"value": "MB"
+		        },
+			"access": {
+				"landingPage": "http://www.blueprintatlas.org/static/download/",
+				"authorizations": [
+					{
+						"value": "public"
+					}
+				]
+			}
+		}
+	],
+
+			"version": "1.0.0",
+			"storedIn": {
+				"name": "http://blueprintnhpatlas.org/api/v2/well_known_file_download/147139119",
+				"description": "Zipped cerebral MRI images from adult (48 months) rhesus macaque, specimen 2"
+			}
+		},
+		{
+			"title":"14868_MRI.zip",
+			"creators": [
+				{
+					"name": "The Allen Institute for Brain Science"
+				}
+			],
+			"types": [
+				{
+					"information": {
+						"value": "neuroanatomical images"
+					}
+				}
+			],
+			"licenses": [
+				{
+					"name": "https://alleninstitute.org/legal/terms-use/"
+				}
+			],
+			"description": "Zipped cerebral MRI images from adult (48 months) rhesus macaque, specimen 3",
+			"keywords": [
+				{
+					"value" : "transcriptomics"
+				}
+			],	"distributions": [
+	        {
+			"formats": [
+				".CEL",
+				".JPG",
+				"DICOM"
+            		],
+			"size" : 4.2,
+		        "unit" : {
+            			"value": "MB"
+		        },
+			"access": {
+				"landingPage": "http://www.blueprintatlas.org/static/download/",
+				"authorizations": [
+					{
+						"value": "public"
+					}
+				]
+			}
+		}
+	],
+
+			"version": "1.0.0",
+			"storedIn": {
+				"name": "http://blueprintnhpatlas.org/api/v2/well_known_file_download/147139125",
+				"description": "Zipped cerebral MRI images from adult (48 months) rhesus macaque, specimen 3"
+			}
+		}
+	],
+	"extraProperties": [
+		{
+			"category": "contact",
+			"values": [
+				{
+					"value": "http://www.alleninstitute.org#contact-form"
+				}
+			]
+		},
+		{
+			"category": "CONP_status",
+			"values": [
+				{
+					"value": "external"
+				}
+			]
+		},
+		{
+			"category": "files",
+			"values": [
+				{
+					"value": "385"
+				}
+			]
+		},
+		{
+			"category": "logo",
+			"values": [
+				{
+					"value": "logo.jpg"
+				}
+			]
+		}
+	]
+}
