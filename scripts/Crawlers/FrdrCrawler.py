@@ -159,7 +159,7 @@ class FrdrCrawler(BaseCrawler):
 
         # get the destination endpoint
         # NOTE that the current search will be successful if the login to globus is under conp.crawlers@gmail.com
-        for ep in self.transfer_client.endpoint_search('conp-gi114', filter_scope='my-endpoints'):
+        for ep in self.transfer_client.endpoint_search('FRDR-crawler', filter_scope='my-endpoints'):
             destination_ep = ep['id']
 
         if not destination_ep:
