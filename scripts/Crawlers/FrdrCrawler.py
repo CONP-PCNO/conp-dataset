@@ -8,6 +8,7 @@ import keyring
 import sys
 import logging
 import asyncio
+import time
 from fair_research_login.local_server import LocalServerCodeHandler
 from globus_sdk import (NativeAppAuthClient, TransferClient, TransferData,
                         RefreshTokenAuthorizer, TransferAPIError)
@@ -126,23 +127,23 @@ class FrdrCrawler(BaseCrawler):
 
         self.transfer_client = TransferClient(authorizer=authorizer)
 
-    async def is_completed(self, path, size, future):
+    def is_completed(self, path, size):
         """
         Waits that an event completes before returning
         :param path: file path on which download is checked upon
         :param size: size to check upon
-        :param future: future object holding the result
         """
-        await asyncio.sleep(5)
-        print("COMPLETE ", path, size)
+        time.sleep(5)
+
         if os.path.exists(path):
             if str(os.stat(path).st_size) == str(size):
-                future.set_result('Completed')
+                print('Completed')
                 return
             else:
-                await self.is_completed(path, size, future)
+                print("CURRENT SIZE ", str(os.stat(path).st_size))
+                self.is_completed(path, size)
         else:
-            await self.is_completed(path, size, future)
+            self.is_completed(path, size)
 
     def transfer_data(self, source_ep, source_path, file_name=None, dest_path=None, size=None):
         """
@@ -213,16 +214,10 @@ class FrdrCrawler(BaseCrawler):
                   ', or go to the Web UI, https://app.globus.org/activity/{}.'
                   .format(task['task_id']))
 
-        # provide event loop for this context
-        loop = asyncio.get_event_loop()
-        # create future object
-        future = asyncio.Future()
         print("SIZE: ", size) 
         # submit task
-        asyncio.ensure_future(self.is_completed(destination_path, size, future))
         try:
-            loop.run_until_complete(future)
-            logger.info(future.result())
+            self.is_completed(destination_path, size)
         finally:
             return destination_path
 
