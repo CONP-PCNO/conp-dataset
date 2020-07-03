@@ -127,6 +127,18 @@ class FrdrCrawler(BaseCrawler):
 
         self.transfer_client = TransferClient(authorizer=authorizer)
 
+    @ staticmethod
+    def get_size(start_path):
+        total_size = 0
+        for dirpath, dirnames, filenames in os.walk(start_path):
+            for f in filenames:
+                file_path = os.path.join(dirpath, f)
+                # skip if it is symbolic link
+                if not os.path.islink(file_path):
+                    total_size += os.path.getsize(file_path)
+
+        return total_size
+
     def is_completed(self, path, size):
         """
         Waits that an event completes before returning
@@ -136,11 +148,11 @@ class FrdrCrawler(BaseCrawler):
         time.sleep(5)
 
         if os.path.exists(path):
-            if str(os.stat(path).st_size) == str(size):
+            if str(self.get_size) == str(size):
                 print('Completed')
                 return
             else:
-                print("CURRENT SIZE ", str(os.stat(path).st_size))
+                print("CURRENT SIZE ", str(self.get_size))
                 self.is_completed(path, size)
         else:
             self.is_completed(path, size)
