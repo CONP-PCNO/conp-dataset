@@ -134,6 +134,7 @@ class FrdrCrawler(BaseCrawler):
         :param future: future object holding the result
         """
         await asyncio.sleep(5)
+        print("COMPLETE ", path, size)
         if os.path.exists(path):
             if str(os.stat(path).st_size) == str(size):
                 future.set_result('Completed')
@@ -152,7 +153,7 @@ class FrdrCrawler(BaseCrawler):
         :param dest_path: transfer destination path
         :param size: size of the transferred directory
         """
-
+        print("INPUTS ", source_ep, source_path, file_name, dest_path, size)
         # default value to transfer directories
         is_recursive = True
         destination_ep = None
@@ -216,6 +217,7 @@ class FrdrCrawler(BaseCrawler):
         loop = asyncio.get_event_loop()
         # create future object
         future = asyncio.Future()
+        print("SIZE: ", size) 
         # submit task
         asyncio.ensure_future(self.is_completed(destination_path, size, future))
         try:
