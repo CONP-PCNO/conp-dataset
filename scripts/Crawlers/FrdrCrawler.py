@@ -136,14 +136,16 @@ class FrdrCrawler(BaseCrawler):
         :param files_count: count of files to be transferred
         """
         time.sleep(5)
-
+        print("I AM IN !!")
         if os.path.exists(path):
             transferred = 0
             # count transferred files
             transfer_response = self.transfer_client.task_successful_transfers(task_id)
             if not transfer_response:
+                print("IS NONE")
                 self.is_completed(path, task_id, files_count)
             else:
+                print("IS NOT NONE")
                 # loop though all responses
                 for info in transfer_response:
                     if info['DATA_TYPE'] == 'successful_transfer':
