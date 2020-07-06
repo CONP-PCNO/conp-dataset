@@ -15,7 +15,7 @@ from globus_sdk import (NativeAppAuthClient, TransferClient, TransferData,
 versions = None
 
 logger = logging.getLogger('FRDR-crawler')
-logger.setLevel(level=logging.WARNING)
+logger.setLevel(level=logging.INFO)
 
 
 # info at https://www.frdr-dfdr.ca/docs/en/searching/
@@ -136,7 +136,7 @@ class FrdrCrawler(BaseCrawler):
         if task['status'] == 'ACTIVE':
             # keep waiting
             if task['nice_status_short_description'] != 'Queued':
-                logger.warning("Current status description: ", task['nice_status_short_description'])
+                logger.info("Current status description: ", task['nice_status_short_description'])
             self.is_completed(task_id)
         elif task['status'] == 'SUCCEEDED':
             print("success !!")
