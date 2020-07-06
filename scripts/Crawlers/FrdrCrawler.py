@@ -138,6 +138,7 @@ class FrdrCrawler(BaseCrawler):
         time.sleep(5)
         print("I AM IN !!")
         if os.path.exists(path):
+            print("PATH EXISTS")
             transferred = 0
             # count transferred files
             transfer_response = self.transfer_client.task_successful_transfers(task_id)
@@ -159,6 +160,7 @@ class FrdrCrawler(BaseCrawler):
                 else:
                     return
         else:
+            print("PATH NOT EXISTS YET")
             self.is_completed(path, task_id, files_count)
 
     def transfer_data(self, source_ep, source_path, file_name=None, dest_path=None, files_count=None):
