@@ -224,7 +224,7 @@ class FrdrCrawler(BaseCrawler):
                   ', or go to the Web UI, https://app.globus.org/activity/{}.'
                   .format(task['task_id']))
 
-        print("TRANSFER TASK ", self.transfer_client.endpoint_manager_get_task(task['task_id']))
+        print("TRANSFER TASK ", self.transfer_client.get_task(task['task_id']))
 
         print("COUNTS: ", files_count)
         # submit task
