@@ -141,7 +141,7 @@ class FrdrCrawler(BaseCrawler):
             print("PATH EXISTS")
             transferred = 0
             # count transferred files
-            transfer_response = self.transfer_client.task_successful_transfers(task_id)
+            transfer_response = self.transfer_client.task_successful_transfers(task_id) or None
             if not transfer_response:
                 print("IS NONE")
                 self.is_completed(path, task_id, files_count)
