@@ -140,6 +140,7 @@ class FrdrCrawler(BaseCrawler):
         if os.path.exists(path):
             transferred = 0
             # count transferred files
+            print("RES ", self.transfer_client.task_successful_transfers(task_id))
             for info in self.transfer_client.task_successful_transfers(task_id):
                 if info['DATA_TYPE'] == 'successful_transfer':
                     transferred += 1
@@ -147,9 +148,8 @@ class FrdrCrawler(BaseCrawler):
                     print("{}->{}".format(info["source_path"], info["destination_path"]))
 
                     # if all files were transferred
-                    if transferred == files_count:
-                        return
-            self.is_completed(path, task_id, files_count)
+                    if transferred != files_count:
+                        self.is_completed(path, task_id, files_count)
         else:
             self.is_completed(path, task_id, files_count)
 
