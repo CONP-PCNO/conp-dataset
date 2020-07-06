@@ -138,10 +138,15 @@ class FrdrCrawler(BaseCrawler):
         time.sleep(5)
 
         if os.path.exists(path):
-            tranfered = 0
-            t = self.transfer_client.task_successful_transfers(task_id)
-            print("SUCCESSFUL ?", t)
-            return
+            transferred = 0
+            # count transferred files
+            for info in self.transfer_client.task_successful_transfers(task_id):
+                if info['DATA_TYPE'] == 'successful_transfer':
+                    transferred += 1
+                    # if all files were transferred
+                    if transferred == files_count:
+                        return
+            self.is_completed(path, task_id, files_count)
         else:
             self.is_completed(path, task_id, files_count)
 

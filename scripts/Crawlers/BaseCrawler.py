@@ -237,7 +237,7 @@ class BaseCrawler:
                 origin_url = next(origin.urls)
                 if "@" not in origin_url:
                     origin.set_url(origin_url.replace("https://", "https://" + self.github_token + "@"))
-            except git.exc.NoSuchPathError:
+            except (git.exc.NoSuchPathError, git.exc.InvalidGitRepositoryError):
                 pass
             if branch_name not in self.repo.remotes.origin.refs:  # New dataset
                 self.repo.git.checkout("-b", branch_name)
