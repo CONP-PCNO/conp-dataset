@@ -180,7 +180,6 @@ class FrdrCrawler(BaseCrawler):
         if not destination_path.startswith('/'):
             logger.error('Destination path must be absolute')
 
-        is_json_present = None
         # check if a source directory is valid and contains the file_sizes.json
         try:
             ls = self.transfer_client.operation_ls(source_ep, path=source_path)
@@ -189,10 +188,9 @@ class FrdrCrawler(BaseCrawler):
                 names = list(map(lambda x: x["name"], ls["DATA"]))
                 if file_name in names:
                     # the file is present !
-                    is_json_present = True
-
-            if not is_json_present:
-                raise TransferAPIError("Missing " + file_name)
+                    pass
+                else:
+                    raise TransferAPIError("Missing " + file_name)
         except TransferAPIError as e:
             logger.error(e)
 
@@ -253,10 +251,11 @@ class FrdrCrawler(BaseCrawler):
         def _get_contents(contents):
             for content in contents:
                 if "type" in content.keys() and content["type"] == "file":
+                    # count files
+                    self.files_count += 1
                     file_ext = str(content["name"].split(".")[1])
                     if file_ext not in files_types:
                         files_types.append(file_ext)
-                        self.files_count += 1
 
                 if "contents" in content.keys():
                     _get_contents(content["contents"])
@@ -410,7 +409,7 @@ class FrdrCrawler(BaseCrawler):
         ep_name = ds_description["extraProperties"][0]["values"][0]["EndpointName"]
         ep_path = ds_description["extraProperties"][0]["values"][1]["EndpointPath"]
         # perform transfer of the given dataset
-        print("downloading...", ep_name, ep_path, ds_path, ds_description["distributions"][0]["size"])
+        print("downloading...", ep_name, ep_path, ds_path)
         self.transfer_data(ep_name,
                            ep_path,
                            dest_path=ds_path,
