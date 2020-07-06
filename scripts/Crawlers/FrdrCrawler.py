@@ -183,7 +183,7 @@ class FrdrCrawler(BaseCrawler):
             if file_name:
                 for data in ls["DATA"]:
                     if data["name"] == str(file_name):
-                        pass
+                        logger.info(file_name + " is present")
                     else:
                         raise TransferAPIError("Missing " + file_name)
         except TransferAPIError as e:
