@@ -180,17 +180,19 @@ class FrdrCrawler(BaseCrawler):
         if not destination_path.startswith('/'):
             logger.error('Destination path must be absolute')
 
+        # is_json_present = None
         # check if a source directory is valid and contains the file_sizes.json
         try:
             ls = self.transfer_client.operation_ls(source_ep, path=source_path)
-            # if a file name is specified, check it exists
-            if file_name:
-                names = list(map(lambda x: x["name"], ls["DATA"]))
-                if file_name in names:
-                    # the file is present !
-                    pass
-                else:
-                    raise TransferAPIError("Missing " + file_name)
+            # # if a file name is specified, check it exists
+            # if file_name:
+            #     names = list(map(lambda x: x["name"], ls["DATA"]))
+            #     if file_name in names:
+            #         # the file is present !
+            #         is_json_present = True
+            #
+            # if not is_json_present:
+            #     raise TransferAPIError("Missing " + file_name)
         except TransferAPIError as e:
             logger.error(e)
 
