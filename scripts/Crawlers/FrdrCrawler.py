@@ -128,23 +128,22 @@ class FrdrCrawler(BaseCrawler):
 
         self.transfer_client = TransferClient(authorizer=authorizer)
 
-    def is_completed(self, tc, path, task_id, files_count):
+    def is_completed(self, path, task_id, files_count):
         """
         Waits that an event completes before returning
-        :param tc: transfer client object
         :param path: file path on which download is checked upon
         :param task_id: id of the transfer task
         :param files_count: count of files to be transferred
         """
-        time.sleep(10)
+        time.sleep(5)
 
         if os.path.exists(path):
             tranfered = 0
-            t = tc.task_successful_transfers(task_id)
+            t = self.transfer_client.task_successful_transfers(task_id)
             print("SUCCESSFUL ?", t)
             return
         else:
-            self.is_completed(tc, path, task_id, files_count)
+            self.is_completed(path, task_id, files_count)
 
     def transfer_data(self, source_ep, source_path, file_name=None, dest_path=None, files_count=None):
         """
@@ -220,7 +219,7 @@ class FrdrCrawler(BaseCrawler):
         print("COUNTS: ", files_count)
         # submit task
         try:
-            self.is_completed(task, destination_path, task['task_id'], files_count)
+            self.is_completed(destination_path, task['task_id'], files_count)
         finally:
             return destination_path
 
