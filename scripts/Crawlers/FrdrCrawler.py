@@ -7,7 +7,6 @@ import xmltodict
 import keyring
 import sys
 import logging
-import asyncio
 import time
 from fair_research_login.local_server import LocalServerCodeHandler
 from globus_sdk import (NativeAppAuthClient, TransferClient, TransferData,
@@ -33,7 +32,6 @@ class FrdrCrawler(BaseCrawler):
         }
         self.verbose = None
         self.transfer_client = None
-        self.files_count = 0
         # set up authentication procedure to retrieve tokens
         self.setup()
 
@@ -128,51 +126,34 @@ class FrdrCrawler(BaseCrawler):
 
         self.transfer_client = TransferClient(authorizer=authorizer)
 
-    def is_completed(self, path, task_id, files_count):
+    def is_completed(self, task_id):
         """
-        Waits that an event completes before returning
-        :param path: file path on which download is checked upon
+        Waits that an event completes by checking the status of the transfer task
         :param task_id: id of the transfer task
-        :param files_count: count of files to be transferred
         """
         time.sleep(5)
-        print("I AM IN !!")
-        if os.path.exists(path):
-            print("PATH EXISTS")
-            transferred = 0
-            # count transferred files
-            transfer_response = self.transfer_client.task_successful_transfers(task_id) or None
-            if not transfer_response:
-                print("IS NONE")
-                self.is_completed(path, task_id, files_count)
-            else:
-                print("IS NOT NONE")
-                # loop though all responses
-                for info in transfer_response:
-                    if info['DATA_TYPE'] == 'successful_transfer':
-                        transferred += 1
-                        print("number: " + str(transferred))
-                        print("{}->{}".format(info["source_path"], info["destination_path"]))
-
-                        # if all files were transferred
-                if transferred != files_count:
-                    self.is_completed(path, task_id, files_count)
-                else:
-                    return
+        task = self.transfer_client.get_task(task_id)
+        if task['status'] == 'ACTIVE':
+            print("Keep waiting")
+            # keep waiting
+            self.is_completed(task_id)
+        elif task['status'] == 'SUCCEEDED':
+            print("success !!")
+            return
+        elif task['status'] == 'INACTIVE':
+            logger.error("Inactivity occurred: The task has been suspended and will not continue without intervention."
+                         "Currently, only credential expiration will cause this state.")
         else:
-            print("PATH NOT EXISTS YET")
-            self.is_completed(path, task_id, files_count)
+            logger.error("Failed: The task or one of its subtasks failed, expired, or was canceled.")
 
-    def transfer_data(self, source_ep, source_path, file_name=None, dest_path=None, files_count=None):
+    def transfer_data(self, source_ep, source_path, file_name=None, dest_path=None):
         """
         Enables directory or files transfer between endpoints
         :param source_ep: source endpoint ID
         :param source_path: source dataset prefix path
         :param file_name: file name to transfer (None if a directory is transferred)
         :param dest_path: transfer destination path
-        :param files_count: count of files to be transferred
         """
-        print("INPUTS ", source_ep, source_path, file_name, dest_path, files_count)
         # default value to transfer directories
         is_recursive = True
         destination_ep = None
@@ -224,14 +205,10 @@ class FrdrCrawler(BaseCrawler):
                   ', or go to the Web UI, https://app.globus.org/activity/{}.'
                   .format(task['task_id']))
 
-        print("TRANSFER TASK ", self.transfer_client.get_task(task['task_id']))
-
-        print("COUNTS: ", files_count)
         # submit task
         try:
-            self.is_completed(destination_path, task['task_id'], files_count)
+            self.is_completed(task['task_id'])
         finally:
-            print("TRANSFER TASK2 ", self.transfer_client.get_task(task['task_id']))
             return destination_path
 
     def _query_frdr(self):
@@ -259,8 +236,6 @@ class FrdrCrawler(BaseCrawler):
         def _get_contents(contents):
             for content in contents:
                 if "type" in content.keys() and content["type"] == "file":
-                    # count files
-                    self.files_count += 1
                     file_ext = str(content["name"].split(".")[1])
                     if file_ext not in files_types:
                         files_types.append(file_ext)
@@ -269,7 +244,7 @@ class FrdrCrawler(BaseCrawler):
                     _get_contents(content["contents"])
 
         # instantiate the file_size.json transfer
-        file_sizes_path = self.transfer_data(ep_id, ep_path, file_name='file_sizes.json', files_count=1)
+        file_sizes_path = self.transfer_data(ep_id, ep_path, file_name='file_sizes.json')
         # open file and read
         with open(file_sizes_path) as json_file:
             json_contents = json.load(json_file)
@@ -420,8 +395,7 @@ class FrdrCrawler(BaseCrawler):
         print("downloading...", ep_name, ep_path, ds_path)
         self.transfer_data(ep_name,
                            ep_path,
-                           dest_path=ds_path,
-                           files_count=self.files_count)
+                           dest_path=ds_path)
         dataset.save()
         # register dataset
         print("retrieving...", ds_path, ep_name, ep_path, git_repo)
