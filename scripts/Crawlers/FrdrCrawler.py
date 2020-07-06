@@ -33,6 +33,7 @@ class FrdrCrawler(BaseCrawler):
         }
         self.verbose = None
         self.transfer_client = None
+        self.files_count = 0
         # set up authentication procedure to retrieve tokens
         self.setup()
 
@@ -127,46 +128,34 @@ class FrdrCrawler(BaseCrawler):
 
         self.transfer_client = TransferClient(authorizer=authorizer)
 
-    @ staticmethod
-    def get_size(start_path):
-        total_size = 0
-        for dirpath, dirnames, filenames in os.walk(start_path):
-            for f in filenames:
-                file_path = os.path.join(dirpath, f)
-                # skip if it is symbolic link
-                if not os.path.islink(file_path):
-                    total_size += os.path.getsize(file_path)
-
-        return total_size
-
-    def is_completed(self, path, size):
+    def is_completed(self, tc, path, task_id, files_count):
         """
         Waits that an event completes before returning
+        :param tc: transfer client object
         :param path: file path on which download is checked upon
-        :param size: size to check upon
+        :param task_id: id of the transfer task
+        :param files_count: count of files to be transferred
         """
-        time.sleep(5)
+        time.sleep(10)
 
         if os.path.exists(path):
-            if str(self.get_size) == str(size):
-                print('Completed')
-                return
-            else:
-                print("CURRENT SIZE ", str(self.get_size))
-                self.is_completed(path, size)
+            tranfered = 0
+            for info in tc.task_successful_transfers(task_id):
+                print(info)
+            return
         else:
-            self.is_completed(path, size)
+            self.is_completed(tc, path, task_id, files_count)
 
-    def transfer_data(self, source_ep, source_path, file_name=None, dest_path=None, size=None):
+    def transfer_data(self, source_ep, source_path, file_name=None, dest_path=None, files_count=None):
         """
         Enables directory or files transfer between endpoints
         :param source_ep: source endpoint ID
         :param source_path: source dataset prefix path
         :param file_name: file name to transfer (None if a directory is transferred)
         :param dest_path: transfer destination path
-        :param size: size of the transferred directory
+        :param files_count: count of files to be transferred
         """
-        print("INPUTS ", source_ep, source_path, file_name, dest_path, size)
+        print("INPUTS ", source_ep, source_path, file_name, dest_path, files_count)
         # default value to transfer directories
         is_recursive = True
         destination_ep = None
@@ -194,10 +183,9 @@ class FrdrCrawler(BaseCrawler):
             if file_name:
                 for data in ls["DATA"]:
                     if data["name"] == str(file_name):
-                        size = data["size"]
-                # names = list(map(lambda x: x["name"], ls["DATA"]))
-                if not size:
-                    raise TransferAPIError("Missing " + file_name)
+                        pass
+                    else:
+                        raise TransferAPIError("Missing " + file_name)
         except TransferAPIError as e:
             logger.error(e)
 
@@ -226,10 +214,10 @@ class FrdrCrawler(BaseCrawler):
                   ', or go to the Web UI, https://app.globus.org/activity/{}.'
                   .format(task['task_id']))
 
-        print("SIZE: ", size) 
+        print("COUNTS: ", files_count)
         # submit task
         try:
-            self.is_completed(destination_path, size)
+            self.is_completed(task, destination_path, task['task_id'], files_count)
         finally:
             return destination_path
 
@@ -261,12 +249,13 @@ class FrdrCrawler(BaseCrawler):
                     file_ext = str(content["name"].split(".")[1])
                     if file_ext not in files_types:
                         files_types.append(file_ext)
+                        self.files_count += 1
 
                 if "contents" in content.keys():
                     _get_contents(content["contents"])
 
         # instantiate the file_size.json transfer
-        file_sizes_path = self.transfer_data(ep_id, ep_path, file_name='file_sizes.json')
+        file_sizes_path = self.transfer_data(ep_id, ep_path, file_name='file_sizes.json', files_count=1)
         # open file and read
         with open(file_sizes_path) as json_file:
             json_contents = json.load(json_file)
@@ -418,7 +407,7 @@ class FrdrCrawler(BaseCrawler):
         self.transfer_data(ep_name,
                            ep_path,
                            dest_path=ds_path,
-                           size=ds_description["distributions"][0]["size"])
+                           files_count=self.files_count)
         dataset.save()
         # register dataset
         print("retrieving...", ds_path, ep_name, ep_path, git_repo)
