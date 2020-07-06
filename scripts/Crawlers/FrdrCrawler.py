@@ -224,6 +224,8 @@ class FrdrCrawler(BaseCrawler):
                   ', or go to the Web UI, https://app.globus.org/activity/{}.'
                   .format(task['task_id']))
 
+        print("TRANSFER TASK ", task)
+
         print("COUNTS: ", files_count)
         # submit task
         try:
