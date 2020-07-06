@@ -231,6 +231,7 @@ class FrdrCrawler(BaseCrawler):
         try:
             self.is_completed(destination_path, task['task_id'], files_count)
         finally:
+            print("TRANSFER TASK2 ", self.transfer_client.get_task(task['task_id']))
             return destination_path
 
     def _query_frdr(self):
