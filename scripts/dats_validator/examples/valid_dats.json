@@ -1,45 +1,49 @@
 {
-	"version": "1.0",
+	"identifier": {
+		"identifier": "https://doi.org/10.5281/zenodo.3405490",
+		"identifierSource": "DOI"
+	},
+	"version": "1.0.0",
 	"privacy": "public open",
 	"licenses": [
 		{
-			"name": "BY-NC-SA"
+			"name": "https://alleninstitute.org/legal/terms-use/"
 		}
 	],
 	"creators": [
 		{
-			"name": "1000 Genomes Project"
+			"name": "The Allen Institute for Brain Science"
 		}
 	],
 	"types": [
 		{
 			"information": {
-				"value": "genomics"
+				"value": "transcriptomics"
 			}
 		}
 	],
-	"title": "1000 Genomes Project",
-	"description": "The 1000 Genomes Project provides a comprehensive description of common human variation by applying a combination of whole-genome sequencing, deep exome sequencing and dense microarray genotyping to a diverse set of 2504 individuals from 26 populations.  Over 88 million variants are characterised, including >99% of SNP variants with a frequency of >1% for a variety of ancestries.",
+	"title": "NIH Blueprint Non-Human Primate Atlas",
+	"description": "The NIH Blueprint Non-Human Primate (NHP) Atlas consists of a suite of gene expression and neuroanatomical data for exploring the cellular and molecular architecture of the developing rhesus macaque brain.",
 	"storedIn": {
-		"name" : "European Bioinformatics Institute"
+		"name" : "The Allen Institute for Brain Science"
 	},
 	"primaryPublications" : [
 		{
 			"identifier": {
-				"identifier": "https://doi.org/10.1038/nature15393"
+				"identifier": "https://dx.doi.org/10.1093%2Fnar%2Fgks1042"
 			},
-			"title": "A global reference for human genetic variation",
+			"title": "Allen Brain Atlas: an integrated spatio-temporal portal for exploring the central nervous system",
 			"dates": [
 				{
 					"type": {
 						"value":"Primary reference publication date"
 					},
-					"date": "2015-10-01 00:00:00"
+					"date": "2012-11-27 00:00:00"
 				}
 			],
 			"authors": [
 				{
-				"name":"1000 Genomes Project"
+				"name":"Susan M. Sunkin, Lydia Ng, Chris Lau, Tim Dolbeare, Terri L. Gilbert, Carol L. Thompson, Michael Hawrylycz, and Chinh Dang"
 				}
 			]
 		}
@@ -47,10 +51,10 @@
 	"isAbout": [
 		{
 			"identifier": {
-				"identifier": "9606",
-				"identifierSource":"https://www.ncbi.nlm.nih.gov/taxonomy/9606"
+				"identifier": "9483",
+				"identifierSource":"https://www.ncbi.nlm.nih.gov/taxonomy/9483"
 			},
-			"name":"Homo sapiens"
+			"name":"Callithrix jacchus"
 		}
 	],
 	"dates": [
@@ -58,1709 +62,456 @@
 			"type": {
 				"value":"CONP DATS JSON fileset creation date"
 			},
-			"date": "2019-06-17 13:16:33"
+			"date": "2019-09-06 13:54:24"
+		}
+	],
+	"distributions": [
+	        {
+			"formats": [
+				".CEL",
+				".JPG",
+				"DICOM"
+            		],
+			"size" : 7,
+		        "unit" : {
+            			"value": "GB"
+		        },
+			"access": {
+				"landingPage": "http://www.blueprintatlas.org/static/download/",
+				"authorizations": [
+					{
+						"value": "public"
+					}
+				]
+			}
+		}
+	],
+	"keywords": [
+		{
+			"value" : "transcriptomics"
 		}
 	],
 	"hasPart": [
 		{
-			"title":"Chromosome 1",
+			"title":"Normalised LMD microarray expression values + probe and sample metadata",
 			"creators": [
 				{
-					"name": "1000 Genomes Project"
+					"name": "The Allen Institute for Brain Science"
 				}
 			],
 			"types": [
 				{
 					"information": {
-						"value": "genomics"
+						"value": "developmental transcriptome"
 					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr1.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"6056764"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"235061"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
 				}
 			],
 			"licenses": [
 				{
-					"name": "BY-NC-SA"
+					"name": "https://alleninstitute.org/legal/terms-use/"
 				}
 			],
-          	"description": "The 1000 Genomes Project provides a comprehensive description of common human variation by applying a combination of whole-genome sequencing, deep exome sequencing and dense microarray genotyping to a diverse set of 2504 individuals from 26 populations.  Over 88 million variants are characterised, including >99% of SNP variants with a frequency of >1% for a variety of ancestries.",
-			"version": "1.0",
+			"description": "Normalised LMD microarray expression values + probe and sample metadata",
+		"distributions": [
+		        {
+				"formats": [
+					".CEL",
+					".JPG",
+					"DICOM"
+            			],
+				"size" : 744,
+		        "unit" : {
+            				"value": "MB"
+		       	},
+				"access": {
+					"landingPage": "http://www.blueprintatlas.org/static/download/",
+					"authorizations": [
+						{
+							"value": "public"
+						}
+					]
+				}
+			}
+		],
 			"keywords": [
 				{
-					"value": "Genomics"
+					"value" : "transcriptomics"
 				}
-
-			]
+			],
+			"version": "1.0.0",
+			"storedIn": {
+				"name": "http://blueprintnhpatlas.org/api/v2/well_known_file_download/298764404",
+				"description": "Zipped file archive"
+			}
 		},
 		{
-			"title":"Chromosome 10",
+			"title":"Normalised macrodissection microarray expression values + probe and sample metadata",
 			"creators": [
 				{
-					"name": "1000 Genomes Project"
+					"name": "The Allen Institute for Brain Science"
 				}
 			],
 			"types": [
 				{
 					"information": {
-						"value": "genomics"
+						"value": "developmental transcriptome"
 					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr10.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"3769238"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"144656"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
 				}
 			],
 			"licenses": [
 				{
-					"name": "BY-NC-SA"
+					"name": "https://alleninstitute.org/legal/terms-use/"
 				}
 			],
-          	"description": "The 1000 Genomes Project provides a comprehensive description of common human variation by applying a combination of whole-genome sequencing, deep exome sequencing and dense microarray genotyping to a diverse set of 2504 individuals from 26 populations.  Over 88 million variants are characterised, including >99% of SNP variants with a frequency of >1% for a variety of ancestries.",
-			"version": "1.0",
+			"description": "Normalised macrodissection microarray expression values + probe and sample metadata",
 			"keywords": [
 				{
-					"value": "Genomics"
+					"value" : "transcriptomics"
 				}
+			],
+	"distributions": [
+	        {
+			"formats": [
+				".CEL",
+				".JPG",
+				"DICOM"
+            ],
+			"size" : 25,
+		        "unit" : {
+            			"value": "MB"
+		        },
+			"access": {
+				"landingPage": "http://www.blueprintatlas.org/static/download/",
+				"authorizations": [
+					{
+						"value": "public"
+					}
+				]
+			}
+		}
+	],
 
-			]
+			"version": "1.0.0",
+			"storedIn": {
+				"name": "http://blueprintnhpatlas.org/api/v2/well_known_file_download/298764384",
+				"description": "Zipped file archive"
+			}
 		},
 		{
-			"title":"Chromosome 11",
+			"title":"Meta-information and URLs for downloading raw microarray files",
 			"creators": [
 				{
-					"name": "1000 Genomes Project"
+					"name": "The Allen Institute for Brain Science"
 				}
 			],
 			"types": [
 				{
 					"information": {
-						"value": "genomics"
+						"value": "developmental transcriptome"
 					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr11.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"3793612"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"143588"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
 				}
 			],
 			"licenses": [
 				{
-					"name": "BY-NC-SA"
+					"name": "https://alleninstitute.org/legal/terms-use/"
 				}
 			],
-          	"description": "The 1000 Genomes Project provides a comprehensive description of common human variation by applying a combination of whole-genome sequencing, deep exome sequencing and dense microarray genotyping to a diverse set of 2504 individuals from 26 populations.  Over 88 million variants are characterised, including >99% of SNP variants with a frequency of >1% for a variety of ancestries.",
-			"version": "1.0",
+			"description": "Meta-information and URLs for downloading raw microarray files",
 			"keywords": [
 				{
-					"value": "Genomics"
+					"value" : "transcriptomics"
 				}
+			],
+	"distributions": [
+	        {
+			"formats": [
+				".CEL",
+				".JPG",
+				"DICOM"
+            		],
+			"size" : 1.67,
+		        "unit" : {
+            			"value": "MB"
+		        },
+			"access": {
+				"landingPage": "http://www.blueprintatlas.org/static/download/",
+				"authorizations": [
+					{
+						"value": "public"
+					}
+				]
+			}
+		}
+	],
 
-			]
+			"version": "1.0.0",
+			"storedIn": {
+				"name": "http://blueprintnhpatlas.org/microarray/well_data_files.xml",
+				"description": "xml file"
+			}
 		},
 		{
-			"title":"Chromosome 12",
+			"title":"Neuroanatomical guides for prenatal LMD sample isolation",
 			"creators": [
 				{
-					"name": "1000 Genomes Project"
+					"name": "The Allen Institute for Brain Science"
 				}
 			],
 			"types": [
 				{
 					"information": {
-						"value": "genomics"
+						"value": "neuroanatomical images"
 					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr12.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"3629625"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"146902"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
 				}
 			],
 			"licenses": [
 				{
-					"name": "BY-NC-SA"
+					"name": "https://alleninstitute.org/legal/terms-use/"
 				}
 			],
-          	"description": "The 1000 Genomes Project provides a comprehensive description of common human variation by applying a combination of whole-genome sequencing, deep exome sequencing and dense microarray genotyping to a diverse set of 2504 individuals from 26 populations.  Over 88 million variants are characterised, including >99% of SNP variants with a frequency of >1% for a variety of ancestries.",
-			"version": "1.0",
+			"description": "Neuroanatomical guides for prenatal LMD sample isolation",
 			"keywords": [
 				{
-					"value": "Genomics"
+					"value" : "transcriptomics"
 				}
+			],
+	"distributions": [
+	        {
+			"formats": [
+				".CEL",
+				".JPG",
+				"DICOM"
+            		],
+			"size" : 1,
+		        "unit" : {
+            			"value": "KB"
+		        },
+			"access": {
+				"landingPage": "http://www.blueprintatlas.org/static/download/",
+				"authorizations": [
+					{
+						"value": "public"
+					}
+				]
+			}
+		}
+	],
 
-			]
+			"version": "1.0.0",
+			"storedIn": {
+				"name": "http://download.alleninstitute.org/nhp/Prenatal_Macaque_LMD_Microarray/neuroanatomical_guides_for_LMD_sampling/",
+				"description": "Directory containing 144 .JPG files + 1 summary document"
+			}
 		},
 		{
-			"title":"Chromosome 13",
+			"title":"Transcriptional architecture of the primate neocortex",
 			"creators": [
 				{
-					"name": "1000 Genomes Project"
+					"name": "The Allen Institute for Brain Science"
 				}
 			],
 			"types": [
 				{
 					"information": {
-						"value": "genomics"
+						"value": "neuroanatomical images"
 					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr13.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"2705190"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"113204"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
 				}
 			],
 			"licenses": [
 				{
-					"name": "BY-NC-SA"
+					"name": "https://alleninstitute.org/legal/terms-use/"
 				}
 			],
-          	"description": "The 1000 Genomes Project provides a comprehensive description of common human variation by applying a combination of whole-genome sequencing, deep exome sequencing and dense microarray genotyping to a diverse set of 2504 individuals from 26 populations.  Over 88 million variants are characterised, including >99% of SNP variants with a frequency of >1% for a variety of ancestries.",
-			"version": "1.0",
+			"description": "Transcriptional architecture of the primate neocortex",
 			"keywords": [
 				{
-					"value": "Genomics"
+					"value" : "transcriptomics"
 				}
+			],
+	"distributions": [
+	        {
+			"formats": [
+				".CEL",
+				".JPG",
+				"DICOM"
+            		],
+			"size" : 52,
+		        "unit" : {
+            			"value": "KB"
+		        },
+			"access": {
+				"landingPage": "http://www.blueprintatlas.org/static/download/",
+				"authorizations": [
+					{
+						"value": "public"
+					}
+				]
+			}
+		}
+	],
 
-			]
+			"version": "1.0.0",
+			"storedIn": {
+				"name": "http://download.alleninstitute.org/nhp/Transcriptional_Architecture_of_the_Primate_Neocortex/",
+				"description": "Directory containing 226 .CEL files + 3 summary/metadata documents"
+			}
 		},
 		{
-			"title":"Chromosome 14",
+			"title":"14349_MRI.zip",
 			"creators": [
 				{
-					"name": "1000 Genomes Project"
+					"name": "The Allen Institute for Brain Science"
 				}
 			],
 			"types": [
 				{
 					"information": {
-						"value": "genomics"
+						"value": "neuroanatomical images"
 					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr14.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"2490590"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"99773"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
 				}
 			],
 			"licenses": [
 				{
-					"name": "BY-NC-SA"
+					"name": "https://alleninstitute.org/legal/terms-use/"
 				}
 			],
-          	"description": "The 1000 Genomes Project provides a comprehensive description of common human variation by applying a combination of whole-genome sequencing, deep exome sequencing and dense microarray genotyping to a diverse set of 2504 individuals from 26 populations.  Over 88 million variants are characterised, including >99% of SNP variants with a frequency of >1% for a variety of ancestries.",
-			"version": "1.0",
+			"description": "Zipped cerebral MRI images from adult (48 months) rhesus macaque, specimen 1",
 			"keywords": [
 				{
-					"value": "Genomics"
+					"value" : "transcriptomics"
 				}
+			],
+	"distributions": [
+	        {
+			"formats": [
+				".CEL",
+				".JPG",
+				"DICOM"
+            		],
+			"size" : 4.5,
+		        "unit" : {
+            			"value": "MB"
+		        },
+			"access": {
+				"landingPage": "http://www.blueprintatlas.org/static/download/",
+				"authorizations": [
+					{
+						"value": "public"
+					}
+				]
+			}
+		}
+	],
 
-			]
+			"version": "1.0.0",
+			"storedIn": {
+				"name": "http://blueprintnhpatlas.org/api/v2/well_known_file_download/147139113",
+				"description": "Zipped cerebral MRI images from adult (48 months) rhesus macaque, specimen 1"
+			}
 		},
 		{
-			"title":"Chromosome 15",
+			"title":"14447_MRI.zip",
 			"creators": [
 				{
-					"name": "1000 Genomes Project"
+					"name": "The Allen Institute for Brain Science"
 				}
 			],
 			"types": [
 				{
 					"information": {
-						"value": "genomics"
+						"value": "neuroanatomical images"
 					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr15.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"2273944"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"89809"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
 				}
 			],
 			"licenses": [
 				{
-					"name": "BY-NC-SA"
+					"name": "https://alleninstitute.org/legal/terms-use/"
 				}
 			],
-          	"description": "The 1000 Genomes Project provides a comprehensive description of common human variation by applying a combination of whole-genome sequencing, deep exome sequencing and dense microarray genotyping to a diverse set of 2504 individuals from 26 populations.  Over 88 million variants are characterised, including >99% of SNP variants with a frequency of >1% for a variety of ancestries.",
-			"version": "1.0",
+			"description": "Zipped cerebral MRI images from adult (48 months) rhesus macaque, specimen 2",
 			"keywords": [
 				{
-					"value": "Genomics"
+					"value" : "transcriptomics"
 				}
+			],	"distributions": [
+	        {
+			"formats": [
+				".CEL",
+				".JPG",
+				"DICOM"
+            		],
+			"size" : 4.0,
+		        "unit" : {
+            			"value": "MB"
+		        },
+			"access": {
+				"landingPage": "http://www.blueprintatlas.org/static/download/",
+				"authorizations": [
+					{
+						"value": "public"
+					}
+				]
+			}
+		}
+	],
 
-			]
+			"version": "1.0.0",
+			"storedIn": {
+				"name": "http://blueprintnhpatlas.org/api/v2/well_known_file_download/147139119",
+				"description": "Zipped cerebral MRI images from adult (48 months) rhesus macaque, specimen 2"
+			}
 		},
 		{
-			"title":"Chromosome 16",
+			"title":"14868_MRI.zip",
 			"creators": [
 				{
-					"name": "1000 Genomes Project"
+					"name": "The Allen Institute for Brain Science"
 				}
 			],
 			"types": [
 				{
 					"information": {
-						"value": "genomics"
+						"value": "neuroanatomical images"
 					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr16.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"2528069"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"84171"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
 				}
 			],
 			"licenses": [
 				{
-					"name": "BY-NC-SA"
+					"name": "https://alleninstitute.org/legal/terms-use/"
 				}
 			],
-          	"description": "The 1000 Genomes Project provides a comprehensive description of common human variation by applying a combination of whole-genome sequencing, deep exome sequencing and dense microarray genotyping to a diverse set of 2504 individuals from 26 populations.  Over 88 million variants are characterised, including >99% of SNP variants with a frequency of >1% for a variety of ancestries.",
-			"version": "1.0",
+			"description": "Zipped cerebral MRI images from adult (48 months) rhesus macaque, specimen 3",
 			"keywords": [
 				{
-					"value": "Genomics"
+					"value" : "transcriptomics"
 				}
-
-			]
-		},
-		{
-			"title":"Chromosome 17",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
+			],	"distributions": [
+	        {
+			"formats": [
+				".CEL",
+				".JPG",
+				"DICOM"
+            		],
+			"size" : 4.2,
+		        "unit" : {
+            			"value": "MB"
+		        },
+			"access": {
+				"landingPage": "http://www.blueprintatlas.org/static/download/",
+				"authorizations": [
+					{
+						"value": "public"
 					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr17.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"2143622"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"87646"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
-				}
-			],
-			"licenses": [
-				{
-					"name": "BY-NC-SA"
-				}
-			],
-          	"description": "The 1000 Genomes Project provides a comprehensive description of common human variation by applying a combination of whole-genome sequencing, deep exome sequencing and dense microarray genotyping to a diverse set of 2504 individuals from 26 populations.  Over 88 million variants are characterised, including >99% of SNP variants with a frequency of >1% for a variety of ancestries.",
-			"version": "1.0",
-			"keywords": [
-				{
-					"value": "Genomics"
-				}
+				]
+			}
+		}
+	],
 
-			]
-		},
-		{
-			"title":"Chromosome 18",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
-					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
+			"version": "1.0.0",
 			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr18.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"2151346"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"82396"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
-				}
-			],
-			"licenses": [
-				{
-					"name": "BY-NC-SA"
-				}
-			],
-          	"description": "The 1000 Genomes Project provides a comprehensive description of common human variation by applying a combination of whole-genome sequencing, deep exome sequencing and dense microarray genotyping to a diverse set of 2504 individuals from 26 populations.  Over 88 million variants are characterised, including >99% of SNP variants with a frequency of >1% for a variety of ancestries.",
-			"version": "1.0",
-			"keywords": [
-				{
-					"value": "Genomics"
-				}
-
-			]
-		},
-		{
-			"title":"Chromosome 19",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
-					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr19.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"1648250"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"67728"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
-				}
-			],
-			"licenses": [
-				{
-					"name": "BY-NC-SA"
-				}
-			],
-          	"description": "The 1000 Genomes Project provides a comprehensive description of common human variation by applying a combination of whole-genome sequencing, deep exome sequencing and dense microarray genotyping to a diverse set of 2504 individuals from 26 populations.  Over 88 million variants are characterised, including >99% of SNP variants with a frequency of >1% for a variety of ancestries.",
-			"version": "1.0",
-			"keywords": [
-				{
-					"value": "Genomics"
-				}
-
-			]
-		},
-		{
-			"title":"Chromosome 2",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
-					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr2.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"6689892"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"254832"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
-				}
-			],
-			"licenses": [
-				{
-					"name": "BY-NC-SA"
-				}
-			],
-          	"description": "The 1000 Genomes Project provides a comprehensive description of common human variation by applying a combination of whole-genome sequencing, deep exome sequencing and dense microarray genotyping to a diverse set of 2504 individuals from 26 populations.  Over 88 million variants are characterised, including >99% of SNP variants with a frequency of >1% for a variety of ancestries.",
-			"version": "1.0",
-			"keywords": [
-				{
-					"value": "Genomics"
-				}
-
-			]
-		},
-		{
-			"title":"Chromosome 20",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
-					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr20.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"1702558"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"62847"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
-				}
-			],
-			"licenses": [
-				{
-					"name": "BY-NC-SA"
-				}
-			],
-          	"description": "The 1000 Genomes Project provides a comprehensive description of common human variation by applying a combination of whole-genome sequencing, deep exome sequencing and dense microarray genotyping to a diverse set of 2504 individuals from 26 populations.  Over 88 million variants are characterised, including >99% of SNP variants with a frequency of >1% for a variety of ancestries.",
-			"version": "1.0",
-			"keywords": [
-				{
-					"value": "Genomics"
-				}
-
-			]
-		},
-		{
-			"title":"Chromosome 21",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
-					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr21.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"1037591"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"43733"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
-				}
-			],
-			"licenses": [
-				{
-					"name": "BY-NC-SA"
-				}
-			],
-          	"description": "The 1000 Genomes Project provides a comprehensive description of common human variation by applying a combination of whole-genome sequencing, deep exome sequencing and dense microarray genotyping to a diverse set of 2504 individuals from 26 populations.  Over 88 million variants are characterised, including >99% of SNP variants with a frequency of >1% for a variety of ancestries.",
-			"version": "1.0",
-			"keywords": [
-				{
-					"value": "Genomics"
-				}
-
-			]
-		},
-		{
-			"title":"Chromosome 22",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
-					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr22.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"1019265"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"40550"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
-				}
-			],
-			"licenses": [
-				{
-					"name": "BY-NC-SA"
-				}
-			],
-          	"description": "The 1000 Genomes Project provides a comprehensive description of common human variation by applying a combination of whole-genome sequencing, deep exome sequencing and dense microarray genotyping to a diverse set of 2504 individuals from 26 populations.  Over 88 million variants are characterised, including >99% of SNP variants with a frequency of >1% for a variety of ancestries.",
-			"version": "1.0",
-			"keywords": [
-				{
-					"value": "Genomics"
-				}
-
-			]
-		},
-		{
-			"title":"Chromosome 3",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
-					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr3.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"5510472"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"213759"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
-				}
-			],
-			"licenses": [
-				{
-					"name": "BY-NC-SA"
-				}
-			],
-          	"description": "The 1000 Genomes Project provides a comprehensive description of common human variation by applying a combination of whole-genome sequencing, deep exome sequencing and dense microarray genotyping to a diverse set of 2504 individuals from 26 populations.  Over 88 million variants are characterised, including >99% of SNP variants with a frequency of >1% for a variety of ancestries.",
-			"version": "1.0",
-			"keywords": [
-				{
-					"value": "Genomics"
-				}
-
-			]
-		},
-		{
-			"title":"Chromosome 4",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
-					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr4.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"5430270"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"217157"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
-				}
-			],
-			"licenses": [
-				{
-					"name": "BY-NC-SA"
-				}
-			],
-          	"description": "The 1000 Genomes Project provides a comprehensive description of common human variation by applying a combination of whole-genome sequencing, deep exome sequencing and dense microarray genotyping to a diverse set of 2504 individuals from 26 populations.  Over 88 million variants are characterised, including >99% of SNP variants with a frequency of >1% for a variety of ancestries.",
-			"version": "1.0",
-			"keywords": [
-				{
-					"value": "Genomics"
-				}
-
-			]
-		},
-		{
-			"title":"Chromosome 5",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
-					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr5.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"4978871"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"196285"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
-				}
-			],
-			"licenses": [
-				{
-					"name": "BY-NC-SA"
-				}
-			],
-          	"description": "The 1000 Genomes Project provides a comprehensive description of common human variation by applying a combination of whole-genome sequencing, deep exome sequencing and dense microarray genotyping to a diverse set of 2504 individuals from 26 populations.  Over 88 million variants are characterised, including >99% of SNP variants with a frequency of >1% for a variety of ancestries.",
-			"version": "1.0",
-			"keywords": [
-				{
-					"value": "Genomics"
-				}
-
-			]
-		},
-		{
-			"title":"Chromosome 6",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
-					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr6.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"4732160"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"193158"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
-				}
-			],
-			"licenses": [
-				{
-					"name": "BY-NC-SA"
-				}
-			],
-          	"description": "The 1000 Genomes Project provides a comprehensive description of common human variation by applying a combination of whole-genome sequencing, deep exome sequencing and dense microarray genotyping to a diverse set of 2504 individuals from 26 populations.  Over 88 million variants are characterised, including >99% of SNP variants with a frequency of >1% for a variety of ancestries.",
-			"version": "1.0",
-			"keywords": [
-				{
-					"value": "Genomics"
-				}
-
-			]
-		},
-		{
-			"title":"Chromosome 7",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
-					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr7.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"4450904"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"170788"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
-				}
-			],
-			"licenses": [
-				{
-					"name": "BY-NC-SA"
-				}
-			],
-          	"description": "The 1000 Genomes Project provides a comprehensive description of common human variation by applying a combination of whole-genome sequencing, deep exome sequencing and dense microarray genotyping to a diverse set of 2504 individuals from 26 populations.  Over 88 million variants are characterised, including >99% of SNP variants with a frequency of >1% for a variety of ancestries.",
-			"version": "1.0",
-			"keywords": [
-				{
-					"value": "Genomics"
-				}
-
-			]
-		},
-		{
-			"title":"Chromosome 8",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
-					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr8.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"4368964"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"151538"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
-				}
-			],
-			"licenses": [
-				{
-					"name": "BY-NC-SA"
-				}
-			],
-          	"description": "The 1000 Genomes Project provides a comprehensive description of common human variation by applying a combination of whole-genome sequencing, deep exome sequencing and dense microarray genotyping to a diverse set of 2504 individuals from 26 populations.  Over 88 million variants are characterised, including >99% of SNP variants with a frequency of >1% for a variety of ancestries.",
-			"version": "1.0",
-			"keywords": [
-				{
-					"value": "Genomics"
-				}
-
-			]
-		},
-		{
-			"title":"Chromosome 9",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
-					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr9.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"3355633"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"124138"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
-				}
-			],
-			"licenses": [
-				{
-					"name": "BY-NC-SA"
-				}
-			],
-          	"description": "The 1000 Genomes Project provides a comprehensive description of common human variation by applying a combination of whole-genome sequencing, deep exome sequencing and dense microarray genotyping to a diverse set of 2504 individuals from 26 populations.  Over 88 million variants are characterised, including >99% of SNP variants with a frequency of >1% for a variety of ancestries.",
-			"version": "1.0",
-			"keywords": [
-				{
-					"value": "Genomics"
-				}
-
-			]
-		},
-		{
-			"title":"Mitochondrial genome",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
-					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-10-02 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chrMT.phase3_callmom-v0_4.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"3587"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"20"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": ""
-						}
-					]
-				}
-			],
-			"licenses": [
-				{
-					"name": "BY-NC-SA"
-				}
-			],
-          	"description": "The 1000 Genomes Project provides a comprehensive description of common human variation by applying a combination of whole-genome sequencing, deep exome sequencing and dense microarray genotyping to a diverse set of 2504 individuals from 26 populations.  Over 88 million variants are characterised, including >99% of SNP variants with a frequency of >1% for a variety of ancestries.",
-			"version": "1.0",
-			"keywords": [
-				{
-					"value": "Genomics"
-				}
-
-			]
-		},
-		{
-			"title":"Chromosome X",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
-					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chrX.phase3_shapeit2_mvncall_integrated_v1b.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"3191768"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"210679"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
-				}
-			],
-			"licenses": [
-				{
-					"name": "BY-NC-SA"
-				}
-			],
-          	"description": "The 1000 Genomes Project provides a comprehensive description of common human variation by applying a combination of whole-genome sequencing, deep exome sequencing and dense microarray genotyping to a diverse set of 2504 individuals from 26 populations.  Over 88 million variants are characterised, including >99% of SNP variants with a frequency of >1% for a variety of ancestries.",
-			"version": "1.0",
-			"keywords": [
-				{
-					"value": "Genomics"
-				}
-
-			]
-		},
-		{
-			"title":"Chromosome Y",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
-					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chrY.phase3_integrated_v2a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"60505"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"1314"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
-				}
-			],
-			"licenses": [
-				{
-					"name": "BY-NC-SA"
-				}
-			],
-          	"description": "The 1000 Genomes Project provides a comprehensive description of common human variation by applying a combination of whole-genome sequencing, deep exome sequencing and dense microarray genotyping to a diverse set of 2504 individuals from 26 populations.  Over 88 million variants are characterised, including >99% of SNP variants with a frequency of >1% for a variety of ancestries.",
-			"version": "1.0",
-			"keywords": [
-				{
-					"value": "Genomics"
-				}
-
-			]
+				"name": "http://blueprintnhpatlas.org/api/v2/well_known_file_download/147139125",
+				"description": "Zipped cerebral MRI images from adult (48 months) rhesus macaque, specimen 3"
+			}
 		}
 	],
 	"extraProperties": [
@@ -1768,14 +519,33 @@
 			"category": "contact",
 			"values": [
 				{
-					"value": "Jennifer Tremblay-Mercier, Research Co-ordinator, jennifer.tremblay-mercier@douglas.mcgill.ca, 514-761-6131 #3329"
+					"value": "http://www.alleninstitute.org#contact-form"
+				}
+			]
+		},
+		{
+			"category": "CONP_status",
+			"values": [
+				{
+					"value": "external"
+				}
+			]
+		},
+		{
+			"category": "files",
+			"values": [
+				{
+					"value": "385"
+				}
+			]
+		},
+		{
+			"category": "logo",
+			"values": [
+				{
+					"value": "logo.jpg"
 				}
 			]
 		}
-	],
-	"keywords": [
-		{
-      		"value": "Genomics"
-    	}
 	]
 }
