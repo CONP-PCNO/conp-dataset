@@ -4,7 +4,7 @@ import argparse
 import os
 import sys
 import traceback
-sys.path.append(os.path.abspath(os.path.join(os.path.expanduser("~"), "giulia_crawler/conp-dataset")))
+sys.path.append(os.path.abspath("/data/giulia_crawler/conp-dataset"))
 from scripts.Crawlers.ZenodoCrawler import ZenodoCrawler
 from scripts.Crawlers.OSFCrawler import OSFCrawler
 from scripts.Crawlers.FrdrCrawler import FrdrCrawler
