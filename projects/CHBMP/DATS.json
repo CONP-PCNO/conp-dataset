@@ -1,0 +1,1455 @@
+{
+  "@id": "https://w3id.org/dats/schema/dataset_schema.json",
+  "@type": "Dataset",
+  "title": "The Cuban Human Brain Mapping Normative database (EEG, MRI, and Cognition dataset)",
+  "description": "The Cuban Human Brain Mapping Project (CHBMP) repository is an open multimodal neuroimaging and cognitive dataset from 282 healthy participants (31.9 ± 9.3 years, age range 18–68 years). This dataset was acquired from 2004 to 2008 as a subset of a larger stratified random sample of 2,019 participants from La Lisa municipality in La Habana, Cuba. The exclusion included presence of disease or brain dysfunctions. The information made available for all participants comprises: high-density (64-120 channels) resting state electroencephalograms (EEG), magnetic resonance images (MRI), psychological tests (MMSE, Wechsler Adult Intelligence Scale -WAIS III, computerized reaction time tests using a go no-go paradigm), as well as general information (age, gender, education, ethnicity, handedness and weight). The EEG data contains recordings with at least 30 minutes duration including the following conditions: eyes closed, eyes open, hyperventilation and subsequent recovery. The MRI consisted in anatomical T1 as well as diffusion weighted (DWI) images acquired on a 1.5 Tesla system. The data is available for registered users on the LORIS database which is part of the MNI neuroinformatics ecosystem.",
+  "identifier": {
+    "@id": "https://w3id.org/dats/schema/identifier_info_schema.json",
+    "@type": "Identifier",
+    "identifier": "https://doi.org/10.5281/zenodo.3945385",
+    "identifierSource": "Zenodo DOI"
+  },
+  "creators": [
+    {
+      "name": "Cuban Center for Neuroscience, La Habana, Cuba"
+    },
+    {
+      "name": "Pedro A. Valdes-Sosa",
+      "roles": [
+        {
+          "value": "Principal Investigator"
+        }
+      ]
+	}
+  ],
+  "storedIn": {
+    "name": "https://chbmp-open.loris.ca/"
+  },
+  "types": [
+    {
+      "@id": "https://w3id.org/dats/schema/data_type_schema.json",
+      "@type": "DataType",
+      "information": {
+        "@id": "https://w3id.org/dats/schema/annotation_schema.json",
+        "@type": "Annotation",
+        "value": "EEG"
+      }
+    },
+    {
+      "@id": "https://w3id.org/dats/schema/data_type_schema.json",
+      "@type": "DataType",
+      "information": {
+        "@id": "https://w3id.org/dats/schema/annotation_schema.json",
+        "@type": "Annotation",
+        "value": "MRI"
+      }
+    },
+    {
+      "@id": "https://w3id.org/dats/schema/data_type_schema.json",
+      "@type": "DataType",
+      "information": {
+        "@id": "https://w3id.org/dats/schema/annotation_schema.json",
+        "@type": "Annotation",
+        "value": "Cognition"
+      }
+    }
+  ],
+  "version": "1.0",
+  "licenses": [
+    {
+      "@id": "https://w3id.org/dats/schema/license_schema.json",
+      "@type": "License",
+      "name": "CC BY-NC-SA",
+    }
+  ],
+  "distributions": [
+    {
+    "@id": "http://json-schema.org/draft-04/schema",
+    "@type": "DatasetDistribution",
+    "formats": [
+      "EEG-BIDS",
+      "MRI-BIDS",
+      "NIfTI",
+      "CSV",
+      "XLS"
+    ],
+    "size" : 23,
+    "unit" : {
+      "@id": "https://w3id.org/dats/schema/annotation_schema.json",
+      "@type": "Annotation",
+      "value": "GB"
+    },
+    "access": {
+      "landingPage": "https://chbmp-open.loris.ca",
+      "authorizations": [
+        {
+          "value": "private"
+        }
+      ]
+    },
+    "storedIn": {
+        "name": "https://chbmp-open.loris.ca"
+      }
+    }
+  ],
+  "acknowledges" : [ 
+    {
+      "@id": "https://w3id.org/dats/schema/grant_schema.json",
+      "@type": "Grant",
+      "name": "Grants",
+      "funders": [
+        {
+          "@id": "https://w3id.org/dats/schema/organization_schema.json",
+          "@type": "Organization",
+          "name": "National Natural Science Foundation of China",
+          "abbreviation": "NSFC"
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/organization_schema.json",
+          "@type": "Organization",
+          "name": "CNS Program of UESTC"
+        }
+      ]
+    }
+  ],
+  "keywords": [
+    {
+      "@id": "https://w3id.org/dats/schema/annotation_schema.json",
+      "@type": "Annotation",
+      "value": "HBM"
+    },
+    {
+      "@id": "https://w3id.org/dats/schema/annotation_schema.json",
+      "@type": "Annotation",
+      "value": "Normative database"
+    },
+    {
+      "@id": "https://w3id.org/dats/schema/annotation_schema.json",
+      "@type": "Annotation",
+      "value": "Multimodal data"
+    },
+    {
+      "@id": "https://w3id.org/dats/schema/annotation_schema.json",
+      "@type": "Annotation",
+      "value": "Neuroinformatics"
+    },
+    {
+      "@id": "https://w3id.org/dats/schema/annotation_schema.json",
+      "@type": "Annotation",
+      "value": "Open Science"
+    },
+    {
+      "@id": "https://w3id.org/dats/schema/annotation_schema.json",
+      "@type": "Annotation",
+      "value": "qEEG"
+    },
+    {
+      "@id": "https://w3id.org/dats/schema/annotation_schema.json",
+      "@type": "Annotation",
+      "value": "LORIS"
+    }
+  ],
+  "primaryPublications": [
+    {
+      "@id": "https://w3id.org/dats/schema/publication_schema.json",
+      "@type": "Publication",
+      "title": "Multimodal quantitative neuroimaging databases and methods: The Cuban human brain mapping project.",
+      "publicationVenue": "Clinical EEG and Neuroscience, Volume 42, Issue 3, 2011",
+      "authors": [
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Gertrudis Hernandez-Gonzalez",
+          "firstName": "Gertrudis",
+          "lastName": "Hernandez-Gonzalez",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ]
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Maria L. Bringas-Vega",
+          "firstName": "Maria",
+          "middleInitial": "L.",
+          "lastName": "Bringas-Vega",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "International Center for Neurological Restoration, Havana, Cuba"
+            }
+          ]
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Lidice Galán-Garcia",
+          "firstName": "Lidice",
+          "lastName": "Galán-Garcia",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ]
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Jorge Bosch-Bayard",
+          "firstName": "Jorge",
+          "lastName": "Bosch-Bayard",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ] 
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Yenisleidy Lorenzo-Ceballos",
+          "firstName": "Yenisleidy",
+          "lastName": "Lorenzo-Ceballos",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ] 
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Lester Melie-Garcia",
+          "firstName": "Lester",
+          "lastName": "Melie-Garcia",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ] 
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Lourdes Valdes-Urrutia",
+          "firstName": "Lourdes",
+          "lastName": "Valdes-Urrutia",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ] 
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Marcia Cobas-Ruiz",
+          "firstName": "Marcia",
+          "lastName": "Cobas-Ruiz",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Ministry of Public Health, Havana, Cuba"
+            }
+          ] 
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Pedro A. Valdes-Sosa",
+          "firstName": "Pedro",
+          "middleInitial": "A.",
+          "lastName": "Valdes-Sosa",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ] 
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Organization",
+          "fullName": "Cuban Human Brain Mapping Project (CHBMP)",
+        }
+      ],
+      "dates": [
+        {
+          "@id": "https://w3id.org/dats/schema/date_info_schema.json",
+          "@type": "Date",
+          "date": "2011-07-01",
+          "type": 
+            {
+              "@id": "https://w3id.org/dats/schema/annotation_schema.json",
+              "@type": "Annotation",
+              "value": "Publication Date"
+            }
+        }
+      ],
+      "identifier": {
+        "@id": "https://w3id.org/dats/schema/identifier_info_schema.json",
+        "@type": "Identifier",
+        "identifier": "https://doi.org/10.1177/155005941104200303",
+        "identifierSource": "International DOI Foundation"
+      }
+    },
+    {
+      "@id": "https://w3id.org/dats/schema/publication_schema.json",
+      "@type": "Publication",
+      "title": "Approximate average head models for EEG source imaging.",
+      "publicationVenue": "Journal of Neuroscience Methods, Volume 185, Issue 1, 2009",
+      "authors": [
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Pedro A. Valdes-Hernandez",
+          "firstName": "Pedro",
+          "middleInitial": "A",
+          "lastName": "Valdes-Hernandez",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ]
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Nicolas von Ellenrieder",
+          "firstName": "Nicolas",
+          "lastName": "von Ellenrieder",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "National University of La Plata, La Plata, Argentina"
+            }
+          ]
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Alejandro Ojeda-Gonzalez",
+          "firstName": "Alejandro",
+          "lastName": "Ojeda-Gonzalez",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ]
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Silvia Kochen",
+          "firstName": "Silvia",
+          "lastName": "Kochen",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "University of Buenos Aires, Buenos Aires, Argentina"
+            }
+          ] 
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Yasser Aleman-Gomez",
+          "firstName": "Yasser",
+          "lastName": "Aleman-Gomez",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ] 
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Carlos Muravchik",
+          "firstName": "Carlos",
+          "lastName": "Muravchik",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "National University of La Plata, La Plata, Argentina"
+            }
+          ] 
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Valdes-Sosa",
+          "firstName": "Pedro",
+          "middleInitial": "A.",
+          "lastName": "Valdes-Sosa",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ] 
+        }
+      ],
+      "dates": [
+        {
+          "@id": "https://w3id.org/dats/schema/date_info_schema.json",
+          "@type": "Date",
+          "date": "2009-12-15",
+          "type": 
+            {
+              "@id": "https://w3id.org/dats/schema/annotation_schema.json",
+              "@type": "Annotation",
+              "value": "Publication Date"
+            }
+        }
+      ],
+      "identifier": {
+        "@id": "https://w3id.org/dats/schema/identifier_info_schema.json",
+        "@type": "Identifier",
+        "identifier": "https://doi.org/10.1016/j.jneumeth.2009.09.005",
+        "identifierSource": "International DOI Foundation"
+      }
+    },
+    {
+      "@id": "https://w3id.org/dats/schema/publication_schema.json",
+      "@type": "Publication",
+      "title": "A quantitative EEG toolbox for the MNI Neuroinformatics ecosystem: normative SPM of EEG source spectra.",
+      "publicationVenue": "Frontiers in Neuroinformatics (in press)",
+      "authors": [
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Jorge F. Bosch-Bayard",
+          "firstName": "Jorge",
+          "middleInitial": "F.",
+          "lastName": "Bosch-Bayard",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "McGill Centre for Integrative Neuroscience, Montreal Neurological Institute, Canada"
+            }
+          ]
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Eduardo Aubert-Vazquez",
+          "firstName": "Eduardo",
+          "lastName": "Aubert-Vazquez",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ]
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Shawn T. Brown",
+          "firstName": "Shawn",
+          "middleInitial": "T.",
+          "lastName": "Brown",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "McGill Centre for Integrative Neuroscience, Montreal Neurological Institute, Canada"
+            }
+          ]
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Christine Rogers",
+          "firstName": "Christine",
+          "lastName": "Rogers",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "McGill Centre for Integrative Neuroscience, Montreal Neurological Institute, Canada"
+            }
+          ] 
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Gregory Kiar",
+          "firstName": "Gregory",
+          "lastName": "Kiar",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "McGill Centre for Integrative Neuroscience, Montreal Neurological Institute, Canada"
+            }
+          ] 
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Tristan Glatard",
+          "firstName": "Tristan",
+          "lastName": "Glatard",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "McGill Centre for Integrative Neuroscience, Montreal Neurological Institute, Canada"
+            }
+          ] 
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Lalet Scaria",
+          "firstName": "Lalet",
+          "lastName": "Scaria",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "McGill Centre for Integrative Neuroscience, Montreal Neurological Institute, Canada"
+            }
+          ] 
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Lidice Galan",
+          "firstName": "Lidice",
+          "lastName": "Galan",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ] 
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Maria L. Bringas",
+          "firstName": "Maria",
+          "middleInitial": "L.",
+          "lastName": "Bringas",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Clinical Hospital of Chengdu Brain Science Institute, University of Electronic Science and Technology of China, China"
+            }
+          ] 
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Trinidad D. Virues",
+          "firstName": "Trinidad",
+          "middleInitial": "D.",
+          "lastName": "Virues",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ] 
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Armin Taheri",
+          "firstName": "Armin",
+          "lastName": "Taheri",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "McGill Centre for Integrative Neuroscience, Montreal Neurological Institute, Canada"
+            }
+          ] 
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Samir Das",
+          "firstName": "Samir",
+          "lastName": "Das",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "McGill Centre for Integrative Neuroscience, Montreal Neurological Institute, Canada"
+            }
+          ] 
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Cecile Madjar",
+          "firstName": "Cecile",
+          "lastName": "Madjar",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "McGill Centre for Integrative Neuroscience, Montreal Neurological Institute, Canada"
+            }
+          ] 
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Zia Mohaddes",
+          "firstName": "Zia",
+          "lastName": "Mohaddes",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "McGill Centre for Integrative Neuroscience, Montreal Neurological Institute, Canada"
+            }
+          ] 
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Leigh C. MacIntyre",
+          "firstName": "Leigh",
+          "middleInitial": "C.",
+          "lastName": "MacIntyre",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "McGill Centre for Integrative Neuroscience, Montreal Neurological Institute, Canada"
+            }
+          ] 
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Alan C. Evans",
+          "firstName": "Alan",
+          "middleInitial": "C.",
+          "lastName": "Evans",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "McGill Centre for Integrative Neuroscience, Montreal Neurological Institute, Canada"
+            }
+          ] 
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Pedro A. Valdes-Sosa",
+          "firstName": "Pedro",
+          "middleInitial": "A.",
+          "lastName": "Valdes-Sosa",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "McGill Centre for Integrative Neuroscience, Montreal Neurological Institute, Canada"
+            }
+          ] 
+        }
+      ],
+      "dates": [
+        {
+          "@id": "https://w3id.org/dats/schema/date_info_schema.json",
+          "@type": "Date",
+          "date": "2020",
+          "type": 
+            {
+              "@id": "https://w3id.org/dats/schema/annotation_schema.json",
+              "@type": "Annotation",
+              "value": "Publication Date"
+            }
+        }
+      ],
+      "identifier": {
+        "@id": "https://w3id.org/dats/schema/identifier_info_schema.json",
+        "@type": "Identifier",
+        "identifier": "10.3389/fninf.2020.00033",
+        "identifierSource": "International DOI Foundation"
+      }
+    },
+    {
+      "@id": "https://w3id.org/dats/schema/publication_schema.json",
+      "@type": "Publication",
+      "title": "Crystallized and fluid intelligence are predicted by microstructure of specific white‐matter tracts.",
+      "publicationVenue": "Human Brain Mapping, Volume 41, Issue 4, 2020",
+      "authors": [
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Daylin Gongora",
+          "firstName": "Daylin",
+          "lastName": "Gongora",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ]
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Mayrim Vega-Hernandez",
+          "firstName": "Mayrim",
+          "lastName": "Vega-Hernandez",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ]
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Marjan Jahanshahi",
+          "firstName": "Marjan",
+          "lastName": "Jahanshahi",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "UCL Queen Square Institute of Neurology, London, UK"
+            }
+          ]
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Pedro A. Valdes-Sosa",
+          "firstName": "Pedro",
+          "middleInitial": "A.",
+          "lastName": "Valdes-Sosa",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ] 
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Maria L. Bringas-Vega",
+          "firstName": "Maria",
+          "middleInitial": "L.",
+          "lastName": "Bringas-Vega",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ] 
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Organization",
+          "fullName": "Cuban Human Brain Mapping Project (CHBMP)",
+        }
+      ],
+      "dates": [
+        {
+          "@id": "https://w3id.org/dats/schema/date_info_schema.json",
+          "@type": "Date",
+          "date": "2019-11-05",
+          "type": 
+            {
+              "@id": "https://w3id.org/dats/schema/annotation_schema.json",
+              "@type": "Annotation",
+              "value": "Publication Date"
+            }
+        }
+      ],
+      "identifier": {
+        "@id": "https://w3id.org/dats/schema/identifier_info_schema.json",
+        "@type": "Identifier",
+        "identifier": "https://doi.org/10.1002/hbm.24848",
+        "identifierSource": "International DOI Foundation"
+      }
+    },
+    {
+      "@id": "https://w3id.org/dats/schema/publication_schema.json",
+      "@type": "Publication",
+      "title": "Surface area and cortical thickness descriptors reveal different attributes of the structural human brain networks.",
+      "publicationVenue": "Neuroimage, Volume 50, Issue 4, 2010",
+      "authors": [
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Gretel Sanabria-Diaz",
+          "firstName": "Gretel",
+          "lastName": "Sanabria-Diaz",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ]
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Lester Melie-Garcia",
+          "firstName": "Lester",
+          "lastName": "Melie-Garcia",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ]
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Yasser Iturria-Medina",
+          "firstName": "Yasser",
+          "lastName": "Iturria-Medina",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ]
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Yasser Aleman-Gomez",
+          "firstName": "Yasser",
+          "lastName": "Aleman-Gomez",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ]
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Gertrudis Hernandez-Gonzalez",
+          "firstName": "Gertrudis",
+          "lastName": "Hernandez-Gonzalez",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ]
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Lourdes Valdes-Urrutia",
+          "firstName": "Lourdes",
+          "lastName": "Valdes-Urrutia",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ]
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Lidice Galan",
+          "firstName": "Lidice",
+          "lastName": "Galan",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ]
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Pedro A. Valdes-Sosa",
+          "firstName": "Pedro",
+          "middleInitial": "A.",
+          "lastName": "Valdes-Sosa",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ] 
+        }
+      ],
+      "dates": [
+        {
+          "@id": "https://w3id.org/dats/schema/date_info_schema.json",
+          "@type": "Date",
+          "date": "2010-01-18",
+          "type": 
+            {
+              "@id": "https://w3id.org/dats/schema/annotation_schema.json",
+              "@type": "Annotation",
+              "value": "Publication Date"
+            }
+        }
+      ],
+      "identifier": {
+        "@id": "https://w3id.org/dats/schema/identifier_info_schema.json",
+        "@type": "Identifier",
+        "identifier": "https://doi.org/10.1016/j.neuroimage.2010.01.028",
+        "identifierSource": "International DOI Foundation"
+      }
+    },
+    {
+      "@id": "https://w3id.org/dats/schema/publication_schema.json",
+      "@type": "Publication",
+      "title": "White Matter Architecture Rather Than Cortical Surface Area Correlates With the EEG Alpha Rhythm.",
+      "publicationVenue": "Neuroimage, Volume 49, Issue 3, 2009",
+      "authors": [
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Pedro A. Valdes-Hernandez",
+          "firstName": "Pedro",
+          "middleInitial": "A.",
+          "lastName": "Valdes-Hernandez",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ] 
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Alejandro Ojeda-Gonzalez",
+          "firstName": "Alejandro",
+          "lastName": "Ojeda-Gonzalez",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ]
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Eduardo Martinez-Montes",
+          "firstName": "Eduardo",
+          "lastName": "Martinez-Montes",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ]
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Agustin Lage-Castellanos",
+          "firstName": "Agustin",
+          "lastName": "Lage-Castellanos",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ]
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Trinidad Virues-Alba",
+          "firstName": "Trinidad",
+          "lastName": "Virues-Alba",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ]
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Lourdes Valdes-Urrutia",
+          "firstName": "Lourdes",
+          "lastName": "Valdes-Urrutia",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ]
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Pedro A. Valdes-Sosa",
+          "firstName": "Pedro",
+          "middleInitial": "A.",
+          "lastName": "Valdes-Sosa",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ] 
+        }
+      ],
+      "dates": [
+        {
+          "@id": "https://w3id.org/dats/schema/date_info_schema.json",
+          "@type": "Date",
+          "date": "2009-10-19",
+          "type": 
+            {
+              "@id": "https://w3id.org/dats/schema/annotation_schema.json",
+              "@type": "Annotation",
+              "value": "Publication Date"
+            }
+        }
+      ],
+      "identifier": {
+        "@id": "https://w3id.org/dats/schema/identifier_info_schema.json",
+        "@type": "Identifier",
+        "identifier": "https://doi.org/10.1016/j.neuroimage.2009.10.030",
+        "identifierSource": "International DOI Foundation"
+      }
+    },
+    {
+      "@id": "https://w3id.org/dats/schema/publication_schema.json",
+      "@type": "Publication",
+      "title": "Characterizing Brain Anatomical Connections Using Diffusion Weighted MRI and Graph Theory.",
+      "publicationVenue": "Neuroimage, Volume 36, Issue 3, 2007",
+      "authors": [
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Yasser Iturria-Medina",
+          "firstName": "Yasser",
+          "lastName": "Iturria-Medina",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ]
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Erick J. Canales-Rodriguez",
+          "firstName": "Erick",
+          "middleInitial": "J.",
+          "lastName": "Canales-Rodriguez",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ] 
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Lester Melie-Garcia",
+          "firstName": "Lester",
+          "lastName": "Melie-Garcia",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ] 
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Pedro A. Valdes-Hernandez",
+          "firstName": "Pedro",
+          "middleInitial": "A.",
+          "lastName": "Valdes-Hernandez",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ] 
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Eduardo Martinez-Montes",
+          "firstName": "Eduardo",
+          "lastName": "Martinez-Montes",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ]
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Yasser Aleman-Gomez",
+          "firstName": "Yasser",
+          "lastName": "Aleman-Gomez",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ] 
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Jose M. Sanchez-Bornot",
+          "firstName": "Jose",
+          "middleInitial": "M.",
+          "lastName": "Sanchez-Bornot",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ] 
+        }
+      ],
+      "dates": [
+        {
+          "@id": "https://w3id.org/dats/schema/date_info_schema.json",
+          "@type": "Date",
+          "date": "2007-02-15",
+          "type": 
+            {
+              "@id": "https://w3id.org/dats/schema/annotation_schema.json",
+              "@type": "Annotation",
+              "value": "Publication Date"
+            }
+        }
+      ],
+      "identifier": {
+        "@id": "https://w3id.org/dats/schema/identifier_info_schema.json",
+        "@type": "Identifier",
+        "identifier": "https://doi.org/10.1016/j.neuroimage.2007.02.012",
+        "identifierSource": "International DOI Foundation"
+      }
+    },
+    {
+      "@id": "https://w3id.org/dats/schema/publication_schema.json",
+      "@type": "Publication",
+      "title": "Studying the Human Brain Anatomical Network via Diffusion-Weighted MRI and Graph Theory.",
+      "publicationVenue": "Neuroimage, Volume 40, Issue 3, 2007",
+      "authors": [
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Yasser Iturria-Medina",
+          "firstName": "Yasser",
+          "lastName": "Iturria-Medina",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ]
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Roberto C. Sotero",
+          "firstName": "Roberto",
+          "middleInitial": "C.",
+          "lastName": "Sotero",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ] 
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Erick J. Canales-Rodriguez",
+          "firstName": "Erick",
+          "middleInitial": "J.",
+          "lastName": "Canales-Rodriguez",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ] 
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Yasser Aleman-Gomez",
+          "firstName": "Yasser",
+          "lastName": "Aleman-Gomez",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ] 
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Lester Melie-Garcia",
+          "firstName": "Lester",
+          "lastName": "Melie-Garcia",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ] 
+        }
+      ],
+      "dates": [
+        {
+          "@id": "https://w3id.org/dats/schema/date_info_schema.json",
+          "@type": "Date",
+          "date": "2007-11-19",
+          "type": 
+            {
+              "@id": "https://w3id.org/dats/schema/annotation_schema.json",
+              "@type": "Annotation",
+              "value": "Publication Date"
+            }
+        }
+      ],
+      "identifier": {
+        "@id": "https://w3id.org/dats/schema/identifier_info_schema.json",
+        "@type": "Identifier",
+        "identifier": "https://doi.org/10.1016/j.neuroimage.2007.10.060",
+        "identifierSource": "International DOI Foundation"
+      }
+    },
+    {
+      "@id": "https://w3id.org/dats/schema/publication_schema.json",
+      "@type": "Publication",
+      "title": "Tensor Analysis and Fusion of Multimodal Brain Images.",
+      "publicationVenue": "IEEE, Volume 103, Issue 9, 2015",
+      "authors": [
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Esin Karhan",
+          "firstName": "Esin",
+          "lastName": "Karhan",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Bogazici University, Istanbul, Turkey"
+            }
+          ]
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Pedro A. Rojas-Lopez",
+          "firstName": "Pedro",
+          "middleInitial": "A.",
+          "lastName": "Rojas-Lopez",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ] 
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Maria L. Bringas-Vega",
+          "firstName": "Maria",
+          "middleInitial": "L.",
+          "lastName": "Bringas-Vega",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Univ. of Electron. Sci. & Technol. of China, Chengdu, China"
+            }
+          ] 
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Pedro A. Valdes-Hernandez",
+          "firstName": "Pedro",
+          "middleInitial": "A.",
+          "lastName": "Valdes-Hernandez",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ] 
+        },
+        {
+          "@id": "https://w3id.org/dats/schema/person_schema.json",
+          "@type": "Person",
+          "fullName": "Pedro A. Valdes-Sosa",
+          "firstName": "Pedro",
+          "middleInitial": "A.",
+          "lastName": "Valdes-Sosa",
+          "affiliations": [
+            {
+              "@id": "https://w3id.org/dats/schema/organization_schema.json",
+              "@type": "Organization",
+              "name": "Cuban Neuroscience Center, Havana, Cuba"
+            }
+          ] 
+        }
+      ],
+      "dates": [
+        {
+          "@id": "https://w3id.org/dats/schema/date_info_schema.json",
+          "@type": "Date",
+          "date": "2015-08-20",
+          "type": 
+            {
+              "@id": "https://w3id.org/dats/schema/annotation_schema.json",
+              "@type": "Annotation",
+              "value": "Publication Date"
+            }
+        }
+      ],
+      "identifier": {
+        "@id": "https://w3id.org/dats/schema/identifier_info_schema.json",
+        "@type": "Identifier",
+        "identifier": "https://doi.org/10.1109/JPROC.2015.2455028",
+        "identifierSource": "International DOI Foundation"
+      }
+    }
+  ],  
+  "extraProperties": [
+    {
+      "category": "subjects",
+      "values": [
+        {
+          "value": "282"
+        }
+      ]
+    },
+    {
+      "category": "files",
+      "values": [
+        {
+          "value": "4,521"
+        }
+      ]
+    },
+    {
+      "category": "CONP_status",
+      "values": [
+        {
+          "value": "external"
+        }
+      ]
+    },
+    {
+      "category": "logo",
+      "values": [
+        {
+          "value": "logo.png"
+        }
+      ]
+    },
+    {
+      "category": "contact",
+      "values": [
+        {
+          "value": "Dr. Pedro A. Valdes-Sosa: pedro.valdes@neuroinformatics-collaboratory.org"
+        }
+      ]
+    }
+  ]
+}
+
