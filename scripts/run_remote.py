@@ -22,7 +22,7 @@ class Retrieve:
         self.dataset_path = dataset_path
         self.remote_prefix = remote_prefix
         self.dataset_name = dataset_name
-        self.encryption = encryption
+        self.encryption = str(encryption).lower()
         # if dataset info must be removed in git annex
         self.remove = with_remove
 

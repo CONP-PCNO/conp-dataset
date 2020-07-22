@@ -267,7 +267,7 @@ class FrdrCrawler(BaseCrawler):
             metadata = dataset["metadata"]["frdr:frdr"]
 
             # TODO: to be updated: we are now testing 1 dataset
-            if "Alzheimer's disease" in metadata["dc:subject"]:
+            if "An End-to-end System for Automatic Characterization of Iba1 Immunopositive Microglia in Whole Slide Imaging: Data" in metadata["dc:title"]:
 
                 files_types, ds_size, globus_path = \
                     self.get_all_files_description(metadata["frdr:globusEndpointName"],
