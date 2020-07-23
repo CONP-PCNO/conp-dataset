@@ -15,7 +15,7 @@ from globus_sdk import (NativeAppAuthClient, TransferClient, TransferData,
 versions = None
 
 logger = logging.getLogger('FRDR-crawler')
-logger.setLevel(level=logging.INFO)
+logging.basicConfig(level=logging.WARN)
 
 
 # info at https://www.frdr-dfdr.ca/docs/en/searching/
@@ -139,7 +139,7 @@ class FrdrCrawler(BaseCrawler):
                 logger.info("Current status description: ", task['nice_status_short_description'])
             self.is_completed(task_id)
         elif task['status'] == 'SUCCEEDED':
-            print("success !!")
+            logger.info("successfully downloaded")
             return
         elif task['status'] == 'INACTIVE':
             logger.error("Inactivity occurred: The task has been suspended and will not continue without intervention."
@@ -223,7 +223,7 @@ class FrdrCrawler(BaseCrawler):
         # load into json(dict) object
         results_json = json.loads(json.dumps(results_dict))
         if self.verbose:
-            print("FRDR query: {}".format(query))
+            logger.info("FRDR query: {}".format(query))
         return results_json["OAI-PMH"]["ListRecords"]["record"]
 
     def get_all_files_description(self, ep_id, ep_path):
@@ -336,9 +336,9 @@ class FrdrCrawler(BaseCrawler):
                 }
             )
         if self.verbose:
-            print("Retrieved FRDR DOIs: ")
+            logger.info("Retrieved FRDR DOIs: ")
             for frdr_doi in frdr_dois:
-                print(
+                logger.info(
                     "- Title: {}, Concept DOI: {}, Latest version DOI: {}".format(
                         frdr_doi["title"],
                         frdr_doi["concept_doi"],
@@ -366,7 +366,7 @@ class FrdrCrawler(BaseCrawler):
         """
         dataset_dir = ds_path.split("conp-dataset/")[1]
         os.chdir(dataset_dir)
-        print(os.getcwd())
+        logger.info("Switch directory to: ", os.getcwd())
         # instantiates dataset retrieval
         retriever = Retrieve()
 
@@ -388,9 +388,9 @@ class FrdrCrawler(BaseCrawler):
 
         # push to git-annex branch
         git_repo.git.push("origin", "git-annex")
-        print("pushed to git annex")
+        logger.info("pushed to git annex")
         os.chdir("../..")
-        print(os.getcwd())
+        logger.info("Switch directory to: ", os.getcwd())
 
     def _download(self, ds_description, dataset_dir, dataset, git_repo):
         """
@@ -403,13 +403,13 @@ class FrdrCrawler(BaseCrawler):
         ep_name = ds_description["extraProperties"][0]["values"][0]["EndpointName"]
         ep_path = ds_description["extraProperties"][0]["values"][1]["EndpointPath"]
         # perform transfer of the given dataset
-        print("downloading...", ep_name, ep_path, ds_path)
+        logger.info("downloading...", ep_name, ep_path, ds_path)
         self.transfer_data(ep_name,
                            ep_path,
                            dest_path=ds_path)
         dataset.save()
         # register dataset
-        print("retrieving...", ds_path, ep_name, ep_path, git_repo)
+        logger.info("retrieving...", ds_path, ep_name, ep_path)
         self._retrieve(ds_path, ep_name, ep_path, git_repo)
 
     def add_new_dataset(self, dataset, dataset_dir):
@@ -427,9 +427,7 @@ class FrdrCrawler(BaseCrawler):
         clean_title = dataset_dir.split('/')[1]
         branch_name = "conp-bot/" + clean_title
         if branch_name not in repo.remotes.origin.refs:  # New dataset
-            print(branch_name)
             repo.git.checkout("-b", branch_name)
-            print('checkout')
 
         # Download dataset
         self._download(dataset, dataset_dir, ds, repo)
@@ -444,23 +442,27 @@ class FrdrCrawler(BaseCrawler):
         """
         tracker_path = os.path.join(ds_dir, ".conp-frdr-crawler.json")
         repo = self.git.Repo(ds_dir)
+        clean_title = ds_dir.split('/')[1]
+        branch_name = "conp-bot/" + clean_title
+        if branch_name not in repo.remotes.origin.refs:  # New dataset
+            repo.git.checkout("-b", branch_name)
 
         if not os.path.isfile(tracker_path):
-            print("{} does not exist in dataset, skipping".format(tracker_path))
+            logger.info("{} does not exist in dataset, skipping".format(tracker_path))
             return False
         with open(tracker_path, "r") as f:
             tracker = json.load(f)
         if tracker["version"] == dataset_description["latest_version"]:
             # Same version, no need to update
             if self.verbose:
-                print("{}, version {} same as current FRDR vesion, no need to update"
+                logger.info("{}, version {} same as current FRDR vesion, no need to update"
                       .format(dataset_description["title"], dataset_description["latest_version"]))
             # evaluate change on endpoint name
             endpoint_name = dataset_description["extraProperties"][0]["values"][0]["EndpointName"]
             if tracker["endpointName"] != endpoint_name:
                 # Update dataset if endpoint has changed
                 if self.verbose:
-                    print("{}, last endpoint name {} different from current FRDR version {}, updating"
+                    logger.info("{}, last endpoint name {} different from current FRDR version {}, updating"
                           .format(dataset_description["title"], tracker["endpointName"],
                                   endpoint_name))
                 # find root path
@@ -478,7 +480,7 @@ class FrdrCrawler(BaseCrawler):
         else:
             # Update dataset
             if self.verbose:
-                print("{}, latest version {} different from current FRDR version {}, updating"
+                logger.info("{}, latest version {} different from current FRDR version {}, updating"
                       .format(dataset_description["title"], tracker["version"],
                               dataset_description["latest_version"]))
 
@@ -489,10 +491,9 @@ class FrdrCrawler(BaseCrawler):
                 self.datalad.remove(os.path.join(ds_dir, file_name), check=False)
 
             ds = self.datalad.Dataset(ds_dir)
-            git_repo = self.git.Repo(ds_dir)
 
             # Download dataset
-            self._download(dataset_description, ds_dir, ds, git_repo)
+            self._download(dataset_description, ds_dir, ds, repo)
 
             # Add .conp-osf-crawler.json tracker file
             self._create_frdr_tracker(

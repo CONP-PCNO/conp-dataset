@@ -5,6 +5,7 @@ import subprocess
 import configparser
 
 logger = logging.getLogger('retrieve-globus')
+logging.basicConfig(level=logging.WARN)
 
 
 class Retrieve:
@@ -42,11 +43,9 @@ class Retrieve:
     @staticmethod
     def _execute_cmd(func, message):
         try:
-            stderr = func
-            if len(stderr) != 0:
-                raise Exception(message + str(stderr))
+            func
         except Exception as ex:
-            print('An exception occurred: ' + str(ex))
+            logger.error('An exception occurred: ' + message + '-->' + str(ex))
             sys.exit()
 
 # ******************************************************************************************************************** #
@@ -60,7 +59,7 @@ class Retrieve:
         try:
             return config['remote "globus"']['annex-uuid']
         except Exception as ex:
-            print('The following exceptions was raised during annex-uuid retrieving: ' + str(ex))
+            logger.error('The following exceptions was raised during annex-uuid retrieving: ' + str(ex))
             sys.exit()
 
     @staticmethod
@@ -81,7 +80,7 @@ class Retrieve:
         endpoint = 'endpoint=%s' % self.dataset_name
         fileprefix = 'fileprefix=%s' % self.remote_prefix
         if not self.remove:
-            print('initializing remote')
+            logger.info('initializing remote')
             initremote_command = \
                 ['git', 'annex', 'initremote', 'globus',  'type=external', 'externaltype=globus', endpoint, fileprefix,
                  encryption]
@@ -127,10 +126,11 @@ class Retrieve:
                         key = str(os.readlink(update_path)).split('/')[-1]
                         # print(key, update_remote_path)
                         self.process(key, update_remote_path)
+                        logger.info("Retrieved:: " + str(update_path))
                     else:
                         pass
         except Exception as ex:
-            print('The following exception was raised while retrieving files: ' + str(ex))
+            logger.error('The following exception was raised while retrieving files: ' + str(ex))
             sys.exit()
 
     def _set_present_key(self, key, val):
