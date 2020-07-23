@@ -230,8 +230,6 @@ class BaseCrawler:
             clean_title = self._clean_dataset_title(dataset_description["title"])
             branch_name = "conp-bot/" + clean_title
             dataset_dir = os.path.join("projects", clean_title)
-            print(dataset_dir)
-            sys.exit()
             d = self.datalad.Dataset(dataset_dir)
             # Add github token to individual dataset remote urls
             try:

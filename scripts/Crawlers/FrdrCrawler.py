@@ -236,13 +236,18 @@ class FrdrCrawler(BaseCrawler):
 
         def _get_contents(contents):
             for content in contents:
-                if "type" in content.keys() and content["type"] == "file":
-                    file_ext = str(content["name"].split(".")[1])
-                    if file_ext not in files_types:
-                        files_types.append(file_ext)
+                if isinstance(content, dict):
+                    if "type" in content.keys() and content["type"] == "file":
+                        file_ext = str(content["name"].split(".")[1])
+                        if file_ext not in files_types:
+                            files_types.append(file_ext)
 
-                if "contents" in content.keys():
-                    _get_contents(content["contents"])
+                    elif "type" in content.keys() and content["type"] == "dir":
+                        _get_contents(content["contents"])
+                    else:
+                        continue
+                else:
+                    continue
 
         # instantiate the file_size.json transfer
         file_sizes_path = self.transfer_data(ep_id, ep_path, file_name='file_sizes.json')
