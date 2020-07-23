@@ -364,6 +364,9 @@ class FrdrCrawler(BaseCrawler):
         """
         Updates git-annex with a new dataset location
         """
+        dataset_dir = ds_path.split("conp-dataset/")[1]
+        os.chdir(dataset_dir)
+        print(os.getcwd())
         # instantiates dataset retrieval
         retriever = Retrieve()
 
@@ -386,6 +389,8 @@ class FrdrCrawler(BaseCrawler):
         # push to git-annex branch
         git_repo.git.push("origin", "git-annex")
         print("pushed to git annex")
+        os.chdir("../..")
+        print(os.getcwd())
 
     def _download(self, ds_description, dataset_dir, dataset, git_repo):
         """

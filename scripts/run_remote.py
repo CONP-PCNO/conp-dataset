@@ -81,7 +81,7 @@ class Retrieve:
         endpoint = 'endpoint=%s' % self.dataset_name
         fileprefix = 'fileprefix=%s' % self.remote_prefix
         if not self.remove:
-            logger.info('initializing remote')
+            print('initializing remote')
             initremote_command = \
                 ['git', 'annex', 'initremote', 'globus',  'type=external', 'externaltype=globus', endpoint, fileprefix,
                  encryption]
