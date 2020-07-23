@@ -34,7 +34,7 @@ class Template(object):
     def install_dataset(self, dataset):
         with lock:
             if len(os.listdir(dataset)) == 0:
-                api.install(path=dataset, recursive=True)
+                api.install(path=dataset, recursive=False)
         yield
 
     def test_has_readme(self, dataset):
