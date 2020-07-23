@@ -416,9 +416,15 @@ class FrdrCrawler(BaseCrawler):
         """
         ds = self.datalad.Dataset(dataset_dir)
         ds.no_annex(".conp-frdr-crawler.json")
-
         ds.save()
+
         repo = self.git.Repo(dataset_dir)
+        clean_title = dataset_dir.split('/')[1]
+        branch_name = "conp-bot/" + clean_title
+        if branch_name not in repo.remotes.origin.refs:  # New dataset
+            print(branch_name)
+            repo.git.checkout("-b", branch_name)
+            print('checkout')
 
         # Download dataset
         self._download(dataset, dataset_dir, ds, repo)
