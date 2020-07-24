@@ -15,7 +15,7 @@ from globus_sdk import (NativeAppAuthClient, TransferClient, TransferData,
 versions = None
 
 logger = logging.getLogger('FRDR-crawler')
-logging.basicConfig(level=logging.WARN)
+logging.basicConfig(level=logging.INFO)
 
 
 # info at https://www.frdr-dfdr.ca/docs/en/searching/

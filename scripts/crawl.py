@@ -34,7 +34,7 @@ def parse_args():
     config_path = args.config_path
     if not config_path:
         config_path = os.path.join(
-            os.path.expanduser("~"), ".conp_crawler_config.json")
+            os.path.expanduser("~"), ".conp_crawler_config_gi114.json")
 
     # If config file does not exist, create an empty one
     if not os.path.isfile(config_path):
