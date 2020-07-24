@@ -115,3 +115,6 @@
 [submodule "projects/cneuromod"]
 	path = projects/cneuromod
 	url = https://github.com/glatard/cneuromod.git
+[submodule "projects/An_End_to_end_System_for_Automatic_Characterization_of_Iba1_Immunopositive_Microglia_in_Whole_Slide_Imaging__Data"]
+	path = projects/An_End_to_end_System_for_Automatic_Characterization_of_Iba1_Immunopositive_Microglia_in_Whole_Slide_Imaging__Data
+	url = https://github.com/gi114/conp-dataset-An-End-to-end-System-for-Automatic-Characterization-of-Iba1-Immunopositive-Microglia-in.git
