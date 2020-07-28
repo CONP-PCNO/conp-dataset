@@ -115,3 +115,8 @@
 [submodule "projects/cneuromod"]
 	path = projects/cneuromod
 	url = https://github.com/glatard/cneuromod.git
+[submodule "projects/braincode_Mouse_Image"]
+	path = projects/braincode_Mouse_Image
+	url = ./projects/braincode_Mouse_Image
+	branch = master
+	datalad-id = 0bfe4696-d12e-11ea-9db8-080027a96228
