@@ -1,99 +1,21 @@
-version: 2
+version: 2.1
 
-aliases:
-  - &docker
-    - image: mathdugre/ci-conp-dataset:v1
-
-  - &workdir ~/conp-dataset
-
-  - &restore_python_cache
-    restore_cache:
-      name: Restore Python Cache
-      keys:
-        - v1.4.2-python-{{ .Branch }}
-        - v1.4.2-python-
+orbs:
+  python: circleci/python@0.2.1
 
 jobs:
-  build:
-    working_directory: *workdir
-    docker: *docker
-
+  build-and-test:
+    executor: python/default
     steps:
-      - checkout:
-          path: *workdir
-      - *restore_python_cache
+      - checkout
+      - python/load-cache
+      - python/install-deps
+      - python/save-cache
       - run:
-          name: Install Dependencies
-          command: |
-            python -m venv ~/venv
-            . ~/venv/bin/activate
-            find . -name requirements.txt | xargs -I{} pip install -r {}
-            pip install gitpython
-      - save_cache:
-          name: Save Python Cache
-          paths:
-            - ~/venv
-          key: v1.4.2-python-{{ .Branch }}
-      - run:
-          name: Install CONP-DATS Validator
-          command: |
-            . ~/venv/bin/activate
-            export PATH=~/git-annex.linux:$PATH
-            datalad install scripts/dats_validator/conp-dats
-      - persist_to_workspace:
-          root: *workdir
-          paths:
-            - scripts/dats_validator/conp-dats
-
-  test:
-    working_directory: *workdir
-    docker: *docker
-    parallelism: 2
-
-    steps:
-      - checkout:
-          path: *workdir
-      - attach_workspace:
-          at: *workdir
-      - *restore_python_cache
-      - run:
-          name: Run Tests
-          command: |
-            . ~/venv/bin/activate
-            export PATH=~/git-annex.linux:$PATH
-            python tests/create_tests.py
-            circleci tests glob tests/test_* | circleci tests split > /tmp/tests-to-run 
-            PYTHONPATH=$PWD pytest --junitxml=tests/junit.xml -v -rfEs $(cat /tmp/tests-to-run)
-      - store_test_results:
-          path: tests
-      - run:
-          when: always
-          name: Parse Test Results
-          command: |
-            . ~/venv/bin/activate
-            PYTHONPATH=$PWD python tests/parse_results.py
-      - store_artifacts:
-          path: tests/test-status.json
+          command: ./manage.py test
+          name: Test
 
 workflows:
-  version: 2
-  commit:
+  main:
     jobs:
-      - build
-      - test:
-          requires:
-            - build
-
-  monitoring:
-    triggers:
-      - schedule:
-          cron: "0 0,4,8,12,16,20 * * *"
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      - build
-      - test:
-          requires:
-            - build
+      - build-and-test
