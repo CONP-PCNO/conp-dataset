@@ -28,6 +28,7 @@ jobs:
             python -m venv ~/venv
             . ~/venv/bin/activate
             find . -name requirements.txt | xargs -I{} pip install -r {}
+            pip install gitpython
       - save_cache:
           name: Save Python Cache
           paths:
