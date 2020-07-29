@@ -28,7 +28,7 @@ jobs:
             python -m venv ~/venv
             . ~/venv/bin/activate
             find . -name requirements.txt | xargs -I{} pip install -r {}
-            pip install gitpython
+            pip install -r ~/conp-dataset/tests/requirements.txt
       - save_cache:
           name: Save Python Cache
           paths:
@@ -62,7 +62,7 @@ jobs:
             . ~/venv/bin/activate
             export PATH=~/git-annex.linux:$PATH
             python tests/create_tests.py
-            circleci tests glob tests/test_* | circleci tests split > /tmp/tests-to-run 
+            circleci tests glob tests/test_* | circleci tests split > /tmp/tests-to-run
             PYTHONPATH=$PWD pytest --junitxml=tests/junit.xml -v -rfEs $(cat /tmp/tests-to-run)
       - store_test_results:
           path: tests
