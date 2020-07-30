@@ -1,0 +1,6 @@
+html2markdown==0.1.7
+humanize==2.5.0
+mock==4.0.2
+pytest==6.0.0
+pytest-xdist==1.34.0
+junitparser==1.4.1
