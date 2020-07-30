@@ -70,8 +70,7 @@ class TestZenodoCrawler(TestCase):
     @mock.patch("scripts.Crawlers.ZenodoCrawler.ZenodoCrawler._check_requirements", return_value="username")
     @mock.patch("git.Repo")
     @mock.patch("datalad.api.Dataset")
-    @mock.patch("datalad.api.add")
-    def test_create_new_dataset(self, mock_datalad_add, mock_dataset, mock_repo, mock_check_requirements,
+    def test_create_new_dataset(self, mock_dataset, mock_repo, mock_check_requirements,
                                 mock_get_all_dataset_description, mock_create_zenodo_tracker,
                                 mock_create_new_dats, mock_get_readme, mock_create_readme, mock_create_pr):
         try:
