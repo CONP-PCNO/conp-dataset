@@ -27,18 +27,25 @@ class OSFCrawler(BaseCrawler):
             if "osf_token" in data.keys():
                 return data["osf_token"]
 
+    def _request_get(self, link):
+        header = {'Authorization': f'Bearer {self.osf_token}'}
+        r = requests.get(link, headers=header)
+        if r.ok:
+            return r
+        else:
+            raise Exception(f'Request to {r.url} failed: {r.content}')
+
     def _query_osf(self):
         query = (
             'https://api.osf.io/v2/nodes/?filter[tags]=canadian-open-neuroscience-platform'
         )
-        header = {'Authorization': f'Bearer {self.osf_token}'}
-        results = requests.get(query, headers=header).json()["data"]
+        results = self._request_get(query).json()["data"]
         if self.verbose:
             print("OSF query: {}".format(query))
         return results
 
     def _download_files(self, link, current_dir, inner_path, d, annex, sizes):
-        r = requests.get(link)
+        r = self._request_get(link)
         files = r.json()["data"]
         for file in files:
             # Handle folders
@@ -64,7 +71,7 @@ class OSFCrawler(BaseCrawler):
                     d.save()
 
     def _get_contributors(self, link):
-        r = requests.get(link)
+        r = self._request_get(link)
         contributors = [
             contributor["embeds"]["users"]["data"]["attributes"]["full_name"]
             for contributor in r.json()["data"]
@@ -72,7 +79,7 @@ class OSFCrawler(BaseCrawler):
         return contributors
 
     def _get_license(self, link):
-        r = requests.get(link)
+        r = self._request_get(link)
         return r.json()["data"]["attributes"]["name"]
 
     def get_all_dataset_description(self):
