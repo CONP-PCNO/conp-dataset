@@ -18,12 +18,21 @@ def _create_osf_tracker(path, dataset):
 class OSFCrawler(BaseCrawler):
     def __init__(self, github_token, config_path, verbose, force):
         super().__init__(github_token, config_path, verbose, force)
+        self.osf_token = self._get_token()
+
+    def _get_token(self):
+        if os.path.isfile(self.config_path):
+            with open(self.config_path, "r") as f:
+                data = json.load(f)
+            if "osf_token" in data.keys():
+                return data["osf_token"]
 
     def _query_osf(self):
         query = (
             'https://api.osf.io/v2/nodes/?filter[tags]=canadian-open-neuroscience-platform'
         )
-        results = requests.get(query).json()["data"]
+        header = {'Authorization': f'Bearer {self.osf_token}'}
+        results = requests.get(query, headers=header).json()["data"]
         if self.verbose:
             print("OSF query: {}".format(query))
         return results
