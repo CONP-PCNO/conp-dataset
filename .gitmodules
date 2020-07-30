@@ -87,7 +87,7 @@
 [submodule "projects/BigBrain_3DSurfaces"]
 	path = projects/BigBrain_3DSurfaces
 	url = https://github.com/emmetaobrien/BigBrain_3DSurfaces.git
-[submodule "projects/ds001634"]
+[submodule "projects/visual-working-memory"]
 	path = projects/visual-working-memory
 	url = https://github.com/conpdatasets/ds001634.git
 [submodule "projects/Comparing_Perturbation_Modes_for_Evaluating_Instabilities_in_Neuroimaging__Processed_NKI_RS_Subset__08_2019_"]
@@ -108,3 +108,10 @@
 	url = https://github.com/conpdatasets/BigBrainMRICoreg
 	branch = master
 	datalad-id = 65391990-d8d5-11e9-b349-000c299164f1
+[submodule "projects/preventad-open-bids"]
+	path = projects/preventad-open-bids
+	url = https://github.com/conpdatasets/preventad-open-bids.git
+
+[submodule "projects/cneuromod"]
+	path = projects/cneuromod
+	url = https://github.com/glatard/cneuromod.git
