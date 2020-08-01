@@ -359,7 +359,7 @@ class FrdrCrawler(BaseCrawler):
             json.dump(data, f, indent=4)
 
     @staticmethod
-    def _retrieve(ds_path, ep_name, ep_path, git_repo, remove=False, tracker_path=None):
+    def _retrieve(ds_path, ep_name, ep_path, git_repo, remove=False, tracker_path=None, branch_name=None):
         """
         Updates git-annex with a new dataset location
         """
@@ -384,14 +384,20 @@ class FrdrCrawler(BaseCrawler):
         retriever.initialize()
         # retrieves dataset info to be saved by git annex
         retriever.retrieve_files(ds_path, retriever.get_remote_path())
+        print(git_repo.active_branch)
+        git_repo.git.checkout("git-annex")
 
         # push to git-annex branch
         git_repo.git.push("origin", "git-annex")
         logger.info("pushed to git annex")
+        if branch_name is not None:
+            git_repo.git.checkout(branch_name)
+        print(git_repo.active_branch)
         os.chdir("../..")
+        print(git_repo.active_branch)
         logger.info("Switch directory to: ", os.getcwd())
 
-    def _download(self, ds_description, dataset_dir, dataset, git_repo):
+    def _download(self, ds_description, dataset_dir, dataset, git_repo, branch_name=None):
         """
         Downloads the dataset and updates git-annex
         """
@@ -409,7 +415,7 @@ class FrdrCrawler(BaseCrawler):
         dataset.save()
         # register dataset
         logger.info("retrieving...", ds_path, ep_name, ep_path)
-        self._retrieve(ds_path, ep_name, ep_path, git_repo)
+        self._retrieve(ds_path, ep_name, ep_path, git_repo, branch_name)
 
     def add_new_dataset(self, dataset_description, dataset_dir):
         """
@@ -431,11 +437,12 @@ class FrdrCrawler(BaseCrawler):
         repo = self.git.Repo(dataset_dir)
         clean_title = dataset_dir.split('/')[1]
         branch_name = "conp-bot/" + clean_title
-        if branch_name not in repo.remotes.origin.refs:  # New dataset
-            repo.git.checkout("-b", branch_name)
+        if branch_name in repo.remotes.origin.refs:
+            print("check out branch")
+            repo.git.checkout(branch_name)
 
         # Download dataset
-        self._download(dataset_description, dataset_dir, ds, repo)
+        self._download(dataset_description, dataset_dir, ds, repo, branch_name)
 
         # Add .conp-osf-crawler.json tracker file
         self._create_frdr_tracker(
