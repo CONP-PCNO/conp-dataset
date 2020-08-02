@@ -415,7 +415,7 @@ class FrdrCrawler(BaseCrawler):
         dataset.save()
         # register dataset
         logger.info("retrieving...", ds_path, ep_name, ep_path)
-        self._retrieve(ds_path, ep_name, ep_path, git_repo, branch_name)
+        self._retrieve(ds_path, ep_name, ep_path, git_repo, branch_name=branch_name)
 
     def add_new_dataset(self, dataset_description, dataset_dir):
         """
