@@ -384,7 +384,10 @@ class FrdrCrawler(BaseCrawler):
         retriever.initialize()
         # retrieves dataset info to be saved by git annex
         retriever.retrieve_files(ds_path, retriever.get_remote_path())
+
+        print("branches", git_repo.remotes.origin.refs)
         print("before push", git_repo.active_branch)
+
         git_repo.git.checkout("git-annex")
 
         # push to git-annex branch
@@ -413,6 +416,7 @@ class FrdrCrawler(BaseCrawler):
                            ep_path,
                            dest_path=ds_path)
         dataset.save()
+        dataset.publish(to="origin")
         # register dataset
         logger.info("retrieving...", ds_path, ep_name, ep_path)
         self._retrieve(ds_path, ep_name, ep_path, git_repo, branch_name=branch_name)
