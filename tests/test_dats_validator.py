@@ -3,7 +3,7 @@ import json
 import os
 import sys
 import copy
-sys.path.append(os.path.join(os.path.dirname(sys.path[0]), 'scripts'))
+sys.path.append(os.path.join(os.getcwd(), 'scripts'))
 from dats_validator.validator import (validate_json,
                                       validate_non_schema_required,
                                       validate_extra_properties,
@@ -11,7 +11,7 @@ from dats_validator.validator import (validate_json,
                                       )
 
 
-EXAMPLES = os.path.join(os.path.dirname(sys.path[0]), 'scripts', 'dats_validator', 'examples')
+EXAMPLES = os.path.join(os.getcwd(), 'scripts', 'dats_validator', 'examples')
 VALID = os.path.join(EXAMPLES, 'valid_dats.json')
 INVALID = os.path.join(EXAMPLES, 'invalid_dats.json')
 
