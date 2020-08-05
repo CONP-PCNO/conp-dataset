@@ -115,6 +115,9 @@
 [submodule "projects/cneuromod"]
 	path = projects/cneuromod
 	url = https://github.com/glatard/cneuromod.git
+[submodule "projects/CHBMP"]
+	path = projects/CHBMP
+	url = https://github.com/conpdatasets/CHBMP.git
 [submodule "projects/braincode_Mouse_Image"]
 	path = projects/braincode_Mouse_Image
 	url = https://github.com/conpdatasets/braincode_Mouse_Image.git
