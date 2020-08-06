@@ -85,3 +85,4 @@ datalad search T1
    `pytest tests/test_projects_SIMON-dataset`
 
 For detailed explanations of the tests, please consult the [test suite documentation](https://github.com/CONP-PCNO/conp-dataset/blob/master/tests/README.md).
+
