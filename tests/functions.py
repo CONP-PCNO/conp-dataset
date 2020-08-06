@@ -190,6 +190,16 @@ def get_submodules(root: str) -> set:
 def eval_config(dataset: str) -> None:
 
     if "config" in os.listdir(dataset):
+
+        # check if the globus token is in the keyring before launching the config file. If not, add the credentials
+        token = keyring.get_password("globus-remote", "auth-tokens")
+
+        if token is None:
+            # get environment variable as token
+            globus_token = os.environ['GLOBUS_TOKEN']
+            # obtains globus token which is used as a password
+            keyring.set_password("globus-remote", "auth-tokens", globus_token)
+
         subprocess.run([os.path.join(dataset, "config")])
 
 
