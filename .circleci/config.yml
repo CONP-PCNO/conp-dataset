@@ -58,8 +58,8 @@ jobs:
       - run:
           name: Run Tests
           command: |
-	        pip install gitpython
             . ~/venv/bin/activate
+            pip install gitpython
             export PATH=~/git-annex.linux:$PATH
             python tests/create_tests.py
             circleci tests glob tests/test_* | circleci tests split > /tmp/tests-to-run 
