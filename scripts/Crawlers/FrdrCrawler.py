@@ -422,12 +422,12 @@ class FrdrCrawler(BaseCrawler):
         """
         ds = self.datalad.Dataset(dataset_dir)
         ds.no_annex(".conp-frdr-crawler.json")
-        config_path = os.path.join(dataset_dir, "config.sh")
-        # fill in the config.sh file
+        config_path = os.path.join(dataset_dir, "config")
+        # fill in the config file
         with open(config_path, 'w') as f:
-            f.write("pip install update git-annex-remote-globus \ngit annex enableremote globus")
+            f.write("pip install update git-annex-remote-globus \ngit-annex-remote-globus setup \ngit annex enableremote globus")
             f.close()
-        ds.no_annex("config.sh")
+        ds.no_annex("config")
         ds.save()
 
         repo = self.git.Repo(dataset_dir)
