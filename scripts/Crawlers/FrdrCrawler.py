@@ -294,11 +294,7 @@ class FrdrCrawler(BaseCrawler):
                     "version": metadata["dc:version"]
                     if "dc:version" in metadata.keys()
                     else "None",
-                    "licenses": [
-                        {
-                            "name": metadata["dc:rights"]
-                        }
-                    ],
+                    "licenses": list(map(lambda x: {"name": x}, metadata["dc:rights"])),
                     "keywords": list(map(lambda x: {"value": x}, metadata["dc:subject"])),
                     "distributions": [
                         {
