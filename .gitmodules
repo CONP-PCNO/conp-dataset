@@ -121,3 +121,8 @@
 [submodule "projects/braincode_Mouse_Image"]
 	path = projects/braincode_Mouse_Image
 	url = https://github.com/conpdatasets/braincode_Mouse_Image.git
+[submodule "projects/braincode_fBIRN"]
+	path = projects/braincode_fBIRN
+	url = ./projects/braincode_fBIRN
+	branch = add-braincode-fbirn
+	datalad-id = 05e981a6-dbe4-11ea-9fd2-080027a96228
