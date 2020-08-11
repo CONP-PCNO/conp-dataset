@@ -121,3 +121,6 @@
 [submodule "projects/braincode_Mouse_Image"]
 	path = projects/braincode_Mouse_Image
 	url = https://github.com/conpdatasets/braincode_Mouse_Image.git
+[submodule "projects/braincode_fBIRN"]
+	path = projects/braincode_fBIRN
+	url = https://github.com/conpdatasets/braincode_fBIRN.git
