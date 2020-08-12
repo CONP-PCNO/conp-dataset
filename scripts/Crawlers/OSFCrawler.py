@@ -27,9 +27,9 @@ class OSFCrawler(BaseCrawler):
             if "osf_token" in data.keys():
                 return data["osf_token"]
 
-    def _request_get(self, link):
+    def _get_request_with_bearer_token(self, link, redirect=True):
         header = {'Authorization': f'Bearer {self.osf_token}'}
-        r = requests.get(link, headers=header)
+        r = requests.get(link, headers=header, allow_redirects=redirect)
         if r.ok:
             return r
         else:
@@ -39,13 +39,13 @@ class OSFCrawler(BaseCrawler):
         query = (
             'https://api.osf.io/v2/nodes/?filter[tags]=canadian-open-neuroscience-platform'
         )
-        results = self._request_get(query).json()["data"]
+        results = self._get_request_with_bearer_token(query).json()["data"]
         if self.verbose:
             print("OSF query: {}".format(query))
         return results
 
     def _download_files(self, link, current_dir, inner_path, d, annex, sizes):
-        r = self._request_get(link)
+        r = self._get_request_with_bearer_token(link)
         files = r.json()["data"]
         for file in files:
             # Handle folders
@@ -58,20 +58,36 @@ class OSFCrawler(BaseCrawler):
                     os.path.join(inner_path, file["attributes"]["name"]),
                     d, annex, sizes
                 )
+
             # Handle single files
             elif file["attributes"]["kind"] == "file":
-                # Remember file size
-                sizes.append(file["attributes"]["size"])
-                # Handle zip files
-                if file["attributes"]["name"].split(".")[-1] == "zip":
-                    d.download_url(file["links"]["download"], path=os.path.join(inner_path, ""), archive=True)
+
+                # Check if file is private
+                r = requests.get(file["links"]["download"], allow_redirects=False)
+                if 'https://accounts.osf.io/login' in r.headers['location']:  # Redirects to login, private file
+                    correct_download_link = self._get_request_with_bearer_token(
+                        file["links"]["download"], redirect=False).headers['location']
+                    if 'https://accounts.osf.io/login' not in correct_download_link:
+                        sizes.append(file["attributes"]["size"])
+                        zip_file = True if file["attributes"]["name"].split(".")[-1] == "zip" else False
+                        d.download_url(correct_download_link, path=os.path.join(inner_path, ""), archive=zip_file)
+                    else:  # Token did not work for downloading file, return
+                        print(f'Unable to download file {file["links"]["download"]} with current token, skipping file')
+                        return
+
+                # Public file
                 else:
-                    annex("addurl", file["links"]["download"], "--fast", "--file",
-                          os.path.join(inner_path, file["attributes"]["name"]))
-                    d.save()
+                    sizes.append(file["attributes"]["size"])
+                    # Handle zip files
+                    if file["attributes"]["name"].split(".")[-1] == "zip":
+                        d.download_url(file["links"]["download"], path=os.path.join(inner_path, ""), archive=True)
+                    else:
+                        annex("addurl", file["links"]["download"], "--fast", "--file",
+                              os.path.join(inner_path, file["attributes"]["name"]))
+                        d.save()
 
     def _get_contributors(self, link):
-        r = self._request_get(link)
+        r = self._get_request_with_bearer_token(link)
         contributors = [
             contributor["embeds"]["users"]["data"]["attributes"]["full_name"]
             for contributor in r.json()["data"]
@@ -79,7 +95,7 @@ class OSFCrawler(BaseCrawler):
         return contributors
 
     def _get_license(self, link):
-        r = self._request_get(link)
+        r = self._get_request_with_bearer_token(link)
         return r.json()["data"]["attributes"]["name"]
 
     def get_all_dataset_description(self):
