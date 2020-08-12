@@ -124,3 +124,8 @@
 [submodule "projects/braincode_fBIRN"]
 	path = projects/braincode_fBIRN
 	url = https://github.com/conpdatasets/braincode_fBIRN.git
+[submodule "projects/braincode_NDD_Priority_Setting_Partnership"]
+	path = projects/braincode_NDD_Priority_Setting_Partnership
+	url = ./projects/braincode_NDD_Priority_Setting_Partnership
+	branch = add-braincode-ndd
+	datalad-id = c071744c-dcbc-11ea-94b4-080027a96228
