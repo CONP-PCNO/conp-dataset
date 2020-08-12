@@ -59,11 +59,11 @@ jobs:
           name: Run Tests
           command: |
             . ~/venv/bin/activate
-            pip install gitpython
+            pip install gitpython==3.1.7
             export PATH=~/git-annex.linux:$PATH
             python tests/create_tests.py
-            circleci tests glob tests/test_* | circleci tests split > /tmp/tests-to-run 
-            PYTHONPATH=$PWD:$PWD/scripts pytest --junitxml=tests/junit.xml -v -rfEs $(cat /tmp/tests-to-run)
+            circleci tests glob tests/test_* | circleci tests split > /tmp/tests-to-run
+            PYTHONPATH=$PWD pytest --junitxml=tests/junit.xml -v -rfEs $(cat /tmp/tests-to-run)
       - store_test_results:
           path: tests
       - run:
