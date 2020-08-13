@@ -3,7 +3,7 @@
 set -e
 set -u
 
-BASEDIR=/tmp/conp-dataset
+BASEDIR=/data/crawler/conp-dataset
 mkdir -p ${BASEDIR}/log
 DATE=$(date)
 LOGFILE=$(mktemp ${BASEDIR}/log/crawler-XXXXX.log)
