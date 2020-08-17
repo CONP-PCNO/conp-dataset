@@ -3,7 +3,7 @@ from unittest import TestCase
 import mock
 
 
-class TestZenodoCrawler(TestCase):
+class TestOSFCrawler(TestCase):
 
     @mock.patch("scripts.Crawlers.OSFCrawler.OSFCrawler._push_and_pull_request")
     @mock.patch("scripts.Crawlers.OSFCrawler.OSFCrawler._create_readme")
