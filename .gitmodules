@@ -127,3 +127,6 @@
 [submodule "projects/braincode_NDD_Priority_Setting_Partnership"]
 	path = projects/braincode_NDD_Priority_Setting_Partnership
 	url = https://github.com/conpdatasets/braincode_NDD_Priority_Setting_Partnership.git
+[submodule "projects/Neural_capacity_limits_on_the_responses_to_memory_interference_during_working_memory_in_young_and_old_adults"]
+	path = projects/Neural_capacity_limits_on_the_responses_to_memory_interference_during_working_memory_in_young_and_old_adults
+	url = https://github.com/conp-bot/conp-dataset-Neural-capacity-limits-on-the-responses-to-memory-interference-during-working-memory-in.git
