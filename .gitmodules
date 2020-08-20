@@ -127,3 +127,6 @@
 [submodule "projects/braincode_NDD_Priority_Setting_Partnership"]
 	path = projects/braincode_NDD_Priority_Setting_Partnership
 	url = https://github.com/conpdatasets/braincode_NDD_Priority_Setting_Partnership.git
+[submodule "projects/Behavioral_data"]
+	path = projects/Behavioral_data
+	url = https://github.com/conp-bot/conp-dataset-Behavioral-data.git
