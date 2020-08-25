@@ -324,7 +324,6 @@ class BaseCrawler:
         return full_name.split("/")[0]
 
     def _push_and_pull_request(self, msg, dataset_dir, title):
-        print("before final push", self.repo.active_branch)
         self.repo.git.add(dataset_dir)
         self.repo.git.add(".gitmodules")
         self.repo.git.commit("-m", "[conp-bot] " + msg)
@@ -333,7 +332,6 @@ class BaseCrawler:
         origin_url = next(origin.urls)
         if "@" not in origin_url:
             origin.set_url(origin_url.replace("https://", "https://" + self.github_token + "@"))
-        print("push to ", "conp-bot/" + clean_title)
         self.repo.git.push("--set-upstream", "origin", "conp-bot/" + clean_title)
 
         # Create PR
