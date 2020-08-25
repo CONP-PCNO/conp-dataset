@@ -425,7 +425,25 @@ class FrdrCrawler(BaseCrawler):
         config_path = os.path.join(dataset_dir, "config")
         # fill in the config file
         with open(config_path, 'w') as f:
-            f.write("pip install update git-annex-remote-globus \ngit-annex-remote-globus setup \ngit annex enableremote globus")
+            f.write("""
+            pip install update git-annex-remote-globus 
+
+            python - << EOF
+
+            # check if the globus token is in the keyring before launching the config file. If not, add the credentials
+            token = keyring.get_password("globus-remote", "auth-tokens")
+
+            if token is None:
+                # get environment variable as token
+                globus_token = os.environ['GLOBUS_TOKEN']
+                # obtains globus token which is used as a password
+                keyring.set_password("globus-remote", "auth-tokens", globus_token)
+
+            EOF
+
+            git-annex-remote-globus setup
+            git annex enableremote globus
+            """)
             f.close()
         ds.no_annex("config")
         ds.save()
