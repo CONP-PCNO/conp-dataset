@@ -264,84 +264,108 @@ class FrdrCrawler(BaseCrawler):
 
     def get_all_dataset_description(self):
         """
-        Builds DATS for all dataset in the field of neuroscience
+        Builds DATS for all dataset in the field of neuroscience. The chosen datasets are read from a custom text file
         """
+        datasets_file = None
+        file_directory = os.path.dirname(os.path.realpath(__file__))
+        file_path = os.path.join(file_directory, 'globus_datasets.txt')
+
+        try:
+            # Reading dataset titles from custom file
+            datasets_file = open(file_path, 'r')
+        except FileNotFoundError as e:
+            logger.error(e)
+
+        datasets_titles = datasets_file.readlines()
+
+        # if it finds only the title
+        if len(datasets_titles) == 1:
+            logger.error("globus datasets file is empty: nothing to process")
+            sys.exit()
+
         frdr_dois = []
         datasets = self._query_frdr()
-        for dataset in datasets:
-            metadata = dataset["metadata"]["frdr:frdr"]
 
-            # TODO: to be updated: we are now testing 1 dataset
-            if "An End-to-end System for Automatic Characterization of Iba1 Immunopositive Microglia in Whole Slide Imaging: Data" in metadata["dc:title"]:
+        # Strips the newline character
+        for title in datasets_titles[1:]:
+            logger.info("evaluating dataset title: {}".format(title.strip()))
 
-                files_types, ds_size, globus_path = \
-                    self.get_all_files_description(metadata["frdr:globusEndpointName"],
-                                                   metadata["frdr:globusEndpointPath"])
+            for dataset in datasets:
+                metadata = dataset["metadata"]["frdr:frdr"]
 
-                frdr_dois.append(
-                {
-                    "identifier": {
-                        "identifier": metadata["dc:identifier"][0],
-                        "identifierSource": "DOI",
-                    },
-                    "concept_doi": metadata["dc:identifier"][1],
-                    "latest_version": metadata["dc:date"][0],
-                    "title": metadata["dc:title"],
-                    "creators": list(
-                        map(lambda x: {"name": x}, metadata["dc:creator"])
-                    ),
-                    "description": metadata["dc:description"],
-                    "version": metadata["dc:version"]
-                    if "dc:version" in metadata.keys()
-                    else "None",
-                    "licenses": list(map(lambda x: {"name": x}, metadata["dc:rights"])),
-                    "keywords": list(map(lambda x: {"value": x}, metadata["dc:subject"])),
-                    "distributions": [
+                # checks if the dataset with the given title is in the list of queried datasets
+                if str(title.strip()) in metadata["dc:title"]:
+
+                    files_types, ds_size, globus_path = \
+                        self.get_all_files_description(metadata["frdr:globusEndpointName"],
+                                                       metadata["frdr:globusEndpointPath"])
+
+                    frdr_dois.append(
                         {
-                            "formats": [
-                                file_format.upper()
-                                for file_format in files_types
-                                # Do not modify specific file formats.
-                                if files_types not in ["NIfTI", "BigWig"]
-                            ],
-                            "size": int(ds_size),
-                            # "unit": {"value": dataset_unit},
-                            "access": {
-                                "landingPage": metadata["dc:identifier"],
-                                "authorizations": [
-                                    {
-                                        "value": "public"
-
-                                    }
-                                ],
+                            "identifier": {
+                                "identifier": metadata["dc:identifier"][0],
+                                "identifierSource": "DOI",
                             },
-                        }
-                    ],
-                    "globusProperties": [
-                        {
-                            "category": "globusEndpoint",
-                            "values": [
+                            "concept_doi": metadata["dc:identifier"][1],
+                            "latest_version": metadata["dc:date"][0],
+                            "title": metadata["dc:title"],
+                            "creators": list(
+                                map(lambda x: {"name": x}, metadata["dc:creator"])
+                            ),
+                            "description": metadata["dc:description"],
+                            "version": metadata["dc:version"]
+                            if "dc:version" in metadata.keys()
+                            else "None",
+                            "licenses": list(map(lambda x: {"name": x}, metadata["dc:rights"])),
+                            "keywords": list(map(lambda x: {"value": x}, metadata["dc:subject"])),
+                            "distributions": [
                                 {
-                                    "EndpointName": metadata["frdr:globusEndpointName"]
-                                },
-                                {
-                                    "EndpointPath": globus_path
+                                    "formats": [
+                                        file_format.upper()
+                                        for file_format in files_types
+                                        # Do not modify specific file formats.
+                                        if files_types not in ["NIfTI", "BigWig"]
+                                    ],
+                                    "size": int(ds_size),
+                                    # "unit": {"value": dataset_unit},
+                                    "access": {
+                                        "landingPage": metadata["dc:identifier"],
+                                        "authorizations": [
+                                            {
+                                                "value": "public"
+
+                                            }
+                                        ],
+                                    },
                                 }
                             ],
-                        }
-                    ],
-                }
-            )
-        if self.verbose:
-            logger.info("Retrieved FRDR DOIs: ")
-            for frdr_doi in frdr_dois:
-                logger.info(
-                    "- Title: {}, Concept DOI: {}, Latest version DOI: {}".format(
-                        frdr_doi["title"],
-                        frdr_doi["concept_doi"],
-                        frdr_doi["latest_version"],
+                            "globusProperties": [
+                                {
+                                    "category": "globusEndpoint",
+                                    "values": [
+                                        {
+                                            "EndpointName": metadata["frdr:globusEndpointName"]
+                                        },
+                                        {
+                                            "EndpointPath": globus_path
+                                        }
+                                    ],
+                                }
+                            ],
+                        })
+                else:
+                    logger.info("Could not find the dataset title {} in the list of queried datasets".format(title.strip()))
+
+            if self.verbose:
+                logger.info("Retrieved FRDR DOIs: ")
+                for frdr_doi in frdr_dois:
+                    logger.info(
+                        "- Title: {}, Concept DOI: {}, Latest version DOI: {}".format(
+                            frdr_doi["title"],
+                            frdr_doi["concept_doi"],
+                            frdr_doi["latest_version"],
+                        )
                     )
-                )
 
         return frdr_dois
 
