@@ -8,6 +8,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.expanduser("~"), "conp-data
 sys.path.append(os.path.join("/data", "crawler", "conp-dataset"))
 from scripts.Crawlers.ZenodoCrawler import ZenodoCrawler
 from scripts.Crawlers.OSFCrawler import OSFCrawler
+from scripts.Crawlers.FrdrCrawler import FrdrCrawler
 
 
 def parse_args():
@@ -73,6 +74,11 @@ if __name__ == "__main__":
             print(os.linesep + "==================== OSF Crawler Running ====================" + os.linesep)
         OSFCrawler = OSFCrawler(github_token, config_path, verbose, force)
         OSFCrawler.run()
+
+        if verbose:
+            print(os.linesep + "==================== FRDR Crawler Running ====================" + os.linesep)
+        FRDRCrawler = FrdrCrawler(github_token, config_path, verbose, force)
+        FRDRCrawler.run()
 
         # INSTANTIATE NEW CRAWLERS AND RUN HERE
 
