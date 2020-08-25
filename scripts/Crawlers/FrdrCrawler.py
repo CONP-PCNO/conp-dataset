@@ -294,11 +294,7 @@ class FrdrCrawler(BaseCrawler):
                     "version": metadata["dc:version"]
                     if "dc:version" in metadata.keys()
                     else "None",
-                    "licenses": [
-                        {
-                            "name": metadata["dc:rights"]
-                        }
-                    ],
+                    "licenses": list(map(lambda x: {"name": x}, metadata["dc:rights"])),
                     "keywords": list(map(lambda x: {"value": x}, metadata["dc:subject"])),
                     "distributions": [
                         {
@@ -308,9 +304,10 @@ class FrdrCrawler(BaseCrawler):
                                 # Do not modify specific file formats.
                                 if files_types not in ["NIfTI", "BigWig"]
                             ],
-                            "size": str(ds_size),
+                            "size": int(ds_size),
                             # "unit": {"value": dataset_unit},
                             "access": {
+                                "landingPage": metadata["dc:identifier"],
                                 "authorizations": [
                                     {
                                         "value": "public"
@@ -320,7 +317,7 @@ class FrdrCrawler(BaseCrawler):
                             },
                         }
                     ],
-                    "extraProperties": [
+                    "globusProperties": [
                         {
                             "category": "globusEndpoint",
                             "values": [
@@ -354,13 +351,12 @@ class FrdrCrawler(BaseCrawler):
             data = {
                 "version": dataset["latest_version"],
                 "title": dataset["title"],
-                "endpointName": dataset["extraProperties"][0]["values"][0]["EndpointName"],
-                "endpointPath": dataset["extraProperties"][0]["values"][1]["EndpointPath"]
+                "endpointName": dataset["globusProperties"][0]["values"][0]["EndpointName"]
             }
             json.dump(data, f, indent=4)
 
     @staticmethod
-    def _retrieve(ds_path, ep_name, ep_path, git_repo, remove=False, tracker_path=None):
+    def _retrieve(ds_path, ep_name, ep_path, git_repo, remove=False, tracker_path=None, branch_name=None):
         """
         Updates git-annex with a new dataset location
         """
@@ -386,13 +382,17 @@ class FrdrCrawler(BaseCrawler):
         # retrieves dataset info to be saved by git annex
         retriever.retrieve_files(ds_path, retriever.get_remote_path())
 
+        git_repo.git.checkout("git-annex")
+
         # push to git-annex branch
         git_repo.git.push("origin", "git-annex")
         logger.info("pushed to git annex")
+
+        git_repo.git.checkout("master")
         os.chdir("../..")
         logger.info("Switch directory to: ", os.getcwd())
 
-    def _download(self, ds_description, dataset_dir, dataset, git_repo):
+    def _download(self, ds_description, dataset_dir, dataset, git_repo, branch_name=None):
         """
         Downloads the dataset and updates git-annex
         """
@@ -400,49 +400,56 @@ class FrdrCrawler(BaseCrawler):
         root_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
         ds_path = os.path.join(root_path, dataset_dir)
         # get globus values
-        ep_name = ds_description["extraProperties"][0]["values"][0]["EndpointName"]
-        ep_path = ds_description["extraProperties"][0]["values"][1]["EndpointPath"]
+        ep_name = ds_description["globusProperties"][0]["values"][0]["EndpointName"]
+        ep_path = ds_description["globusProperties"][0]["values"][1]["EndpointPath"]
         # perform transfer of the given dataset
         logger.info("downloading...", ep_name, ep_path, ds_path)
         self.transfer_data(ep_name,
                            ep_path,
                            dest_path=ds_path)
         dataset.save()
+        dataset.publish(to="origin")
         # register dataset
         logger.info("retrieving...", ds_path, ep_name, ep_path)
-        self._retrieve(ds_path, ep_name, ep_path, git_repo)
+        self._retrieve(ds_path, ep_name, ep_path, git_repo, branch_name=branch_name)
 
-    def add_new_dataset(self, dataset, dataset_dir):
+    def add_new_dataset(self, dataset_description, dataset_dir):
         """
         Adds any one time configuration such as annex ignoring files or adding dataset version tracker
         and downloads datasets
-        :param dataset: a dataset description
+        :param dataset_description: a dataset description
         :param dataset_dir: dataset path relative to conp-dataset, such as project/dataset_name
         """
         ds = self.datalad.Dataset(dataset_dir)
         ds.no_annex(".conp-frdr-crawler.json")
+        config_path = os.path.join(dataset_dir, "config")
+        # fill in the config file
+        with open(config_path, 'w') as f:
+            f.write("pip install update git-annex-remote-globus \ngit-annex-remote-globus setup \ngit annex enableremote globus")
+            f.close()
+        ds.no_annex("config")
         ds.save()
 
         repo = self.git.Repo(dataset_dir)
         clean_title = dataset_dir.split('/')[1]
         branch_name = "conp-bot/" + clean_title
-        if branch_name not in repo.remotes.origin.refs:  # New dataset
-            repo.git.checkout("-b", branch_name)
+        if branch_name in repo.remotes.origin.refs:
+            repo.git.checkout(branch_name)
 
         # Download dataset
-        self._download(dataset, dataset_dir, ds, repo)
+        self._download(dataset_description, dataset_dir, ds, repo, branch_name)
 
         # Add .conp-osf-crawler.json tracker file
         self._create_frdr_tracker(
-           os.path.join(dataset_dir, ".conp-frdr-crawler.json"), dataset)
+           os.path.join(dataset_dir, ".conp-frdr-crawler.json"), dataset_description)
 
-    def update_if_necessary(self, dataset_description, ds_dir):
+    def update_if_necessary(self, dataset_description, dataset_dir):
         """
         Update dataset if a change is detected in the dataset last modified date
         """
-        tracker_path = os.path.join(ds_dir, ".conp-frdr-crawler.json")
-        repo = self.git.Repo(ds_dir)
-        clean_title = ds_dir.split('/')[1]
+        tracker_path = os.path.join(dataset_dir, ".conp-frdr-crawler.json")
+        repo = self.git.Repo(dataset_dir)
+        clean_title = dataset_dir.split('/')[1]
         branch_name = "conp-bot/" + clean_title
         if branch_name not in repo.remotes.origin.refs:  # New dataset
             repo.git.checkout("-b", branch_name)
@@ -458,7 +465,7 @@ class FrdrCrawler(BaseCrawler):
                 logger.info("{}, version {} same as current FRDR vesion, no need to update"
                       .format(dataset_description["title"], dataset_description["latest_version"]))
             # evaluate change on endpoint name
-            endpoint_name = dataset_description["extraProperties"][0]["values"][0]["EndpointName"]
+            endpoint_name = dataset_description["globusProperties"][0]["values"][0]["EndpointName"]
             if tracker["endpointName"] != endpoint_name:
                 # Update dataset if endpoint has changed
                 if self.verbose:
@@ -467,11 +474,16 @@ class FrdrCrawler(BaseCrawler):
                                   endpoint_name))
                 # find root path
                 root_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-                ds_path = os.path.join(root_path, ds_dir)
+                ds_path = os.path.join(root_path, dataset_dir)
                 # retrieve without downloading. The remove flag is to remove the previous dataset info in git annex
                 self._retrieve(ds_path, endpoint_name,
-                               dataset_description["extraProperties"][0]["values"][1]["EndpointPath"],
+                               dataset_description["globusProperties"][0]["values"][1]["EndpointPath"],
                                repo, remove=True, tracker_path=tracker_path)
+                # update tracker with latest globus location
+                with open(tracker_path, "w") as f:
+                    tracker = json.load(f)
+                    tracker["endpointName"] = endpoint_name
+                    tracker.close()
                 return True
 
             else:
@@ -485,19 +497,19 @@ class FrdrCrawler(BaseCrawler):
                               dataset_description["latest_version"]))
 
             # Remove all data and DATS.json files
-            for file_name in os.listdir(ds_dir):
+            for file_name in os.listdir(dataset_dir):
                 if file_name[0] == "." or file_name == "README.md":
                     continue
-                self.datalad.remove(os.path.join(ds_dir, file_name), check=False)
+                self.datalad.remove(os.path.join(dataset_dir, file_name), check=False)
 
-            ds = self.datalad.Dataset(ds_dir)
+            ds = self.datalad.Dataset(dataset_dir)
 
             # Download dataset
-            self._download(dataset_description, ds_dir, ds, repo)
+            self._download(dataset_description, dataset_dir, ds, repo)
 
             # Add .conp-osf-crawler.json tracker file
             self._create_frdr_tracker(
-                os.path.join(ds_dir, ".conp-frdr-crawler.json"), dataset_description)
+                os.path.join(dataset_dir, ".conp-frdr-crawler.json"), dataset_description)
 
             return True
 
