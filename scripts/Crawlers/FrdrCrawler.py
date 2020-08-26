@@ -404,6 +404,7 @@ class FrdrCrawler(BaseCrawler):
         retriever(ds_path, ep_name, ep_path, encryption=None)
         retriever.initialize()
         # retrieves dataset info to be saved by git annex
+        print("Retrieving files, do not interrupt, it may take some time..")
         retriever.retrieve_files(ds_path, retriever.get_remote_path())
 
         git_repo.git.checkout("git-annex")
@@ -469,6 +470,8 @@ class FrdrCrawler(BaseCrawler):
             git annex enableremote globus
             """)
             f.close()
+        # make the config executable
+        os.chmod(config_path, 755)
         ds.no_annex("config")
         ds.save()
 
