@@ -76,6 +76,9 @@
 [submodule "projects/Reusing-Neuro-Data"]
 	path = projects/Reusing-Neuro-Data
 	url = https://github.com/conpdatasets/Reusing-Neuro-Data/
+[submodule "projects/1000GenomesProject"]
+    path = projects/1000GenomesProject
+    url = https://github/com/emmetaobrien/1000GenomesProject.git
 [submodule "projects/BigBrain_3DClassifiedVolumes"]
 	path = projects/BigBrain_3DClassifiedVolumes
 	url = https://github.com/emmetaobrien/BigBrain_3DClassifiedVolumes.git
