@@ -59,7 +59,7 @@ class OSFCrawler(BaseCrawler):
         files = r_json["data"]
 
         # Retrieve the files in the other pages if there are more than 1 page
-        if r_json["links"]["meta"]["total"] > r_json["links"]["meta"]["per_page"]:
+        if "links" in r_json.keys() and r_json["links"]["meta"]["total"] > r_json["links"]["meta"]["per_page"]:
             next_page = r_json["links"]["next"]
             while next_page is not None:
                 next_page_json = self._get_request_with_bearer_token(next_page).json()
