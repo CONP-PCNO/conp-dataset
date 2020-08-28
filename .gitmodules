@@ -75,10 +75,7 @@
 	datalad-id = 27e7f426-5d64-11ea-bba9-0800277806bd
 [submodule "projects/Reusing-Neuro-Data"]
 	path = projects/Reusing-Neuro-Data
-	url = http://github.com/gi114/Reusing-Neuro-Data.git
-[submodule "projects/1000GenomesProject"]
-	path = projects/1000GenomesProject
-	url = https://github.com/emmetaobrien/1000GenomesProject.git
+	url = https://github.com/conpdatasets/Reusing-Neuro-Data/
 [submodule "projects/BigBrain_3DClassifiedVolumes"]
 	path = projects/BigBrain_3DClassifiedVolumes
 	url = https://github.com/emmetaobrien/BigBrain_3DClassifiedVolumes.git
@@ -102,7 +99,6 @@
 [submodule "projects/Intracellular_Recordings_of_Murine_Neocortical_Neurons"]
 	path = projects/Intracellular_Recordings_of_Murine_Neocortical_Neurons
 	url = https://github.com/conp-bot/conp-dataset-Intracellular-Recordings-of-Murine-Neocortical-Neurons.git
-
 [submodule "projects/Khanlab/BigBrainMRICoreg"]
 	path = projects/Khanlab/BigBrainMRICoreg
 	url = https://github.com/conpdatasets/BigBrainMRICoreg
@@ -111,7 +107,6 @@
 [submodule "projects/preventad-open-bids"]
 	path = projects/preventad-open-bids
 	url = https://github.com/conpdatasets/preventad-open-bids.git
-
 [submodule "projects/cneuromod"]
 	path = projects/cneuromod
 	url = https://github.com/glatard/cneuromod.git
@@ -130,3 +125,6 @@
 [submodule "projects/Participant_level_contrast_maps"]
 	path = projects/Participant_level_contrast_maps
 	url = https://github.com/conp-bot/conp-dataset-Participant-level-contrast-maps.git
+[submodule "projects/1000GenomesProject"]
+	path = projects/1000GenomesProject
+	url = https://github.com/conpdatasets/1000GenomesProject
