@@ -39,14 +39,33 @@ class OSFCrawler(BaseCrawler):
         query = (
             'https://api.osf.io/v2/nodes/?filter[tags]=canadian-open-neuroscience-platform'
         )
-        results = self._get_request_with_bearer_token(query).json()["data"]
+        r_json = self._get_request_with_bearer_token(query).json()
+        results = r_json["data"]
+
+        # Retrieve results from other pages
+        if r_json["links"]["meta"]["total"] > r_json["links"]["meta"]["per_page"]:
+            next_page = r_json["links"]["next"]
+            while next_page is not None:
+                next_page_json = self._get_request_with_bearer_token(next_page).json()
+                results.extend(next_page_json["data"])
+                next_page = next_page_json["links"]["next"]
+
         if self.verbose:
             print("OSF query: {}".format(query))
         return results
 
     def _download_files(self, link, current_dir, inner_path, d, annex, sizes):
-        r = self._get_request_with_bearer_token(link)
-        files = r.json()["data"]
+        r_json = self._get_request_with_bearer_token(link).json()
+        files = r_json["data"]
+
+        # Retrieve the files in the other pages if there are more than 1 page
+        if r_json["links"]["meta"]["total"] > r_json["links"]["meta"]["per_page"]:
+            next_page = r_json["links"]["next"]
+            while next_page is not None:
+                next_page_json = self._get_request_with_bearer_token(next_page).json()
+                files.extend(next_page_json["data"])
+                next_page = next_page_json["links"]["next"]
+
         for file in files:
             # Handle folders
             if file["attributes"]["kind"] == "folder":
@@ -118,10 +137,15 @@ class OSFCrawler(BaseCrawler):
                                     dataset["relationships"]
                                     ["license"]["links"]["related"]["href"])
 
+            # Get dataset files root folder
+            files_link = self._get_request_with_bearer_token(
+                dataset["relationships"]["files"]["links"]["related"]["href"])\
+                .json()["data"]["relationships"]["root_folder"]["links"]["links"]["related"]["href"]
+
             osf_dois.append(
                 {
                     "title": attributes["title"],
-                    "files": dataset["relationships"]["files"]["links"]["related"]["href"],
+                    "files": files_link,
                     "creators": list(
                         map(lambda x: {"name": x}, contributors)
                     ),
