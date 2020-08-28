@@ -75,10 +75,7 @@
 	datalad-id = 27e7f426-5d64-11ea-bba9-0800277806bd
 [submodule "projects/Reusing-Neuro-Data"]
 	path = projects/Reusing-Neuro-Data
-	url = http://github.com/gi114/Reusing-Neuro-Data.git
-[submodule "projects/1000GenomesProject"]
-	path = projects/1000GenomesProject
-	url = https://github.com/emmetaobrien/1000GenomesProject.git
+	url = https://github.com/conpdatasets/Reusing-Neuro-Data/
 [submodule "projects/BigBrain_3DClassifiedVolumes"]
 	path = projects/BigBrain_3DClassifiedVolumes
 	url = https://github.com/emmetaobrien/BigBrain_3DClassifiedVolumes.git
@@ -130,3 +127,6 @@
 [submodule "projects/Behavioral_data"]
 	path = projects/Behavioral_data
 	url = https://github.com/conp-bot/conp-dataset-Behavioral-data.git
+[submodule "projects/1000GenomesProject"]
+	path = projects/1000GenomesProject
+	url = https://github.com/conpdatasets/1000GenomesProject
