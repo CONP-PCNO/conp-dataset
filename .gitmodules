@@ -75,7 +75,7 @@
 	datalad-id = 27e7f426-5d64-11ea-bba9-0800277806bd
 [submodule "projects/Reusing-Neuro-Data"]
 	path = projects/Reusing-Neuro-Data
-	url = https://github.com/conpdatasets/Reusing-Neuro-Data/
+	url = https://github.com/conpdatasets/Reusing-Neuro-Data.git
 [submodule "projects/BigBrain_3DClassifiedVolumes"]
 	path = projects/BigBrain_3DClassifiedVolumes
 	url = https://github.com/emmetaobrien/BigBrain_3DClassifiedVolumes.git
