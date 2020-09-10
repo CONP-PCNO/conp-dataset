@@ -75,7 +75,7 @@
 	datalad-id = 27e7f426-5d64-11ea-bba9-0800277806bd
 [submodule "projects/Reusing-Neuro-Data"]
 	path = projects/Reusing-Neuro-Data
-	url = https://github.com/conpdatasets/Reusing-Neuro-Data/
+	url = https://github.com/conpdatasets/Reusing-Neuro-Data.git
 [submodule "projects/BigBrain_3DClassifiedVolumes"]
 	path = projects/BigBrain_3DClassifiedVolumes
 	url = https://github.com/emmetaobrien/BigBrain_3DClassifiedVolumes.git
@@ -128,3 +128,6 @@
 [submodule "projects/1000GenomesProject"]
 	path = projects/1000GenomesProject
 	url = https://github.com/conpdatasets/1000GenomesProject
+[submodule "projects/Multimodal_data_with_wide_field_GCaMP_imaging"]
+	path = projects/Multimodal_data_with_wide_field_GCaMP_imaging
+	url = https://github.com/conp-bot/conp-dataset-Multimodal-data-with-wide-field-GCaMP-imaging.git
