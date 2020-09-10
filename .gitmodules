@@ -127,3 +127,6 @@
 [submodule "projects/1000GenomesProject"]
 	path = projects/1000GenomesProject
 	url = https://github.com/conpdatasets/1000GenomesProject
+[submodule "projects/Multimodal_data_with_wide_field_GCaMP_imaging"]
+	path = projects/Multimodal_data_with_wide_field_GCaMP_imaging
+	url = https://github.com/conp-bot/conp-dataset-Multimodal-data-with-wide-field-GCaMP-imaging.git
