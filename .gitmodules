@@ -125,9 +125,6 @@
 [submodule "projects/1000GenomesProject"]
 	path = projects/1000GenomesProject
 	url = https://github.com/conpdatasets/1000GenomesProject
-[submodule "projects/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations"]
-	path = projects/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations
-	url = https://github.com/conpdatasets/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations.git
 [submodule "projects/Systematic_phenomics_analysis_of_autism-associated_genes"]
 	path = projects/Systematic_phenomics_analysis_of_autism-associated_genes
 	url = https://github.com/conpdatasets/Systematic_phenomics_analysis_of_autism-associated_genes.git
