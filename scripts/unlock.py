@@ -1,32 +1,50 @@
 #!/usr/bin/env python
-import argparse
-import traceback
-import os
 import json
+import os
+import re
+import sys
+import traceback
+
 from git import Repo
 from datalad import api
 
+def project_name2env(project_name: str) -> str:
+    """Convert the project name to a valid ENV var name.
+
+    The ENV name for the project must match the regex `[a-zA-Z_]+[a-zA-Z0-9_]*`.
+
+    Parameters
+    ----------
+    project_name: str
+        Name of the project.
+
+    Return
+    ------
+    project_env: str
+        A valid ENV name for the project.
+    """
+    project_name = project_name.replace("-", "_")
+    project_env = re.sub("[_]+", "_", project_name)  # Remove consecutive `_`
+    project_env = re.sub("[^a-zA-Z0-9_]", "", project_env)
+
+    # Env var cannot start with number
+    if re.compile("[0-9]").match(project_env[0]):
+        project_env = "_" + project_env
+
+    return project_env.upper()
+
 
 def unlock():
-    parser = argparse.ArgumentParser(
-        formatter_class=argparse.RawTextHelpFormatter,
-        description=r"""
-        Script which allows to unlock a restricted dataset given the correct token
-
-        Requirements:
-        * The token must be passed to the script via the command line
-        * Script must be run in the base directory of the dataset
-        * File '.conp-zenodo-crawler.json' must exist
-        * Dataset git repository must be set on branch 'master'
-        """,
-    )
-    parser.add_argument(
-        "token", help="Zenodo access token"
-    )
-    args = parser.parse_args()
-    token = args.token
-
     repo = Repo()
+    project: str = project_name2env(repo.working_dir.split("/")[-1])
+    token: (str | None) = os.getenv(project + "_ZENODO_TOKEN", None)
+
+    if not token:
+        raise Exception(
+            f"{project}_ZENODO_TOKEN not found."
+            + "Cannot inject the Zenodo token into the git-annex urls."
+        )
+
     annex = repo.git.annex
     if repo.active_branch.name != "master":
         raise Exception("Dataset repository not set to branch 'master'")
@@ -77,6 +95,7 @@ def unlock():
 
 
 if __name__ == "__main__":
+    os.chdir(os.path.dirname(__file__))
     try:
         unlock()
     except Exception as e:
