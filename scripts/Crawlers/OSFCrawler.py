@@ -148,6 +148,7 @@ class OSFCrawler(BaseCrawler):
                 {
                     "title": attributes["title"],
                     "files": files_link,
+                    "homepage": dataset["links"]["html"],
                     "creators": list(
                         map(lambda x: {"name": x}, contributors)
                     ),
@@ -256,8 +257,8 @@ class OSFCrawler(BaseCrawler):
     def get_readme_content(self, dataset):
         return """# {}
 
-Crawled from OSF
+Crawled from [OSF]({})
 
 ## Description
 
-{}""".format(dataset["title"], dataset["description"])
+{}""".format(dataset["title"], dataset["homepage"], dataset["description"])

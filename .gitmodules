@@ -131,3 +131,6 @@
 [submodule "projects/Systematic_phenomics_analysis_of_autism-associated_genes"]
 	path = projects/Systematic_phenomics_analysis_of_autism-associated_genes
 	url = https://github.com/conpdatasets/Systematic_phenomics_analysis_of_autism-associated_genes.git
+[submodule "projects/Multimodal_data_with_wide_field_GCaMP_imaging"]
+	path = projects/Multimodal_data_with_wide_field_GCaMP_imaging
+	url = https://github.com/conp-bot/conp-dataset-Multimodal-data-with-wide-field-GCaMP-imaging.git
