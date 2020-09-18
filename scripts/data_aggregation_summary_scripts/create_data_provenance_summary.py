@@ -59,7 +59,7 @@ def read_conp_dataset_dir(conp_dataset_dir):
     dataset_dirs_list = os.listdir(conp_dataset_dir + '/projects')
 
     csv_content = [
-        ['Dataset', 'Consortium', 'Institution', 'City', 'Province', 'Country']
+        ['Dataset', 'Principal Investigator', 'Consortium', 'Institution', 'City', 'Province', 'Country']
     ]
 
     for dataset in dataset_dirs_list:
