@@ -30,7 +30,7 @@ def parse_input(argv):
     )
 
     try:
-        opts, args = getopt.getopt(argv, "d:")
+        opts, args = getopt.getopt(argv, "hd:")
     except getopt.GetoptError:
         sys.exit()
 
