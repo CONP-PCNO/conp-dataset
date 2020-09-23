@@ -137,3 +137,6 @@
 [submodule "projects/Numerically_Perturbed_Structural_Connectomes_from_100_individuals_in_the_NKI_Rockland_Dataset"]
 	path = projects/Numerically_Perturbed_Structural_Connectomes_from_100_individuals_in_the_NKI_Rockland_Dataset
 	url = https://github.com/conp-bot/conp-dataset-Numerically-Perturbed-Structural-Connectomes-from-100-individuals-in-the-NKI-Rockland-D.git
+[submodule "projects/Expression_based_polygenic_score_from_the_amygdala_5HTT_gene_network"]
+	path = projects/Expression_based_polygenic_score_from_the_amygdala_5HTT_gene_network
+	url = https://github.com/conp-bot/conp-dataset-Expression-based-polygenic-score-from-the-amygdala-5HTT-gene-network.git
