@@ -131,3 +131,6 @@
 [submodule "projects/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations"]
 	path = projects/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations
 	url = https://github.com/conpdatasets/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations.git
+[submodule "projects/Khanlab/HCPUR100-Template"]
+	path = projects/Khanlab/HCPUR100-Template
+	url = https://github.com/conpdatasets/HCPUR100-Template.git
