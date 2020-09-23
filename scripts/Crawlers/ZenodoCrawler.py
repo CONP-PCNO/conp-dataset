@@ -172,17 +172,19 @@ class ZenodoCrawler(BaseCrawler):
                                     "roles": [{"value": "Principal Investigator"}]}
                             )
 
+            identifier = dataset["conceptdoi"] if "conceptdoi" in dataset.keys() else dataset["doi"]
+
             zenodo_dois.append(
                 {
                     "identifier": {
-                        "identifier": "https://doi.org/{}".format(dataset["conceptdoi"]),
+                        "identifier": "https://doi.org/{}".format(identifier),
                         "identifierSource": "DOI",
                     },
                     "concept_doi": dataset["conceptrecid"],
                     "latest_version": latest_version_doi,
                     "title": metadata["title"],
                     "files": files,
-                    "doi_badge": dataset["conceptdoi"],
+                    "doi_badge": identifier,
                     "creators": creators,
                     "description": metadata["description"],
                     "version": metadata["version"]
