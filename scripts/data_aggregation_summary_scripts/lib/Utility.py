@@ -68,6 +68,34 @@ def read_dats_file_from_subdataset_folders(conp_dataset_dir_path, dataset_name):
     return subdataset_content
 
 
+def read_boutiques_cached_dir(tools_json_dir_path):
+    """
+    Reads the Boutiques' cache directory and return the contents
+    of every JSON descriptor file in a list (one list item = one
+    Boutiques' JSON descriptor content).
+
+    :param tools_json_dir_path: path to the cached Boutiques directory
+     :type tools_json_dir_path: str
+
+    :return: list of dictionaries with Boutiques' JSON descriptor content
+             (one list item = one Boutiques' JSON descriptor content)
+     :rtype: list
+    """
+
+    boutiques_descriptor_list = []
+
+    for json_file in os.listdir(tools_json_dir_path):
+        print(json_file)
+        if 'zenodo' not in json_file or 'swp' in json_file:
+            continue
+        json_path = tools_json_dir_path + '/' + json_file
+        with open(json_path) as json_file:
+            json_dict = json.loads(json_file.read())
+            boutiques_descriptor_list.append(json_dict)
+
+    return boutiques_descriptor_list
+
+
 def write_csv_file(csv_file_basename, csv_content):
     """
     Write the content of a list of list into a CSV file. Example of csv_content:

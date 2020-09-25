@@ -35,7 +35,7 @@ def main(argv):
         csv_content.append(summary_list)
 
     # write the summary statistics into a CSV file
-    Utility.write_csv_file('summary_statistics_per_data_providers', csv_content)
+    Utility.write_csv_file('dataset_summary_statistics_per_data_providers', csv_content)
 
 
 def parse_input(argv):
@@ -160,48 +160,21 @@ def get_stats_for_data_provider(dataset_summary_dict, data_provider):
         else:
             total_files += dataset_dict['number_of_files']
 
-        print(dataset_dict['title'])
-        print(dataset_dict['data_provider'])
-        print('\n')
-
         if dataset_dict['authorization'].lower() in ['private', 'restricted']:
             requires_login += 1
 
         if dataset_dict['size_unit'].lower() == 'b':
             total_size += dataset_dict['dataset_size'] / pow(1024, 3)
-            print('kb')
-            print(dataset_dict['dataset_size'])
-            print(dataset_dict['dataset_size'] / pow(1024, 2))
-            print('\n')
         elif dataset_dict['size_unit'].lower() == 'kb':
             total_size += dataset_dict['dataset_size'] / pow(1024, 2)
-            print('kb')
-            print(dataset_dict['dataset_size'])
-            print(dataset_dict['dataset_size'] / pow(1024, 2))
-            print('\n')
         elif dataset_dict['size_unit'].lower() == 'mb':
             total_size += dataset_dict['dataset_size'] / 1024
-            print('mb')
-            print(dataset_dict['dataset_size'])
-            print(dataset_dict['dataset_size'] / 1024)
-            print('\n')
         elif dataset_dict['size_unit'].lower() == 'gb':
             total_size += dataset_dict['dataset_size']
-            print('gb')
-            print(dataset_dict['dataset_size'])
-            print('\n')
         elif dataset_dict['size_unit'].lower() == 'tb':
             total_size += dataset_dict['dataset_size'] * 1024
-            print('tb')
-            print(dataset_dict['dataset_size'])
-            print(dataset_dict['dataset_size'] / 1024)
-            print('\n')
         elif dataset_dict['size_unit'].lower() == 'pb':
             total_size += dataset_dict['dataset_size'] * pow(1024, 2)
-            print('pb')
-            print(dataset_dict['dataset_size'])
-            print(dataset_dict['dataset_size'] / 1024)
-            print('\n')
 
         for keyword in dataset_dict['keywords']:
             if keyword not in keywords_list:
