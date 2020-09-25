@@ -23,7 +23,6 @@ def main(argv):
             'Number Of Datasets Requiring Authentication',
             'Total Number Of Files',
             'Total Size (GB)',
-            'CONP Status',
             'Keywords Describing The Data'
         ]
     ]
@@ -100,7 +99,6 @@ def parse_dats_information(dats_dict):
         'dataset_size'   : dats_dict['distributions'][0]['size'],
         'size_unit'      : dats_dict['distributions'][0]['unit']['value'],
         'number_of_files': values_dict['files']        if 'files'       in values_dict else '',
-        'conp_status'    : values_dict['CONP_status']  if 'CONP_status' in values_dict else '',
         'keywords'       : values_dict['keywords']     if 'keywords'    in values_dict else '',
     }
 
@@ -111,9 +109,6 @@ def get_stats_for_data_provider(dataset_summary_dict, data_provider):
     requires_login  = 0
     total_size      = 0
     total_files     = 0
-    total_conp_data = 0
-    total_canadian  = 0
-    total_external  = 0
     keywords_list   = []
 
     for index in dataset_summary_dict:
@@ -128,28 +123,48 @@ def get_stats_for_data_provider(dataset_summary_dict, data_provider):
         else:
             total_files += dataset_dict['number_of_files']
 
-        print(dataset_dict['authorization'])
+        print(dataset_dict['title'])
+        print(dataset_dict['data_provider'])
+        print('\n')
 
-        if dataset_dict['authorization'] in ['private', 'restricted']:
+        if dataset_dict['authorization'].lower() in ['private', 'restricted']:
             requires_login += 1
 
-        if dataset_dict['size_unit'] == 'KB':
-            total_size += dataset_dict['dataset_size'] * pow(1024, 2)
-        elif dataset_dict['size_unit'] == 'MB':
-            total_size += dataset_dict['dataset_size'] * 1024
-        elif dataset_dict['size_unit'] == 'GB':
-            total_size += dataset_dict['dataset_size']
-        elif dataset_dict['size_unit'] == 'TB':
-            total_size += dataset_dict['dataset_size'] / 1024
-        elif dataset_dict['size_unit'] == 'PB':
+        if dataset_dict['size_unit'].lower() == 'b':
+            total_size += dataset_dict['dataset_size'] / pow(1024, 3)
+            print('kb')
+            print(dataset_dict['dataset_size'])
+            print(dataset_dict['dataset_size'] / pow(1024, 2))
+            print('\n')
+        elif dataset_dict['size_unit'].lower() == 'kb':
             total_size += dataset_dict['dataset_size'] / pow(1024, 2)
-
-        if dataset_dict['conp_status'] == 'CONP':
-            total_conp_data += 1
-        elif dataset_dict['conp_status'] == 'Canadian':
-            total_canadian += 1
-        elif dataset_dict['conp_status'] == 'external':
-            total_external += 1
+            print('kb')
+            print(dataset_dict['dataset_size'])
+            print(dataset_dict['dataset_size'] / pow(1024, 2))
+            print('\n')
+        elif dataset_dict['size_unit'].lower() == 'mb':
+            total_size += dataset_dict['dataset_size'] / 1024
+            print('mb')
+            print(dataset_dict['dataset_size'])
+            print(dataset_dict['dataset_size'] / 1024)
+            print('\n')
+        elif dataset_dict['size_unit'].lower() == 'gb':
+            total_size += dataset_dict['dataset_size']
+            print('gb')
+            print(dataset_dict['dataset_size'])
+            print('\n')
+        elif dataset_dict['size_unit'].lower() == 'tb':
+            total_size += dataset_dict['dataset_size'] * 1024
+            print('tb')
+            print(dataset_dict['dataset_size'])
+            print(dataset_dict['dataset_size'] / 1024)
+            print('\n')
+        elif dataset_dict['size_unit'].lower() == 'pb':
+            total_size += dataset_dict['dataset_size'] * pow(1024, 2)
+            print('pb')
+            print(dataset_dict['dataset_size'])
+            print(dataset_dict['dataset_size'] / 1024)
+            print('\n')
 
         for keyword in dataset_dict['keywords']:
             if keyword not in keywords_list:
@@ -157,17 +172,12 @@ def get_stats_for_data_provider(dataset_summary_dict, data_provider):
                     continue
                 keywords_list.append(keyword)
 
-    conp_status_summary = 'CONP (' + str(total_conp_data) + '); ' \
-                          'Canadian (' + str(total_canadian) + '); ' \
-                          'External (' + str(total_external) + ')'
-
     return [
         data_provider,
         str(dataset_number),
         str(requires_login),
         str(total_files),
-        str(total_size),
-        conp_status_summary,
+        str(round(total_size)),
         ', '.join(keywords_list)
     ]
 
