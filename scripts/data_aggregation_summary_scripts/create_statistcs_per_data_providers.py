@@ -6,16 +6,20 @@ import lib.Utility as Utility
 
 def main(argv):
 
+    # create the getopt table + read and validate the options given to the script
     conp_dataset_dir = parse_input(argv)
 
+    # read the content of the DATS.json files present in the conp-dataset directory
     dataset_descriptor_list = Utility.read_conp_dataset_dir(conp_dataset_dir)
 
+    # digest the content of the DATS.json files into a summary of variables of interest
     datasets_summary_dict = {}
     i = 0
     for dataset in dataset_descriptor_list:
         datasets_summary_dict[i] = parse_dats_information(dataset)
         i += 1
 
+    # create the summary statistics of the variables of interest organized per data providers
     csv_content = [
         [
             'Data Provider',
@@ -30,12 +34,22 @@ def main(argv):
         summary_list = get_stats_for_data_provider(datasets_summary_dict, data_provider)
         csv_content.append(summary_list)
 
+    # write the summary statistics into a CSV file
     Utility.write_csv_file('summary_statistics_per_data_providers', csv_content)
 
 
 def parse_input(argv):
+    """
+    Creates the GetOpt table + read and validate the options given when calling the script.
 
-    conp_dataset_dir = None
+    :param argv: command-line arguments
+     :type argv: list
+
+    :return: the path to the conp-dataset directory
+     :rtype: str
+    """
+
+    conp_dataset_dir_path = None
 
     description = '\nThis tool facilitates the creation of statistics per data providers for reporting purposes.' \
                   ' It will read DATS files and print out a summary per data providers based on the following list' \
@@ -59,22 +73,33 @@ def parse_input(argv):
             print(description + usage)
             sys.exit()
         elif opt == '-d':
-            conp_dataset_dir = arg
+            conp_dataset_dir_path = arg
 
-    if not conp_dataset_dir:
+    if not conp_dataset_dir_path:
         print('a path to the conp-dataset needs to be given as an argument to the script by using the option `-d`')
         print(description + usage)
         sys.exit()
 
-    if not os.path.exists(conp_dataset_dir + '/projects'):
-        print(conp_dataset_dir + 'does not appear to be a valid path and does not include a `projects` directory')
+    if not os.path.exists(conp_dataset_dir_path + '/projects'):
+        print(conp_dataset_dir_path + 'does not appear to be a valid path and does not include a `projects` directory')
         print(description + usage)
         sys.exit()
 
-    return conp_dataset_dir
+    return conp_dataset_dir_path
 
 
 def parse_dats_information(dats_dict):
+    """
+    Parse the content of the DATS dictionary and grep the variables of interest for
+    the summary statistics.
+
+    :param dats_dict: dictionary with the content of a dataset's DATS.json file
+     :type dats_dict: dict
+
+    :return: dictionary with the variables of interest to use to produce the
+             summary statistics
+     :rtype: dict
+    """
 
     extra_properties = dats_dict['extraProperties']
     keywords = dats_dict['keywords']
@@ -104,6 +129,18 @@ def parse_dats_information(dats_dict):
 
 
 def get_stats_for_data_provider(dataset_summary_dict, data_provider):
+    """
+    Produces a summary statistics per data provider (Zenodo, OSF, LORIS...) of the
+    identified variables of interest.
+
+    :param dataset_summary_dict: dictionary with the variables of interest for the summary
+     :type dataset_summary_dict: dict
+    :param data_provider       : name of the data provider
+     :type data_provider       : str
+
+    :return: list with the summary statistics on the variables for the data provider
+     :rtype: list
+    """
 
     dataset_number  = 0
     requires_login  = 0
