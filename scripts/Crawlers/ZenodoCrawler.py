@@ -95,6 +95,8 @@ class ZenodoCrawler(BaseCrawler):
                 annex("rmurl", file_name, link)
                 annex("addurl", tokenless_link, "--file", file_name, "--relaxed")
                 private_files["files"].append({"name": file_name, "link": tokenless_link})
+        if os.path.exists(os.path.join(dataset_dir, 'DATS')):
+            os.rename(os.path.join(dataset_dir, 'DATS'), os.path.join(dataset_dir, 'DATS.json'))
         d.save()
 
     def _put_unlock_script(self, dataset_dir):
