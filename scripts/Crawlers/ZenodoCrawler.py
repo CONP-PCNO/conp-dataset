@@ -52,6 +52,11 @@ class ZenodoCrawler(BaseCrawler):
         return results
 
     def _download_file(self, bucket, d, dataset_dir, private_files):
+        """
+        Note - Zenodo does not allow JSON files to be uploaded for a dataset. To circumvent this, we
+        will ask users to upload a DATS file without the `.json` extension to their Zenodo dataset
+        and the crawler will rename the downloaded DATS file as DATS.json.
+        """
         link = bucket["links"]["self"]
         repo = self.git.Repo(dataset_dir)
         annex = repo.git.annex
