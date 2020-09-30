@@ -52,11 +52,6 @@ class ZenodoCrawler(BaseCrawler):
         return results
 
     def _download_file(self, bucket, d, dataset_dir, private_files):
-        """
-        Note - Zenodo does not allow JSON files to be uploaded for a dataset. To circumvent this, we
-        will ask users to upload a DATS file without the `.json` extension to their Zenodo dataset
-        and the crawler will rename the downloaded DATS file as DATS.json.
-        """
         link = bucket["links"]["self"]
         repo = self.git.Repo(dataset_dir)
         annex = repo.git.annex
@@ -100,6 +95,10 @@ class ZenodoCrawler(BaseCrawler):
                 annex("rmurl", file_name, link)
                 annex("addurl", tokenless_link, "--file", file_name, "--relaxed")
                 private_files["files"].append({"name": file_name, "link": tokenless_link})
+        '''
+        Note - Zenodo does not allow for JSON files to be uploaded for a dataset. To circumvent this, 
+        we will tell users to upload a DATS file without the .json extension to their Zenodo dataset.
+        '''
         if os.path.exists(os.path.join(dataset_dir, 'DATS')):
             os.rename(os.path.join(dataset_dir, 'DATS'), os.path.join(dataset_dir, 'DATS.json'))
         d.save()
@@ -179,19 +178,17 @@ class ZenodoCrawler(BaseCrawler):
                                     "roles": [{"value": "Principal Investigator"}]}
                             )
 
-            identifier = dataset["conceptdoi"] if "conceptdoi" in dataset.keys() else dataset["doi"]
-
             zenodo_dois.append(
                 {
                     "identifier": {
-                        "identifier": "https://doi.org/{}".format(identifier),
+                        "identifier": "https://doi.org/{}".format(dataset["conceptdoi"]),
                         "identifierSource": "DOI",
                     },
                     "concept_doi": dataset["conceptrecid"],
                     "latest_version": latest_version_doi,
                     "title": metadata["title"],
                     "files": files,
-                    "doi_badge": identifier,
+                    "doi_badge": dataset["conceptdoi"],
                     "creators": creators,
                     "description": metadata["description"],
                     "version": metadata["version"]
