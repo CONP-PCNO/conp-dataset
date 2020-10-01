@@ -4,10 +4,6 @@ import argparse
 import os
 import sys
 import traceback
-sys.path.append(os.path.abspath(os.path.join(os.path.expanduser("~"), "conp-dataset")))
-sys.path.append(os.path.join("/data", "crawler", "conp-dataset"))
-from scripts.Crawlers.ZenodoCrawler import ZenodoCrawler
-from scripts.Crawlers.OSFCrawler import OSFCrawler
 
 
 def parse_args():
@@ -43,6 +39,20 @@ def parse_args():
 
     with open(config_path, "r") as f:
         config = json.load(f)
+
+    if 'conp-dataset_path' not in config.keys():
+        raise Exception(
+            '"conp-dataset_path" not configured in ' + config_path + ','
+            'please configure it as follows: \n'
+            '  "conp-dataset_path": "PATH TO conp-dataset DIRECTORY",'
+        )
+
+    # import the crawler packages
+    sys.path.append(config['conp-dataset_path'])
+    global ZenodoCrawler
+    global OSFCrawler
+    from scripts.Crawlers.ZenodoCrawler import ZenodoCrawler
+    from scripts.Crawlers.OSFCrawler import OSFCrawler
 
     if not github_token and "github_token" not in config.keys():
         raise Exception(
