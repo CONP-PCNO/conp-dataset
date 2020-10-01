@@ -95,6 +95,12 @@ class ZenodoCrawler(BaseCrawler):
                 annex("rmurl", file_name, link)
                 annex("addurl", tokenless_link, "--file", file_name, "--relaxed")
                 private_files["files"].append({"name": file_name, "link": tokenless_link})
+        '''
+        Note - Zenodo does not allow for JSON files to be uploaded for a dataset. To circumvent this, 
+        we will tell users to upload a DATS file without the .json extension to their Zenodo dataset.
+        '''
+        if os.path.exists(os.path.join(dataset_dir, 'DATS')):
+            os.rename(os.path.join(dataset_dir, 'DATS'), os.path.join(dataset_dir, 'DATS.json'))
         d.save()
 
     def _put_unlock_script(self, dataset_dir):
