@@ -93,9 +93,6 @@
 [submodule "projects/multicenter-phantom"]
 	path = projects/multicenter-phantom
 	url = https://github.com/emmetaobrien/multicenter-phantom.git
-[submodule "projects/Khanlab/HCPUR100-Template"]
-	path = projects/Khanlab/HCPUR100-Template
-	url = https://github.com/emmetaobrien/HCPUR100-Template.git
 [submodule "projects/Intracellular_Recordings_of_Murine_Neocortical_Neurons"]
 	path = projects/Intracellular_Recordings_of_Murine_Neocortical_Neurons
 	url = https://github.com/conp-bot/conp-dataset-Intracellular-Recordings-of-Murine-Neocortical-Neurons.git
@@ -134,6 +131,9 @@
 [submodule "projects/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations"]
 	path = projects/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations
 	url = https://github.com/conpdatasets/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations.git
+[submodule "projects/Khanlab/HCPUR100-Template"]
+	path = projects/Khanlab/HCPUR100-Template
+	url = https://github.com/conpdatasets/HCPUR100-Template.git
 [submodule "projects/Numerically_Perturbed_Structural_Connectomes_from_100_individuals_in_the_NKI_Rockland_Dataset"]
 	path = projects/Numerically_Perturbed_Structural_Connectomes_from_100_individuals_in_the_NKI_Rockland_Dataset
 	url = https://github.com/conp-bot/conp-dataset-Numerically-Perturbed-Structural-Connectomes-from-100-individuals-in-the-NKI-Rockland-D.git
