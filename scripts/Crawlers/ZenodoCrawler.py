@@ -55,6 +55,9 @@ class ZenodoCrawler(BaseCrawler):
         link = bucket["links"]["self"]
         repo = self.git.Repo(dataset_dir)
         annex = repo.git.annex
+        if bucket['key'] in ['DATS.json', 'README.md']:
+            d.download_url(link)
+            return
         if "access_token" not in link:
             if bucket["type"] == "zip":
                 d.download_url(link, archive=True)
@@ -95,12 +98,6 @@ class ZenodoCrawler(BaseCrawler):
                 annex("rmurl", file_name, link)
                 annex("addurl", tokenless_link, "--file", file_name, "--relaxed")
                 private_files["files"].append({"name": file_name, "link": tokenless_link})
-        '''
-        Note - Zenodo does not allow for JSON files to be uploaded for a dataset. To circumvent this, 
-        we will tell users to upload a DATS file without the .json extension to their Zenodo dataset.
-        '''
-        if os.path.exists(os.path.join(dataset_dir, 'DATS')):
-            os.rename(os.path.join(dataset_dir, 'DATS'), os.path.join(dataset_dir, 'DATS.json'))
         d.save()
 
     def _put_unlock_script(self, dataset_dir):
@@ -294,7 +291,7 @@ class ZenodoCrawler(BaseCrawler):
 
             # Remove all data and DATS.json files
             for file_name in os.listdir(dataset_dir):
-                if file_name[0] == "." or file_name == "README.md":
+                if file_name[0] == ".":
                     continue
                 self.datalad.remove(os.path.join(dataset_dir, file_name), check=False)
 
