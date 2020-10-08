@@ -63,7 +63,7 @@ def read_conp_dataset_dir(conp_dataset_dir):
     ]
 
     for dataset in dataset_dirs_list:
-        if dataset == '.touchfile':
+        if dataset in ['.touchfile', '.DS_Store']:
             continue
         dats_path = conp_dataset_dir + '/projects/' + dataset + '/DATS.json'
         if not (os.path.exists(dats_path)):
@@ -93,13 +93,15 @@ def look_for_dats_file_in_subfolders(conp_dataset_dir, dataset):
 
 def parse_dats_json_file(dats_path):
 
-    with open(dats_path) as dats_file:
+    print(dats_path)
+
+    with open(dats_path, encoding="utf8") as dats_file:
         dats_dict = json.loads(dats_file.read())
 
     extra_properties = dats_dict['extraProperties']
     values_dict = {}
     for extra_property in extra_properties:
-        values_dict[extra_property['category']] = extra_property['values'][0]['value']
+        values_dict[extra_property['category']] = ", ".join(str(value) for value in [exp["value"] for exp in extra_property["values"]])
 
     creators = dats_dict['creators']
     for creator in creators:
