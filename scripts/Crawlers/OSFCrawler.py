@@ -139,12 +139,8 @@ class OSFCrawler(BaseCrawler):
                                     dataset["relationships"]
                                     ["license"]["links"]["related"]["href"])
 
-            # Get dataset root folder files link
-            root_folder_link = self._get_request_with_bearer_token(
-                dataset["relationships"]["files"]["links"]["related"]["href"])\
-                .json()["data"][0]["relationships"]["root_folder"]["links"]["related"]["href"]
-            files_link = self._get_request_with_bearer_token(root_folder_link)\
-                .json()["data"]["relationships"]["files"]["links"]["related"]["href"]
+            # Get link for the dataset files
+            files_link = dataset['relationships']['files']['links']['related']['href']
 
             osf_dois.append(
                 {
