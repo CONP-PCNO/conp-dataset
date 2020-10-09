@@ -140,3 +140,7 @@
 [submodule "projects/Expression_based_polygenic_score_from_the_amygdala_5HTT_gene_network"]
 	path = projects/Expression_based_polygenic_score_from_the_amygdala_5HTT_gene_network
 	url = https://github.com/conp-bot/conp-dataset-Expression-based-polygenic-score-from-the-amygdala-5HTT-gene-network.git
+[submodule "projects/Mousebytes-An-open-access-high-throughput-pipeline-and-database-for-rodent-touchscreen-based-data"]
+	path = projects/Mousebytes-An-open-access-high-throughput-pipeline-and-database-for-rodent-touchscreen-based-data
+	url = https://github.com/emmetaobrien/Mousebytes-An-open-access-high-throughput-pipeline-and-database-for-rodent-touchscreen-based-data.git
+
