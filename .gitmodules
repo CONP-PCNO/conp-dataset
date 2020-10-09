@@ -141,3 +141,6 @@
 	path = projects/Expression_based_polygenic_score_from_the_amygdala_5HTT_gene_network
 	url = https://github.com/conp-bot/conp-dataset-Expression-based-polygenic-score-from-the-amygdala-5HTT-gene-network.git
 
+[submodule "projects/mousebytesdataset"]
+	path = projects/mousebytesdataset
+	url = https://github.com/emmetaobrien/mousebytesdataset/
