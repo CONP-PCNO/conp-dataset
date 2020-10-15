@@ -274,6 +274,10 @@ class BaseCrawler:
                     # Create DATS.json if it doesn't exist
                     if not os.path.isfile(os.path.join(dataset_dir, "DATS.json")):
                         self._create_new_dats(dataset_dir, os.path.join(dataset_dir, "DATS.json"), dataset_description)
+                    # Create README.md if it doesn't exist
+                    if not os.path.isfile(os.path.join(dataset_dir, "README.md")):
+                        readme = self.get_readme_content(dataset_description)
+                        self._create_readme(readme, os.path.join(dataset_dir, "README.md"))
                     d.save()
                     d.publish(to="origin")
                 commit_msg = "Updated " + dataset_description["title"]
