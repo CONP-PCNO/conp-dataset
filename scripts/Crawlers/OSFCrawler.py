@@ -100,6 +100,8 @@ class OSFCrawler(BaseCrawler):
                     # Handle zip files
                     if file["attributes"]["name"].split(".")[-1] == "zip":
                         d.download_url(file["links"]["download"], path=os.path.join(inner_path, ""), archive=True)
+                    elif file['attributes']['name'] in ['DATS.json', 'README.md']:
+                        d.download_url(file['links']['download'], path=os.path.join(inner_path, ''))
                     else:
                         annex("addurl", file["links"]["download"], "--fast", "--file",
                               os.path.join(inner_path, file["attributes"]["name"]))
@@ -137,12 +139,8 @@ class OSFCrawler(BaseCrawler):
                                     dataset["relationships"]
                                     ["license"]["links"]["related"]["href"])
 
-            # Get dataset root folder files link
-            root_folder_link = self._get_request_with_bearer_token(
-                dataset["relationships"]["files"]["links"]["related"]["href"])\
-                .json()["data"][0]["relationships"]["root_folder"]["links"]["related"]["href"]
-            files_link = self._get_request_with_bearer_token(root_folder_link)\
-                .json()["data"]["relationships"]["files"]["links"]["related"]["href"]
+            # Get link for the dataset files
+            files_link = dataset['relationships']['files']['links']['related']['href']
 
             osf_dois.append(
                 {
@@ -235,7 +233,7 @@ class OSFCrawler(BaseCrawler):
 
             # Remove all data and DATS.json files
             for file_name in os.listdir(dataset_dir):
-                if file_name[0] == "." or file_name == "README.md":
+                if file_name[0] == ".":
                     continue
                 self.datalad.remove(os.path.join(dataset_dir, file_name), check=False)
 
