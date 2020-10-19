@@ -108,7 +108,10 @@ class OSFCrawler(BaseCrawler):
                 # append the size of the downloaded file to the sizes array
                 file_size = file['attributes']['size']
                 if not file_size:
-                    file_size = annex('info', '--bytes', os.path.join(inner_path, file["attributes"]["name"]))
+                    # if the file size cannot be found in the OSF API response, then get it from git annex info
+                    inner_file_path = os.path.join(inner_path, file["attributes"]["name"])
+                    annex_info_dict = json.loads(annex('info', '--bytes', '--json', inner_file_path))
+                    file_size       = int(annex_info_dict['size'])
                 sizes.append(file_size)
 
     def _get_contributors(self, link):
