@@ -87,7 +87,6 @@ class OSFCrawler(BaseCrawler):
                     correct_download_link = self._get_request_with_bearer_token(
                         file["links"]["download"], redirect=False).headers['location']
                     if 'https://accounts.osf.io/login' not in correct_download_link:
-                        sizes.append(file["attributes"]["size"])
                         zip_file = True if file["attributes"]["name"].split(".")[-1] == "zip" else False
                         d.download_url(correct_download_link, path=os.path.join(inner_path, ""), archive=zip_file)
                     else:  # Token did not work for downloading file, return
@@ -96,7 +95,6 @@ class OSFCrawler(BaseCrawler):
 
                 # Public file
                 else:
-                    sizes.append(file["attributes"]["size"])
                     # Handle zip files
                     if file["attributes"]["name"].split(".")[-1] == "zip":
                         d.download_url(file["links"]["download"], path=os.path.join(inner_path, ""), archive=True)
@@ -106,6 +104,12 @@ class OSFCrawler(BaseCrawler):
                         annex("addurl", file["links"]["download"], "--fast", "--file",
                               os.path.join(inner_path, file["attributes"]["name"]))
                         d.save()
+
+                # append the file size
+                file_size = file['attributes']['size']
+                if not file_size:
+                    file_size = annex('info', '--bytes', os.path.join(inner_path, file["attributes"]["name"]))
+                sizes.append(file_size)
 
     def _get_contributors(self, link):
         r = self._get_request_with_bearer_token(link)
