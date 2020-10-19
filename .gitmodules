@@ -146,3 +146,6 @@
 [submodule "projects/Calgary_Preschool_MRI_Dataset"]
 	path = projects/Calgary_Preschool_MRI_Dataset
 	url = https://github.com/conp-bot/conp-dataset-Calgary-Preschool-MRI-Dataset.git
+[submodule "projects/CFMM_7T__MP2RAGE_T1_mapping"]
+	path = projects/CFMM_7T__MP2RAGE_T1_mapping
+	url = https://github.com/conp-bot/conp-dataset-CFMM-7T-MP2RAGE-T1-mapping.git
