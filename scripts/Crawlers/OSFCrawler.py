@@ -105,7 +105,7 @@ class OSFCrawler(BaseCrawler):
                               os.path.join(inner_path, file["attributes"]["name"]))
                         d.save()
 
-                # append the file size
+                # append the size of the downloaded file to the sizes array
                 file_size = file['attributes']['size']
                 if not file_size:
                     file_size = annex('info', '--bytes', os.path.join(inner_path, file["attributes"]["name"]))
