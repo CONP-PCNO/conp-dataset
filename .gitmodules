@@ -154,6 +154,6 @@
     url = https://github.com/conpdatasets/preventad-registered.git
 [submodule "projects/calgary-campinas"]
 	path = projects/calgary-campinas
-	url = ./projects/calgary-campinas
+	url = https://github.com/emmetaobrien/calgary-campinas.git
 	branch = master
 	datalad-id = 95f9d92a-3414-11eb-8a50-525400da244d
