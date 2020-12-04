@@ -341,8 +341,7 @@ class BaseCrawler:
         # Create PR
         print("Creating PR for " + title)
         r = requests.post(
-            "https://api.github.com/repos/CONP-PCNO/conp-dataset/pulls?access_token="
-            + self.github_token,
+            "https://api.github.com/repos/CONP-PCNO/conp-dataset/pulls",
             json={
                 "title": "Crawler result ({})".format(title),
                 "body": """## Description
@@ -368,6 +367,7 @@ Functional checks:
                 "head": self.username + ":conp-bot/" + clean_title,
                 "base": "master",
             },
+            headers={"Authorization": "token {}".format(self.github_token)}
         )
         if r.status_code != 201:
             raise Exception("Error while creating pull request: " + r.text)
