@@ -93,9 +93,6 @@
 [submodule "projects/multicenter-phantom"]
 	path = projects/multicenter-phantom
 	url = https://github.com/emmetaobrien/multicenter-phantom.git
-[submodule "projects/Khanlab/HCPUR100-Template"]
-	path = projects/Khanlab/HCPUR100-Template
-	url = https://github.com/emmetaobrien/HCPUR100-Template.git
 [submodule "projects/Intracellular_Recordings_of_Murine_Neocortical_Neurons"]
 	path = projects/Intracellular_Recordings_of_Murine_Neocortical_Neurons
 	url = https://github.com/conp-bot/conp-dataset-Intracellular-Recordings-of-Murine-Neocortical-Neurons.git
@@ -134,6 +131,24 @@
 [submodule "projects/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations"]
 	path = projects/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations
 	url = https://github.com/conpdatasets/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations.git
+[submodule "projects/Khanlab/HCPUR100-Template"]
+	path = projects/Khanlab/HCPUR100-Template
+	url = https://github.com/conpdatasets/HCPUR100-Template.git
 [submodule "projects/Numerically_Perturbed_Structural_Connectomes_from_100_individuals_in_the_NKI_Rockland_Dataset"]
 	path = projects/Numerically_Perturbed_Structural_Connectomes_from_100_individuals_in_the_NKI_Rockland_Dataset
 	url = https://github.com/conp-bot/conp-dataset-Numerically-Perturbed-Structural-Connectomes-from-100-individuals-in-the-NKI-Rockland-D.git
+[submodule "projects/Expression_based_polygenic_score_from_the_amygdala_5HTT_gene_network"]
+	path = projects/Expression_based_polygenic_score_from_the_amygdala_5HTT_gene_network
+	url = https://github.com/conp-bot/conp-dataset-Expression-based-polygenic-score-from-the-amygdala-5HTT-gene-network.git
+[submodule "projects/mousebytesdataset"]
+	path = projects/mousebytesdataset
+	url = https://github.com/conpdatasets/mousebytesdataset.git
+[submodule "projects/Calgary_Preschool_MRI_Dataset"]
+	path = projects/Calgary_Preschool_MRI_Dataset
+	url = https://github.com/conp-bot/conp-dataset-Calgary-Preschool-MRI-Dataset.git
+[submodule "projects/CFMM_7T__MP2RAGE_T1_mapping"]
+	path = projects/CFMM_7T__MP2RAGE_T1_mapping
+	url = https://github.com/conp-bot/conp-dataset-CFMM-7T-MP2RAGE-T1-mapping.git
+[submodule "projects/preventad-registered"]
+    path = projects/preventad-registered
+    url = https://github.com/conpdatasets/preventad-registered.git
