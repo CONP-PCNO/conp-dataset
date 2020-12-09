@@ -128,9 +128,6 @@
 [submodule "projects/Multimodal_data_with_wide_field_GCaMP_imaging"]
 	path = projects/Multimodal_data_with_wide_field_GCaMP_imaging
 	url = https://github.com/conp-bot/conp-dataset-Multimodal-data-with-wide-field-GCaMP-imaging.git
-[submodule "projects/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations"]
-	path = projects/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations
-	url = https://github.com/conpdatasets/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations.git
 [submodule "projects/Khanlab/HCPUR100-Template"]
 	path = projects/Khanlab/HCPUR100-Template
 	url = https://github.com/conpdatasets/HCPUR100-Template.git
