@@ -154,3 +154,6 @@
 	url = https://github.com/emmetaobrien/calgary-campinas.git
 	branch = master
 	datalad-id = 95f9d92a-3414-11eb-8a50-525400da244d
+[submodule "projects/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations"]
+	path = projects/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations
+	url = https://github.com/conpdatasets/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations
