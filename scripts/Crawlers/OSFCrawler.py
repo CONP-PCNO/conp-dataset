@@ -136,6 +136,10 @@ class OSFCrawler(BaseCrawler):
         else:
             return False
 
+    def _get_identifier(self, link):
+        r = self._get_request_with_bearer_token(link)
+        return r.json()['data'][0]['attributes']['value'] if r.json()['data'] else False
+
     def get_all_dataset_description(self):
         osf_dois = []
         datasets = self._query_osf()
@@ -158,6 +162,10 @@ class OSFCrawler(BaseCrawler):
 
             # Retrieve institution information
             institutions = self._get_institutions(dataset['relationships']['affiliated_institutions']['links']['related']['href'])
+
+            # Retrieve identifier information
+            dats_identifier_section = ''
+            identifier = self._get_identifier(dataset['relationships']['identifiers']['links']['related']['href'])
 
             # Get link for the dataset files
             files_link = dataset['relationships']['files']['links']['related']['href']
@@ -183,39 +191,46 @@ class OSFCrawler(BaseCrawler):
                     }
                 )
 
-            osf_dois.append(
-                {
-                    "title": attributes["title"],
-                    "files": files_link,
-                    "homepage": dataset["links"]["html"],
-                    "creators": list(
-                        map(lambda x: {"name": x}, contributors)
-                    ),
-                    "description": attributes["description"],
-                    "version": attributes["date_modified"],
-                    "licenses": [
-                        {
-                            "name": license_
-                        }
-                    ],
-                    "keywords": keywords,
-                    "distributions": [
-                        {
-                            "size": 0,
-                            "unit": {"value": "B"},
-                            "access": {
-                                "landingPage": dataset["links"]["html"],
-                                "authorizations": [
-                                    {
-                                        "value": "public"
-                                    }
-                                ],
-                            },
-                        }
-                    ],
-                    "extraProperties": extra_properties,
+            dataset_dats_content = {
+                "title"          : attributes["title"],
+                "files"          : files_link,
+                "homepage"       : dataset["links"]["html"],
+                "creators"       : list(
+                    map(lambda x: {"name": x}, contributors)
+                ),
+                "description"    : attributes["description"],
+                "version"        : attributes["date_modified"],
+                "licenses"       : [
+                    {
+                        "name": license_
+                    }
+                ],
+                "keywords"       : keywords,
+                "distributions"  : [
+                    {
+                        "size"  : 0,
+                        "unit"  : {"value": "B"},
+                        "access": {
+                            "landingPage"   : dataset["links"]["html"],
+                            "authorizations": [
+                                {
+                                    "value": "public"
+                                }
+                            ],
+                        },
+                    }
+                ],
+                "extraProperties": extra_properties
+            }
+
+            if identifier:
+                source = 'OSF DOI' if 'OSF.IO' in identifier else 'DOI'
+                dataset_dats_content['identifier'] = {
+                    "identifier": identifier,
+                    "identifierSource": source
                 }
-            )
+
+            osf_dois.append(dataset_dats_content)
 
         if self.verbose:
             print("Retrieved OSF DOIs: ")
