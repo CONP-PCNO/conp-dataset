@@ -164,7 +164,6 @@ class OSFCrawler(BaseCrawler):
             institutions = self._get_institutions(dataset['relationships']['affiliated_institutions']['links']['related']['href'])
 
             # Retrieve identifier information
-            dats_identifier_section = ''
             identifier = self._get_identifier(dataset['relationships']['identifiers']['links']['related']['href'])
 
             # Get link for the dataset files
