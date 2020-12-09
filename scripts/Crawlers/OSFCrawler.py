@@ -126,6 +126,16 @@ class OSFCrawler(BaseCrawler):
         r = self._get_request_with_bearer_token(link)
         return r.json()["data"]["attributes"]["name"]
 
+    def _get_institutions(self, link):
+        r = self._get_request_with_bearer_token(link)
+        if r.json()['data']:
+            institutions = [
+                institution['attributes']['name'] for institution in r.json()['data']
+            ]
+            return institutions
+        else:
+            return False
+
     def get_all_dataset_description(self):
         osf_dois = []
         datasets = self._query_osf()
@@ -145,6 +155,9 @@ class OSFCrawler(BaseCrawler):
                 license_ = self._get_license(
                                     dataset["relationships"]
                                     ["license"]["links"]["related"]["href"])
+
+            # Retrieve institution information
+            institutions = self._get_institutions(dataset['relationships']['affiliated_institutions']['links']['related']['href'])
 
             # Get link for the dataset files
             files_link = dataset['relationships']['files']['links']['related']['href']
@@ -180,6 +193,12 @@ class OSFCrawler(BaseCrawler):
                         }
                     ],
                     "extraProperties": [
+                        {
+                            "category": "origin_institution",
+                            "values": list(
+                                map(lambda x: {'value': x}, institutions)
+                            )
+                        },
                         {
                             "category": "logo",
                             "values": [
