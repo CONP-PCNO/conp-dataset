@@ -60,17 +60,17 @@
   url = https://github.com/conp-bot/conp-dataset-MRI_and_unbiased_averages_of_wild_muskrats__Ondatra_zibethicus__and_red_squirrels__Tami.git
 [submodule "projects/refseq/refseq_Callithrix_jacchus"]
 	path = projects/refseq/refseq_Callithrix_jacchus
-	url = https://github.com/emmetaobrien/refseq_Callithrix_jacchus.git
+	url = https://github.com/conpdatasets/refseq_Callithrix_jacchus.git
 	branch = master
 	datalad-id = 1b374678-5d64-11ea-bba9-0800277806bd
 [submodule "projects/refseq/refseq_Homo_sapiens"]
 	path = projects/refseq/refseq_Homo_sapiens
-	url = https://github.com/emmetaobrien/refseq_Homo_sapiens.git
+	url = https://github.com/conpdatasets/refseq_Homo_sapiens.git
 	branch = master
 	datalad-id = 201d6d0c-5d64-11ea-bba9-0800277806bd
 [submodule "projects/refseq/refseq_Mus_musculus"]
 	path = projects/refseq/refseq_Mus_musculus
-	url = https://github.com/emmetaobrien/refseq_Mus_musculus.git
+	url = https://github.com/conpdatasets/refseq_Mus_musculus.git
 	branch = master
 	datalad-id = 27e7f426-5d64-11ea-bba9-0800277806bd
 [submodule "projects/Reusing-Neuro-Data"]
