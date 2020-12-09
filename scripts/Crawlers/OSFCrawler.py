@@ -4,6 +4,7 @@ import os
 import json
 import requests
 import humanize
+import datetime
 
 
 def _create_osf_tracker(path, dataset):
@@ -190,6 +191,10 @@ class OSFCrawler(BaseCrawler):
                     }
                 )
 
+            # Retrieve dates
+            date_created  = datetime.datetime.strptime(attributes['date_created'], '%Y-%m-%dT%H:%M:%S.%f')
+            date_modified = datetime.datetime.strptime(attributes['date_modified'], '%Y-%m-%dT%H:%M:%S.%f')
+
             dataset_dats_content = {
                 "title"          : attributes["title"],
                 "files"          : files_link,
@@ -202,6 +207,20 @@ class OSFCrawler(BaseCrawler):
                 "licenses"       : [
                     {
                         "name": license_
+                    }
+                ],
+                "dates": [
+                    {
+                        "date": date_created.strftime('%Y-%m-%d %H:%M:%S'),
+                        "type": {
+                            "value": "Date Created"
+                        }
+                    },
+                    {
+                        "date": date_modified.strftime('%Y-%m-%d %H:%M:%S'),
+                        "type": {
+                            "value": "Date Modified"
+                        }
                     }
                 ],
                 "keywords"       : keywords,
