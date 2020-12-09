@@ -162,6 +162,27 @@ class OSFCrawler(BaseCrawler):
             # Get link for the dataset files
             files_link = dataset['relationships']['files']['links']['related']['href']
 
+            # Gather extra properties
+            extra_properties = [
+                {
+                    "category": "logo",
+                    "values"  : [
+                        {
+                            "value": "https://osf.io/static/img/institutions/shields/cos-shield.png"
+                        }
+                    ],
+                }
+            ]
+            if institutions:
+                extra_properties.append(
+                    {
+                        "category": "origin_institution",
+                        "values"  : list(
+                            map(lambda x: {'value': x}, institutions)
+                        )
+                    }
+                )
+
             osf_dois.append(
                 {
                     "title": attributes["title"],
@@ -192,22 +213,7 @@ class OSFCrawler(BaseCrawler):
                             },
                         }
                     ],
-                    "extraProperties": [
-                        {
-                            "category": "origin_institution",
-                            "values": list(
-                                map(lambda x: {'value': x}, institutions)
-                            )
-                        },
-                        {
-                            "category": "logo",
-                            "values": [
-                                {
-                                    "value": "https://osf.io/static/img/institutions/shields/cos-shield.png"
-                                }
-                            ],
-                        }
-                    ],
+                    "extraProperties": extra_properties,
                 }
             )
 
