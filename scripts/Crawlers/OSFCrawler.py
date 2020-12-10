@@ -232,7 +232,7 @@ class OSFCrawler(BaseCrawler):
                             "landingPage"   : dataset["links"]["html"],
                             "authorizations": [
                                 {
-                                    "value": "public"
+                                    "value": "public" if attributes['public'] else "private"
                                 }
                             ],
                         },
