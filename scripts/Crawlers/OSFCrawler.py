@@ -318,10 +318,17 @@ class OSFCrawler(BaseCrawler):
             return True
 
     def get_readme_content(self, dataset):
-        return """# {}
+        readme_content = """# {}
 
 Crawled from [OSF]({})
 
 ## Description
 
 {}""".format(dataset["title"], dataset["homepage"], dataset["description"])
+
+        if 'identifier' in dataset:
+            readme_content += """
+
+DOI: {}""".format(dataset['identifier']['identifier'])
+
+        return readme_content
