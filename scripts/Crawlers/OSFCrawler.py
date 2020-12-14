@@ -39,14 +39,33 @@ class OSFCrawler(BaseCrawler):
         query = (
             'https://api.osf.io/v2/nodes/?filter[tags]=canadian-open-neuroscience-platform'
         )
-        results = self._get_request_with_bearer_token(query).json()["data"]
+        r_json = self._get_request_with_bearer_token(query).json()
+        results = r_json["data"]
+
+        # Retrieve results from other pages
+        if r_json["links"]["meta"]["total"] > r_json["links"]["meta"]["per_page"]:
+            next_page = r_json["links"]["next"]
+            while next_page is not None:
+                next_page_json = self._get_request_with_bearer_token(next_page).json()
+                results.extend(next_page_json["data"])
+                next_page = next_page_json["links"]["next"]
+
         if self.verbose:
             print("OSF query: {}".format(query))
         return results
 
     def _download_files(self, link, current_dir, inner_path, d, annex, sizes):
-        r = self._get_request_with_bearer_token(link)
-        files = r.json()["data"]
+        r_json = self._get_request_with_bearer_token(link).json()
+        files = r_json["data"]
+
+        # Retrieve the files in the other pages if there are more than 1 page
+        if "links" in r_json.keys() and r_json["links"]["meta"]["total"] > r_json["links"]["meta"]["per_page"]:
+            next_page = r_json["links"]["next"]
+            while next_page is not None:
+                next_page_json = self._get_request_with_bearer_token(next_page).json()
+                files.extend(next_page_json["data"])
+                next_page = next_page_json["links"]["next"]
+
         for file in files:
             # Handle folders
             if file["attributes"]["kind"] == "folder":
@@ -68,7 +87,6 @@ class OSFCrawler(BaseCrawler):
                     correct_download_link = self._get_request_with_bearer_token(
                         file["links"]["download"], redirect=False).headers['location']
                     if 'https://accounts.osf.io/login' not in correct_download_link:
-                        sizes.append(file["attributes"]["size"])
                         zip_file = True if file["attributes"]["name"].split(".")[-1] == "zip" else False
                         d.download_url(correct_download_link, path=os.path.join(inner_path, ""), archive=zip_file)
                     else:  # Token did not work for downloading file, return
@@ -77,14 +95,24 @@ class OSFCrawler(BaseCrawler):
 
                 # Public file
                 else:
-                    sizes.append(file["attributes"]["size"])
                     # Handle zip files
                     if file["attributes"]["name"].split(".")[-1] == "zip":
                         d.download_url(file["links"]["download"], path=os.path.join(inner_path, ""), archive=True)
+                    elif file['attributes']['name'] in ['DATS.json', 'README.md']:
+                        d.download_url(file['links']['download'], path=os.path.join(inner_path, ''))
                     else:
                         annex("addurl", file["links"]["download"], "--fast", "--file",
                               os.path.join(inner_path, file["attributes"]["name"]))
                         d.save()
+
+                # append the size of the downloaded file to the sizes array
+                file_size = file['attributes']['size']
+                if not file_size:
+                    # if the file size cannot be found in the OSF API response, then get it from git annex info
+                    inner_file_path = os.path.join(inner_path, file["attributes"]["name"])
+                    annex_info_dict = json.loads(annex('info', '--bytes', '--json', inner_file_path))
+                    file_size       = int(annex_info_dict['size'])
+                sizes.append(file_size)
 
     def _get_contributors(self, link):
         r = self._get_request_with_bearer_token(link)
@@ -118,10 +146,14 @@ class OSFCrawler(BaseCrawler):
                                     dataset["relationships"]
                                     ["license"]["links"]["related"]["href"])
 
+            # Get link for the dataset files
+            files_link = dataset['relationships']['files']['links']['related']['href']
+
             osf_dois.append(
                 {
                     "title": attributes["title"],
-                    "files": dataset["relationships"]["files"]["links"]["related"]["href"],
+                    "files": files_link,
+                    "homepage": dataset["links"]["html"],
                     "creators": list(
                         map(lambda x: {"name": x}, contributors)
                     ),
@@ -208,7 +240,7 @@ class OSFCrawler(BaseCrawler):
 
             # Remove all data and DATS.json files
             for file_name in os.listdir(dataset_dir):
-                if file_name[0] == "." or file_name == "README.md":
+                if file_name[0] == ".":
                     continue
                 self.datalad.remove(os.path.join(dataset_dir, file_name), check=False)
 
@@ -230,8 +262,8 @@ class OSFCrawler(BaseCrawler):
     def get_readme_content(self, dataset):
         return """# {}
 
-Crawled from OSF
+Crawled from [OSF]({})
 
 ## Description
 
-{}""".format(dataset["title"], dataset["description"])
+{}""".format(dataset["title"], dataset["homepage"], dataset["description"])
