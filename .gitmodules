@@ -10,9 +10,6 @@
 [submodule "projects/nhpatlas"]
   path = projects/nhpatlas
   url = https://github.com/conpdatasets/nhpatlas.git
-[submodule "projects/mm_neo_atlas"]
-  path = projects/mm_neo_atlas
-  url = https://github.com/conpdatasets/mm_neo_atlas.git
 [submodule "projects/celltypes"]
   path = projects/celltypes
   url = https://github.com/conpdatasets/celltypes.git
@@ -60,17 +57,17 @@
   url = https://github.com/conp-bot/conp-dataset-MRI_and_unbiased_averages_of_wild_muskrats__Ondatra_zibethicus__and_red_squirrels__Tami.git
 [submodule "projects/refseq/refseq_Callithrix_jacchus"]
 	path = projects/refseq/refseq_Callithrix_jacchus
-	url = https://github.com/emmetaobrien/refseq_Callithrix_jacchus.git
+	url = https://github.com/conpdatasets/refseq_Callithrix_jacchus.git
 	branch = master
 	datalad-id = 1b374678-5d64-11ea-bba9-0800277806bd
 [submodule "projects/refseq/refseq_Homo_sapiens"]
 	path = projects/refseq/refseq_Homo_sapiens
-	url = https://github.com/emmetaobrien/refseq_Homo_sapiens.git
+	url = https://github.com/conpdatasets/refseq_Homo_sapiens.git
 	branch = master
 	datalad-id = 201d6d0c-5d64-11ea-bba9-0800277806bd
 [submodule "projects/refseq/refseq_Mus_musculus"]
 	path = projects/refseq/refseq_Mus_musculus
-	url = https://github.com/emmetaobrien/refseq_Mus_musculus.git
+	url = https://github.com/conpdatasets/refseq_Mus_musculus.git
 	branch = master
 	datalad-id = 27e7f426-5d64-11ea-bba9-0800277806bd
 [submodule "projects/Reusing-Neuro-Data"]
@@ -128,9 +125,6 @@
 [submodule "projects/Multimodal_data_with_wide_field_GCaMP_imaging"]
 	path = projects/Multimodal_data_with_wide_field_GCaMP_imaging
 	url = https://github.com/conp-bot/conp-dataset-Multimodal-data-with-wide-field-GCaMP-imaging.git
-[submodule "projects/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations"]
-	path = projects/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations
-	url = https://github.com/conpdatasets/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations.git
 [submodule "projects/Khanlab/HCPUR100-Template"]
 	path = projects/Khanlab/HCPUR100-Template
 	url = https://github.com/conpdatasets/HCPUR100-Template.git
@@ -152,3 +146,11 @@
 [submodule "projects/preventad-registered"]
     path = projects/preventad-registered
     url = https://github.com/conpdatasets/preventad-registered.git
+[submodule "projects/calgary-campinas"]
+	path = projects/calgary-campinas
+	url = https://github.com/emmetaobrien/calgary-campinas.git
+	branch = master
+	datalad-id = 95f9d92a-3414-11eb-8a50-525400da244d
+[submodule "projects/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations"]
+	path = projects/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations
+	url = https://github.com/conpdatasets/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations
