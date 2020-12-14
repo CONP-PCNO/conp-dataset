@@ -4,6 +4,7 @@ import json
 import requests
 import humanize
 import html2markdown
+import datetime
 
 
 def _get_unlock_script():
@@ -55,6 +56,9 @@ class ZenodoCrawler(BaseCrawler):
         link = bucket["links"]["self"]
         repo = self.git.Repo(dataset_dir)
         annex = repo.git.annex
+        if bucket['key'] in ['DATS.json', 'README.md']:
+            d.download_url(link)
+            return
         if "access_token" not in link:
             if bucket["type"] == "zip":
                 d.download_url(link, archive=True)
@@ -172,17 +176,24 @@ class ZenodoCrawler(BaseCrawler):
                                     "roles": [{"value": "Principal Investigator"}]}
                             )
 
+            # Get identifier
+            identifier = dataset["conceptdoi"] if "conceptdoi" in dataset.keys() else dataset["doi"]
+
+            # Get date created and date modified
+            date_created  = datetime.datetime.strptime(metadata['created'], '%Y-%m-%dT%H:%M:%S.%f%z')
+            date_modified = datetime.datetime.strptime(metadata['updated'], '%Y-%m-%dT%H:%M:%S.%f%z')
+
             zenodo_dois.append(
                 {
                     "identifier": {
-                        "identifier": "https://doi.org/{}".format(dataset["conceptdoi"]),
+                        "identifier": "https://doi.org/{}".format(identifier),
                         "identifierSource": "DOI",
                     },
                     "concept_doi": dataset["conceptrecid"],
                     "latest_version": latest_version_doi,
                     "title": metadata["title"],
                     "files": files,
-                    "doi_badge": dataset["conceptdoi"],
+                    "doi_badge": identifier,
                     "creators": creators,
                     "description": metadata["description"],
                     "version": metadata["version"]
@@ -226,6 +237,20 @@ class ZenodoCrawler(BaseCrawler):
                                     "value": "https://about.zenodo.org/static/img/logos/zenodo-gradient-round.svg"
                                 }
                             ],
+                        }
+                    ],
+                    "dates": [
+                        {
+                            "date": date_created.strftime('%Y-%m-%d %H:%M:%S'),
+                            "type": {
+                                "value": "Date Created"
+                            }
+                        },
+                        {
+                            "date": date_modified.strftime('%Y-%m-%d %H:%M:%S'),
+                            "type": {
+                                "value": "Date Modified"
+                            }
                         }
                     ],
                 }
@@ -286,7 +311,7 @@ class ZenodoCrawler(BaseCrawler):
 
             # Remove all data and DATS.json files
             for file_name in os.listdir(dataset_dir):
-                if file_name[0] == "." or file_name == "README.md":
+                if file_name[0] == ".":
                     continue
                 self.datalad.remove(os.path.join(dataset_dir, file_name), check=False)
 
