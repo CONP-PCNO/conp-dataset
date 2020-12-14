@@ -4,9 +4,6 @@ import argparse
 import os
 import sys
 import traceback
-sys.path.append(os.path.abspath(os.path.join(os.path.expanduser("~"), "conp-dataset")))
-from scripts.Crawlers.ZenodoCrawler import ZenodoCrawler
-from scripts.Crawlers.OSFCrawler import OSFCrawler
 
 
 def parse_args():
@@ -43,6 +40,13 @@ def parse_args():
     with open(config_path, "r") as f:
         config = json.load(f)
 
+    if 'conp-dataset_path' not in config.keys():
+        raise Exception(
+            '"conp-dataset_path" not configured in ' + config_path + ','
+            'please configure it as follows: \n'
+            '  "conp-dataset_path": "PATH TO conp-dataset DIRECTORY",'
+        )
+
     if not github_token and "github_token" not in config.keys():
         raise Exception(
             "Github token not passed by command line argument "
@@ -57,21 +61,27 @@ def parse_args():
     else:  # Retrieve github token from config file
         github_token = config["github_token"]
 
-    return github_token, config_path, args.verbose, args.force
+    return github_token, config_path, args.verbose, args.force, config['conp-dataset_path']
 
 
 if __name__ == "__main__":
-    github_token, config_path, verbose, force = parse_args()
+    github_token, config_path, verbose, force, conp_dataset_dir_path = parse_args()
+
+    # import the crawler packages
+    sys.path.append(conp_dataset_dir_path)
+    from scripts.Crawlers.ZenodoCrawler import ZenodoCrawler
+    from scripts.Crawlers.OSFCrawler import OSFCrawler
+
     try:
         if verbose:
             print("==================== Zenodo Crawler Running ====================" + os.linesep)
-        ZenodoCrawler = ZenodoCrawler(github_token, config_path, verbose, force)
-        ZenodoCrawler.run()
+        ZenodoCrawlerObj = ZenodoCrawler(github_token, config_path, verbose, force)
+        ZenodoCrawlerObj.run()
 
         if verbose:
             print(os.linesep + "==================== OSF Crawler Running ====================" + os.linesep)
-        OSFCrawler = OSFCrawler(github_token, config_path, verbose, force)
-        OSFCrawler.run()
+        OSFCrawlerObj = OSFCrawler(github_token, config_path, verbose, force)
+        OSFCrawlerObj.run()
 
         # INSTANTIATE NEW CRAWLERS AND RUN HERE
 
