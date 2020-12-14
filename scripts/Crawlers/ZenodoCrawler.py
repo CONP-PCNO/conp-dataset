@@ -4,6 +4,7 @@ import json
 import requests
 import humanize
 import html2markdown
+import datetime
 
 
 def _get_unlock_script():
@@ -175,7 +176,12 @@ class ZenodoCrawler(BaseCrawler):
                                     "roles": [{"value": "Principal Investigator"}]}
                             )
 
+            # Get identifier
             identifier = dataset["conceptdoi"] if "conceptdoi" in dataset.keys() else dataset["doi"]
+
+            # Get date created and date modified
+            date_created  = datetime.datetime.strptime(metadata['created'], '%Y-%m-%dT%H:%M:%S.%f%z')
+            date_modified = datetime.datetime.strptime(metadata['updated'], '%Y-%m-%dT%H:%M:%S.%f%z')
 
             zenodo_dois.append(
                 {
@@ -231,6 +237,20 @@ class ZenodoCrawler(BaseCrawler):
                                     "value": "https://about.zenodo.org/static/img/logos/zenodo-gradient-round.svg"
                                 }
                             ],
+                        }
+                    ],
+                    "dates": [
+                        {
+                            "date": date_created.strftime('%Y-%m-%d %H:%M:%S'),
+                            "type": {
+                                "value": "Date Created"
+                            }
+                        },
+                        {
+                            "date": date_modified.strftime('%Y-%m-%d %H:%M:%S'),
+                            "type": {
+                                "value": "Date Modified"
+                            }
                         }
                     ],
                 }
