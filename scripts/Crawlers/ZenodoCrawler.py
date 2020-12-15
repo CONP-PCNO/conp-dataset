@@ -180,8 +180,8 @@ class ZenodoCrawler(BaseCrawler):
             identifier = dataset["conceptdoi"] if "conceptdoi" in dataset.keys() else dataset["doi"]
 
             # Get date created and date modified
-            date_created  = datetime.datetime.strptime(metadata['created'], '%Y-%m-%dT%H:%M:%S.%f%z')
-            date_modified = datetime.datetime.strptime(metadata['updated'], '%Y-%m-%dT%H:%M:%S.%f%z')
+            date_created  = datetime.datetime.strptime(dataset['created'], '%Y-%m-%dT%H:%M:%S.%f%z')
+            date_modified = datetime.datetime.strptime(dataset['updated'], '%Y-%m-%dT%H:%M:%S.%f%z')
 
             zenodo_dois.append(
                 {
