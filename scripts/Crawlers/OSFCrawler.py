@@ -115,17 +115,25 @@ class OSFCrawler(BaseCrawler):
                 sizes.append(file_size)
 
     def _download_components(self, components_list, current_dir, d, annex, dataset_size):
+        # Loop through each available components and download their files
         for component in components_list:
             component_title = self._clean_dataset_title(component['attributes']['title'])
-            component_path  = os.path.join(current_dir, 'components', component_title)
-            os.makedirs(component_path)
+            component_inner_path = os.path.join('components', component_title)
+            os.makedirs(os.path.join(current_dir, component_inner_path))
             self._download_files(
                 component['relationships']['files']['links']['related']['href'],
-                component_path,
+                os.path.join(current_dir, component_inner_path),
+                component_inner_path,
                 d,
                 annex,
                 dataset_size
             )
+
+        # Once we have downloaded all the components files, check to see if there are any empty
+        # directories (in the case the 'OSF parent' dataset did not have any downloaded files
+        list_of_empty_dirs = [dirpath for (dirpath, dirnames, filenames) in os.walk(current_dir) if len(dirnames) == 0 and len(filenames) == 0]
+        for empty_dir in list_of_empty_dirs:
+            os.rmdir(empty_dir)
 
     def _get_contributors(self, link):
         r = self._get_request_with_bearer_token(link)
