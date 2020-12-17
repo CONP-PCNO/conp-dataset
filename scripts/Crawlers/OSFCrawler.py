@@ -114,6 +114,19 @@ class OSFCrawler(BaseCrawler):
                     file_size       = int(annex_info_dict['size'])
                 sizes.append(file_size)
 
+    def _download_components(self, components_list, current_dir, d, annex, dataset_size):
+        for component in components_list:
+            component_title = self._clean_dataset_title(component['attributes']['title'])
+            component_path  = os.path.join(current_dir, 'components', component_title)
+            os.makedirs(component_path)
+            self._download_files(
+                component['relationships']['files']['links']['related']['href'],
+                component_path,
+                d,
+                annex,
+                dataset_size
+            )
+
     def _get_contributors(self, link):
         r = self._get_request_with_bearer_token(link)
         contributors = [
@@ -126,10 +139,19 @@ class OSFCrawler(BaseCrawler):
         r = self._get_request_with_bearer_token(link)
         return r.json()["data"]["attributes"]["name"]
 
+    def _get_components(self, link):
+        r = self._get_request_with_bearer_token(link)
+        return r.json()['data']
+
     def get_all_dataset_description(self):
         osf_dois = []
         datasets = self._query_osf()
         for dataset in datasets:
+            # skip datasets that have a parent since the files' components will
+            # go into the parent dataset.
+            if 'parent' in dataset['relationships'].keys():
+                continue
+
             attributes = dataset["attributes"]
 
             # Retrieve keywords/tags
@@ -149,10 +171,14 @@ class OSFCrawler(BaseCrawler):
             # Get link for the dataset files
             files_link = dataset['relationships']['files']['links']['related']['href']
 
+            # Get components list
+            components_list = self._get_components(dataset['relationships']['children']['links']['related']['href'])
+
             osf_dois.append(
                 {
                     "title": attributes["title"],
                     "files": files_link,
+                    "components_list": components_list,
                     "homepage": dataset["links"]["html"],
                     "creators": list(
                         map(lambda x: {"name": x}, contributors)
@@ -211,6 +237,8 @@ class OSFCrawler(BaseCrawler):
         annex = Repo(dataset_dir).git.annex
         dataset_size = []
         self._download_files(dataset["files"], dataset_dir, "", d, annex, dataset_size)
+        if dataset['components_list']:
+            self._download_components(dataset['components_list'], dataset_dir, d, annex, dataset_size)
         dataset_size, dataset_unit = humanize.naturalsize(sum(dataset_size)).split(" ")
         dataset["distributions"][0]["size"] = float(dataset_size)
         dataset["distributions"][0]["unit"]["value"] = dataset_unit
@@ -249,6 +277,8 @@ class OSFCrawler(BaseCrawler):
 
             dataset_size = []
             self._download_files(dataset_description["files"], dataset_dir, "", d, annex, dataset_size)
+            if dataset_description['components_list']:
+                self._download_components(dataset_description['components_list'], dataset_dir, d, annex, dataset_size)
             dataset_size, dataset_unit = humanize.naturalsize(sum(dataset_size)).split(" ")
             dataset_description["distributions"][0]["size"] = float(dataset_size)
             dataset_description["distributions"][0]["unit"]["value"] = dataset_unit
