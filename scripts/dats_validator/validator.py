@@ -46,7 +46,7 @@ def validate_json(json_obj):
     with open(SCHEMA_PATH) as s:
         json_schema = json.load(s)
     # first validate schema file
-    v = jsonschema.Draft4Validator(json_schema)
+    v = jsonschema.Draft4Validator(json_schema, format_checker=jsonschema.FormatChecker())
     # now validate json file
     try:
         jsonschema.validate(json_obj, json_schema, format_checker=jsonschema.FormatChecker())
