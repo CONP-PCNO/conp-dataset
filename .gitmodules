@@ -143,9 +143,6 @@
 [submodule "projects/preventad-registered"]
     path = projects/preventad-registered
     url = https://github.com/conpdatasets/preventad-registered.git
-[submodule "projects/calgary-campinas"]
-	path = projects/calgary-campinas
-	url = https://github.com/conpdatasets/calgary-campinas.git
 [submodule "projects/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations"]
 	path = projects/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations
 	url = https://github.com/conpdatasets/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations
