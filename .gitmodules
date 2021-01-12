@@ -131,9 +131,6 @@
 [submodule "projects/Numerically_Perturbed_Structural_Connectomes_from_100_individuals_in_the_NKI_Rockland_Dataset"]
 	path = projects/Numerically_Perturbed_Structural_Connectomes_from_100_individuals_in_the_NKI_Rockland_Dataset
 	url = https://github.com/conp-bot/conp-dataset-Numerically-Perturbed-Structural-Connectomes-from-100-individuals-in-the-NKI-Rockland-D.git
-[submodule "projects/Expression_based_polygenic_score_from_the_amygdala_5HTT_gene_network"]
-	path = projects/Expression_based_polygenic_score_from_the_amygdala_5HTT_gene_network
-	url = https://github.com/conp-bot/conp-dataset-Expression-based-polygenic-score-from-the-amygdala-5HTT-gene-network.git
 [submodule "projects/mousebytesdataset"]
 	path = projects/mousebytesdataset
 	url = https://github.com/conpdatasets/mousebytesdataset.git
@@ -146,11 +143,11 @@
 [submodule "projects/preventad-registered"]
     path = projects/preventad-registered
     url = https://github.com/conpdatasets/preventad-registered.git
-[submodule "projects/calgary-campinas"]
-	path = projects/calgary-campinas
-	url = https://github.com/emmetaobrien/calgary-campinas.git
-	branch = master
-	datalad-id = 95f9d92a-3414-11eb-8a50-525400da244d
 [submodule "projects/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations"]
 	path = projects/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations
 	url = https://github.com/conpdatasets/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations
+[submodule "projects/calgary-campinas"]
+	path = projects/calgary-campinas
+	url = https://github.com/conpdatasets/calgary-campinas.git
+	branch = main
+	datalad-id = 95f9d92a-3414-11eb-8a50-525400da244d
