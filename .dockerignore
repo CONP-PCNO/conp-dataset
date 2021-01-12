@@ -1,0 +1,16 @@
+**/.dockerignore
+**/Dockerfile*
+
+**/.env
+**/.venv
+
+**/.vs
+**/.vscode
+
+**/.circleci
+**/.github
+**/.gitignore
+README.md
+
+__pycache__
+.*_cache
