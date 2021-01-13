@@ -6,6 +6,7 @@ import json
 import logging
 import getopt
 from sys import argv
+from functools import reduce
 
 
 logger = logging.getLogger(__name__)
@@ -105,10 +106,41 @@ def validate_extra_properties(dataset):
                         f"{[k for k in REQUIRED_EXTRA_PROPERTIES.keys()]}")
 
 
+def validate_formats(dataset):
+    """ Checks if the values in the formats field of the JSON object follows the upper case convention without dots. """
+
+    errors_list       = []
+    format_exceptions = ['BigWig', 'NIfTI', 'RNA-Seq']
+    file_formats_list = reduce(
+        lambda x,y: x+y,
+        [prop['formats'] for prop in dataset['distributions'] if 'formats' in prop.keys()]
+    )
+
+    for file_format in file_formats_list:
+        if file_format != file_format.upper() and file_format not in format_exceptions:
+            error_message = f"Validation error in {dataset['title']}: distributions." \
+                            f"formats - {file_format} is not allowed. " \
+                            f"Allowed value should either be capitalized or one of {format_exceptions}. " \
+                            f"Consider changing the value to {file_format.strip('.').upper()}. "
+            errors_list.append(error_message)
+        elif file_format.startswith('.'):
+            error_message = f"Validation error in {dataset['title']}: distributions." \
+                            f"format - {file_format} is not allowed. " \
+                            f"Format values should not start with a dot."
+            errors_list.append(error_message)
+
+    if errors_list:
+        return False, errors_list
+    else:
+        return True, errors_list
+
+
 def validate_recursively(obj, errors):
     """ Checks all datasets recursively for required extraProperties. """
 
     val, errors_list = validate_extra_properties(obj)
+    errors.extend(errors_list)
+    val, errors_list = validate_formats(obj)
     errors.extend(errors_list)
     if "hasPart" in obj:
         for each in obj["hasPart"]:
