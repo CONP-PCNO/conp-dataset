@@ -129,8 +129,8 @@ class OSFCrawler(BaseCrawler):
                 annex,
                 dataset_size
             )
-            
-            # check if the component contain (sub)components, in which case, download the (sub)components data
+
+            # check if the component contains (sub)components, in which case, download the (sub)components data
             subcomponents_list = self._get_components(component['relationships']['children']['links']['related']['href'])
             if subcomponents_list:
                 self._download_components(
