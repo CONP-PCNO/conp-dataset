@@ -134,8 +134,6 @@ class OSFCrawler(BaseCrawler):
                 institution['attributes']['name'] for institution in r.json()['data']
             ]
             return institutions
-        else:
-            return False
 
     def _get_identifier(self, link):
         r = self._get_request_with_bearer_token(link)
