@@ -201,19 +201,6 @@ class OSFCrawler(BaseCrawler):
             # Get components list
             components_list = self._get_components(dataset['relationships']['children']['links']['related']['href'])
 
-            osf_dois.append(
-                {
-                    "title": attributes["title"],
-                    "files": files_link,
-                    "components_list": components_list,
-                    "homepage": dataset["links"]["html"],
-                    "creators": list(
-                        map(lambda x: {"name": x}, contributors)
-                    ),
-                    "description": attributes["description"],
-                    "version": attributes["date_modified"],
-                    "licenses": [
-
             # Gather extra properties
             extra_properties = [
                 {
@@ -242,6 +229,7 @@ class OSFCrawler(BaseCrawler):
             dataset_dats_content = {
                 "title"          : attributes["title"],
                 "files"          : files_link,
+                "components_list": components_list,
                 "homepage"       : dataset["links"]["html"],
                 "creators"       : list(
                     map(lambda x: {"name": x}, contributors)
