@@ -4,6 +4,7 @@ import os
 import json
 import requests
 import humanize
+import datetime
 
 
 def _create_osf_tracker(path, dataset):
@@ -151,6 +152,18 @@ class OSFCrawler(BaseCrawler):
         r = self._get_request_with_bearer_token(link)
         return r.json()['data']
 
+    def _get_institutions(self, link):
+        r = self._get_request_with_bearer_token(link)
+        if r.json()['data']:
+            institutions = [
+                institution['attributes']['name'] for institution in r.json()['data']
+            ]
+            return institutions
+
+    def _get_identifier(self, link):
+        r = self._get_request_with_bearer_token(link)
+        return r.json()['data'][0]['attributes']['value'] if r.json()['data'] else False
+
     def get_all_dataset_description(self):
         osf_dois = []
         datasets = self._query_osf()
@@ -176,6 +189,12 @@ class OSFCrawler(BaseCrawler):
                                     dataset["relationships"]
                                     ["license"]["links"]["related"]["href"])
 
+            # Retrieve institution information
+            institutions = self._get_institutions(dataset['relationships']['affiliated_institutions']['links']['related']['href'])
+
+            # Retrieve identifier information
+            identifier = self._get_identifier(dataset['relationships']['identifiers']['links']['related']['href'])
+
             # Get link for the dataset files
             files_link = dataset['relationships']['files']['links']['related']['href']
 
@@ -194,37 +213,86 @@ class OSFCrawler(BaseCrawler):
                     "description": attributes["description"],
                     "version": attributes["date_modified"],
                     "licenses": [
+
+            # Gather extra properties
+            extra_properties = [
+                {
+                    "category": "logo",
+                    "values"  : [
                         {
-                            "name": license_
-                        }
-                    ],
-                    "keywords": keywords,
-                    "distributions": [
-                        {
-                            "size": 0,
-                            "unit": {"value": "B"},
-                            "access": {
-                                "landingPage": dataset["links"]["html"],
-                                "authorizations": [
-                                    {
-                                        "value": "public"
-                                    }
-                                ],
-                            },
-                        }
-                    ],
-                    "extraProperties": [
-                        {
-                            "category": "logo",
-                            "values": [
-                                {
-                                    "value": "https://osf.io/static/img/institutions/shields/cos-shield.png"
-                                }
-                            ],
+                            "value": "https://osf.io/static/img/institutions/shields/cos-shield.png"
                         }
                     ],
                 }
-            )
+            ]
+            if institutions:
+                extra_properties.append(
+                    {
+                        "category": "origin_institution",
+                        "values"  : list(
+                            map(lambda x: {'value': x}, institutions)
+                        )
+                    }
+                )
+
+            # Retrieve dates
+            date_created  = datetime.datetime.strptime(attributes['date_created'], '%Y-%m-%dT%H:%M:%S.%f')
+            date_modified = datetime.datetime.strptime(attributes['date_modified'], '%Y-%m-%dT%H:%M:%S.%f')
+
+            dataset_dats_content = {
+                "title"          : attributes["title"],
+                "files"          : files_link,
+                "homepage"       : dataset["links"]["html"],
+                "creators"       : list(
+                    map(lambda x: {"name": x}, contributors)
+                ),
+                "description"    : attributes["description"],
+                "version"        : attributes["date_modified"],
+                "licenses"       : [
+                    {
+                        "name": license_
+                    }
+                ],
+                "dates": [
+                    {
+                        "date": date_created.strftime('%Y-%m-%d %H:%M:%S'),
+                        "type": {
+                            "value": "Date Created"
+                        }
+                    },
+                    {
+                        "date": date_modified.strftime('%Y-%m-%d %H:%M:%S'),
+                        "type": {
+                            "value": "Date Modified"
+                        }
+                    }
+                ],
+                "keywords"       : keywords,
+                "distributions"  : [
+                    {
+                        "size"  : 0,
+                        "unit"  : {"value": "B"},
+                        "access": {
+                            "landingPage"   : dataset["links"]["html"],
+                            "authorizations": [
+                                {
+                                    "value": "public" if attributes['public'] else "private"
+                                }
+                            ],
+                        },
+                    }
+                ],
+                "extraProperties": extra_properties
+            }
+
+            if identifier:
+                source = 'OSF DOI' if 'OSF.IO' in identifier else 'DOI'
+                dataset_dats_content['identifier'] = {
+                    "identifier": identifier,
+                    "identifierSource": source
+                }
+
+            osf_dois.append(dataset_dats_content)
 
         if self.verbose:
             print("Retrieved OSF DOIs: ")
@@ -298,10 +366,17 @@ class OSFCrawler(BaseCrawler):
             return True
 
     def get_readme_content(self, dataset):
-        return """# {}
+        readme_content = """# {}
 
 Crawled from [OSF]({})
 
 ## Description
 
 {}""".format(dataset["title"], dataset["homepage"], dataset["description"])
+
+        if 'identifier' in dataset:
+            readme_content += """
+
+DOI: {}""".format(dataset['identifier']['identifier'])
+
+        return readme_content
