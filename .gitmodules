@@ -116,6 +116,9 @@
 [submodule "projects/braincode_NDD_Priority_Setting_Partnership"]
 	path = projects/braincode_NDD_Priority_Setting_Partnership
 	url = https://github.com/conpdatasets/braincode_NDD_Priority_Setting_Partnership.git
+[submodule "projects/Quantifying_Neural_Cognitive_Relationships_Across_the_Brain"]
+	path = projects/Quantifying_Neural_Cognitive_Relationships_Across_the_Brain
+	url = https://github.com/conp-bot/conp-dataset-Quantifying-Neural-Cognitive-Relationships-Across-the-Brain.git
 [submodule "projects/1000GenomesProject"]
 	path = projects/1000GenomesProject
 	url = https://github.com/conpdatasets/1000GenomesProject
@@ -143,11 +146,11 @@
 [submodule "projects/preventad-registered"]
     path = projects/preventad-registered
     url = https://github.com/conpdatasets/preventad-registered.git
-[submodule "projects/calgary-campinas"]
-	path = projects/calgary-campinas
-	url = https://github.com/emmetaobrien/calgary-campinas.git
-	branch = master
-	datalad-id = 95f9d92a-3414-11eb-8a50-525400da244d
 [submodule "projects/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations"]
 	path = projects/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations
 	url = https://github.com/conpdatasets/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations
+[submodule "projects/calgary-campinas"]
+	path = projects/calgary-campinas
+	url = https://github.com/conpdatasets/calgary-campinas.git
+	branch = main
+	datalad-id = 95f9d92a-3414-11eb-8a50-525400da244d
