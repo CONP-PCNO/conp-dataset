@@ -1,4 +1,6 @@
 import jsonschema
+import requests
+
 import os
 import json
 import logging
@@ -44,14 +46,14 @@ def validate_json(json_obj):
     with open(SCHEMA_PATH) as s:
         json_schema = json.load(s)
     # first validate schema file
-    v = jsonschema.Draft4Validator(json_schema)
+    v = jsonschema.Draft4Validator(json_schema, format_checker=jsonschema.FormatChecker())
     # now validate json file
     try:
         jsonschema.validate(json_obj, json_schema, format_checker=jsonschema.FormatChecker())
         logger.info("JSON schema validation passed.")
         return True
     except jsonschema.exceptions.ValidationError:
-        errors = [e for e in v.iter_errors((json_obj))]
+        errors = [e for e in v.iter_errors(json_obj)]
         logger.info(f"The file is not valid. Total json schema errors: {len(errors)}")
         for i, error in enumerate(errors, 1):
             logger.error(f"{i} Validation error in {'.'.join(str(v) for v in error.path)}: {error.message}")
@@ -80,6 +82,14 @@ def validate_extra_properties(dataset):
                     error_message = f"Validation error in {dataset['title']}: extraProperties.category." \
                                     f"CONP_status - {each_value} is not allowed value for CONP_status. " \
                                     f"Allowed values are {REQUIRED_EXTRA_PROPERTIES['CONP_status']}."
+                    errors.append(error_message)
+
+        # checks if 'derivedFrom' values refer to existing datasets accessible online
+        if "derivedFrom" in extra_prop_categories:
+            for value in extra_prop_categories["derivedFrom"]:
+                if not dataset_exists(value):
+                    error_message = f"Validation error in {dataset['title']}: extraProperties.category." \
+                                    f"derivedFrom - {value} is not found. "
                     errors.append(error_message)
 
         if errors:
@@ -118,6 +128,31 @@ def validate_non_schema_required(json_obj):
     else:
         logger.info(f"Required extra properties validation passed.")
         return True
+
+
+# cache responses to avoid redundant calls
+cache = dict()
+
+
+def dataset_exists(derived_from_url):
+    """ Caches response values in cache dict. """
+
+    if derived_from_url not in cache:
+        cache[derived_from_url] = get_response_status(derived_from_url)
+    return cache[derived_from_url]
+
+
+def get_response_status(derived_from_url):
+    """ Get a response status code for derivedFrom value. Returns True if status code is 200."""
+
+    try:
+        r = requests.get(derived_from_url)
+        r.raise_for_status()
+        if r.status_code == 200:
+            return True
+
+    except requests.exceptions.HTTPError:
+        return False
 
 
 def help():
