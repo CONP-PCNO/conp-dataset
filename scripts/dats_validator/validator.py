@@ -125,7 +125,7 @@ def validate_formats(dataset):
             errors_list.append(error_message)
         elif file_format.startswith('.'):
             error_message = f"Validation error in {dataset['title']}: distributions." \
-                            f"format - {file_format} is not allowed. " \
+                            f"formats - {file_format} is not allowed. " \
                             f"Format values should not start with a dot."
             errors_list.append(error_message)
 

@@ -69,7 +69,7 @@
     {
       "formats": [
         ".VCF",
-        "FASTA"
+        "fasta"
       ],
       "size": 16.2,
       "unit": {
