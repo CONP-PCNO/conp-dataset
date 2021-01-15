@@ -10,6 +10,7 @@ import git
 import pytest
 
 from scripts.dats_validator.validator import validate_json
+from scripts.dats_validator.validator import validate_non_schema_required
 from tests.functions import (
     authenticate,
     download_files,
@@ -55,6 +56,13 @@ class Template(object):
             if not validate_json(json.load(f)):
                 pytest.fail(
                     f"Dataset {dataset} doesn't contain a valid DATS.json.",
+                    pytrace=False,
+                )
+
+            if not validate_non_schema_required(json.load(f)):
+                pytest.fail(
+                    f"Dataset {dataset} contains DATS.json that has errors "
+                    f"in required extra properties or formats.",
                     pytrace=False,
                 )
 
