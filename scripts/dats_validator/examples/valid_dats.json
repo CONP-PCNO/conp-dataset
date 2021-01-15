@@ -22,7 +22,7 @@
       }
     }
   ],
-  "title": "1000 Genomes Project",
+  "title": "1000 Genomes Project - Valid Test Example For Validator",
   "description": "The 1000 Genomes Project provides a comprehensive description of common human variation by applying a combination of whole-genome sequencing, deep exome sequencing and dense microarray genotyping to a diverse set of 2504 individuals from 26 populations.  Over 88 million variants are characterised, including >99% of SNP variants with a frequency of >1% for a variety of ancestries.",
   "storedIn": {
     "name": "European Bioinformatics Institute"
@@ -121,7 +121,7 @@
       "distributions": [
         {
           "formats": [
-            ".VCF"
+            "VCF"
           ],
           "size": 1.19,
           "unit": {
@@ -231,7 +231,7 @@
       "distributions": [
         {
           "formats": [
-            ".VCF"
+            "VCF"
           ],
           "size": 755,
           "unit": {
@@ -341,7 +341,7 @@
       "distributions": [
         {
           "formats": [
-            ".VCF"
+            "VCF"
           ],
           "size": 749,
           "unit": {
@@ -451,7 +451,7 @@
       "distributions": [
         {
           "formats": [
-            ".VCF"
+            "VCF"
           ],
           "size": 723,
           "unit": {
@@ -561,7 +561,7 @@
       "distributions": [
         {
           "formats": [
-            ".VCF"
+            "VCF"
           ],
           "size": 543,
           "unit": {
@@ -671,7 +671,7 @@
       "distributions": [
         {
           "formats": [
-            ".VCF"
+            "VCF"
           ],
           "size": 494,
           "unit": {
@@ -781,7 +781,7 @@
       "distributions": [
         {
           "formats": [
-            ".VCF"
+            "VCF"
           ],
           "size": 447,
           "unit": {
@@ -891,7 +891,7 @@
       "distributions": [
         {
           "formats": [
-            ".VCF"
+            "VCF"
           ],
           "size": 483,
           "unit": {
@@ -1001,7 +1001,7 @@
       "distributions": [
         {
           "formats": [
-            ".VCF"
+            "VCF"
           ],
           "size": 424,
           "unit": {
@@ -1111,7 +1111,7 @@
       "distributions": [
         {
           "formats": [
-            ".VCF"
+            "VCF"
           ],
           "size": 426,
           "unit": {
@@ -1221,7 +1221,7 @@
       "distributions": [
         {
           "formats": [
-            ".VCF"
+            "VCF"
           ],
           "size": 351,
           "unit": {
@@ -1331,7 +1331,7 @@
       "distributions": [
         {
           "formats": [
-            ".VCF"
+            "VCF"
           ],
           "size": 1.28,
           "unit": {
@@ -1441,7 +1441,7 @@
       "distributions": [
         {
           "formats": [
-            ".VCF"
+            "VCF"
           ],
           "size": 334,
           "unit": {
@@ -1551,7 +1551,7 @@
       "distributions": [
         {
           "formats": [
-            ".VCF"
+            "VCF"
           ],
           "size": 213,
           "unit": {
@@ -1661,7 +1661,7 @@
       "distributions": [
         {
           "formats": [
-            ".VCF"
+            "VCF"
           ],
           "size": 209,
           "unit": {
@@ -1771,7 +1771,7 @@
       "distributions": [
         {
           "formats": [
-            ".VCF"
+            "VCF"
           ],
           "size": 1.08,
           "unit": {
@@ -1881,7 +1881,7 @@
       "distributions": [
         {
           "formats": [
-            ".VCF"
+            "VCF"
           ],
           "size": 1.09,
           "unit": {
@@ -1991,7 +1991,7 @@
       "distributions": [
         {
           "formats": [
-            ".VCF"
+            "VCF"
           ],
           "size": 966,
           "unit": {
@@ -2101,7 +2101,7 @@
       "distributions": [
         {
           "formats": [
-            ".VCF"
+            "VCF"
           ],
           "size": 976,
           "unit": {
@@ -2211,7 +2211,7 @@
       "distributions": [
         {
           "formats": [
-            ".VCF"
+            "VCF"
           ],
           "size": 886,
           "unit": {
@@ -2321,7 +2321,7 @@
       "distributions": [
         {
           "formats": [
-            ".VCF"
+            "VCF"
           ],
           "size": 841,
           "unit": {
@@ -2431,7 +2431,7 @@
       "distributions": [
         {
           "formats": [
-            ".VCF"
+            "VCF"
           ],
           "size": 657,
           "unit": {
@@ -2541,7 +2541,7 @@
       "distributions": [
         {
           "formats": [
-            ".VCF"
+            "VCF"
           ],
           "size": 202,
           "unit": {
@@ -2651,7 +2651,7 @@
       "distributions": [
         {
           "formats": [
-            ".VCF"
+            "VCF"
           ],
           "size": 1.87,
           "unit": {
@@ -2761,7 +2761,7 @@
       "distributions": [
         {
           "formats": [
-            ".VCF"
+            "VCF"
           ],
           "size": 5.73,
           "unit": {
