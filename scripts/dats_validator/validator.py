@@ -113,11 +113,14 @@ def validate_formats(dataset):
     format_exceptions = ['BigWig', 'NIfTI', 'RNA-Seq']
 
     # check that distributions have a formats property as this is required in the schema
-    if 'formats' not in dataset['distributions'].keys():
-        error_message = f"Validation error in {dataset['title']}: distributions." \
-                        f"formats - 'formats' property is missing under distributions. " \
-                        f"Please add a the 'formats' property to 'distributions'."
-        errors_list.append(error_message)
+    for distribution_dict in dataset['distributions']:
+        if 'formats' not in distribution_dict.keys():
+            error_message = f"Validation error in {dataset['title']}: distributions." \
+                            f"formats - 'formats' property is missing under distributions. " \
+                            f"Please add a the 'formats' property to 'distributions'."
+            errors_list.append(error_message)
+
+    if errors_list:
         return False, errors_list
 
     file_formats_list = reduce(
