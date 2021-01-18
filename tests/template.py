@@ -59,6 +59,7 @@ class Template(object):
                     pytrace=False,
                 )
 
+        with open(os.path.join(dataset, "DATS.json"), "rb") as f:
             if not validate_non_schema_required(json.load(f)):
                 pytest.fail(
                     f"Dataset {dataset} contains DATS.json that has errors "
