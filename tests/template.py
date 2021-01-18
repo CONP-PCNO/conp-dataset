@@ -63,7 +63,7 @@ class Template(object):
             if not is_valid:
                 summary_error_message = f"Dataset {dataset} contains DATS.json that has errors " \
                                         f"in required extra properties or formats. List of errors:\n",
-                for i, error_message in errors:
+                for i, error_message in enumerate(errors, 1):
                     summary_error_message += f"- {i} - {error_message}\n"
                 pytest.fail(
                     summary_error_message,
