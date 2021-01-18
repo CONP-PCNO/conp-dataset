@@ -1,0 +1,216 @@
+{
+	"@context": 
+		[
+			{ 
+				"dats": "https://w3id.org/dats/schema/",
+				"dimensions": "dats:dimensions",
+				"extraProperties": "dats:extraProperties"
+			},
+			{
+				"sdo": "https://schema.org/",
+				"Dataset": "sdo:Dataset",
+				"title": {
+					"@id": "sdo:name",
+					"@type": "sdo:Text"
+				},
+				"description": {
+					"@id": "sdo:description",
+					"@type": "sdo:Text"
+				},
+				"distributions": {
+					"@id": "sdo:distribution",
+					"@type": "sdo:DataDownload"
+				},
+				"primaryPublications": "sdo:citation",
+				"citations": "sdo:citation",
+				"producedBy": "sdo:producer",
+				"creators": "sdo:creator",
+				"licenses": "sdo:license",
+				"isAbout": "sdo:about",
+				"hasPart": "sdo:hasPart",
+				"acknowledges": "sdo:funder",
+				"keywords": "sdo:keywords",
+				"dates": "sdo:date",
+				"storedIn": "sdo:url"
+			}
+		],
+    "title": "Multicenter Single Subject Human MRI Phantom",
+    "description": "Human Brain phantom scans, Multiple MRI scans of a single human phantom over 11 years, T1 weighted images and others on 13 scanner in 6 sites accross North America. The data are available in minc format.",
+    "dates": [ 
+        {
+            "@id": "https://w3id.org/dats/schema/date_info_schema.json",
+            "@type": "Date",
+            "date": "2008-04-25 00:00:00",
+            "type": {
+                "@id": "https://w3id.org/dats/schema/annotation_schema.json",
+                "@type": "Annotation",
+                "value": "Start Date"
+            }
+        },
+        {
+            "@id": "https://w3id.org/dats/schema/date_info_schema.json",
+            "@type": "Date",
+            "date": "2019-04-15 00:00:00",
+            "type": {
+                "@id": "https://w3id.org/dats/schema/annotation_schema.json",
+                "@type": "Annotation",
+                "value": "End Date"
+            }
+        }
+    ],
+    "creators": [
+        {
+            "@id": "https://w3id.org/dats/schema/organization_schema.json",
+            "@type": "Organization",
+            "name": "McGill Center for Integrative Neuroscience",
+            "abbreviation": "MCIN"
+        }
+    ],
+    "types": [
+        { 
+            "information": {
+                "value": "MRI",
+                "valueIRI": ""
+            }
+        },
+        {
+            "information": {
+                "value": "Quality Control Subject",
+                "valueIRI": "http://uri.interlex.org/base/ilx_0381893"
+            }
+        }
+    ],
+    "version": "1.0",
+    "privacy": "Open Access",
+    "distributions": [
+        {
+            "@id": "http://json-schema.org/draft-04/schema",
+            "@type": "DatasetDistribution",
+            "formats": [
+                "minc"
+            ],
+            "size" : 38,
+            "unit" : {
+                "@id": "https://w3id.org/dats/schema/annotation_schema.json",
+                "@type": "Annotation",
+                "value": "GB"
+            },
+            "access" : {
+                "@id": "https://w3id.org/dats/schema/access_schema.json",
+                "@type": "Access",
+                "landingPage" : "https://phantom-dev.loris.ca"
+            }
+        }
+    ],
+    "isAbout": [
+        {
+            "@id": "https://w3id.org/dats/schema/biological_entity_schema.json",
+            "@type": "BiologicalEntity",
+            "name": "adult human"
+        }
+    ],
+    "spatialCoverage": [
+        {
+            "@id": "https://w3id.org/dats/schema/place_schema.json",
+            "@type": "Place",
+            "name": "North America",
+            "description": "13 scanner in 6 sites accross North America"
+        }
+    ],
+    "licenses": [
+        {
+            "@id": "https://w3id.org/dats/schema/license_schema.json",
+            "@type": "License",
+            "name": "CC BY-ND",
+            "version": "4.0"
+        }
+    ],
+    "aggregation": "instance of dataset",
+    "dimensions": [
+        {
+            "@id": "https://w3id.org/dats/schema/dimension_schema.json",
+            "@type": "Dimension",
+            "name" : {
+                "@id": "https://w3id.org/dats/schema/annotation_schema.json",
+                "@type": "Annotation",
+                "value": "resting BOLD"
+            }
+        },
+        {
+            "@id": "https://w3id.org/dats/schema/dimension_schema.json",
+            "@type": "Dimension",
+            "name" : {
+                "@id": "https://w3id.org/dats/schema/annotation_schema.json",
+                "@type": "Annotation",
+                "value": "fieldmap BOLD"
+            }
+        },
+        {
+            "@id": "https://w3id.org/dats/schema/dimension_schema.json",
+            "@type": "Dimension",
+            "name" : {
+                "@id": "https://w3id.org/dats/schema/annotation_schema.json",
+                "@type": "Annotation",
+                "value": "fieldmap DWI"
+            }
+        },
+        {
+            "@id": "https://w3id.org/dats/schema/dimension_schema.json",
+            "@type": "Dimension",
+            "name" : {
+                "@id": "https://w3id.org/dats/schema/annotation_schema.json",
+                "@type": "Annotation",
+                "value": "DWI 65 directions"
+            }
+        },
+        {
+            "@id": "https://w3id.org/dats/schema/dimension_schema.json",
+            "@type": "Dimension",
+            "name" : {
+                "@id": "https://w3id.org/dats/schema/annotation_schema.json",
+                "@type": "Annotation",
+                "value": "DWI 25 directions"
+            }
+        },
+        {
+            "@id": "https://w3id.org/dats/schema/dimension_schema.json",
+            "@type": "Dimension",
+            "name" : {
+                "@id": "https://w3id.org/dats/schema/annotation_schema.json",
+                "@type": "Annotation",
+                "value": "T1w"
+            }
+        },
+        {
+            "@id": "https://w3id.org/dats/schema/dimension_schema.json",
+            "@type": "Dimension",
+            "name" : {
+                "@id": "https://w3id.org/dats/schema/annotation_schema.json",
+                "@type": "Annotation",
+                "value": "T2w"
+            }
+        }
+    ],
+    "keywords": [
+        {
+            "@id": "https://w3id.org/dats/schema/annotation_schema.json",
+            "@type": "Annotation",
+            "value": "Phantom"
+        },
+        {
+            "@id": "https://w3id.org/dats/schema/annotation_schema.json",
+            "@type": "Annotation",
+            "value": "MRI"
+        }
+    ],
+    "extraProperties": [
+        {
+            "category": "Total number of sessions",
+            "values": [
+                {
+                    "value": "521"
+                }
+            ]
+        }
+    ]
+}

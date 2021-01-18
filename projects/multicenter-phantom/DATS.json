@@ -1,0 +1,199 @@
+{
+    "title": "Multicenter Single Subject Human MRI Phantom",
+    "description": "Human Brain phantom scans, Multiple MRI scans of a single human phantom over 11 years, T1 weighted images and others on 13 scanner in 6 sites across North America. The data are available in minc format.",
+    "dates": [ 
+        {
+            "@type": "Date",
+            "date": "2008-04-25 00:00:00",
+            "type": {
+                "@type": "Annotation",
+                "value": "start date"
+            }
+        },
+        {
+            "@type": "Date",
+            "date": "2019-04-15 00:00:00",
+            "type": {
+                "@type": "Annotation",
+                "value": "end date"
+            }
+        }
+    ],
+    "creators": [
+        {
+            "@type": "Organization",
+            "name": "McGill Center for Integrative Neuroscience",
+            "abbreviation": "MCIN"
+        },
+	{
+		"name": "Alan C. Evans",
+		"roles": [
+			{
+				"value": "Principal Investigator"
+			}
+		]
+	}
+    ],
+    "types": [
+        { 
+            "information": {
+                "value": "MRI",
+                "valueIRI": ""
+            }
+        },
+        {
+            "information": {
+                "value": "Quality Control Subject",
+                "valueIRI": "http://uri.interlex.org/base/ilx_0381893"
+            }
+        }
+    ],
+    "version": "1.0",
+    "privacy": "Open Access",
+    "distributions": [
+        {
+            "@type": "DatasetDistribution",
+            "formats": [
+                "MINC"
+            ],
+            "size" : 38,
+            "unit" : {
+                "@type": "Annotation",
+                "value": "GB"
+            },
+            "access" : {
+                "@type": "Access",
+                "landingPage" : "https://phantom.loris.ca",
+				"authorizations": [
+					{
+						"value": "private"
+					}
+				]
+            }
+        }
+    ],
+    "isAbout": [
+        {
+            "@type": "BiologicalEntity",
+            "name": "adult human"
+        }
+    ],
+    "spatialCoverage": [
+        {
+            "@type": "Place",
+            "name": "North America",
+            "description": "13 scanner in 6 sites accross North America"
+        }
+    ],
+    "licenses": [
+        {
+            "@type": "License",
+            "name": "CC BY-ND",
+            "version": "4.0"
+        }
+    ],
+    "aggregation": "instance of dataset",
+    "dimensions": [
+        {
+            "@type": "Dimension",
+            "name" : {
+                "@type": "Annotation",
+                "value": "resting BOLD"
+            }
+        },
+        {
+            "@type": "Dimension",
+            "name" : {
+                "@type": "Annotation",
+                "value": "fieldmap BOLD"
+            }
+        },
+        {
+            "@type": "Dimension",
+            "name" : {
+                "@type": "Annotation",
+                "value": "fieldmap DWI"
+            }
+        },
+        {
+            "@type": "Dimension",
+            "name" : {
+                "@type": "Annotation",
+                "value": "DWI 65 directions"
+            }
+        },
+        {
+            "@type": "Dimension",
+            "name" : {
+                "@type": "Annotation",
+                "value": "DWI 25 directions"
+            }
+        },
+        {
+            "@type": "Dimension",
+            "name" : {
+                "@type": "Annotation",
+                "value": "T1w"
+            }
+        },
+        {
+            "@type": "Dimension",
+            "name" : {
+                "@type": "Annotation",
+                "value": "T2w"
+            }
+        }
+    ],
+    "keywords": [
+        {
+            "@type": "Annotation",
+            "value": "Phantom"
+        },
+        {
+            "@type": "Annotation",
+            "value": "MRI"
+        }
+    ],
+    "extraProperties": [
+        {
+            "category": "Total number of sessions",
+            "values": [
+                {
+                    "value": "521"
+                }
+            ]
+        },
+		{
+			"category": "logo",
+			"values": [
+				{
+					"value": "logo.png"
+				}
+			]
+		},
+		{
+			"category": "CONP_status",
+			"values": [
+				{
+					"value": "CONP"
+				}
+			]
+		},
+		{
+			"category": "files",
+			"values": [
+				{
+					"value": "2710"
+				}
+			]
+		},
+		{
+			"category": "subjects",
+			"values": [
+				{
+					"value": "1"
+				}
+			]
+		}
+    ]
+}
