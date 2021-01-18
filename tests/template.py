@@ -53,14 +53,13 @@ class Template(object):
             )
 
         with open(os.path.join(dataset, "DATS.json"), "rb") as f:
-            if not validate_json(json.load(f)):
+            json_obj = json.load(f)
+            if not validate_json(json_obj):
                 pytest.fail(
                     f"Dataset {dataset} doesn't contain a valid DATS.json.",
                     pytrace=False,
                 )
-
-        with open(os.path.join(dataset, "DATS.json"), "rb") as f:
-            is_valid, errors = validate_non_schema_required(json.load(f))
+            is_valid, errors = validate_non_schema_required(json_obj)
             if not is_valid:
                 summary_error_message = f"Dataset {dataset} contains DATS.json that has errors " \
                                         f"in required extra properties or formats. List of errors:\n",

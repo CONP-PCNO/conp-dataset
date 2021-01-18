@@ -168,10 +168,10 @@ def validate_non_schema_required(json_obj):
         logger.info(f"Total required extra properties errors: {len(errors)}")
         for i, er in enumerate(errors, 1):
             logger.error(f"{i} {er}")
-        return False
+        return False, errors
     else:
         logger.info(f"Required extra properties validation passed.")
-        return True
+        return True, None
 
 
 # cache responses to avoid redundant calls
