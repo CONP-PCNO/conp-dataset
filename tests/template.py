@@ -60,10 +60,14 @@ class Template(object):
                 )
 
         with open(os.path.join(dataset, "DATS.json"), "rb") as f:
-            if not validate_non_schema_required(json.load(f)):
+            is_valid, errors = validate_non_schema_required(json.load(f))
+            if not is_valid:
+                summary_error_message = f"Dataset {dataset} contains DATS.json that has errors "
+                                        f"in required extra properties or formats. List of errors:\n",
+                for error_message in errors:
+                    summary_error_message += f"- {error_message}\n"
                 pytest.fail(
-                    f"Dataset {dataset} contains DATS.json that has errors "
-                    f"in required extra properties or formats.",
+                    summary_error_message,
                     pytrace=False,
                 )
 
