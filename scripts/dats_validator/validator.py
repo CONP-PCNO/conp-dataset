@@ -109,11 +109,20 @@ def validate_extra_properties(dataset):
 def validate_formats(dataset):
     """ Checks if the values in the formats field of the JSON object follows the upper case convention without dots. """
 
-    errors_list       = []
+    errors_list = []
     format_exceptions = ['BigWig', 'NIfTI', 'RNA-Seq']
+
+    # check that distributions have a formats property as this is required in the schema
+    if 'formats' not in prop.keys():
+        error_message = f"Validation error in {dataset['title']}: distributions." \
+                        f"formats - 'formats' property is missing under distributions. " \
+                        f"Please add a the 'formats' property to 'distributions'."
+        errors_list.append(error_message)
+        return False, errors_list
+
     file_formats_list = reduce(
         lambda x,y: x+y,
-        [prop['formats'] for prop in dataset['distributions'] if 'formats' in prop.keys()]
+        [ prop['formats'] for prop in dataset['distributions'] ]
     )
 
     for file_format in file_formats_list:
