@@ -9,8 +9,7 @@ from datalad import api
 import git
 import pytest
 
-from scripts.dats_validator.validator import validate_json
-from scripts.dats_validator.validator import validate_non_schema_required
+from scripts.dats_validator.validator import (validate_json, validate_non_schema_required)
 from tests.functions import (
     authenticate,
     download_files,
