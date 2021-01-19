@@ -117,7 +117,7 @@ def validate_formats(dataset):
         if 'formats' not in distribution_dict.keys():
             error_message = f"Validation error in {dataset['title']}: distributions." \
                             f"formats - 'formats' property is missing under distributions. " \
-                            f"Please add a the 'formats' property to 'distributions'."
+                            f"Please add the 'formats' property to 'distributions'."
             errors_list.append(error_message)
 
     if errors_list:
