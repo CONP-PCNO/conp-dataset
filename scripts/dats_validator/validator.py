@@ -120,10 +120,6 @@ def validate_formats(dataset):
                             f"Please add the 'formats' property to 'distributions'."
             errors_list.append(error_message)
         else:
-            file_formats_list = reduce(
-                lambda x,y: x+y,
-                [ prop['formats'] for prop in dataset['distributions'] ]
-            )
             for file_format in file_formats_list:
                 if file_format != file_format.upper() and file_format not in format_exceptions:
                     error_message = f"Validation error in {dataset['title']}: distributions." \
