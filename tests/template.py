@@ -62,7 +62,7 @@ class Template(object):
             is_valid, errors = validate_non_schema_required(json_obj)
             if not is_valid:
                 summary_error_message = f"Dataset {dataset} contains DATS.json that has errors " \
-                                        f"in required extra properties or formats. List of errors:\n",
+                                        f"in required extra properties or formats. List of errors:\n"
                 for i, error_message in enumerate(summary_error_message, 1):
                     summary_error_message += f"- {str(i)} - {error_message}\n"
                 pytest.fail(
