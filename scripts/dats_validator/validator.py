@@ -120,7 +120,7 @@ def validate_formats(dataset):
                             f"Please add the 'formats' property to 'distributions'."
             errors_list.append(error_message)
         else:
-            for file_format in dataset['distributions']['formats']:
+            for file_format in distribution_dict['formats']:
                 if file_format != file_format.upper() and file_format not in format_exceptions:
                     error_message = f"Validation error in {dataset['title']}: distributions." \
                                     f"formats - {file_format} is not allowed. " \
