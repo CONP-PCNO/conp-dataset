@@ -69,7 +69,7 @@ class Template(object):
             # For datasets crawled with OSF: skip validation of extra properties
             is_osf_dataset = os.path.exists(os.path.join(dataset, '.conp-osf-crawler'))
             is_zenodo_dataset = os.path.exists(os.path.join(dataset, '.conp-zenodo-crawler'))
-            is_valid, errors = validate_formats(json_obj) if is_zenodo_dataset else validate_non_schema_required
+            is_valid, errors = validate_formats(json_obj) if is_zenodo_dataset else validate_non_schema_required(json_obj)
             if not is_valid and not is_osf_dataset:
                 summary_error_message = f"Dataset {dataset} contains DATS.json that has errors " \
                                         f"in required extra properties or formats. List of errors:\n"
