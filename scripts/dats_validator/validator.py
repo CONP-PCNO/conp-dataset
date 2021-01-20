@@ -110,7 +110,7 @@ def validate_formats(dataset):
     """ Checks if the values in the formats field of the JSON object follows the upper case convention without dots. """
 
     errors_list = []
-    format_exceptions = ['BigWig', 'NIfTI', 'RNA-Seq']
+    format_exceptions = ['bigWig', 'NIfTI', 'RNA-Seq']
 
     # check that distributions have a formats property as this is required in the schema
     for distribution_dict in dataset['distributions']:
