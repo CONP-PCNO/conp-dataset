@@ -9,7 +9,11 @@ from datalad import api
 import git
 import pytest
 
-from scripts.dats_validator.validator import (validate_json, validate_non_schema_required)
+from scripts.dats_validator.validator import (
+    validate_json,
+    validate_non_schema_required,
+    validate_formats
+)
 from tests.functions import (
     authenticate,
     download_files,
@@ -58,8 +62,15 @@ class Template(object):
                     f"Dataset {dataset} doesn't contain a valid DATS.json.",
                     pytrace=False,
                 )
-            is_valid, errors = validate_non_schema_required(json_obj)
-            if not is_valid:
+
+            # For crawled dataset, some tests should not be run as there is no way to
+            # automatically populate some of the fields
+            # For datasets crawled with Zenodo: check the formats extra property only
+            # For datasets crawled with OSF: skip validation of extra properties
+            is_osf_dataset = os.path.exists(os.path.join(dataset, '.conp-osf-crawler'))
+            is_zenodo_dataset = os.path.exists(os.path.join(dataset, '.conp-zenodo-crawler'))
+            is_valid, errors = validate_formats(json_obj) if is_zenodo_dataset else validate_non_schema_required
+            if not is_valid and not is_osf_dataset:
                 summary_error_message = f"Dataset {dataset} contains DATS.json that has errors " \
                                         f"in required extra properties or formats. List of errors:\n"
                 for i, error_message in enumerate(errors, 1):
