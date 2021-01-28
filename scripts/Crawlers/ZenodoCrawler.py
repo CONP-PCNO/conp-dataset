@@ -47,7 +47,16 @@ class ZenodoCrawler(BaseCrawler):
             "type=dataset&"
             'q=keywords:"canadian-open-neuroscience-platform"'
         )
-        results = requests.get(query).json()["hits"]["hits"]
+        r_json  = requests.get(query).json()
+        results = r_json['hits']['hits']
+
+        if r_json['links']['next']:
+            next_page = r_json['links']['next']
+            while next_page is not None:
+                next_page_json = requests.get(next_page).json()
+                results.extend(next_page_json['hits']['hits'])
+                next_page = next_page_json['links']['next'] if 'next' in next_page_json['links'] else None
+
         if self.verbose:
             print("Zenodo query: {}".format(query))
         return results
