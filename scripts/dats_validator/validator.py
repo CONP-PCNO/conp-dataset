@@ -6,7 +6,6 @@ import json
 import logging
 import getopt
 from sys import argv
-from functools import reduce
 
 
 logger = logging.getLogger(__name__)
