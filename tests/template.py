@@ -12,7 +12,8 @@ import pytest
 from scripts.dats_validator.validator import (
     validate_json,
     validate_non_schema_required,
-    validate_formats
+    validate_formats,
+    validate_date_types,
 )
 from tests.functions import (
     authenticate,
@@ -62,6 +63,18 @@ class Template(object):
                     f"Dataset {dataset} doesn't contain a valid DATS.json.",
                     pytrace=False,
                 )
+
+            # Validate the date type values
+            date_type_valid_bool, date_type_errors = validate_date_types(json_obj)
+            if not date_type_valid_bool:
+                summary_error_message = f"Dataset {dataset} contains DATS.json that has errors " \
+                                        f"in date's type encoding. List of errors:\n"
+                for i, error_message in enumerate(date_type_errors, 1):
+                    summary_error_message += f"- {i}. {error_message}\n"
+                    pytest.fail(
+                        summary_error_message,
+                        pytrace=False,
+                    )
 
             # For crawled dataset, some tests should not be run as there is no way to
             # automatically populate some of the fields
