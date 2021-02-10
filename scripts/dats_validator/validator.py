@@ -105,10 +105,45 @@ def validate_extra_properties(dataset):
                         f"{[k for k in REQUIRED_EXTRA_PROPERTIES.keys()]}")
 
 
+def validate_formats(dataset):
+    """ Checks if the values in the formats field of the JSON object follows the upper case convention without dots. """
+
+    errors_list = []
+    format_exceptions = ['bigWig', 'NIfTI', 'GIfTI', 'RNA-Seq']
+
+    # check that distributions have a formats property as this is required in the schema
+    for distribution_dict in dataset['distributions']:
+        if 'formats' not in distribution_dict.keys():
+            error_message = f"Validation error in {dataset['title']}: distributions." \
+                            f"formats - 'formats' property is missing under distributions. " \
+                            f"Please add the 'formats' property to 'distributions'."
+            errors_list.append(error_message)
+        else:
+            for file_format in distribution_dict['formats']:
+                if file_format != file_format.upper() and file_format not in format_exceptions:
+                    error_message = f"Validation error in {dataset['title']}: distributions." \
+                                    f"formats - {file_format} is not allowed. " \
+                                    f"Allowed value should either be capitalized or one of {format_exceptions}. " \
+                                    f"Consider changing the value to {file_format.strip('.').upper()}. "
+                    errors_list.append(error_message)
+                elif file_format.startswith('.'):
+                    error_message = f"Validation error in {dataset['title']}: distributions." \
+                                    f"formats - {file_format} is not allowed. " \
+                                    f"Format values should not start with a dot."
+                    errors_list.append(error_message)
+
+    if errors_list:
+        return False, errors_list
+    else:
+        return True, errors_list
+
+
 def validate_recursively(obj, errors):
     """ Checks all datasets recursively for required extraProperties. """
 
     val, errors_list = validate_extra_properties(obj)
+    errors.extend(errors_list)
+    val, errors_list = validate_formats(obj)
     errors.extend(errors_list)
     if "hasPart" in obj:
         for each in obj["hasPart"]:
@@ -124,10 +159,10 @@ def validate_non_schema_required(json_obj):
         logger.info(f"Total required extra properties errors: {len(errors)}")
         for i, er in enumerate(errors, 1):
             logger.error(f"{i} {er}")
-        return False
+        return False, errors
     else:
         logger.info(f"Required extra properties validation passed.")
-        return True
+        return True, None
 
 
 # cache responses to avoid redundant calls

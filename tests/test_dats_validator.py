@@ -34,8 +34,8 @@ class JsonschemaTest(unittest.TestCase):
 class ExtraPropertiesTest(unittest.TestCase):
 
     def test_non_schema_required(self):
-        valid_validation = validate_non_schema_required(valid_obj)
-        invalid_validation = validate_non_schema_required(invalid_obj)
+        valid_validation, errors = validate_non_schema_required(valid_obj)
+        invalid_validation, errors = validate_non_schema_required(invalid_obj)
         self.assertEqual(valid_validation, True)
         self.assertEqual(invalid_validation, False)
 
