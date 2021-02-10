@@ -60,7 +60,7 @@
   "dates": [
     {
       "type": {
-        "value": "CONP DATS fileset creation date"
+        "value": "CONP DATS JSON fileset creation date"
       },
       "date": "2019-07-31 11:21:58"
     }

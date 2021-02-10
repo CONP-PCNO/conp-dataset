@@ -141,7 +141,7 @@ def validate_formats(dataset):
 def date_type_validation(dates_list, dataset_title):
 
     errors_list = []
-    date_type_exception = ['CONP DATS fileset creation date']
+    date_type_exception = ['CONP DATS JSON fileset creation date']
 
     for date_dict in dates_list:
         dtype = date_dict['type']['value']
