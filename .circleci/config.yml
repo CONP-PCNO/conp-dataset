@@ -27,6 +27,7 @@ jobs:
           command: |
             python -m venv ~/venv
             . ~/venv/bin/activate
+            pip install --upgrade pip
             find . -name requirements.txt | xargs -I{} pip install -r {}
       - save_cache:
           name: Save Python Cache
