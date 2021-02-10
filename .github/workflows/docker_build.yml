@@ -1,0 +1,24 @@
+on:
+  push:
+    paths:
+      - "projects/**"
+      - "tests/**"
+    branches:
+      - master
+
+jobs:
+  build_push:
+    runs-on: ubuntu-latest
+    name: Build a Docker image for conp-dataset and Push it to DockerHub.
+    steps:
+      - name: Checkout repository
+        id: checkout
+        uses: actions/checkout@v2
+      - name: Docker build and push.
+        id: build_push
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          repository: ${{ secrets.DOCKERHUB_REPOSITORY }}
+          tags: latest
