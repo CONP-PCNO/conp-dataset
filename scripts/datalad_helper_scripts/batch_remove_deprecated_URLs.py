@@ -21,7 +21,12 @@ def parse_input(argv):
     script_options = {}
 
     description = f"\nThis script can be used to remove from git-annex a series of URLs matching" \
-                  f" a specific pattern.\n"
+                  f" a specific pattern.\n" \
+                  f"\t- To run the script and print out the URLs that will be removed, use options" \
+                  f" -d <dataset path> -u <invalid URL regex>.\n" \
+                  f"\t- After examination of the result of the script, rerun the script with the same" \
+                  f" option and add the -c argument for actual removal of the URLs.\n" \
+                  f"\t- Option -v prints out progress of the script in the terminal.\n"
 
     usage = (
         f"\nusage  : python {__file__} -d <DataLad dataset directory path> -u <invalid URL regex>\n"
@@ -30,6 +35,7 @@ def parse_input(argv):
             f"\t-u: regular expression for invalid URLs to remove from git-annex\n"
             f"\t-c: confirm that the removal of the URLs should be performed. "
                     f"By default it will just print out what needs to be removed for validation\n"
+            f"\t-v: verbose\n"
     )
 
     try:
