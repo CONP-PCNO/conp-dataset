@@ -20,7 +20,8 @@ def parse_input(argv):
 
     script_options = {}
 
-    description = f"\n********************* DESCRIPTION TO BE WRITTEN ************************\n"
+    description = f"\nThis script can be used to remove from git-annex a series of URLs matching" \
+                  f" a specific pattern.\n"
 
     usage = (
         f"\nusage  : python {__file__} -d <DataLad dataset directory path> -u <invalid URL regex>\n"
