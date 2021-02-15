@@ -3,27 +3,20 @@ import getopt
 import sys
 import os
 import git
-import subprocess
 import traceback
 import re
 
 
-
-
-def main(argv):
-
-    script_options = parse_input(argv)
-
-    repo = git.Repo(script_options['dataset_path'])
-    annex = repo.git.annex
-    files_and_urls_dict = get_files_and_urls(script_options, annex)
-
-    regex_pattern = re.compile(script_options['invalid_url_regex'])
-    filtered_file_urls_dict = filter_invalid_urls(files_and_urls_dict, regex_pattern)
-
-    remove_url(filtered_file_urls_dict, script_options, annex)
-
 def parse_input(argv):
+    """
+    Displays the script's help section and parses the options given to the script.
+
+    :param argv: command line arguments
+     :type argv: array
+
+    :return: parsed and validated script options
+     :rtype: dict
+    """
 
     script_options = {}
 
@@ -102,34 +95,25 @@ def parse_input(argv):
     return script_options
 
 
-def read_dataset_directory(script_options):
+def get_files_and_urls(dataset_path, annex):
+    """
+    Runs git annex whereis in the dataset directory to retrieve
+    a list of annexed files with their URLs' location.
 
-    dataset_path = script_options['dataset_path']
-    current_path = os.path.dirname(os.path.realpath(__file__))
-    files_list   = []
+    :param dataset_path: full path to the DataLad dataset
+     :type dataset_path: string
+    :param annex: the git annex object
+     :type annex: object
 
-    try:
-        os.chdir(dataset_path)
-        proc = subprocess.Popen(
-            " git annex find --include='*' .",
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            shell=True
-        )
-        output, error = proc.communicate()
-        files_list = output.decode().split("\n")
-    except Exception:
-        traceback.print_exc()
-        sys.exit()
-    finally:
-        os.chdir(current_path)
+    :return: files path and there URLs organized as follows:
+             {
+                <file-1_path> => [file-1_url-1, file-1_url-2 ...]
+                <file-2_path> => [file-2_url-1, file-2_url-2 ...]
+                ...
+             }
+     :rtype: dict
+    """
 
-    return files_list
-
-
-def get_files_and_urls(script_options, annex):
-
-    dataset_path = script_options['dataset_path']
     current_path = os.path.dirname(os.path.realpath(__file__))
 
     results = {}
@@ -154,6 +138,18 @@ def get_files_and_urls(script_options, annex):
 
 
 def filter_invalid_urls(files_and_urls_dict, regex_pattern):
+    """
+    Filters out the URLs that need to be removed based on a regular
+    expression pattern.
+
+    :param files_and_urls_dict: files' path and their respective URLs.
+     :type files_and_urls_dict: dict
+    :param regex_pattern: regular expression pattern for URL filtering
+     :type regex_pattern: str
+
+    :return: filtered URLs per file
+     :rtype: dict
+    """
 
     filtered_dict = {}
     for file_path in files_and_urls_dict.keys():
@@ -166,17 +162,28 @@ def filter_invalid_urls(files_and_urls_dict, regex_pattern):
     return filtered_dict
 
 
-def remove_url(filtered_file_urls_dict, script_options, annex):
+def remove_invalid_urls(filtered_file_urls_dict, script_options, annex):
+    """
+    Removes URLs listed in the filtered dictionary from the files.
+
+    :param filtered_file_urls_dict: filtered URLs to remove per file
+     :type filtered_file_urls_dict: dict
+    :param script_options: options give to the script
+     :type script_options: dict
+    :param annex: the git annex object
+     :type annex: object
+    """
 
     dataset_path = script_options['dataset_path']
     current_path = os.path.dirname(os.path.realpath(__file__))
-
 
     try:
         os.chdir(dataset_path)
         for file_path in filtered_file_urls_dict.keys():
             for url in filtered_file_urls_dict[file_path]:
                 if script_options['run_removal']:
+                    if script_options['verbose']:
+                        print(f"\n => Running `git annex rmurl {file_path} {url}`\n")
                     annex('rmurl', file_path, url)
                 else:
                     print(
@@ -189,4 +196,22 @@ def remove_url(filtered_file_urls_dict, script_options, annex):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+
+    script_options = parse_input(sys.argv[1:])
+
+    repo = git.Repo(script_options['dataset_path'])
+    annex = repo.git.annex
+
+    # fetch files and urls attached to the file
+    if script_options['verbose']:
+        print(f"\n => Reading {script_options['dataset_path']} and grep annexed files with their URLs\n")
+    files_and_urls_dict = get_files_and_urls(script_options['dataset_path'], annex)
+
+    # grep only the invalid URLs that need to be removed from the annexed files
+    regex_pattern = re.compile(script_options['invalid_url_regex'])
+    if script_options['verbose']:
+        print(f"\n => Grep the invalid URLs based on the regular expression {regex_pattern}")
+    filtered_file_urls_dict = filter_invalid_urls(files_and_urls_dict, regex_pattern)
+
+    # remove the invalid URLs found for each annexed file
+    remove_invalid_urls(filtered_file_urls_dict, script_options, annex)
