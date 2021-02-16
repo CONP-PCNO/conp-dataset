@@ -115,6 +115,39 @@ class OSFCrawler(BaseCrawler):
                     file_size       = int(annex_info_dict['size'])
                 sizes.append(file_size)
 
+    def _download_components(self, components_list, current_dir, inner_path, d, annex, dataset_size):
+        # Loop through each available components and download their files
+        for component in components_list:
+            component_title = self._clean_dataset_title(component['attributes']['title'])
+            component_inner_path = os.path.join(inner_path, 'components', component_title)
+            os.makedirs(os.path.join(current_dir, component_inner_path))
+            self._download_files(
+                component['relationships']['files']['links']['related']['href'],
+                os.path.join(current_dir, component_inner_path),
+                component_inner_path,
+                d,
+                annex,
+                dataset_size
+            )
+
+            # check if the component contains (sub)components, in which case, download the (sub)components data
+            subcomponents_list = self._get_components(component['relationships']['children']['links']['related']['href'])
+            if subcomponents_list:
+                self._download_components(
+                    subcomponents_list,
+                    current_dir,
+                    os.path.join(component_inner_path),
+                    d,
+                    annex,
+                    dataset_size
+                )
+
+        # Once we have downloaded all the components files, check to see if there are any empty
+        # directories (in the case the 'OSF parent' dataset did not have any downloaded files
+        list_of_empty_dirs = [dirpath for (dirpath, dirnames, filenames) in os.walk(current_dir) if len(dirnames) == 0 and len(filenames) == 0]
+        for empty_dir in list_of_empty_dirs:
+            os.rmdir(empty_dir)
+
     def _get_contributors(self, link):
         r = self._get_request_with_bearer_token(link)
         contributors = [
@@ -126,6 +159,10 @@ class OSFCrawler(BaseCrawler):
     def _get_license(self, link):
         r = self._get_request_with_bearer_token(link)
         return r.json()["data"]["attributes"]["name"]
+
+    def _get_components(self, link):
+        r = self._get_request_with_bearer_token(link)
+        return r.json()['data']
 
     def _get_institutions(self, link):
         r = self._get_request_with_bearer_token(link)
@@ -143,6 +180,11 @@ class OSFCrawler(BaseCrawler):
         osf_dois = []
         datasets = self._query_osf()
         for dataset in datasets:
+            # skip datasets that have a parent since the files' components will
+            # go into the parent dataset.
+            if 'parent' in dataset['relationships'].keys():
+                continue
+
             attributes = dataset["attributes"]
 
             # Retrieve keywords/tags
@@ -167,6 +209,9 @@ class OSFCrawler(BaseCrawler):
 
             # Get link for the dataset files
             files_link = dataset['relationships']['files']['links']['related']['href']
+
+            # Get components list
+            components_list = self._get_components(dataset['relationships']['children']['links']['related']['href'])
 
             # Gather extra properties
             extra_properties = [
@@ -196,6 +241,7 @@ class OSFCrawler(BaseCrawler):
             dataset_dats_content = {
                 "title"          : attributes["title"],
                 "files"          : files_link,
+                "components_list": components_list,
                 "homepage"       : dataset["links"]["html"],
                 "creators"       : list(
                     map(lambda x: {"name": x}, contributors)
@@ -267,6 +313,8 @@ class OSFCrawler(BaseCrawler):
         annex = Repo(dataset_dir).git.annex
         dataset_size = []
         self._download_files(dataset["files"], dataset_dir, "", d, annex, dataset_size)
+        if dataset['components_list']:
+            self._download_components(dataset['components_list'], dataset_dir, '', d, annex, dataset_size)
         dataset_size, dataset_unit = humanize.naturalsize(sum(dataset_size)).split(" ")
         dataset["distributions"][0]["size"] = float(dataset_size)
         dataset["distributions"][0]["unit"]["value"] = dataset_unit
@@ -305,6 +353,8 @@ class OSFCrawler(BaseCrawler):
 
             dataset_size = []
             self._download_files(dataset_description["files"], dataset_dir, "", d, annex, dataset_size)
+            if dataset_description['components_list']:
+                self._download_components(dataset_description['components_list'], dataset_dir, '', d, annex, dataset_size)
             dataset_size, dataset_unit = humanize.naturalsize(sum(dataset_size)).split(" ")
             dataset_description["distributions"][0]["size"] = float(dataset_size)
             dataset_description["distributions"][0]["unit"]["value"] = dataset_unit
