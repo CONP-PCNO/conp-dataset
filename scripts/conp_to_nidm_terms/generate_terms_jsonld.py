@@ -3,6 +3,7 @@ import sys
 import json
 import logging
 from collections import Counter
+from copy import deepcopy
 import requests
 
 
@@ -14,6 +15,10 @@ PWD = os.path.dirname(os.path.realpath(__file__))
 
 # More about NIF API endpoints https://neuinfo.org/about/webservices
 NIF_API_URL = "https://scicrunch.org/api/1/ilx/search/term/"
+
+# Load jsonld template
+with open("template.jsonld", "r", encoding="utf-8") as template_file:
+    JSONLD_TEMPLATE = json.load(template_file)
 
 
 def _raise_error(er): raise Exception(er)
@@ -36,7 +41,7 @@ def get_api_response(term):
         # Standard response will have existing_ids key
         if response["data"]["existing_ids"]:
             for i in response["data"]["existing_ids"]:
-                match = i["iri"] if "curie" in i and "ILX:" in i["curie"] else "no Interlex match found"
+                match = i["iri"] if "curie" in i and "ILX:".upper() in i["curie"] else match
         else:
             match = "no match found"
         return match
@@ -111,7 +116,7 @@ def aggregate(privacy=True, types=True, licenses=True, is_about=True, formats=Tr
         if value:
             report[key] = {
                 "count": len(value),
-                "values": list(value)[:6]
+                "values": list(value)
             }
     return report
 
@@ -149,21 +154,15 @@ def generate_term_files(report):
     for key, value in report.items():
         for term in value["values"]:
             terms_counter.update((term.lower(),))
-            jsonld_description = {
-                "@context": "https://raw.githubusercontent.com/NIDM-Terms/terms/master/context/cde_context.jsonld",
-                "@type": "http://www.w3.org/2002/07/owl#DatatypeProperty",
-                "label": f"{term.lower()}",
-                "associatedWith": [
-                    "DATS"
-                ],
-                "sameAs": get_api_response(term.lower()),
-                "valueType": "xsd:string"
-            }
+            jsonld_description = deepcopy(JSONLD_TEMPLATE)
+            jsonld_description["label"] = f"{term.lower()}"
+            # Get NIF API matching URI
+            jsonld_description["sameAs"] = get_api_response(term.lower())
             # Create a folder for each text value type (e.g. privacy, licenses, etc.)
             if not os.path.exists(os.path.join(PWD, key)):
                 os.makedirs(os.path.join(PWD, key))
             filename = "".join(x for x in term.title().replace(" ", "") if x.isalnum())
-            # create and save jsonld file in a respestive folder
+            # Create and save jsonld file in a respestive folder
             with open(f"{os.path.join(PWD, key, filename)}.jsonld", "w", encoding="utf-8") as jsonld_file:
                 json.dump(jsonld_description, jsonld_file, indent=4, ensure_ascii=False)
 
