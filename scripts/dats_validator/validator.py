@@ -138,12 +138,49 @@ def validate_formats(dataset):
         return True, errors_list
 
 
+def date_type_validation(dates_list, dataset_title):
+
+    errors_list = []
+    date_type_exception = ['CONP DATS JSON fileset creation date']
+
+    for date_dict in dates_list:
+        dtype = date_dict['type']['value']
+        if dtype != dtype.lower() and dtype not in date_type_exception:
+            error_message = f"Validation error in {dataset_title}: dates.type - {dtype} is not allowed. " \
+                            f"Allowed value should either be all lower case or one of {date_type_exception}. " \
+                            f"Consider changing the value to {dtype.lower()}"
+            errors_list.append(error_message)
+
+    return errors_list
+
+def validate_date_types(dataset):
+    """ Checks if the values in the dates type field of the JSON object follows the lower case convention. """
+
+    errors_list = []
+
+    if 'dates' in dataset.keys():
+        dates_errors_list = date_type_validation(dataset['dates'], dataset['title'])
+        errors_list.extend(dates_errors_list)
+
+    if 'primaryPublications' in dataset.keys():
+        for publication in dataset['primaryPublications']:
+            if 'dates' in publication:
+                dates_errors_list = date_type_validation(publication['dates'], dataset['title'])
+                errors_list.extend(dates_errors_list)
+
+    if errors_list:
+        return False, errors_list
+    else:
+        return True, errors_list
+
 def validate_recursively(obj, errors):
     """ Checks all datasets recursively for required extraProperties. """
 
     val, errors_list = validate_extra_properties(obj)
     errors.extend(errors_list)
     val, errors_list = validate_formats(obj)
+    errors.extend(errors_list)
+    val, errors_list = validate_date_types(obj)
     errors.extend(errors_list)
     if "hasPart" in obj:
         for each in obj["hasPart"]:
