@@ -1,5 +1,4 @@
 import os
-import sys
 import json
 import logging
 from collections import Counter
@@ -9,9 +8,10 @@ import requests
 
 logger = logging.getLogger(__name__)
 
-CONP_DATASET_ROOT = sys.path[1]
+
+CONP_DATASET_ROOT = os.path.abspath(os.path.join(__file__, "../../.."))
 PROJECTS = os.path.join(CONP_DATASET_ROOT, "projects")
-PWD = os.path.dirname(os.path.realpath(__file__))
+CUR_WORKING_DIR = os.path.dirname(os.path.realpath(__file__))
 
 # More about NIF API endpoints https://neuinfo.org/about/webservices
 NIF_API_URL = "https://scicrunch.org/api/1/ilx/search/term/"
@@ -139,7 +139,7 @@ def normalize_and_count(report):
                 for k, v in normilized_terms.items():
                     if len(v) > 1:
                         errors.append(f"{key.title()} duplicate terms: {v}")
-    with open('duplicates.txt', 'w') as f:
+    with open("duplicates.txt", "w") as f:
         for i, item in enumerate(errors, 1):
             f.write(f"{i}. {item}\n")
     return errors
@@ -159,11 +159,11 @@ def generate_term_files(report):
             # Get NIF API matching URI
             jsonld_description["sameAs"] = get_api_response(term.lower())
             # Create a folder for each text value type (e.g. privacy, licenses, etc.)
-            if not os.path.exists(os.path.join(PWD, key)):
-                os.makedirs(os.path.join(PWD, key))
+            if not os.path.exists(os.path.join(CUR_WORKING_DIR, key)):
+                os.makedirs(os.path.join(CUR_WORKING_DIR, key))
             filename = "".join(x for x in term.title().replace(" ", "") if x.isalnum())
             # Create and save jsonld file in a respestive folder
-            with open(f"{os.path.join(PWD, key, filename)}.jsonld", "w", encoding="utf-8") as jsonld_file:
+            with open(f"{os.path.join(CUR_WORKING_DIR, key, filename)}.jsonld", "w", encoding="utf-8") as jsonld_file:
                 json.dump(jsonld_description, jsonld_file, indent=4, ensure_ascii=False)
 
     return f"Created {len(terms_counter.keys())} jsonld files."
