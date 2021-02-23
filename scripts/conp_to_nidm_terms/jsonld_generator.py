@@ -1,24 +1,20 @@
 import getopt
 from sys import argv
-from datetime import date
-import json
-from functions import aggregate
+from functions import generate_term_files, aggregate
 
 
 def main(argv):
-    timestamp = date.today()
-    opts, args = getopt.getopt(argv, "", ["filename=", "privacy=", "types=", "licenses=",
+    opts, args = getopt.getopt(argv, "", ["privacy=", "types=", "licenses=",
                                           "is_about=", "formats=", "keywords="])
 
     options = dict(privacy=True, types=True, licenses=True, is_about=True, formats=True, keywords=True)
-    filename = f"report_{timestamp}"
 
     for opt, arg in opts:
         for op in ["privacy", "types", "licenses", "is_about", "formats", "keywords"]:
             if opt == str("--" + op) and arg == "False":
                 options[op] = False
-            elif opt == '--filename':
-                filename = arg
+            else:
+                info()
 
     report = aggregate(
         privacy=options["privacy"],
@@ -28,15 +24,12 @@ def main(argv):
         formats=options["formats"],
         keywords=options["keywords"]
     )
-
-    with open(f"{filename}.json", "w") as report_file:
-        json.dump(report, report_file, indent=4)
-        print("Report created.")
+    generate_term_files(report)
 
 
 def info():
     print("Usage:"
-          "python report_generator.py [--privacy=False --types=False --licenses=False "
+          "python jsonld_generator.py [--privacy=False --types=False --licenses=False "
           "--is_about= --formats=False --keywords=False]")
     return
 
