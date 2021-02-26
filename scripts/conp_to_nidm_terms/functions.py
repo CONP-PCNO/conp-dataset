@@ -10,8 +10,9 @@ logger = logging.getLogger(__name__)
 
 
 CONP_DATASET_ROOT = os.path.abspath(os.path.join(__file__, "../../.."))
+# conp-dataset/projects
 PROJECTS = os.path.join(CONP_DATASET_ROOT, "projects")
-CUR_WORKING_DIR = os.path.dirname(os.path.realpath(__file__))
+CURRENT_WORKING_DIR = os.path.dirname(os.path.realpath(__file__))
 
 # More about NIF API endpoints https://neuinfo.org/about/webservices
 NIF_API_URL = "https://scicrunch.org/api/1/ilx/search/term/"
@@ -41,6 +42,7 @@ def get_api_response(term):
         # Standard response will have existing_ids key
         if response["data"]["existing_ids"]:
             for i in response["data"]["existing_ids"]:
+                # retrieve InterLex id, its curie has "ILX" prefix
                 match = i["iri"] if "curie" in i and "ILX:".upper() in i["curie"] else match
         else:
             match = "no match found"
@@ -50,13 +52,13 @@ def get_api_response(term):
         logger.error(f"Error: {e}")
 
 
-def aggregate(privacy=True, types=True, licenses=True, is_about=True, formats=True, keywords=True):
+def collect_values(privacy=True, types=True, licenses=True, is_about=True, formats=True, keywords=True):
     """
     Iterates over projects directory retrieving DATS file for each project.
     Aggregates all values and their count for selected properties in the report object.
     """
 
-    # Text values to aggregate
+    # Text values to collect
     privacy_values = set()
     licenses_values = set()
     types_datatype_values = set()
@@ -108,7 +110,7 @@ def aggregate(privacy=True, types=True, licenses=True, is_about=True, formats=Tr
                 if keywords:
                     keywords_values.update(set(k["value"] for k in dats_data["keywords"]))
 
-    # report = dict(dats_files_processed=dats_files_count)
+    logger.info(f"DATS files processed: {dats_files_count}")
     report = dict()
     for key, value in zip(["privacy", "licenses", "types", "is_about", "formats", "keywords"],
                           [privacy_values, licenses_values, types_datatype_values, is_about_values,
@@ -121,7 +123,7 @@ def aggregate(privacy=True, types=True, licenses=True, is_about=True, formats=Tr
     return report
 
 
-def normalize_and_count(report):
+def find_duplicates(report):
     errors = list()
     for key in ["privacy", "licenses", "types", "is_about", "formats", "keywords"]:
         if key in report:
@@ -145,7 +147,7 @@ def normalize_and_count(report):
     return errors
 
 
-def generate_term_files(report):
+def generate_jsonld_files(report):
     """
     Generates a jsonld file for each unique term.
     Files are saved to the directories respectively to their properties.
@@ -159,11 +161,11 @@ def generate_term_files(report):
             # Get NIF API matching URI
             jsonld_description["sameAs"] = get_api_response(term.lower())
             # Create a folder for each text value type (e.g. privacy, licenses, etc.)
-            if not os.path.exists(os.path.join(CUR_WORKING_DIR, key)):
-                os.makedirs(os.path.join(CUR_WORKING_DIR, key))
+            if not os.path.exists(os.path.join(CURRENT_WORKING_DIR, key)):
+                os.makedirs(os.path.join(CURRENT_WORKING_DIR, key))
             filename = "".join(x for x in term.title().replace(" ", "") if x.isalnum())
             # Create and save jsonld file in a respestive folder
-            with open(f"{os.path.join(CUR_WORKING_DIR, key, filename)}.jsonld", "w", encoding="utf-8") as jsonld_file:
+            with open(f"{os.path.join(CURRENT_WORKING_DIR, key, filename)}.jsonld", "w", encoding="utf-8") as jsonld_file:
                 json.dump(jsonld_description, jsonld_file, indent=4, ensure_ascii=False)
 
     return f"Created {len(terms_counter.keys())} jsonld files."

@@ -1,6 +1,6 @@
 import getopt
 from sys import argv
-from functions import generate_term_files, aggregate
+from functions import generate_jsonld_files, collect_values
 
 
 def main(argv):
@@ -16,7 +16,7 @@ def main(argv):
             else:
                 info()
 
-    report = aggregate(
+    report = collect_values(
         privacy=options["privacy"],
         types=options["types"],
         licenses=options["licenses"],
@@ -24,7 +24,7 @@ def main(argv):
         formats=options["formats"],
         keywords=options["keywords"]
     )
-    generate_term_files(report)
+    generate_jsonld_files(report)
 
 
 def info():

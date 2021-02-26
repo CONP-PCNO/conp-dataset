@@ -2,7 +2,7 @@ import getopt
 from sys import argv
 from datetime import date
 import json
-from functions import aggregate, normalize_and_count
+from functions import collect_values, find_duplicates
 
 
 def main(argv):
@@ -20,7 +20,7 @@ def main(argv):
             elif opt == '--filename':
                 filename = arg
 
-    report = aggregate(
+    report = collect_values(
         privacy=options["privacy"],
         types=options["types"],
         licenses=options["licenses"],
@@ -29,7 +29,7 @@ def main(argv):
         keywords=options["keywords"]
     )
     # create file with duplicate terms
-    normalize_and_count(report)
+    find_duplicates(report)
     # save report to a file
     with open(f"{filename}.json", "w") as report_file:
         json.dump(report, report_file, indent=4)
