@@ -2,7 +2,7 @@ import getopt
 from sys import argv
 from datetime import date
 import json
-from functions import aggregate
+from functions import aggregate, normalize_and_count
 
 
 def main(argv):
@@ -28,7 +28,9 @@ def main(argv):
         formats=options["formats"],
         keywords=options["keywords"]
     )
-
+    # create file with duplicate terms
+    normalize_and_count(report)
+    # save report to a file
     with open(f"{filename}.json", "w") as report_file:
         json.dump(report, report_file, indent=4)
         print("Report created.")
