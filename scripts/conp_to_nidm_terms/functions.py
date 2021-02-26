@@ -26,7 +26,11 @@ def _raise_error(er): raise Exception(er)
 
 
 def get_api_response(term):
-    """ Call NIF API and retrieve InterLex URI for a term. """
+    """
+    Call NIF API and retrieve InterLex URI for a term.
+    :param term: string to send to the API
+    :return: string Interlex URI
+    """
 
     # API Key must be provided
     with open("api_key.json", "r", encoding="utf-8") as api_key_file:
@@ -56,6 +60,8 @@ def collect_values(privacy=True, types=True, licenses=True, is_about=True, forma
     """
     Iterates over projects directory retrieving DATS file for each project.
     Aggregates all values and their count for selected properties in the report object.
+    :param : set to False in order not to include the property in the final report
+    :return: dict object report, int how many DATS files were processed
     """
 
     # Text values to collect
@@ -110,7 +116,6 @@ def collect_values(privacy=True, types=True, licenses=True, is_about=True, forma
                 if keywords:
                     keywords_values.update(set(k["value"] for k in dats_data["keywords"]))
 
-    logger.info(f"DATS files processed: {dats_files_count}")
     report = dict()
     for key, value in zip(["privacy", "licenses", "types", "is_about", "formats", "keywords"],
                           [privacy_values, licenses_values, types_datatype_values, is_about_values,
@@ -120,10 +125,15 @@ def collect_values(privacy=True, types=True, licenses=True, is_about=True, forma
                 "count": len(value),
                 "values": list(value)
             }
-    return report
+    return report, dats_files_count
 
 
 def find_duplicates(report):
+    """
+    Finds duplicate values spelled in different cases (e.g. lowercases vs uppercase vs title)
+    :param report: json object returned by collect_values()
+    :return: list of errors describing where duplicates occur
+    """
     errors = list()
     for key in ["privacy", "licenses", "types", "is_about", "formats", "keywords"]:
         if key in report:
@@ -141,16 +151,15 @@ def find_duplicates(report):
                 for k, v in normilized_terms.items():
                     if len(v) > 1:
                         errors.append(f"{key.title()} duplicate terms: {v}")
-    with open("duplicates.txt", "w") as f:
-        for i, item in enumerate(errors, 1):
-            f.write(f"{i}. {item}\n")
     return errors
 
 
-def generate_jsonld_files(report):
+def generate_jsonld_files(report, use_api=True):
     """
     Generates a jsonld file for each unique term.
     Files are saved to the directories respectively to their properties.
+    :param report: json object returned by collect_values()
+    :param use_api: defaults to True; if False then NIF API won't be called for InterLex match
     """
     terms_counter = Counter()
     for key, value in report.items():
@@ -158,8 +167,9 @@ def generate_jsonld_files(report):
             terms_counter.update((term.lower(),))
             jsonld_description = deepcopy(JSONLD_TEMPLATE)
             jsonld_description["label"] = f"{term.lower()}"
-            # Get NIF API matching URI
-            jsonld_description["sameAs"] = get_api_response(term.lower())
+            if use_api:
+                # Get NIF API matching URI
+                jsonld_description["sameAs"] = get_api_response(term.lower())
             # Create a folder for each text value type (e.g. privacy, licenses, etc.)
             if not os.path.exists(os.path.join(CURRENT_WORKING_DIR, key)):
                 os.makedirs(os.path.join(CURRENT_WORKING_DIR, key))
@@ -167,5 +177,5 @@ def generate_jsonld_files(report):
             # Create and save jsonld file in a respestive folder
             with open(f"{os.path.join(CURRENT_WORKING_DIR, key, filename)}.jsonld", "w", encoding="utf-8") as jsonld_file:
                 json.dump(jsonld_description, jsonld_file, indent=4, ensure_ascii=False)
-
-    return f"Created {len(terms_counter.keys())} jsonld files."
+    print(f"JSON-LD files created: {len(terms_counter.keys())}")
+    return

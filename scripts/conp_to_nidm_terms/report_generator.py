@@ -8,19 +8,22 @@ from functions import collect_values, find_duplicates
 def main(argv):
     timestamp = date.today()
     opts, args = getopt.getopt(argv, "", ["filename=", "privacy=", "types=", "licenses=",
-                                          "is_about=", "formats=", "keywords="])
+                                          "is_about=", "formats=", "keywords=", "help"])
 
     options = dict(privacy=True, types=True, licenses=True, is_about=True, formats=True, keywords=True)
     filename = f"report_{timestamp}"
 
     for opt, arg in opts:
-        for op in ["privacy", "types", "licenses", "is_about", "formats", "keywords"]:
-            if opt == str("--" + op) and arg == "False":
-                options[op] = False
-            elif opt == '--filename':
-                filename = arg
+        opt_properties = ["--privacy", "--types", "--licenses", "--is_about", "--formats", "--keywords"]
+        if opt in opt_properties and arg == "False":
+            options[opt.replace("--", "")] = False
+        elif opt == '--filename':
+            filename = arg
+        else:
+            help_info()
+            exit()
 
-    report = collect_values(
+    report, dats_files_count = collect_values(
         privacy=options["privacy"],
         types=options["types"],
         licenses=options["licenses"],
@@ -28,19 +31,21 @@ def main(argv):
         formats=options["formats"],
         keywords=options["keywords"]
     )
+    print(f"DATS files processed: {dats_files_count}")
     # create file with duplicate terms
-    find_duplicates(report)
+    with open("duplicates.txt", "w") as f:
+        for i, item in enumerate(find_duplicates(report), 1):
+            f.write(f"{i}. {item}\n")
     # save report to a file
     with open(f"{filename}.json", "w") as report_file:
         json.dump(report, report_file, indent=4)
-        print("Report created.")
+        print(f"Report {filename}.json created.")
 
 
-def info():
+def help_info():
     print("Usage:"
           "python report_generator.py [--privacy=False --types=False --licenses=False "
-          "--is_about= --formats=False --keywords=False]")
-    return
+          "--is_about= --formats=False --keywords=False --help]")
 
 
 if __name__ == "__main__":
