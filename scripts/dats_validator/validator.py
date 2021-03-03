@@ -1,4 +1,6 @@
 import jsonschema
+import requests
+
 import os
 import json
 import logging
@@ -44,14 +46,14 @@ def validate_json(json_obj):
     with open(SCHEMA_PATH) as s:
         json_schema = json.load(s)
     # first validate schema file
-    v = jsonschema.Draft4Validator(json_schema)
+    v = jsonschema.Draft4Validator(json_schema, format_checker=jsonschema.FormatChecker())
     # now validate json file
     try:
         jsonschema.validate(json_obj, json_schema, format_checker=jsonschema.FormatChecker())
         logger.info("JSON schema validation passed.")
         return True
     except jsonschema.exceptions.ValidationError:
-        errors = [e for e in v.iter_errors((json_obj))]
+        errors = [e for e in v.iter_errors(json_obj)]
         logger.info(f"The file is not valid. Total json schema errors: {len(errors)}")
         for i, error in enumerate(errors, 1):
             logger.error(f"{i} Validation error in {'.'.join(str(v) for v in error.path)}: {error.message}")
@@ -82,6 +84,14 @@ def validate_extra_properties(dataset):
                                     f"Allowed values are {REQUIRED_EXTRA_PROPERTIES['CONP_status']}."
                     errors.append(error_message)
 
+        # checks if 'derivedFrom' values refer to existing datasets accessible online
+        if "derivedFrom" in extra_prop_categories:
+            for value in extra_prop_categories["derivedFrom"]:
+                if not dataset_exists(value):
+                    error_message = f"Validation error in {dataset['title']}: extraProperties.category." \
+                                    f"derivedFrom - {value} is not found. "
+                    errors.append(error_message)
+
         if errors:
             return False, errors
         else:
@@ -95,10 +105,82 @@ def validate_extra_properties(dataset):
                         f"{[k for k in REQUIRED_EXTRA_PROPERTIES.keys()]}")
 
 
+def validate_formats(dataset):
+    """ Checks if the values in the formats field of the JSON object follows the upper case convention without dots. """
+
+    errors_list = []
+    format_exceptions = ['bigWig', 'NIfTI', 'GIfTI', 'RNA-Seq']
+
+    # check that distributions have a formats property as this is required in the schema
+    for distribution_dict in dataset['distributions']:
+        if 'formats' not in distribution_dict.keys():
+            error_message = f"Validation error in {dataset['title']}: distributions." \
+                            f"formats - 'formats' property is missing under distributions. " \
+                            f"Please add the 'formats' property to 'distributions'."
+            errors_list.append(error_message)
+        else:
+            for file_format in distribution_dict['formats']:
+                if file_format != file_format.upper() and file_format not in format_exceptions:
+                    error_message = f"Validation error in {dataset['title']}: distributions." \
+                                    f"formats - {file_format} is not allowed. " \
+                                    f"Allowed value should either be capitalized or one of {format_exceptions}. " \
+                                    f"Consider changing the value to {file_format.strip('.').upper()}. "
+                    errors_list.append(error_message)
+                elif file_format.startswith('.'):
+                    error_message = f"Validation error in {dataset['title']}: distributions." \
+                                    f"formats - {file_format} is not allowed. " \
+                                    f"Format values should not start with a dot."
+                    errors_list.append(error_message)
+
+    if errors_list:
+        return False, errors_list
+    else:
+        return True, errors_list
+
+
+def date_type_validation(dates_list, dataset_title):
+
+    errors_list = []
+    date_type_exception = ['CONP DATS JSON fileset creation date']
+
+    for date_dict in dates_list:
+        dtype = date_dict['type']['value']
+        if dtype != dtype.lower() and dtype not in date_type_exception:
+            error_message = f"Validation error in {dataset_title}: dates.type - {dtype} is not allowed. " \
+                            f"Allowed value should either be all lower case or one of {date_type_exception}. " \
+                            f"Consider changing the value to {dtype.lower()}"
+            errors_list.append(error_message)
+
+    return errors_list
+
+def validate_date_types(dataset):
+    """ Checks if the values in the dates type field of the JSON object follows the lower case convention. """
+
+    errors_list = []
+
+    if 'dates' in dataset.keys():
+        dates_errors_list = date_type_validation(dataset['dates'], dataset['title'])
+        errors_list.extend(dates_errors_list)
+
+    if 'primaryPublications' in dataset.keys():
+        for publication in dataset['primaryPublications']:
+            if 'dates' in publication:
+                dates_errors_list = date_type_validation(publication['dates'], dataset['title'])
+                errors_list.extend(dates_errors_list)
+
+    if errors_list:
+        return False, errors_list
+    else:
+        return True, errors_list
+
 def validate_recursively(obj, errors):
     """ Checks all datasets recursively for required extraProperties. """
 
     val, errors_list = validate_extra_properties(obj)
+    errors.extend(errors_list)
+    val, errors_list = validate_formats(obj)
+    errors.extend(errors_list)
+    val, errors_list = validate_date_types(obj)
     errors.extend(errors_list)
     if "hasPart" in obj:
         for each in obj["hasPart"]:
@@ -114,10 +196,35 @@ def validate_non_schema_required(json_obj):
         logger.info(f"Total required extra properties errors: {len(errors)}")
         for i, er in enumerate(errors, 1):
             logger.error(f"{i} {er}")
-        return False
+        return False, errors
     else:
         logger.info(f"Required extra properties validation passed.")
-        return True
+        return True, None
+
+
+# cache responses to avoid redundant calls
+cache = dict()
+
+
+def dataset_exists(derived_from_url):
+    """ Caches response values in cache dict. """
+
+    if derived_from_url not in cache:
+        cache[derived_from_url] = get_response_status(derived_from_url)
+    return cache[derived_from_url]
+
+
+def get_response_status(derived_from_url):
+    """ Get a response status code for derivedFrom value. Returns True if status code is 200."""
+
+    try:
+        r = requests.get(derived_from_url)
+        r.raise_for_status()
+        if r.status_code == 200:
+            return True
+
+    except requests.exceptions.HTTPError:
+        return False
 
 
 def help():

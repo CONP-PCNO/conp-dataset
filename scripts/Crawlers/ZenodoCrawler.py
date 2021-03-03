@@ -4,6 +4,7 @@ import json
 import requests
 import humanize
 import html2markdown
+import datetime
 
 
 def _get_unlock_script():
@@ -46,7 +47,16 @@ class ZenodoCrawler(BaseCrawler):
             "type=dataset&"
             'q=keywords:"canadian-open-neuroscience-platform"'
         )
-        results = requests.get(query).json()["hits"]["hits"]
+        r_json  = requests.get(query).json()
+        results = r_json['hits']['hits']
+
+        if r_json['links']['next']:
+            next_page = r_json['links']['next']
+            while next_page is not None:
+                next_page_json = requests.get(next_page).json()
+                results.extend(next_page_json['hits']['hits'])
+                next_page = next_page_json['links']['next'] if 'next' in next_page_json['links'] else None
+
         if self.verbose:
             print("Zenodo query: {}".format(query))
         return results
@@ -55,6 +65,9 @@ class ZenodoCrawler(BaseCrawler):
         link = bucket["links"]["self"]
         repo = self.git.Repo(dataset_dir)
         annex = repo.git.annex
+        if bucket['key'] in ['DATS.json', 'README.md']:
+            d.download_url(link)
+            return
         if "access_token" not in link:
             if bucket["type"] == "zip":
                 d.download_url(link, archive=True)
@@ -172,17 +185,24 @@ class ZenodoCrawler(BaseCrawler):
                                     "roles": [{"value": "Principal Investigator"}]}
                             )
 
+            # Get identifier
+            identifier = dataset["conceptdoi"] if "conceptdoi" in dataset.keys() else dataset["doi"]
+
+            # Get date created and date modified
+            date_created  = datetime.datetime.strptime(dataset['created'], '%Y-%m-%dT%H:%M:%S.%f%z')
+            date_modified = datetime.datetime.strptime(dataset['updated'], '%Y-%m-%dT%H:%M:%S.%f%z')
+
             zenodo_dois.append(
                 {
                     "identifier": {
-                        "identifier": "https://doi.org/{}".format(dataset["conceptdoi"]),
+                        "identifier": "https://doi.org/{}".format(identifier),
                         "identifierSource": "DOI",
                     },
                     "concept_doi": dataset["conceptrecid"],
                     "latest_version": latest_version_doi,
                     "title": metadata["title"],
                     "files": files,
-                    "doi_badge": dataset["conceptdoi"],
+                    "doi_badge": identifier,
                     "creators": creators,
                     "description": metadata["description"],
                     "version": metadata["version"]
@@ -226,6 +246,20 @@ class ZenodoCrawler(BaseCrawler):
                                     "value": "https://about.zenodo.org/static/img/logos/zenodo-gradient-round.svg"
                                 }
                             ],
+                        }
+                    ],
+                    "dates": [
+                        {
+                            "date": date_created.strftime('%Y-%m-%d %H:%M:%S'),
+                            "type": {
+                                "value": "date created"
+                            }
+                        },
+                        {
+                            "date": date_modified.strftime('%Y-%m-%d %H:%M:%S'),
+                            "type": {
+                                "value": "date modified"
+                            }
                         }
                     ],
                 }
@@ -286,7 +320,7 @@ class ZenodoCrawler(BaseCrawler):
 
             # Remove all data and DATS.json files
             for file_name in os.listdir(dataset_dir):
-                if file_name[0] == "." or file_name == "README.md":
+                if file_name[0] == ".":
                     continue
                 self.datalad.remove(os.path.join(dataset_dir, file_name), check=False)
 

@@ -127,8 +127,8 @@ def is_authentication_required(dataset):
 
     except FileNotFoundError as e:
         pytest.fail(f"DATS.json was not found!\n{str(e)}", pytrace=False)
-    except Exeception as e:
-        pytest.fail(f"Authentiaction error!\n{str(e)}", pytrace=False)
+    except Exception as e:
+        pytest.fail(f"Authentication error!\n{str(e)}", pytrace=False)
 
 
 def generate_datalad_provider(loris_api):

@@ -274,6 +274,10 @@ class BaseCrawler:
                     # Create DATS.json if it doesn't exist
                     if not os.path.isfile(os.path.join(dataset_dir, "DATS.json")):
                         self._create_new_dats(dataset_dir, os.path.join(dataset_dir, "DATS.json"), dataset_description)
+                    # Create README.md if it doesn't exist
+                    if not os.path.isfile(os.path.join(dataset_dir, "README.md")):
+                        readme = self.get_readme_content(dataset_description)
+                        self._create_readme(readme, os.path.join(dataset_dir, "README.md"))
                     d.save()
                     d.publish(to="origin")
                 commit_msg = "Updated " + dataset_description["title"]
@@ -337,8 +341,7 @@ class BaseCrawler:
         # Create PR
         print("Creating PR for " + title)
         r = requests.post(
-            "https://api.github.com/repos/CONP-PCNO/conp-dataset/pulls?access_token="
-            + self.github_token,
+            "https://api.github.com/repos/CONP-PCNO/conp-dataset/pulls",
             json={
                 "title": "Crawler result ({})".format(title),
                 "body": """## Description
@@ -364,6 +367,7 @@ Functional checks:
                 "head": self.username + ":conp-bot/" + clean_title,
                 "base": "master",
             },
+            headers={"Authorization": "token {}".format(self.github_token)}
         )
         if r.status_code != 201:
             raise Exception("Error while creating pull request: " + r.text)
