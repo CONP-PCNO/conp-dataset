@@ -222,13 +222,13 @@ def validate_is_about(dataset):
     """
 
     errors_list = []
-    identifier_source_base_url = 'https://www.ncbi.nlm.nih.gov/Taxonomy'
+    identifier_source_base_url = 'https://www.ncbi.nlm.nih.gov/taxonomy'
 
     if 'isAbout' in dataset.keys():
         species_present = False
         for entry in dataset['isAbout']:
             if 'identifier' in entry.keys():
-                identifier_source = entry['identifier']['identifierSource']
+                identifier_source = entry['identifier']['identifierSource'].lower()
                 if identifier_source.startswith(identifier_source_base_url):
                     species_present = True
 
