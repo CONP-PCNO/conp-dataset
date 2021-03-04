@@ -14,6 +14,7 @@ from scripts.dats_validator.validator import (
     validate_non_schema_required,
     validate_formats,
     validate_date_types,
+    validate_privacy,
 )
 from tests.functions import (
     authenticate,
@@ -71,10 +72,16 @@ class Template(object):
                                         f"in date's type encoding. List of errors:\n"
                 for i, error_message in enumerate(date_type_errors, 1):
                     summary_error_message += f"- {i}. {error_message}\n"
-                    pytest.fail(
-                        summary_error_message,
-                        pytrace=False,
-                    )
+                    pytest.fail(summary_error_message, pytrace=False)
+
+            # Validate the privacy values
+            privacy_valid_bool, privacy_errors = validate_privacy(json_obj)
+            if not privacy_valid_bool:
+                summary_error_message = f"Dataset {dataset} contains DATS.json that has errors " \
+                                        f"in privacy value. Error is:\n" \
+                                        f"- {privacy_errors[0]}"
+                pytest.fail(summary_error_message, pytrace=False)
+
 
             # For crawled dataset, some tests should not be run as there is no way to
             # automatically populate some of the fields
@@ -89,10 +96,7 @@ class Template(object):
                                         f"in required extra properties or formats. List of errors:\n"
                 for i, error_message in enumerate(errors, 1):
                     summary_error_message += f"- {i}. {error_message}\n"
-                pytest.fail(
-                    summary_error_message,
-                    pytrace=False,
-                )
+                pytest.fail(summary_error_message, pytrace=False)
 
     def test_download(self, dataset):
         eval_config(dataset)
