@@ -82,7 +82,6 @@ class Template(object):
                                         f"- {privacy_errors[0]}"
                 pytest.fail(summary_error_message, pytrace=False)
 
-
             # For crawled dataset, some tests should not be run as there is no way to
             # automatically populate some of the fields
             # For datasets crawled with Zenodo: check the formats extra property only
