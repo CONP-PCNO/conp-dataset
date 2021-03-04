@@ -15,6 +15,7 @@ from scripts.dats_validator.validator import (
     validate_formats,
     validate_date_types,
     validate_privacy,
+    validate_is_about,
 )
 from tests.functions import (
     authenticate,
@@ -80,6 +81,14 @@ class Template(object):
                 summary_error_message = f"Dataset {dataset} contains DATS.json that has errors " \
                                         f"in privacy value. Error is:\n" \
                                         f"- {privacy_errors[0]}"
+                pytest.fail(summary_error_message, pytrace=False)
+
+            # Validate that isAbout contains at least one species entry if present
+            is_about_valid_bool, is_about_errors = validate_is_about(json_obj)
+            if not is_about_valid_bool:
+                summary_error_message = f"Dataset {dataset} contains DATS.json that has errors " \
+                                        f"in isAbout. Error is:\n" \
+                                        f"- {is_about_errors[0]}"
                 pytest.fail(summary_error_message, pytrace=False)
 
             # For crawled dataset, some tests should not be run as there is no way to

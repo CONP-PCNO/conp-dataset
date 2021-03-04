@@ -200,6 +200,52 @@ def validate_privacy(dataset):
         return True, errors_list
 
 
+def validate_is_about(dataset):
+    """
+    Checks whether there is at least one entry in the 'isAbout' field with an
+    'identifier' and an 'identifierSource' containing a value that starts
+    with the string 'https://www.ncbi.nlm.nih.gov/Taxonomy'.
+
+    Note: isAbout is not a required field.
+    """
+
+    example_species = """
+    "isAbout": [
+        {
+            "identifier": {
+                "identifier"      : "9606",
+                "identifierSource": "https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=9606"
+            },
+            "name"      : "Homo sapiens"
+        }
+    ],
+    """
+
+    errors_list = []
+    identifier_source_base_url = 'https://www.ncbi.nlm.nih.gov/Taxonomy'
+
+    if 'isAbout' in dataset.keys():
+        species_present = False
+        for entry in dataset['isAbout']:
+            if 'identifier' in entry.keys():
+                identifier_source = entry['identifier']['identifierSource']
+                if identifier_source.startswith(identifier_source_base_url):
+                    species_present = True
+
+        if not species_present:
+            error_message = f"Validation error in {dataset['title']}: isAbout " \
+                            f"- There appears to be no species specified in isAbout. " \
+                            f"At least one species is required in the field and should " \
+                            f"follow the NCBI taxonomy. Valid example for a species:\n" \
+                            f"{example_species}"
+            errors_list.append(error_message)
+
+    if errors_list:
+        return False, errors_list
+    else:
+        return True, errors_list
+
+
 def validate_recursively(obj, errors):
     """ Checks all datasets recursively for non-schema checks. """
 
@@ -210,6 +256,8 @@ def validate_recursively(obj, errors):
     val, errors_list = validate_date_types(obj)
     errors.extend(errors_list)
     val, errors_list = validate_privacy(obj)
+    errors.extend(errors_list)
+    val, errors_list = validate_is_about(obj)
     errors.extend(errors_list)
 
     if "hasPart" in obj:
