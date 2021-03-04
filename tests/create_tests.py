@@ -23,11 +23,11 @@ def get_datasets():
 def minimal_tests(datasets: List[str], pr_files: List[str]):
     """Return the minimal test set for a pull request.
 
-    To return the dataset affected by a pull request changes we verify if the pull 
+    To return the dataset affected by a pull request changes we verify if the pull
     request modifies a file from the dataset. Otherwise, we verify if the file is part
-    of a whitelist that does not require testing. If either are the case, we need to 
+    of a whitelist that does not require testing. If either are the case, we need to
     test all datasets.
-     
+
 
     Parameters
     ----------
@@ -35,7 +35,7 @@ def minimal_tests(datasets: List[str], pr_files: List[str]):
         List of datasets in the repository.
     pr_files : List[str]
         List of files modified by the pull request.
-    
+
     Returns
     -------
     list
@@ -56,7 +56,7 @@ def minimal_tests(datasets: List[str], pr_files: List[str]):
     for pr_filename in pr_files:
         if pr_filename.startswith("projects/"):
             for dataset in datasets:
-                if re.match(f"{dataset}\/", pr_filename) or pr_filename == dataset:
+                if re.match(f"{dataset}/", pr_filename) or pr_filename == dataset:
                     modified_datasets.append(dataset)
                     break
         else:

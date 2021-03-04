@@ -13,42 +13,42 @@ def mock_input():
 
 def mock_zenodo_query():
     return [
-                {
-                    "conceptdoi": "10.5281/zenodo.2586674",
-                    "conceptrecid": "1234567",
-                    "metadata": {
-                        "title": "Generic Title",
-                        "creators": [
-                            {
-                                "name": "Test"
-                            }
-                        ],
-                        "description": "Generic description",
-                        "access_right": "open",
-                        "relations": {
-                            "version": [
-                                {
-                                    "last_child": {
-                                        "pid_value": "7654321"
-                                    }
-                                }
-                            ]
-                        }
-                    },
-                    "links": {
-                        "html": "https://www.fake.link.com"
-                    },
-                    "files": [
+        {
+            "conceptdoi": "10.5281/zenodo.2586674",
+            "conceptrecid": "1234567",
+            "metadata": {
+                "title": "Generic Title",
+                "creators": [
+                    {
+                        "name": "Test"
+                    }
+                ],
+                "description": "Generic description",
+                "access_right": "open",
+                "relations": {
+                    "version": [
                         {
-                            "links": {
-                                "self": "https://www.test.file.com/nofilehere"
-                            },
-                            "type": "json",
-                            "size": 45346
+                            "last_child": {
+                                "pid_value": "7654321"
+                            }
                         }
                     ]
                 }
+            },
+            "links": {
+                "html": "https://www.fake.link.com"
+            },
+            "files": [
+                {
+                    "links": {
+                        "self": "https://www.test.file.com/nofilehere"
+                    },
+                    "type": "json",
+                    "size": 45346
+                }
             ]
+        }
+    ]
 
 
 def mock_get_empty_conp_dois():
@@ -66,7 +66,10 @@ class TestZenodoCrawler(TestCase):
     @mock.patch("scripts.Crawlers.ZenodoCrawler.ZenodoCrawler.get_readme_content")
     @mock.patch("scripts.Crawlers.ZenodoCrawler.ZenodoCrawler._create_new_dats")
     @mock.patch("scripts.Crawlers.ZenodoCrawler._create_zenodo_tracker")
-    @mock.patch("scripts.Crawlers.ZenodoCrawler.ZenodoCrawler.get_all_dataset_description", return_value=[{"title": "Test", "files": []}])
+    @mock.patch(
+        "scripts.Crawlers.ZenodoCrawler.ZenodoCrawler.get_all_dataset_description",
+        return_value=[{"title": "Test", "files": []}]
+    )
     @mock.patch("scripts.Crawlers.ZenodoCrawler.ZenodoCrawler._check_requirements", return_value="username")
     @mock.patch("git.Repo")
     @mock.patch("datalad.api.Dataset")

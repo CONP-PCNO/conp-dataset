@@ -153,6 +153,7 @@ def date_type_validation(dates_list, dataset_title):
 
     return errors_list
 
+
 def validate_date_types(dataset):
     """ Checks if the values in the dates type field of the JSON object follows the lower case convention. """
 
@@ -172,6 +173,7 @@ def validate_date_types(dataset):
         return False, errors_list
     else:
         return True, errors_list
+
 
 def validate_recursively(obj, errors):
     """ Checks all datasets recursively for required extraProperties. """
@@ -198,7 +200,7 @@ def validate_non_schema_required(json_obj):
             logger.error(f"{i} {er}")
         return False, errors
     else:
-        logger.info(f"Required extra properties validation passed.")
+        logger.info("Required extra properties validation passed.")
         return True, None
 
 

@@ -15,9 +15,9 @@ def parse_args():
     Requirements:
     * GitHub user must have a fork of https://github.com/CONP-PCNO/conp-dataset
     * Script must be run in the base directory of a local clone of this fork
-    * Git remote 'origin' of local Git clone must point to that fork. Warning: this script will 
-      push dataset updates to 'origin'.
-    * Local Git clone must be set to branch 'master' 
+    * Git remote 'origin' of local Git clone must point to that fork. Warning: this script will
+       push dataset updates to 'origin'.
+    * Local Git clone must be set to branch 'master'
     """,
     )
     parser.add_argument("github_token", action="store", nargs="?", help="GitHub access token")
