@@ -10,8 +10,8 @@ aliases:
     restore_cache:
       name: Restore Python Cache
       keys:
-        - v1.4.2-python-{{ .Branch }}
-        - v1.4.2-python-
+        - v1.4.3-python-{{ .Branch }}
+        - v1.4.3-python-
 
 jobs:
   build:
@@ -33,7 +33,7 @@ jobs:
           name: Save Python Cache
           paths:
             - ~/venv
-          key: v1.4.2-python-{{ .Branch }}
+          key: v1.4.3-python-{{ .Branch }}
       - run:
           name: Install CONP-DATS Validator
           command: |
@@ -44,6 +44,21 @@ jobs:
           root: *workdir
           paths:
             - scripts/dats_validator/conp-dats
+
+  QA:
+    working_directory: *workdir
+    docker: *docker
+
+    steps:
+      - checkout:
+          path: *workdir
+      - *restore_python_cache
+      - run:
+          name: Pre-commit hooks
+          command: |
+            . ~/venv/bin/activate
+            pre-commit install
+            pre-commit run --all-files
 
   test:
     working_directory: *workdir
@@ -60,8 +75,6 @@ jobs:
           name: Run Tests
           command: |
             . ~/venv/bin/activate
-            ./lint.sh
-            pip install gitpython==3.1.7
             export PATH=~/git-annex.linux:$PATH
             python tests/create_tests.py
             circleci tests glob tests/test_* | circleci tests split > /tmp/tests-to-run
@@ -82,6 +95,9 @@ workflows:
   commit:
     jobs:
       - build
+      - QA:
+          requires:
+            - build
       - test:
           requires:
             - build
