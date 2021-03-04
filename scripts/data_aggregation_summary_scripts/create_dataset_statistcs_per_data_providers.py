@@ -54,13 +54,14 @@ def parse_input(argv):
     description = '\nThis tool facilitates the creation of statistics per data providers for reporting purposes.' \
                   ' It will read DATS files and print out a summary per data providers based on the following list' \
                   'of DATS fields present in the DATS. json of every dataset present in the conp-dataset/projects' \
-                  'directory.\n Queried fields: <distribution->access->landingPage>; <distributions->access->authorizations>; ' \
+                  'directory.\n Queried fields: <distribution->access->landingPage>; ' \
+                  '<distributions->access->authorizations>; ' \
                   '<distributions->size>; <extraProperties->files>; <keywords>\n'
     usage = (
         '\n'
         'usage  : python ' + __file__ + ' -d <conp-dataset directory path>\n\n'
         'options: \n'
-            '\t-d: path to the conp-dataset directory to parse\n'
+        '\t-d: path to the conp-dataset directory to parse\n'
     )
 
     try:
@@ -118,13 +119,13 @@ def parse_dats_information(dats_dict):
         authorization = dats_dict['distributions'][0]['access']['authorizations'][0]['value']
 
     return {
-        'title'          : dats_dict['title'],
-        'data_provider'  : dats_dict['distributions'][0]['access']['landingPage'],
-        'authorization'  : authorization,
-        'dataset_size'   : dats_dict['distributions'][0]['size'],
-        'size_unit'      : dats_dict['distributions'][0]['unit']['value'],
-        'number_of_files': values_dict['files']        if 'files'       in values_dict else '',
-        'keywords'       : values_dict['keywords']     if 'keywords'    in values_dict else '',
+        'title': dats_dict['title'],
+        'data_provider': dats_dict['distributions'][0]['access']['landingPage'],
+        'authorization': authorization,
+        'dataset_size': dats_dict['distributions'][0]['size'],
+        'size_unit': dats_dict['distributions'][0]['unit']['value'],
+        'number_of_files': values_dict['files'] if 'files' in values_dict else '',
+        'keywords': values_dict['keywords'] if 'keywords' in values_dict else '',
     }
 
 
@@ -142,11 +143,11 @@ def get_stats_for_data_provider(dataset_summary_dict, data_provider):
      :rtype: list
     """
 
-    dataset_number  = 0
-    requires_login  = 0
-    total_size      = 0
-    total_files     = 0
-    keywords_list   = []
+    dataset_number = 0
+    requires_login = 0
+    total_size = 0
+    total_files = 0
+    keywords_list = []
 
     for index in dataset_summary_dict:
 

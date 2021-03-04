@@ -26,7 +26,7 @@ def parse_input(argv):
         '\n'
         'usage  : python ' + __file__ + ' -d <conp-dataset directory path>\n\n'
         'options: \n'
-            '\t-d: path to the conp-dataset directory to parse\n'
+        '\t-d: path to the conp-dataset directory to parse\n'
     )
 
     try:
@@ -101,7 +101,8 @@ def parse_dats_json_file(dats_path):
     extra_properties = dats_dict['extraProperties']
     values_dict = {}
     for extra_property in extra_properties:
-        values_dict[extra_property['category']] = ", ".join(str(value) for value in [exp["value"] for exp in extra_property["values"]])
+        values_dict[extra_property['category']] = ", ".join(
+            str(value) for value in [exp["value"] for exp in extra_property["values"]])
 
     creators = dats_dict['creators']
     for creator in creators:
@@ -113,11 +114,11 @@ def parse_dats_json_file(dats_path):
     return [
         dats_dict['title'],
         values_dict['principal_investigator'] if 'principal_investigator' in values_dict else '',
-        values_dict['origin_consortium']      if 'origin_consortium' in values_dict      else '',
-        values_dict['origin_institution']     if 'origin_institution' in values_dict     else '',
-        values_dict['origin_city']            if 'origin_city' in values_dict            else '',
-        values_dict['origin_province']        if 'origin_province' in values_dict        else '',
-        values_dict['origin_country']         if 'origin_country' in values_dict         else ''
+        values_dict['origin_consortium'] if 'origin_consortium' in values_dict else '',
+        values_dict['origin_institution'] if 'origin_institution' in values_dict else '',
+        values_dict['origin_city'] if 'origin_city' in values_dict else '',
+        values_dict['origin_province'] if 'origin_province' in values_dict else '',
+        values_dict['origin_country'] if 'origin_country' in values_dict else ''
     ]
 
 
@@ -128,6 +129,7 @@ def write_csv_file(csv_content):
     with open(csv_file, 'w', newline='') as file:
         writer = csv.writer(file)
         writer.writerows(csv_content)
+
 
 if __name__ == "__main__":
     main(sys.argv[1:])
