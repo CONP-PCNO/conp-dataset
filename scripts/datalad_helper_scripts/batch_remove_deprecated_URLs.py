@@ -20,22 +20,21 @@ def parse_input(argv):
 
     script_options = {}
 
-    description = f"\nThis script can be used to remove from git-annex a series of URLs matching" \
-                  f" a specific pattern.\n" \
-                  f"\t- To run the script and print out the URLs that will be removed, use options" \
-                  f" -d <dataset path> -u <invalid URL regex>.\n" \
-                  f"\t- After examination of the result of the script, rerun the script with the same" \
-                  f" option and add the -c argument for actual removal of the URLs.\n" \
-                  f"\t- Option -v prints out progress of the script in the terminal.\n"
+    description = "\nThis script can be used to remove from git-annex a series of URLs matching" \
+                  " a specific pattern.\n" \
+                  "\t- To run the script and print out the URLs that will be removed, use options" \
+                  " -d <dataset path> -u <invalid URL regex>.\n" \
+                  "\t- After examination of the result of the script, rerun the script with the same" \
+                  " option and add the -c argument for actual removal of the URLs.\n" \
+                  "\t- Option -v prints out progress of the script in the terminal.\n"
 
     usage = (
         f"\nusage  : python {__file__} -d <DataLad dataset directory path> -u <invalid URL regex>\n"
-        f"\noptions: \n"
-            f"\t-d: path to the DataLad dataset to work on\n"
-            f"\t-u: regular expression for invalid URLs to remove from git-annex\n"
-            f"\t-c: confirm that the removal of the URLs should be performed. "
-                    f"By default it will just print out what needs to be removed for validation\n"
-            f"\t-v: verbose\n"
+        "\noptions: \n"
+            "\t-d: path to the DataLad dataset to work on\n"  # noqa: E131
+            "\t-u: regular expression for invalid URLs to remove from git-annex\n"  # noqa: E131
+            "\t-c: confirm that the removal of the URLs should be performed. By default it will just print out what needs to be removed for validation\n"  # noqa: E501,E131
+            "\t-v: verbose\n"  # noqa: E131
     )
 
     try:
@@ -44,7 +43,7 @@ def parse_input(argv):
         sys.exit()
 
     script_options['run_removal'] = False
-    script_options['verbose']     = False
+    script_options['verbose'] = False
 
     if not opts:
         print(description + usage)
@@ -65,9 +64,9 @@ def parse_input(argv):
 
     if 'dataset_path' not in script_options.keys():
         print(
-            '\n\t* ----------------------------------------------------------------------------------------------------------------------- *'
-            '\n\t* ERROR: a path to the DataLad dataset to process needs to be given as an argument to the script by using the option `-d` *'
-            '\n\t* ----------------------------------------------------------------------------------------------------------------------- *'
+            '\n\t* ----------------------------------------------------------------------------------------------------------------------- *'  # noqa: E501
+            '\n\t* ERROR: a path to the DataLad dataset to process needs to be given as an argument to the script by using the option `-d` *'  # noqa: E501
+            '\n\t* ----------------------------------------------------------------------------------------------------------------------- *'  # noqa: E501
         )
         print(description + usage)
         sys.exit()
@@ -92,9 +91,9 @@ def parse_input(argv):
 
     if 'invalid_url_regex' not in script_options.keys():
         print(
-            '\n\t* --------------------------------------------------------------------------------------------------- *'
-            '\n\t* ERROR: a regex for invalid URLs to remove should be provided to the script by using the option `-u` *'            
-            '\n\t* --------------------------------------------------------------------------------------------------- *'
+            '\n\t* --------------------------------------------------------------------------------------------------- *'  # noqa: E501
+            '\n\t* ERROR: a regex for invalid URLs to remove should be provided to the script by using the option `-u` *'  # noqa: E501
+            '\n\t* --------------------------------------------------------------------------------------------------- *'  # noqa: E501
         )
         print(description + usage)
         sys.exit()
@@ -127,7 +126,7 @@ def get_files_and_urls(dataset_path, annex):
     try:
         os.chdir(dataset_path)
         annex_results = annex("whereis", ".", "--json")
-        results_list  = annex_results.split("\n")
+        results_list = annex_results.split("\n")
         for annex_result_item in results_list:
             r_json = json.loads(annex_result_item)
             file_path = r_json['file']

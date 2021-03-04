@@ -35,7 +35,7 @@ class BaseCrawler:
     (2) It iterates through each dataset description, and switch to a dedicated git branch
     for each dataset.
        (2.a) If the dataset is new, the base class will create a new branch,
-             an empty datalad repository, unannex DATS.json and README.md and create an 
+             an empty datalad repository, unannex DATS.json and README.md and create an
              empty GitHub repository. It will then call abstract method add_new_dataset()
              which will add/download all dataset files under given directory.
              The crawler will then add a custom DATS.json and README.md if those weren't added.
@@ -47,7 +47,7 @@ class BaseCrawler:
              the base class will call abstract method update_if_necessary() which will verify
              if the dataset requires updating and update if so. If the dataset got updated, This method
              will return True which will trigger saving, publishing new content to the dataset's respective
-             repository, creating a new DATS.json if it doesn't exist and creating a pull 
+             repository, creating a new DATS.json if it doesn't exist and creating a pull
              request to CONP-PCNO/conp-dataset.
 
     ==================
@@ -80,11 +80,11 @@ class BaseCrawler:
         Get relevant datasets' description from platform.
 
         Retrieves datasets' description that needs to be in CONP-datasets
-        from platform specific to each crawler like Zenodo, OSF, etc. It is up 
+        from platform specific to each crawler like Zenodo, OSF, etc. It is up
         to the crawler to identify which datasets on the platform should be crawled.
         The Zenodo crawler uses keywords for this purpose, but other mechanisms
         could work too.
-        
+
         Each description is required to have the necessary information in order
         to build a valid DATS file from it. The following keys are necessary in
         each description:
@@ -95,13 +95,14 @@ class BaseCrawler:
             description["version"]: A release point for the dataset when applicable
             description["licenses"]: The terms of use of the dataset
             description["keywords"]: Tags associated with the dataset, which will help in its discovery
-            description["types"]: A term, ideally from a controlled terminology, identifying the dataset type or nature of the data, placing it in a typology
+            description["types"]: A term, ideally from a controlled terminology, identifying the dataset type or nature
+                                  of the data, placing it in a typology
         More fields can be added as long as they comply with the DATS schema available at
         https://github.com/CONP-PCNO/schema/blob/master/dataset_schema.json
-        
+
         Any fields/keys not in the schema will be ignored when creating the dataset's DATS.
         It is fine to add more helpful information for other methods which will use them.
-        
+
         Here are some examples of valid DATS.json files:
         https://github.com/conp-bot/conp-dataset-Learning_Naturalistic_Structure__Processed_fMRI_dataset/blob/476a1ee3c4df59aca471499b2e492a65bd389a88/DATS.json
         https://github.com/conp-bot/conp-dataset-MRI_and_unbiased_averages_of_wild_muskrats__Ondatra_zibethicus__and_red_squirrels__Tami/blob/c9e9683fbfec71f44a5fc3576515011f6cd024fe/DATS.json
@@ -159,10 +160,10 @@ class BaseCrawler:
 
         Parameter:
         dataset_description (dict): Dictionary containing information on
-                                    retrieved dataset from platform. Element of 
+                                    retrieved dataset from platform. Element of
                                     the list returned by get_all_dataset_description.
         dataset_dir (str): Local directory path where the newly
-                           created datalad dataset is located. 
+                           created datalad dataset is located.
         """
         return
 
@@ -295,9 +296,8 @@ class BaseCrawler:
         head = {"Authorization": "token {}".format(self.github_token)}
         description = "Please don't submit any PR to this repository. "
         if "creators" in dataset_description.keys():
-            description += "If you want to request modifications, " \
-                           "please contact {}".format(
-                            dataset_description["creators"][0]["name"])
+            description += "If you want to request modifications, please contact " \
+                           f"{dataset_description['creators'][0]['name']}"
         payload = {"description": description}
         r = requests.patch(url, data=json.dumps(payload), headers=head)
         if not r.ok:
@@ -352,8 +352,10 @@ class BaseCrawler:
 Mandatory files and elements:
 - [x] A `README.md` file, at the root of the dataset
 - [x] A `DATS.json` file, at the root of the dataset
-- [ ] If configuration is required (for instance to enable a special remote), a `config.sh` script at the root of the dataset
-- [x] A DOI (see instructions in [contribution guide](https://github.com/CONP-PCNO/conp-dataset/blob/master/.github/CONTRIBUTING.md), and corresponding badge in `README.md`
+- [ ] If configuration is required (for instance to enable a special remote),
+ a `config.sh` script at the root of the dataset
+- [x] A DOI (see instructions in [contribution guide]
+(https://github.com/CONP-PCNO/conp-dataset/blob/master/.github/CONTRIBUTING.md), and corresponding badge in `README.md`
 
 Functional checks:
 - [x] Dataset can be installed using DataLad, recursively if it has sub-datasets
@@ -373,7 +375,7 @@ Functional checks:
             raise Exception("Error while creating pull request: " + r.text)
 
     def _clean_dataset_title(self, title):
-        return re.sub("\W|^(?=\d)", "_", title)
+        return re.sub(r"\W|^(?=\d)", "_", title)
 
     def _create_new_dats(self, dataset_dir, dats_path, dataset):
         # Fields/properties that are acceptable in DATS schema according to
