@@ -85,3 +85,7 @@ datalad search T1
    `pytest tests/test_projects_SIMON-dataset`
 
 For detailed explanations of the tests, please consult the [test suite documentation](https://github.com/CONP-PCNO/conp-dataset/blob/master/tests/README.md).
+
+## Coding standards
+
+In order to keep the Python code maintainable and readable, please run `./lint.sh` to make sure the coding is up to standards. CircleCI will be checking this.
