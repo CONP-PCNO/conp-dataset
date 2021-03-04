@@ -4,7 +4,7 @@
     "identifierSource": "DOI"
   },
   "version": "1.0",
-  "privacy": "public open",
+  "privacy": "open",
   "licenses": [
     {
       "name": "BY-NC-SA"
