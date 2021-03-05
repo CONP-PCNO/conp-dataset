@@ -37,9 +37,38 @@ lock = Lock()
 class Template(object):
     @pytest.fixture(autouse=True)
     def install_dataset(self, dataset):
+
+        if "DATS.json" not in os.listdir(dataset):
+            pytest.fail(
+                f"Dataset {dataset} doesn't contain DATS.json in its root directory.",
+                pytrace=False,
+            )
+
+        with open(os.path.join(dataset, "DATS.json")) as fin:
+            dats = json.load(fin)
+
+        derivedFrom_url = set()
+        if "extraProperties" in dats:
+            for property_ in dats["extraProperties"]:
+                if property_["category"] == "derivedFrom":
+                    derivedFrom_url = {x["value"] for x in property_["values"]}
+                break
+
+        submodules = git.Repo(dataset).submodules
+        # Parent dataset should not be tested once; in their own dataset repository.
+        # For this reason we only install submodules for which there is no derivedFrom
+        # value associated with.
+        filtered_submodules = [
+            submodule.path
+            for submodule in submodules
+            if submodule.url in derivedFrom_url
+        ]
+
         with lock:
             if len(os.listdir(dataset)) == 0:
                 api.install(path=dataset, recursive=False)
+            for submodule in filtered_submodules:
+                api.install(path=submodule, recursive=True)
         yield
 
     def test_has_readme(self, dataset):
@@ -50,11 +79,6 @@ class Template(object):
             )
 
     def test_has_valid_dats(self, dataset):
-        if "DATS.json" not in os.listdir(dataset):
-            pytest.fail(
-                f"Dataset {dataset} doesn't contain DATS.json in its root directory.",
-                pytrace=False,
-            )
 
         with open(os.path.join(dataset, "DATS.json"), "rb") as f:
             json_obj = json.load(f)
