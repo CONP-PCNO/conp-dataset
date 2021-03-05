@@ -67,8 +67,10 @@ class Template(object):
             # Validate the date type values
             date_type_valid_bool, date_type_errors = validate_date_types(json_obj)
             if not date_type_valid_bool:
-                summary_error_message = f"Dataset {dataset} contains DATS.json that has errors " \
-                                        f"in date's type encoding. List of errors:\n"
+                summary_error_message = (
+                    f"Dataset {dataset} contains DATS.json that has errors "
+                    f"in date's type encoding. List of errors:\n"
+                )
                 for i, error_message in enumerate(date_type_errors, 1):
                     summary_error_message += f"- {i}. {error_message}\n"
                     pytest.fail(
@@ -80,13 +82,22 @@ class Template(object):
             # automatically populate some of the fields
             # For datasets crawled with Zenodo: check the formats extra property only
             # For datasets crawled with OSF: skip validation of extra properties
-            is_osf_dataset = os.path.exists(os.path.join(dataset, '.conp-osf-crawler.json'))
-            is_zenodo_dataset = os.path.exists(os.path.join(dataset, '.conp-zenodo-crawler.json'))
-            is_valid, errors = validate_formats(json_obj) if is_zenodo_dataset \
+            is_osf_dataset = os.path.exists(
+                os.path.join(dataset, ".conp-osf-crawler.json")
+            )
+            is_zenodo_dataset = os.path.exists(
+                os.path.join(dataset, ".conp-zenodo-crawler.json")
+            )
+            is_valid, errors = (
+                validate_formats(json_obj)
+                if is_zenodo_dataset
                 else validate_non_schema_required(json_obj)
+            )
             if not is_valid and not is_osf_dataset:
-                summary_error_message = f"Dataset {dataset} contains DATS.json that has errors " \
-                                        f"in required extra properties or formats. List of errors:\n"
+                summary_error_message = (
+                    f"Dataset {dataset} contains DATS.json that has errors "
+                    f"in required extra properties or formats. List of errors:\n"
+                )
                 for i, error_message in enumerate(errors, 1):
                     summary_error_message += f"- {i}. {error_message}\n"
                 pytest.fail(
@@ -124,7 +135,10 @@ class Template(object):
                 # In the future, those metadata are likely to be removed. When this occurs,
                 # this the `exclude=".datalad/metadata/**"` argument should be removed.
                 fsck_output = git.Repo(dataset).git.annex(
-                    "fsck", fast=True, quiet=True, exclude=".datalad/metadata/**",
+                    "fsck",
+                    fast=True,
+                    quiet=True,
+                    exclude=".datalad/metadata/**",
                 )
                 if fsck_output:
                     pytest.fail(fsck_output, pytrace=False)
