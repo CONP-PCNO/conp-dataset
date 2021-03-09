@@ -235,7 +235,7 @@ def get_filenames(dataset):
 
 def download_files(dataset, filenames, time_limit=120):
     if len(filenames) == 0:
-            return
+        return
 
     responses = []
     with timeout(time_limit):
@@ -307,7 +307,7 @@ def get_proper_submodules(dataset: str) -> List[str]:
                 break
 
     submodules = git.Repo(dataset).submodules
-    # Parent dataset should not be tested once; in their own dataset repository.
+    # Parent dataset should not be tested here but in their own dataset repository.
     # For this reason we only install submodules for which there is no derivedFrom
     # value associated with.
     proper_submodules = [
