@@ -304,7 +304,7 @@ def get_proper_submodules(dataset: str) -> List[str]:
         for property_ in dats["extraProperties"]:
             if property_["category"] == "parent_dataset_id":
                 parent_dataset_ids = {x["value"] for x in property_["values"]}
-            break
+                break
 
     submodules = git.Repo(dataset).submodules
     # Parent dataset should not be tested once; in their own dataset repository.
