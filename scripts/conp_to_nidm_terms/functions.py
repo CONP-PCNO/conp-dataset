@@ -17,7 +17,7 @@ CURRENT_WORKING_DIR = os.path.dirname(os.path.realpath(__file__))
 # More about NIF API endpoints https://neuinfo.org/about/webservices
 NIF_API_URL = "https://scicrunch.org/api/1/ilx/search/term/"
 
-# Load jsonld template
+# Load JSON-LD template
 with open("template.jsonld", "r", encoding="utf-8") as template_file:
     JSONLD_TEMPLATE = json.load(template_file)
 
@@ -28,7 +28,7 @@ def _raise_error(er): raise Exception(er)
 def get_api_response(term):
     """
     Call NIF API and retrieve InterLex URI for a term.
-    :param term: string to send to the API
+    :param term: string with the term to send to the API
     :return: string Interlex URI
     """
 
@@ -46,7 +46,7 @@ def get_api_response(term):
         # Standard response will have existing_ids key
         if response["data"]["existing_ids"]:
             for i in response["data"]["existing_ids"]:
-                # retrieve InterLex id, its curie has "ILX" prefix
+                # retrieve InterLex ID, its curie has "ILX" prefix
                 match = i["iri"] if "curie" in i and "ILX:".upper() in i["curie"] else match
         else:
             match = "no match found"
@@ -58,9 +58,9 @@ def get_api_response(term):
 
 def collect_values(privacy=True, types=True, licenses=True, is_about=True, formats=True, keywords=True):
     """
-    Iterates over projects directory retrieving DATS file for each project.
+    Iterates over the projects directory content retrieving DATS file for each project.
     Aggregates all values and their count for selected properties in the report object.
-    :param : set to False in order not to include the property in the final report
+    :param : set to False in order to exclude the property from the final report
     :return: dict object report, int how many DATS files were processed
     """
 
@@ -130,7 +130,7 @@ def collect_values(privacy=True, types=True, licenses=True, is_about=True, forma
 
 def find_duplicates(report):
     """
-    Finds duplicate values spelled in different cases (e.g. lowercases vs uppercase vs title)
+    Finds duplicate values spelled in different cases (e.g. lowercase vs uppercase vs title)
     :param report: json object returned by collect_values()
     :return: list of errors describing where duplicates occur
     """
@@ -156,8 +156,8 @@ def find_duplicates(report):
 
 def generate_jsonld_files(report, use_api=True):
     """
-    Generates a jsonld file for each unique term.
-    Files are saved to the directories respectively to their properties.
+    Generates a JSON-LD file for each unique term.
+    Files are saved to the directories respective to their properties.
     :param report: json object returned by collect_values()
     :param use_api: defaults to True; if False then NIF API won't be called for InterLex match
     """
@@ -174,7 +174,7 @@ def generate_jsonld_files(report, use_api=True):
             if not os.path.exists(os.path.join(CURRENT_WORKING_DIR, key)):
                 os.makedirs(os.path.join(CURRENT_WORKING_DIR, key))
             filename = "".join(x for x in term.title().replace(" ", "") if x.isalnum())
-            # Create and save jsonld file in a respestive folder
+            # Create and save JSON-LD file in the respective folder
             with open(f"{os.path.join(CURRENT_WORKING_DIR, key, filename)}.jsonld", "w", encoding="utf-8") as jsonld_file:
                 json.dump(jsonld_description, jsonld_file, indent=4, ensure_ascii=False)
     print(f"JSON-LD files created: {len(terms_counter.keys())}")
