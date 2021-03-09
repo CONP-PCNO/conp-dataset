@@ -308,7 +308,9 @@ def get_proper_submodules(dataset: str) -> List[str]:
     # For this reason we only install submodules for which there is no derivedFrom
     # value associated with.
     proper_submodules = [
-        submodule.path for submodule in submodules if submodule.url in derivedFrom_url
+        os.path.join(dataset, submodule.path)
+        for submodule in submodules
+        if submodule.url not in derivedFrom_url
     ]
 
     for submodule in proper_submodules:
