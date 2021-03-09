@@ -106,11 +106,7 @@ class Template(object):
         eval_config(dataset)
         authenticate(dataset)
 
-        filenames = get_filenames(dataset)
-        if len(filenames) == 0:
-            return True
-
-        k_smallest = get_approx_ksmallests(dataset, filenames)
+        k_smallest = get_approx_ksmallests(dataset, get_filenames(dataset))
 
         # Restricted Zenodo datasets require to download the whole archive before
         # downloading individual files.
@@ -122,11 +118,7 @@ class Template(object):
 
         # Test the download of proper submodules.
         for submodule in get_proper_submodules(dataset):
-            filenames = get_filenames(submodule)
-            if len(filenames) == 0:
-                continue
-
-            k_smallest = get_approx_ksmallests(submodule, filenames)
+            k_smallest = get_approx_ksmallests(submodule, get_filenames(submodule))
             download_files(submodule, k_smallest)
 
     def test_files_integrity(self, dataset):

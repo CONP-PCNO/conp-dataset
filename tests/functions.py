@@ -234,6 +234,9 @@ def get_filenames(dataset):
 
 
 def download_files(dataset, filenames, time_limit=120):
+    if len(filenames) == 0:
+            return
+
     responses = []
     with timeout(time_limit):
         for filename in filenames:
@@ -296,11 +299,11 @@ def get_proper_submodules(dataset: str) -> List[str]:
     with open(os.path.join(dataset, "DATS.json")) as fin:
         dats = json.load(fin)
 
-    derivedFrom_url = set()
+    parent_dataset_ids = set()
     if "extraProperties" in dats:
         for property_ in dats["extraProperties"]:
-            if property_["category"] == "derivedFrom":
-                derivedFrom_url = {x["value"] for x in property_["values"]}
+            if property_["category"] == "parent_dataset_id":
+                parent_dataset_ids = {x["value"] for x in property_["values"]}
             break
 
     submodules = git.Repo(dataset).submodules
@@ -310,7 +313,7 @@ def get_proper_submodules(dataset: str) -> List[str]:
     proper_submodules = [
         os.path.join(dataset, submodule.path)
         for submodule in submodules
-        if submodule.url not in derivedFrom_url
+        if submodule.path not in parent_dataset_ids
     ]
 
     for submodule in proper_submodules:
