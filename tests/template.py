@@ -21,6 +21,7 @@ from tests.functions import (
     eval_config,
     get_approx_ksmallests,
     get_filenames,
+    get_proper_submodules,
     project_name2env,
     timeout,
 )
@@ -38,37 +39,9 @@ class Template(object):
     @pytest.fixture(autouse=True)
     def install_dataset(self, dataset):
 
-        if "DATS.json" not in os.listdir(dataset):
-            pytest.fail(
-                f"Dataset {dataset} doesn't contain DATS.json in its root directory.",
-                pytrace=False,
-            )
-
-        with open(os.path.join(dataset, "DATS.json")) as fin:
-            dats = json.load(fin)
-
-        derivedFrom_url = set()
-        if "extraProperties" in dats:
-            for property_ in dats["extraProperties"]:
-                if property_["category"] == "derivedFrom":
-                    derivedFrom_url = {x["value"] for x in property_["values"]}
-                break
-
-        submodules = git.Repo(dataset).submodules
-        # Parent dataset should not be tested once; in their own dataset repository.
-        # For this reason we only install submodules for which there is no derivedFrom
-        # value associated with.
-        filtered_submodules = [
-            submodule.path
-            for submodule in submodules
-            if submodule.url in derivedFrom_url
-        ]
-
         with lock:
             if len(os.listdir(dataset)) == 0:
                 api.install(path=dataset, recursive=False)
-            for submodule in filtered_submodules:
-                api.install(path=submodule, recursive=True)
         yield
 
     def test_has_readme(self, dataset):
@@ -146,6 +119,15 @@ class Template(object):
             with timeout(300):
                 api.get(path=dataset, on_failure="ignore")
         download_files(dataset, k_smallest)
+
+        # Test the download of proper submodules.
+        for submodule in get_proper_submodules(dataset):
+            filenames = get_filenames(submodule)
+            if len(filenames) == 0:
+                continue
+
+            k_smallest = get_approx_ksmallests(submodule, filenames)
+            download_files(submodule, k_smallest)
 
     def test_files_integrity(self, dataset):
         TIME_LIMIT = 300
