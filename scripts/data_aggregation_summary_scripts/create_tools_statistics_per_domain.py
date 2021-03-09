@@ -52,16 +52,16 @@ def parse_input(argv):
 
     tools_dir_path = None
 
-    description = '\nThis tool facilitates the creation of tools summary statistics per domain of application for reporting purposes.' \
-                  ' It will read Boutiques\'s JSON files and print out a summary per domain based on the following list of tags:' \
-                  '\nNeuroinformatics, Bioinformatics, MRI, EEG, Connectome, BIDS-App.\n'
+    description = '\nThis tool facilitates the creation of tools summary statistics per domain of application for ' \
+                  'reporting purposes. It will read Boutiques\'s JSON files and print out a summary per domain based ' \
+                  'on the following list of tags: \nNeuroinformatics, Bioinformatics, MRI, EEG, Connectome, BIDS-App.\n'
     usage = (
         '\n'
         'usage  : python ' + __file__ + ' -d <path to the Boutiques\'s JSON cached directory to parse.'
-            ' (typically ~/.cache/boutiques/production>\n\n'
+        ' (typically ~/.cache/boutiques/production>\n\n'
         'options: \n'
-            '\t-d: path to the Boutiques\'s JSON cached directory to parse.'
-            ' (typically ~/.cache/boutiques/production>\n\n'
+        '\t-d: path to the Boutiques\'s JSON cached directory to parse.'
+        ' (typically ~/.cache/boutiques/production>\n\n'
     )
 
     try:
@@ -77,7 +77,8 @@ def parse_input(argv):
             tools_dir_path = arg
 
     if not tools_dir_path:
-        print('a path to the Boutiques\'s JSON cached directory needs to be given as an argument to the script by using the option `-d`')
+        print('a path to the Boutiques\'s JSON cached directory needs to be '
+              'given as an argument to the script by using the option `-d`')
         print(description + usage)
         sys.exit()
 
@@ -103,9 +104,9 @@ def parse_json_information(json_dict):
     """
 
     tool_summary_dict = {
-        'title'         : json_dict['name'],
+        'title': json_dict['name'],
         'container_type': None,
-        'domain'        : None,
+        'domain': None,
         'online_platform_urls': None
     }
 
@@ -113,7 +114,7 @@ def parse_json_information(json_dict):
         tool_summary_dict['container_type'] = json_dict['container-image']['type']
 
     if 'tags' in json_dict and 'domain' in json_dict['tags']:
-        tool_summary_dict['domain'] = [ x.lower() for x in json_dict['tags']['domain']]
+        tool_summary_dict['domain'] = [x.lower() for x in json_dict['tags']['domain']]
 
     if 'online-platform-urls' in json_dict:
         tool_summary_dict['online_platform_urls'] = json_dict['online-platform-urls']
@@ -136,10 +137,10 @@ def get_stats_per_domain(tool_summary_dict, domain):
     """
 
     container = {
-        'docker'     : 0,
+        'docker': 0,
         'singularity': 0
     }
-    number_of_tools        = 0
+    number_of_tools = 0
     number_of_cbrain_tools = 0
 
     for index in tool_summary_dict:
@@ -164,13 +165,14 @@ def get_stats_per_domain(tool_summary_dict, domain):
 
         print(tool_dict['online_platform_urls'])
 
-        if tool_dict['online_platform_urls'] and 'https://portal.cbrain.mcgill.ca' in tool_dict['online_platform_urls']:
+        if tool_dict['online_platform_urls'] and 'https://portal.cbrain.mcgill.ca' in \
+                tool_dict['online_platform_urls']:
             number_of_cbrain_tools += 1
 
     return [
         domain,
         str(number_of_tools),
-        'Docker (' + str(container['docker']) + '); Singularity (' + str(container['singularity']) + ')',
+        f'Docker ({str(container["docker"])}); Singularity ({str(container["singularity"])})',
         'CBRAIN (' + str(number_of_cbrain_tools) + ')'
     ]
 

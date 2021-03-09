@@ -4,7 +4,7 @@ import os
 import sys
 import copy
 sys.path.append(os.path.join(os.getcwd(), 'scripts'))
-from dats_validator.validator import (validate_json,
+from dats_validator.validator import (validate_json,  # noqa: E402
                                       validate_non_schema_required,
                                       validate_extra_properties,
                                       REQUIRED_EXTRA_PROPERTIES
@@ -21,6 +21,7 @@ with open(VALID) as v_file:
 
 with open(INVALID) as inv_file:
     invalid_obj = json.load(inv_file)
+
 
 class JsonschemaTest(unittest.TestCase):
 
@@ -76,7 +77,7 @@ class ExtraPropertiesTest(unittest.TestCase):
                 del prop
         invalid_validation, errors = validate_extra_properties(modified_copy)
         for error in errors:
-            self.assertIn(f"required but not found", error)
+            self.assertIn("required but not found", error)
 
 
 if __name__ == '__main__':

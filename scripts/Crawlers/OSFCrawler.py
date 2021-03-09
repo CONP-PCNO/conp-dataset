@@ -112,7 +112,7 @@ class OSFCrawler(BaseCrawler):
                     # if the file size cannot be found in the OSF API response, then get it from git annex info
                     inner_file_path = os.path.join(inner_path, file["attributes"]["name"])
                     annex_info_dict = json.loads(annex('info', '--bytes', '--json', inner_file_path))
-                    file_size       = int(annex_info_dict['size'])
+                    file_size = int(annex_info_dict['size'])
                 sizes.append(file_size)
 
     def _download_components(self, components_list, current_dir, inner_path, d, annex, dataset_size):
@@ -131,7 +131,8 @@ class OSFCrawler(BaseCrawler):
             )
 
             # check if the component contains (sub)components, in which case, download the (sub)components data
-            subcomponents_list = self._get_components(component['relationships']['children']['links']['related']['href'])
+            subcomponents_list = self._get_components(
+                component['relationships']['children']['links']['related']['href'])
             if subcomponents_list:
                 self._download_components(
                     subcomponents_list,
@@ -144,7 +145,11 @@ class OSFCrawler(BaseCrawler):
 
         # Once we have downloaded all the components files, check to see if there are any empty
         # directories (in the case the 'OSF parent' dataset did not have any downloaded files
-        list_of_empty_dirs = [dirpath for (dirpath, dirnames, filenames) in os.walk(current_dir) if len(dirnames) == 0 and len(filenames) == 0]
+        list_of_empty_dirs = [
+            dirpath
+            for (dirpath, dirnames, filenames) in os.walk(current_dir)
+            if len(dirnames) == 0 and len(filenames) == 0
+        ]
         for empty_dir in list_of_empty_dirs:
             os.rmdir(empty_dir)
 
@@ -197,12 +202,11 @@ class OSFCrawler(BaseCrawler):
             # Retrieve license
             license_ = "None"
             if "license" in dataset["relationships"].keys():
-                license_ = self._get_license(
-                                    dataset["relationships"]
-                                    ["license"]["links"]["related"]["href"])
+                license_ = self._get_license(dataset["relationships"]["license"]["links"]["related"]["href"])
 
             # Retrieve institution information
-            institutions = self._get_institutions(dataset['relationships']['affiliated_institutions']['links']['related']['href'])
+            institutions = self._get_institutions(
+                dataset['relationships']['affiliated_institutions']['links']['related']['href'])
 
             # Retrieve identifier information
             identifier = self._get_identifier(dataset['relationships']['identifiers']['links']['related']['href'])
@@ -217,7 +221,7 @@ class OSFCrawler(BaseCrawler):
             extra_properties = [
                 {
                     "category": "logo",
-                    "values"  : [
+                    "values": [
                         {
                             "value": "https://osf.io/static/img/institutions/shields/cos-shield.png"
                         }
@@ -228,27 +232,27 @@ class OSFCrawler(BaseCrawler):
                 extra_properties.append(
                     {
                         "category": "origin_institution",
-                        "values"  : list(
+                        "values": list(
                             map(lambda x: {'value': x}, institutions)
                         )
                     }
                 )
 
             # Retrieve dates
-            date_created  = datetime.datetime.strptime(attributes['date_created'], '%Y-%m-%dT%H:%M:%S.%f')
+            date_created = datetime.datetime.strptime(attributes['date_created'], '%Y-%m-%dT%H:%M:%S.%f')
             date_modified = datetime.datetime.strptime(attributes['date_modified'], '%Y-%m-%dT%H:%M:%S.%f')
 
             dataset_dats_content = {
-                "title"          : attributes["title"],
-                "files"          : files_link,
+                "title": attributes["title"],
+                "files": files_link,
                 "components_list": components_list,
-                "homepage"       : dataset["links"]["html"],
-                "creators"       : list(
+                "homepage": dataset["links"]["html"],
+                "creators": list(
                     map(lambda x: {"name": x}, contributors)
                 ),
-                "description"    : attributes["description"],
-                "version"        : attributes["date_modified"],
-                "licenses"       : [
+                "description": attributes["description"],
+                "version": attributes["date_modified"],
+                "licenses": [
                     {
                         "name": license_
                     }
@@ -267,13 +271,13 @@ class OSFCrawler(BaseCrawler):
                         }
                     }
                 ],
-                "keywords"       : keywords,
-                "distributions"  : [
+                "keywords": keywords,
+                "distributions": [
                     {
-                        "size"  : 0,
-                        "unit"  : {"value": "B"},
+                        "size": 0,
+                        "unit": {"value": "B"},
                         "access": {
-                            "landingPage"   : dataset["links"]["html"],
+                            "landingPage": dataset["links"]["html"],
                             "authorizations": [
                                 {
                                     "value": "public" if attributes['public'] else "private"
@@ -354,7 +358,8 @@ class OSFCrawler(BaseCrawler):
             dataset_size = []
             self._download_files(dataset_description["files"], dataset_dir, "", d, annex, dataset_size)
             if dataset_description['components_list']:
-                self._download_components(dataset_description['components_list'], dataset_dir, '', d, annex, dataset_size)
+                self._download_components(
+                    dataset_description['components_list'], dataset_dir, '', d, annex, dataset_size)
             dataset_size, dataset_unit = humanize.naturalsize(sum(dataset_size)).split(" ")
             dataset_description["distributions"][0]["size"] = float(dataset_size)
             dataset_description["distributions"][0]["unit"]["value"] = dataset_unit

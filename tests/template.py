@@ -82,16 +82,17 @@ class Template(object):
             # For datasets crawled with OSF: skip validation of extra properties
             is_osf_dataset = os.path.exists(os.path.join(dataset, '.conp-osf-crawler.json'))
             is_zenodo_dataset = os.path.exists(os.path.join(dataset, '.conp-zenodo-crawler.json'))
-            is_valid, errors = validate_formats(json_obj) if is_zenodo_dataset else validate_non_schema_required(json_obj)
+            is_valid, errors = validate_formats(json_obj) if is_zenodo_dataset \
+                else validate_non_schema_required(json_obj)
             if not is_valid and not is_osf_dataset:
-                    summary_error_message = f"Dataset {dataset} contains DATS.json that has errors " \
-                                            f"in required extra properties or formats. List of errors:\n"
-                    for i, error_message in enumerate(errors, 1):
-                        summary_error_message += f"- {i}. {error_message}\n"
-                    pytest.fail(
-                        summary_error_message,
-                        pytrace=False,
-                    )
+                summary_error_message = f"Dataset {dataset} contains DATS.json that has errors " \
+                                        f"in required extra properties or formats. List of errors:\n"
+                for i, error_message in enumerate(errors, 1):
+                    summary_error_message += f"- {i}. {error_message}\n"
+                pytest.fail(
+                    summary_error_message,
+                    pytrace=False,
+                )
 
     def test_download(self, dataset):
         eval_config(dataset)
@@ -135,5 +136,5 @@ class Template(object):
         if not completed:
             pytest.fail(
                 f"The dataset timed out after {TIME_LIMIT} seconds before retrieving a file."
-                + "\nCannot determine if the test is valid."
+                "\nCannot determine if the test is valid."
             )
