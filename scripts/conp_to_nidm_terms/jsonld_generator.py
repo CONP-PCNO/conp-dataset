@@ -1,6 +1,6 @@
 import getopt
 from sys import argv
-from functions import generate_jsonld_files, collect_values
+from functions import generate_jsonld_files, collect_values, API_KEY
 
 
 def main(argv):
@@ -21,6 +21,10 @@ def main(argv):
             help_info()
             exit()
 
+    if use_api and not API_KEY:
+        print("The API key is not set in the api_key.json. Add your API Key or set --use_api=False")
+        exit()
+
     report, dats_files_count = collect_values(
         privacy=options["privacy"],
         types=options["types"],
@@ -30,6 +34,7 @@ def main(argv):
         keywords=options["keywords"]
     )
     print(f"DATS files processed: {dats_files_count}")
+
     generate_jsonld_files(report=report, use_api=use_api)
 
 

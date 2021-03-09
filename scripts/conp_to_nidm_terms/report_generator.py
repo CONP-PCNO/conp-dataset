@@ -32,10 +32,14 @@ def main(argv):
         keywords=options["keywords"]
     )
     print(f"DATS files processed: {dats_files_count}")
-    # create file with duplicate terms
-    with open("duplicates.txt", "w") as f:
-        for i, item in enumerate(find_duplicates(report), 1):
-            f.write(f"{i}. {item}\n")
+    # check if duplicate terms exist
+    duplicates = find_duplicates(report)
+    if duplicates:
+        # save duplicates to a file
+        with open("duplicates.txt", "w") as f:
+            for i, item in enumerate(duplicates, 1):
+                f.write(f"{i}. {item}\n")
+            print(f"Duplicates were found and saved to the duplicates.txt.")
     # save report to a file
     with open(f"{filename}.json", "w") as report_file:
         json.dump(report, report_file, indent=4)

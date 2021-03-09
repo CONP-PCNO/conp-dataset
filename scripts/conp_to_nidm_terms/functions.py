@@ -9,9 +9,9 @@ import requests
 logger = logging.getLogger(__name__)
 
 
-CONP_DATASET_ROOT = os.path.abspath(os.path.join(__file__, "../../.."))
+CONP_DATASET_ROOT_DIR = os.path.abspath(os.path.join(__file__, "../../.."))
 # conp-dataset/projects
-PROJECTS = os.path.join(CONP_DATASET_ROOT, "projects")
+PROJECTS_DIR = os.path.join(CONP_DATASET_ROOT_DIR, "projects")
 CURRENT_WORKING_DIR = os.path.dirname(os.path.realpath(__file__))
 
 # More about NIF API endpoints https://neuinfo.org/about/webservices
@@ -22,7 +22,9 @@ with open("template.jsonld", "r", encoding="utf-8") as template_file:
     JSONLD_TEMPLATE = json.load(template_file)
 
 
-def _raise_error(er): raise Exception(er)
+# Set API key
+with open("api_key.json", "r", encoding="utf-8") as api_key_file:
+    API_KEY = json.load(api_key_file)["api_key"]
 
 
 def get_api_response(term):
@@ -33,18 +35,17 @@ def get_api_response(term):
     """
 
     # API Key must be provided
-    with open("api_key.json", "r", encoding="utf-8") as api_key_file:
-        api_key_json = json.load(api_key_file)
-        key = api_key_json["api_key"] if api_key_json["api_key"] != "" else _raise_error(f"{api_key_json['_comment']}")
+    if not API_KEY:
+        raise Exception("Add your API Key for the NIF data services to the api_key.json file.")
 
     try:
-        api_key = f"?key={key}"
+        api_key = f"?key={API_KEY}"
         r = requests.get(NIF_API_URL + term + api_key, headers={'accept': 'application/json'})
         r.raise_for_status()
         response = json.loads(r.content.decode('utf-8'))
         match = str()
         # Standard response will have existing_ids key
-        if response["data"]["existing_ids"]:
+        if "existing_ids" in response["data"] and response["data"]["existing_ids"]:
             for i in response["data"]["existing_ids"]:
                 # retrieve InterLex ID, its curie has "ILX" prefix
                 match = i["iri"] if "curie" in i and "ILX:".upper() in i["curie"] else match
@@ -75,7 +76,7 @@ def collect_values(privacy=True, types=True, licenses=True, is_about=True, forma
     dats_files_count = 0
 
     # Access DATS.json in each project's root directory
-    for path, directories, files in os.walk(PROJECTS):
+    for path, directories, files in os.walk(PROJECTS_DIR):
         if "DATS.json" in files:
             dats_files_count += 1
             dats_file = os.path.join(path, "DATS.json")
