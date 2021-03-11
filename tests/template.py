@@ -21,6 +21,7 @@ from tests.functions import (
     eval_config,
     get_approx_ksmallests,
     get_filenames,
+    get_proper_submodules,
     project_name2env,
     timeout,
 )
@@ -37,6 +38,7 @@ lock = Lock()
 class Template(object):
     @pytest.fixture(autouse=True)
     def install_dataset(self, dataset):
+
         with lock:
             if len(os.listdir(dataset)) == 0:
                 api.install(path=dataset, recursive=False)
@@ -50,11 +52,6 @@ class Template(object):
             )
 
     def test_has_valid_dats(self, dataset):
-        if "DATS.json" not in os.listdir(dataset):
-            pytest.fail(
-                f"Dataset {dataset} doesn't contain DATS.json in its root directory.",
-                pytrace=False,
-            )
 
         with open(os.path.join(dataset, "DATS.json"), "rb") as f:
             json_obj = json.load(f)
@@ -67,8 +64,10 @@ class Template(object):
             # Validate the date type values
             date_type_valid_bool, date_type_errors = validate_date_types(json_obj)
             if not date_type_valid_bool:
-                summary_error_message = f"Dataset {dataset} contains DATS.json that has errors " \
-                                        f"in date's type encoding. List of errors:\n"
+                summary_error_message = (
+                    f"Dataset {dataset} contains DATS.json that has errors "
+                    f"in date's type encoding. List of errors:\n"
+                )
                 for i, error_message in enumerate(date_type_errors, 1):
                     summary_error_message += f"- {i}. {error_message}\n"
                     pytest.fail(
@@ -80,13 +79,22 @@ class Template(object):
             # automatically populate some of the fields
             # For datasets crawled with Zenodo: check the formats extra property only
             # For datasets crawled with OSF: skip validation of extra properties
-            is_osf_dataset = os.path.exists(os.path.join(dataset, '.conp-osf-crawler.json'))
-            is_zenodo_dataset = os.path.exists(os.path.join(dataset, '.conp-zenodo-crawler.json'))
-            is_valid, errors = validate_formats(json_obj) if is_zenodo_dataset \
+            is_osf_dataset = os.path.exists(
+                os.path.join(dataset, ".conp-osf-crawler.json")
+            )
+            is_zenodo_dataset = os.path.exists(
+                os.path.join(dataset, ".conp-zenodo-crawler.json")
+            )
+            is_valid, errors = (
+                validate_formats(json_obj)
+                if is_zenodo_dataset
                 else validate_non_schema_required(json_obj)
+            )
             if not is_valid and not is_osf_dataset:
-                summary_error_message = f"Dataset {dataset} contains DATS.json that has errors " \
-                                        f"in required extra properties or formats. List of errors:\n"
+                summary_error_message = (
+                    f"Dataset {dataset} contains DATS.json that has errors "
+                    f"in required extra properties or formats. List of errors:\n"
+                )
                 for i, error_message in enumerate(errors, 1):
                     summary_error_message += f"- {i}. {error_message}\n"
                 pytest.fail(
@@ -98,11 +106,7 @@ class Template(object):
         eval_config(dataset)
         authenticate(dataset)
 
-        filenames = get_filenames(dataset)
-        if len(filenames) == 0:
-            return True
-
-        k_smallest = get_approx_ksmallests(dataset, filenames)
+        k_smallest = get_approx_ksmallests(dataset, get_filenames(dataset))
 
         # Restricted Zenodo datasets require to download the whole archive before
         # downloading individual files.
@@ -111,6 +115,11 @@ class Template(object):
             with timeout(300):
                 api.get(path=dataset, on_failure="ignore")
         download_files(dataset, k_smallest)
+
+        # Test the download of proper submodules.
+        for submodule in get_proper_submodules(dataset):
+            k_smallest = get_approx_ksmallests(submodule, get_filenames(submodule))
+            download_files(submodule, k_smallest)
 
     def test_files_integrity(self, dataset):
         TIME_LIMIT = 300
@@ -124,7 +133,10 @@ class Template(object):
                 # In the future, those metadata are likely to be removed. When this occurs,
                 # this the `exclude=".datalad/metadata/**"` argument should be removed.
                 fsck_output = git.Repo(dataset).git.annex(
-                    "fsck", fast=True, quiet=True, exclude=".datalad/metadata/**",
+                    "fsck",
+                    fast=True,
+                    quiet=True,
+                    exclude=".datalad/metadata/**",
                 )
                 if fsck_output:
                     pytest.fail(fsck_output, pytrace=False)
