@@ -54,21 +54,6 @@ jobs:
           paths:
             - scripts/dats_validator/conp-dats
 
-  QA:
-    working_directory: *workdir
-    docker: *docker
-
-    steps:
-      - checkout:
-          path: *workdir
-      - *restore_python_cache
-      - run:
-          name: Pre-commit hooks
-          command: |
-            . ~/venv/bin/activate
-            pre-commit install
-            pre-commit run --all-files
-
   test:
     working_directory: *workdir
     docker: *docker
@@ -105,9 +90,6 @@ workflows:
   commit:
     jobs:
       - build
-      - QA:
-          requires:
-            - build
       - test:
           requires:
             - build
