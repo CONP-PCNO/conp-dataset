@@ -3,7 +3,11 @@
 set -e
 set -u
 
-BASEDIR=/data/crawler/conp-dataset
+# Check for if BASEDIR is set, else set to /data/crawler/conp-dataset
+if ! [[ -v BASEDIR ]]; then
+  BASEDIR=/data/crawler/conp-dataset
+fi
+
 mkdir -p ${BASEDIR}/log
 DATE=$(date)
 LOGFILE=$(mktemp ${BASEDIR}/log/crawler-XXXXX.log)
@@ -16,6 +20,10 @@ test -f ${TOUCHFILE} && (echo "Another crawling process is still running (${TOUC
 # We are in the protected section
 touch ${TOUCHFILE}
 
-cd ${BASEDIR} && git pull --no-edit main master
-
-python3 ./scripts/crawl.py --verbose &>>${LOGFILE}
+cd ${BASEDIR}
+if git pull --no-edit main master &>>${LOGFILE}
+then
+  python3 ./scripts/crawl.py --verbose &>>${LOGFILE}; rm ${TOUCHFILE}; exit 0
+else
+  echo "ERROR: git pull failed, did not run crawl.py script" &>>${LOGFILE}; rm ${TOUCHFILE}; exit 1
+fi

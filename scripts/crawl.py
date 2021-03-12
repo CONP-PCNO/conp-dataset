@@ -93,9 +93,5 @@ if __name__ == "__main__":
         if repository.active_branch.name != "master":
             repository.git.checkout("master")
 
-        # Always clear .crawling touchfile
-        if ".crawling" in os.listdir("."):
-            os.remove(".crawling")
-
         if verbose:
             print(os.linesep + "==================== Done ====================")
