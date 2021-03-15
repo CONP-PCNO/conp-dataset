@@ -96,7 +96,7 @@ def collect_values(privacy=True, types=True, licenses=True, is_about=True, forma
 
                 if licenses:
                     # licenses is required
-                    licenses_values.update(set(l["name"] for l in dats_data["licenses"]))
+                    licenses_values.update(set(licence["name"] for licence in dats_data["licenses"]))
 
                 # isAbout is not required
                 if is_about and "isAbout" in dats_data:
@@ -176,7 +176,7 @@ def generate_jsonld_files(report, use_api=True):
                 os.makedirs(os.path.join(CURRENT_WORKING_DIR, key))
             filename = "".join(x for x in term.title().replace(" ", "") if x.isalnum())
             # Create and save JSON-LD file in the respective folder
-            with open(f"{os.path.join(CURRENT_WORKING_DIR, key, filename)}.jsonld", "w", encoding="utf-8") as jsonld_file:
-                json.dump(jsonld_description, jsonld_file, indent=4, ensure_ascii=False)
+            with open(f"{os.path.join(CURRENT_WORKING_DIR, key, filename)}.jsonld", "w", encoding="utf-8") as jldfile:
+                json.dump(jsonld_description, jldfile, indent=4, ensure_ascii=False)
     print(f"JSON-LD files created: {len(terms_counter.keys())}")
     return

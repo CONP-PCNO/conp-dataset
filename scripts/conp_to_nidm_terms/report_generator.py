@@ -39,7 +39,7 @@ def main(argv):
         with open("duplicates.txt", "w") as f:
             for i, item in enumerate(duplicates, 1):
                 f.write(f"{i}. {item}\n")
-            print(f"Duplicates were found and saved to the duplicates.txt.")
+            print("Duplicates were found and saved to the duplicates.txt.")
     # save report to a file
     with open(f"{filename}.json", "w") as report_file:
         json.dump(report, report_file, indent=4)
