@@ -77,7 +77,10 @@ def get_annexed_file_size(dataset, file_path):
         Size of the annexed file in Bytes.
     """
     info_output = git.Repo(dataset).git.annex(
-        "info", file_path, json=True, bytes=True,
+        "info",
+        file_path,
+        json=True,
+        bytes=True,
     )
     metadata = json.loads(info_output)
 
@@ -133,9 +136,14 @@ def generate_datalad_provider(loris_api):
     # Regex for provider
     re_loris_api = loris_api.replace(".", "\\.")
 
-    datalad_provider_path = os.path.join(os.path.expanduser("~"), ".config", "datalad", "providers")
+    datalad_provider_path = os.path.join(
+        os.path.expanduser("~"), ".config", "datalad", "providers"
+    )
     os.makedirs(datalad_provider_path, exist_ok=True)
-    with open(os.path.join(datalad_provider_path, "loris.cfg"), "w+",) as fout:
+    with open(
+        os.path.join(datalad_provider_path, "loris.cfg"),
+        "w+",
+    ) as fout:
         fout.write(
             f"""[provider:loris]
 url_re = {re_loris_api}/*
@@ -226,6 +234,9 @@ def get_filenames(dataset):
 
 
 def download_files(dataset, filenames, time_limit=120):
+    if len(filenames) == 0:
+        return
+
     responses = []
     with timeout(time_limit):
         for filename in filenames:
@@ -263,3 +274,49 @@ def get_approx_ksmallests(dataset, filenames, k=4, sample_size=200):
         [filename for filename in sample_files],
         key=lambda x: get_annexed_file_size(dataset, x),
     )[:k]
+
+
+def get_proper_submodules(dataset: str) -> List[str]:
+    """Install and Return the non-derivative submodules.
+
+    Parameters
+    ----------
+    dataset: str
+        Path to the root of the dataset.
+
+    Returns
+    -------
+        proper_submodules: list[str]
+            Submodules not derived form another CONP dataset.
+
+    """
+    if "DATS.json" not in os.listdir(dataset):
+        pytest.fail(
+            f"Dataset {dataset} doesn't contain DATS.json in its root directory.",
+            pytrace=False,
+        )
+
+    with open(os.path.join(dataset, "DATS.json")) as fin:
+        dats = json.load(fin)
+
+    parent_dataset_ids = set()
+    if "extraProperties" in dats:
+        for property_ in dats["extraProperties"]:
+            if property_["category"] == "parent_dataset_id":
+                parent_dataset_ids = {x["value"] for x in property_["values"]}
+                break
+
+    submodules = git.Repo(dataset).submodules
+    # Parent dataset should not be tested here but in their own dataset repository.
+    # For this reason we only install submodules for which there is no derivedFrom
+    # value associated with.
+    proper_submodules = [
+        os.path.join(dataset, submodule.path)
+        for submodule in submodules
+        if submodule.path not in parent_dataset_ids
+    ]
+
+    for submodule in proper_submodules:
+        api.install(path=submodule, recursive=True)
+
+    return proper_submodules
