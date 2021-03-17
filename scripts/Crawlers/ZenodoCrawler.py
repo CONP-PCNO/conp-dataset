@@ -47,7 +47,7 @@ class ZenodoCrawler(BaseCrawler):
             "type=dataset&"
             'q=keywords:"canadian-open-neuroscience-platform"'
         )
-        r_json  = requests.get(query).json()
+        r_json = requests.get(query).json()
         results = r_json['hits']['hits']
 
         if r_json['links']['next']:
@@ -141,9 +141,7 @@ class ZenodoCrawler(BaseCrawler):
                     else:
                         # Append access token to each file url
                         for bucket in data["files"]:
-                            bucket["links"]["self"] += (
-                                    "?access_token=" + self.zenodo_tokens[clean_title]
-                            )
+                            bucket["links"]["self"] += "?access_token=" + self.zenodo_tokens[clean_title]
                             files.append(bucket)
                 else:
                     print("No available tokens to access files of {}".format(metadata["title"]))
@@ -189,7 +187,7 @@ class ZenodoCrawler(BaseCrawler):
             identifier = dataset["conceptdoi"] if "conceptdoi" in dataset.keys() else dataset["doi"]
 
             # Get date created and date modified
-            date_created  = datetime.datetime.strptime(dataset['created'], '%Y-%m-%dT%H:%M:%S.%f%z')
+            date_created = datetime.datetime.strptime(dataset['created'], '%Y-%m-%dT%H:%M:%S.%f%z')
             date_modified = datetime.datetime.strptime(dataset['updated'], '%Y-%m-%dT%H:%M:%S.%f%z')
 
             zenodo_dois.append(
@@ -315,8 +313,8 @@ class ZenodoCrawler(BaseCrawler):
         else:
             # Update dataset
             if self.verbose:
-                print("{}, version {} different from Zenodo vesion DOI {}, updating"
-                      .format(dataset_description["title"], tracker["zenodo"]["version"], dataset_description["latest_version"]))
+                print(f"{dataset_description['title']}, version {tracker['zenodo']['version']} different "
+                      f"from Zenodo vesion DOI {dataset_description['latest_version']}, updating")
 
             # Remove all data and DATS.json files
             for file_name in os.listdir(dataset_dir):

@@ -6,7 +6,6 @@ import random
 import re
 import signal
 import subprocess
-import sys
 from typing import List, Set, Union
 
 import datalad.api as api
@@ -14,8 +13,6 @@ import git
 from git.exc import InvalidGitRepositoryError
 import keyring
 import pytest
-
-from scripts.dats_validator.validator import validate_json
 
 
 @contextmanager
@@ -66,39 +63,42 @@ def project_name2env(project_name: str) -> str:
 
 def get_annexed_file_size(dataset, file_path):
     """Get the size of an annexed file in Bytes.
-    
+
     Parameters
     ----------
     dataset : string
         Path to the dataset containing the file.
     file_path : str
         Realative path of the file within a dataset
-    
+
     Returns
     -------
     float
         Size of the annexed file in Bytes.
     """
     info_output = git.Repo(dataset).git.annex(
-        "info", file_path, json=True, bytes=True,
+        "info",
+        file_path,
+        json=True,
+        bytes=True,
     )
     metadata = json.loads(info_output)
 
     try:
         return int(metadata["size"])
-    except Exception as e:
+    except Exception:
         print(file_path)
         return float("inf")
 
 
 def is_authentication_required(dataset):
     """Verify in the dataset DATS file if authentication is required.
-    
+
     Parameters
     ----------
     dataset : str
         Relative path to the dataset root.
-    
+
     Returns
     -------
     bool
@@ -134,34 +134,37 @@ def is_authentication_required(dataset):
 def generate_datalad_provider(loris_api):
 
     # Regex for provider
-    re_loris_api = loris_api.replace(".", "\.")
+    re_loris_api = loris_api.replace(".", "\\.")
 
     datalad_provider_path = os.path.join(
         os.path.expanduser("~"), ".config", "datalad", "providers"
     )
     os.makedirs(datalad_provider_path, exist_ok=True)
-    with open(os.path.join(datalad_provider_path, "loris.cfg"), "w+",) as fout:
+    with open(
+        os.path.join(datalad_provider_path, "loris.cfg"),
+        "w+",
+    ) as fout:
         fout.write(
-            f"""[provider:loris]                                                                    
-url_re = {re_loris_api}/*                             
-authentication_type = loris-token                                                           
-credential = loris                                                                  
-                                                                                            
-[credential:loris]                                                                  
-url = {loris_api}/login                                           
-type = loris-token  
+            f"""[provider:loris]
+url_re = {re_loris_api}/*
+authentication_type = loris-token
+credential = loris
+
+[credential:loris]
+url = {loris_api}/login
+type = loris-token
 """
         )
 
 
 def get_submodules(root: str) -> set:
     """Return recursively all submodule of a dataset.
-    
+
     Parameters
     ----------
     root : str
         Absolute path of the submodule root.
-    
+
     Returns
     -------
     set
@@ -171,7 +174,7 @@ def get_submodules(root: str) -> set:
         submodules: Union[Set[str], None] = {
             submodule.path for submodule in git.Repo(root).submodules
         }
-    except InvalidGitRepositoryError as e:
+    except InvalidGitRepositoryError:
         submodules = None
 
     if submodules:
@@ -210,7 +213,7 @@ def authenticate(dataset):
         generate_datalad_provider(loris_api)
     elif zenodo_token:
         pass
-    elif is_authentication_required(dataset) == True:
+    elif is_authentication_required(dataset):
         if os.getenv("CIRCLE_PR_NUMBER", False):
             pytest.skip(
                 f"WARNING: {dataset} cannot be test on Pull Requests to protect secrets."
@@ -218,8 +221,8 @@ def authenticate(dataset):
 
         pytest.fail(
             "Cannot download file (dataset requires authentication, make sure "
-            + f"that environment variables {project}_USERNAME, {project}_PASSWORD, "
-            + f"and {project}_LORIS_API are defined in CircleCI).",
+            f"that environment variables {project}_USERNAME, {project}_PASSWORD, "
+            f"and {project}_LORIS_API are defined in CircleCI).",
             pytrace=False,
         )
 
@@ -231,6 +234,9 @@ def get_filenames(dataset):
 
 
 def download_files(dataset, filenames, time_limit=120):
+    if len(filenames) == 0:
+        return
+
     responses = []
     with timeout(time_limit):
         for filename in filenames:
@@ -245,11 +251,11 @@ def download_files(dataset, filenames, time_limit=120):
                         f"{full_path}\n{response.get('message')}", pytrace=False
                     )
 
-    if responses == []:
+    if not responses:
         pytest.fail(
             f"The dataset timed out after {time_limit} seconds before retrieving a file."
-            + " Cannot to tell if the download would be sucessful."
-            + f"\n{filename} has size of {get_annexed_file_size(dataset, full_path)} Bytes.",
+            " Cannot to tell if the download would be sucessful."
+            f"\n{filename} has size of {get_annexed_file_size(dataset, full_path)} Bytes.",
             pytrace=False,
         )
 
@@ -268,3 +274,49 @@ def get_approx_ksmallests(dataset, filenames, k=4, sample_size=200):
         [filename for filename in sample_files],
         key=lambda x: get_annexed_file_size(dataset, x),
     )[:k]
+
+
+def get_proper_submodules(dataset: str) -> List[str]:
+    """Install and Return the non-derivative submodules.
+
+    Parameters
+    ----------
+    dataset: str
+        Path to the root of the dataset.
+
+    Returns
+    -------
+        proper_submodules: list[str]
+            Submodules not derived form another CONP dataset.
+
+    """
+    if "DATS.json" not in os.listdir(dataset):
+        pytest.fail(
+            f"Dataset {dataset} doesn't contain DATS.json in its root directory.",
+            pytrace=False,
+        )
+
+    with open(os.path.join(dataset, "DATS.json")) as fin:
+        dats = json.load(fin)
+
+    parent_dataset_ids = set()
+    if "extraProperties" in dats:
+        for property_ in dats["extraProperties"]:
+            if property_["category"] == "parent_dataset_id":
+                parent_dataset_ids = {x["value"] for x in property_["values"]}
+                break
+
+    submodules = git.Repo(dataset).submodules
+    # Parent dataset should not be tested here but in their own dataset repository.
+    # For this reason we only install submodules for which there is no derivedFrom
+    # value associated with.
+    proper_submodules = [
+        os.path.join(dataset, submodule.path)
+        for submodule in submodules
+        if submodule.path not in parent_dataset_ids
+    ]
+
+    for submodule in proper_submodules:
+        api.install(path=submodule, recursive=True)
+
+    return proper_submodules

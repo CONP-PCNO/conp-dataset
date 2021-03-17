@@ -20,7 +20,7 @@ def read_conp_dataset_dir(conp_dataset_dir_path):
 
     dataset_dirs_list = os.listdir(conp_dataset_dir_path + '/projects')
 
-    dataset_descriptor_list =[]
+    dataset_descriptor_list = []
 
     for dataset in dataset_dirs_list:
         if dataset == '.touchfile':
@@ -59,7 +59,7 @@ def read_dats_file_from_subdataset_folders(conp_dataset_dir_path, dataset_name):
     subdataset_content = []
 
     for subdataset in subdataset_dirs_list:
-        dats_path = conp_dataset_dir_path + '/projects/' + dataset_name + '/' + subdataset + '/DATS.json'
+        dats_path = os.path.join(conp_dataset_dir_path, 'projects', dataset_name, subdataset, 'DATS.json')
         print('Reading file: ' + dats_path)
         with open(dats_path) as dats_file:
             dats_dict = json.loads(dats_file.read())
