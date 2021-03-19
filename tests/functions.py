@@ -11,6 +11,7 @@ from typing import List, Set, Union
 import datalad.api as api
 import git
 from git.exc import InvalidGitRepositoryError
+import humanize
 import keyring
 import pytest
 
@@ -87,7 +88,6 @@ def get_annexed_file_size(dataset, file_path):
     try:
         return int(metadata["size"])
     except Exception:
-        print(file_path)
         return float("inf")
 
 
@@ -255,7 +255,7 @@ def download_files(dataset, filenames, time_limit=120):
         pytest.fail(
             f"The dataset timed out after {time_limit} seconds before retrieving a file."
             " Cannot to tell if the download would be sucessful."
-            f"\n{filename} has size of {get_annexed_file_size(dataset, full_path)} Bytes.",
+            f"\n{filename} has size of {humanize.naturalsize(get_annexed_file_size(dataset, filename))}.",
             pytrace=False,
         )
 
