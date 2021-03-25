@@ -421,7 +421,7 @@ credential = OSF
 # If known, specify URL or email to how/where to request credentials
 # url = ???
 type = token''')
-            dataset.no_annex(os.path.join('*', 'OSF.cfg'))
+            dataset.no_annex(os.path.join('**', 'OSF.cfg'))
 
             # Make git annex autoenable datalad remote
             annex('initremote', 'datalad', 'externaltype=datalad',
