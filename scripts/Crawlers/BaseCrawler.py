@@ -242,7 +242,7 @@ class BaseCrawler:
                 pass
             if branch_name not in self.repo.remotes.origin.refs:  # New dataset
                 self.repo.git.checkout("-b", branch_name)
-                repo_title = ("conp-dataset-" + dataset_description["title"])[0:100]
+                repo_title = ("conp-dataset-" + clean_title)[0:100]
                 d.create()
                 r = d.create_sibling_github(
                     repo_title,
