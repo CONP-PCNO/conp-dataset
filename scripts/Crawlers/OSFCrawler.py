@@ -1,3 +1,8 @@
+from typing import Callable, List, Dict, Union, Any
+
+from annexremote import SpecialRemote
+from datalad.distribution.dataset import Dataset
+
 from scripts.Crawlers.BaseCrawler import BaseCrawler
 from git import Repo
 import os
@@ -310,17 +315,20 @@ class OSFCrawler(BaseCrawler):
 
         return osf_dois
 
-    def add_new_dataset(self, dataset, dataset_dir):
-        d = self.datalad.Dataset(dataset_dir)
+    def add_new_dataset(self, dataset: Dict[str, Any], dataset_dir: str):
+        d: Dataset = self.datalad.Dataset(dataset_dir)
         d.no_annex(".conp-osf-crawler.json")
         d.save()
-        annex = Repo(dataset_dir).git.annex
-        dataset_size = []
+        annex: Callable = Repo(dataset_dir).git.annex
+        dataset_size: List[int] = []
+
+        # Setup private OSF dataset if the dataset is private
+        self._setup_private_dataset(dataset['files'], dataset_dir, annex, d)
         self._download_files(dataset["files"], dataset_dir, "", d, annex, dataset_size)
         if dataset['components_list']:
             self._download_components(dataset['components_list'], dataset_dir, '', d, annex, dataset_size)
-        dataset_size, dataset_unit = humanize.naturalsize(sum(dataset_size)).split(" ")
-        dataset["distributions"][0]["size"] = float(dataset_size)
+        dataset_size_num, dataset_unit = humanize.naturalsize(sum(dataset_size)).split(" ")
+        dataset["distributions"][0]["size"] = float(dataset_size_num)
         dataset["distributions"][0]["unit"]["value"] = dataset_unit
 
         # Add .conp-osf-crawler.json tracker file
@@ -385,3 +393,36 @@ Crawled from [OSF]({})
 DOI: {}""".format(dataset['identifier']['identifier'])
 
         return readme_content
+
+    def _setup_private_dataset(self, files_url: str, dataset_dir: str, annex: Callable, dataset: Dataset):
+        # Check if the dataset is indeed private
+        if requests.get(files_url).status_code == 401:
+            if self.verbose:
+                print('Dataset is private, creating OSF provider and make git annex autoenable datalad remote')
+
+            # Create OSF provider file and needed directories
+            datalad_dir: str = os.path.join(dataset_dir, '.datalad')
+            if not os.path.exists(datalad_dir):
+                os.mkdir(datalad_dir)
+            providers_dir: str = os.path.join(datalad_dir, 'providers')
+            if not os.path.exists(providers_dir):
+                os.mkdir(providers_dir)
+            osf_config_path: str = os.path.join(providers_dir, 'OSF.cfg')
+            with open(osf_config_path, 'w') as f:
+                f.write('''
+[provider:OSF]
+url_re = .*osf\\.io.*
+authentication_type = bearer_token
+credential = OSF
+
+[credential:OSF]
+# If known, specify URL or email to how/where to request credentials
+# url = ???
+type = token''')
+
+            # Make git annex autoenable datalad remote
+            annex('initremote', 'datalad', externaltype='datalad',
+                  type='external', encryption='none', autoenable='true')
+
+            # Save changes
+            dataset.save()
