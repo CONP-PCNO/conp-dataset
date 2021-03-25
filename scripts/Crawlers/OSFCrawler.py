@@ -421,8 +421,8 @@ credential = OSF
 type = token''')
 
             # Make git annex autoenable datalad remote
-            annex('initremote', 'datalad', externaltype='datalad',
-                  type='external', encryption='none', autoenable='true')
+            annex('initremote', 'datalad', 'externaltype=datalad',
+                  'type=external', 'encryption=none', 'autoenable=true')
 
             # Save changes
             dataset.save()
