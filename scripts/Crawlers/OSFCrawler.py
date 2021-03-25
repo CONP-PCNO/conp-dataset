@@ -426,6 +426,9 @@ type = token''')
             annex('initremote', 'datalad', 'externaltype=datalad',
                   'type=external', 'encryption=none', 'autoenable=true')
 
+            # Set OSF token as a environment variable for authentication
+            os.environ['DATALAD_OSF_token'] = self.osf_token
+
             # Save changes
             dataset.save()
 
