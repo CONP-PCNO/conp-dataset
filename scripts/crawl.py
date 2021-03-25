@@ -24,6 +24,7 @@ def parse_args():
     parser.add_argument("config_path", action="store", nargs="?", help="Path to config file to use")
     parser.add_argument("--verbose", action="store_true", help="Print debug information")
     parser.add_argument("--force", action="store_true", help="Force updates")
+    parser.add_argument("--no_pr", action="store_true", help="Don't create a pull request at the end")
     args = parser.parse_args()
 
     github_token = args.github_token
@@ -61,11 +62,11 @@ def parse_args():
     else:  # Retrieve github token from config file
         github_token = config["github_token"]
 
-    return github_token, config_path, args.verbose, args.force, config['conp-dataset_path']
+    return github_token, config_path, args.verbose, args.force, config['conp-dataset_path'], args.no_pr
 
 
 if __name__ == "__main__":
-    github_token, config_path, verbose, force, conp_dataset_dir_path = parse_args()
+    github_token, config_path, verbose, force, conp_dataset_dir_path, no_pr = parse_args()
 
     # import the crawler packages
     sys.path.append(conp_dataset_dir_path)
@@ -75,12 +76,12 @@ if __name__ == "__main__":
     try:
         if verbose:
             print("==================== Zenodo Crawler Running ====================" + os.linesep)
-        ZenodoCrawlerObj = ZenodoCrawler(github_token, config_path, verbose, force)
+        ZenodoCrawlerObj = ZenodoCrawler(github_token, config_path, verbose, force, no_pr)
         ZenodoCrawlerObj.run()
 
         if verbose:
             print(os.linesep + "==================== OSF Crawler Running ====================" + os.linesep)
-        OSFCrawlerObj = OSFCrawler(github_token, config_path, verbose, force)
+        OSFCrawlerObj = OSFCrawler(github_token, config_path, verbose, force, no_pr)
         OSFCrawlerObj.run()
 
         # INSTANTIATE NEW CRAWLERS AND RUN HERE

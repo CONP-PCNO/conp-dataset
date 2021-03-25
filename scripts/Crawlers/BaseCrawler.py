@@ -64,7 +64,7 @@ class BaseCrawler:
         (3) In crawl.py, locate the comment where it says to instantiate new crawlers,
             instantiate this new Crawler and call run() on it
     """
-    def __init__(self, github_token, config_path, verbose, force):
+    def __init__(self, github_token, config_path, verbose, force, no_pr):
         self.repo = git.Repo()
         self.username = self._check_requirements()
         self.github_token = github_token
@@ -73,6 +73,7 @@ class BaseCrawler:
         self.force = force
         self.git = git
         self.datalad = api
+        self.no_pr = no_pr
 
     @abc.abstractmethod
     def get_all_dataset_description(self):
@@ -340,11 +341,12 @@ class BaseCrawler:
 
         # Create PR
         print("Creating PR for " + title)
-        r = requests.post(
-            "https://api.github.com/repos/CONP-PCNO/conp-dataset/pulls",
-            json={
-                "title": "Crawler result ({})".format(title),
-                "body": """## Description
+        if not self.no_pr:
+            r = requests.post(
+                "https://api.github.com/repos/CONP-PCNO/conp-dataset/pulls",
+                json={
+                    "title": "Crawler result ({})".format(title),
+                    "body": """## Description
 {}
 
 ## Checklist
@@ -364,15 +366,15 @@ Functional checks:
 - [ ] `DATS.json` is a valid DATs model
 - [ ] If dataset is derived data, raw data is a sub-dataset
 """.format(
-                    msg + "\n"
-                ),
-                "head": self.username + ":conp-bot/" + clean_title,
-                "base": "master",
-            },
-            headers={"Authorization": "token {}".format(self.github_token)}
-        )
-        if r.status_code != 201:
-            raise Exception("Error while creating pull request: " + r.text)
+                        msg + "\n"
+                    ),
+                    "head": self.username + ":conp-bot/" + clean_title,
+                    "base": "master",
+                },
+                headers={"Authorization": "token {}".format(self.github_token)}
+            )
+            if r.status_code != 201:
+                raise Exception("Error while creating pull request: " + r.text)
 
     def _clean_dataset_title(self, title):
         return re.sub(r"\W|^(?=\d)", "_", title)

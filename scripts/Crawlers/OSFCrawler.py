@@ -22,8 +22,8 @@ def _create_osf_tracker(path, dataset):
 
 
 class OSFCrawler(BaseCrawler):
-    def __init__(self, github_token, config_path, verbose, force):
-        super().__init__(github_token, config_path, verbose, force)
+    def __init__(self, github_token, config_path, verbose, force, no_pr):
+        super().__init__(github_token, config_path, verbose, force, no_pr)
         self.osf_token = self._get_token()
 
     def _get_token(self):
@@ -402,7 +402,7 @@ DOI: {}""".format(dataset['identifier']['identifier'])
             if self.verbose:
                 print('Dataset is private, creating OSF provider and make git annex autoenable datalad remote')
 
-            # Create OSF provider file and needed directories
+            # Create OSF provider file and needed directories and don't annex the file
             datalad_dir: str = os.path.join(dataset_dir, '.datalad')
             if not os.path.exists(datalad_dir):
                 os.mkdir(datalad_dir)
@@ -421,6 +421,7 @@ credential = OSF
 # If known, specify URL or email to how/where to request credentials
 # url = ???
 type = token''')
+            dataset.no_annex(osf_config_path)
 
             # Make git annex autoenable datalad remote
             annex('initremote', 'datalad', 'externaltype=datalad',
