@@ -4,6 +4,7 @@ import json
 import requests
 import humanize
 import html2markdown
+import datetime
 
 
 def _get_unlock_script():
@@ -46,7 +47,16 @@ class ZenodoCrawler(BaseCrawler):
             "type=dataset&"
             'q=keywords:"canadian-open-neuroscience-platform"'
         )
-        results = requests.get(query).json()["hits"]["hits"]
+        r_json = requests.get(query).json()
+        results = r_json['hits']['hits']
+
+        if r_json['links']['next']:
+            next_page = r_json['links']['next']
+            while next_page is not None:
+                next_page_json = requests.get(next_page).json()
+                results.extend(next_page_json['hits']['hits'])
+                next_page = next_page_json['links']['next'] if 'next' in next_page_json['links'] else None
+
         if self.verbose:
             print("Zenodo query: {}".format(query))
         return results
@@ -131,9 +141,7 @@ class ZenodoCrawler(BaseCrawler):
                     else:
                         # Append access token to each file url
                         for bucket in data["files"]:
-                            bucket["links"]["self"] += (
-                                    "?access_token=" + self.zenodo_tokens[clean_title]
-                            )
+                            bucket["links"]["self"] += "?access_token=" + self.zenodo_tokens[clean_title]
                             files.append(bucket)
                 else:
                     print("No available tokens to access files of {}".format(metadata["title"]))
@@ -175,7 +183,12 @@ class ZenodoCrawler(BaseCrawler):
                                     "roles": [{"value": "Principal Investigator"}]}
                             )
 
+            # Get identifier
             identifier = dataset["conceptdoi"] if "conceptdoi" in dataset.keys() else dataset["doi"]
+
+            # Get date created and date modified
+            date_created = datetime.datetime.strptime(dataset['created'], '%Y-%m-%dT%H:%M:%S.%f%z')
+            date_modified = datetime.datetime.strptime(dataset['updated'], '%Y-%m-%dT%H:%M:%S.%f%z')
 
             zenodo_dois.append(
                 {
@@ -233,6 +246,20 @@ class ZenodoCrawler(BaseCrawler):
                             ],
                         }
                     ],
+                    "dates": [
+                        {
+                            "date": date_created.strftime('%Y-%m-%d %H:%M:%S'),
+                            "type": {
+                                "value": "date created"
+                            }
+                        },
+                        {
+                            "date": date_modified.strftime('%Y-%m-%d %H:%M:%S'),
+                            "type": {
+                                "value": "date modified"
+                            }
+                        }
+                    ],
                 }
             )
 
@@ -286,8 +313,8 @@ class ZenodoCrawler(BaseCrawler):
         else:
             # Update dataset
             if self.verbose:
-                print("{}, version {} different from Zenodo vesion DOI {}, updating"
-                      .format(dataset_description["title"], tracker["zenodo"]["version"], dataset_description["latest_version"]))
+                print(f"{dataset_description['title']}, version {tracker['zenodo']['version']} different "
+                      f"from Zenodo vesion DOI {dataset_description['latest_version']}, updating")
 
             # Remove all data and DATS.json files
             for file_name in os.listdir(dataset_dir):

@@ -2,11 +2,11 @@
 import json
 import os
 import re
-import sys
 import traceback
 
 from git import Repo
 from datalad import api
+
 
 def project_name2env(project_name: str) -> str:
     """Convert the project name to a valid ENV var name.
@@ -40,10 +40,7 @@ def unlock():
     token: (str | None) = os.getenv(project + "_ZENODO_TOKEN", None)
 
     if not token:
-        raise Exception(
-            f"{project}_ZENODO_TOKEN not found."
-            + "Cannot inject the Zenodo token into the git-annex urls."
-        )
+        raise Exception(f"{project}_ZENODO_TOKEN not found. Cannot inject the Zenodo token into the git-annex urls.")
 
     annex = repo.git.annex
     if repo.active_branch.name != "master":
@@ -98,7 +95,7 @@ if __name__ == "__main__":
     os.chdir(os.path.dirname(__file__))
     try:
         unlock()
-    except Exception as e:
+    except Exception:
         traceback.print_exc()
     finally:
         # Always switch branch back to master
