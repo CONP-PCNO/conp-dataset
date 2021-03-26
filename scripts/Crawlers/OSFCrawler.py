@@ -411,8 +411,7 @@ DOI: {}""".format(dataset['identifier']['identifier'])
                 os.mkdir(providers_dir)
             osf_config_path: str = os.path.join(providers_dir, 'OSF.cfg')
             with open(osf_config_path, 'w') as f:
-                f.write('''
-[provider:OSF]
+                f.write('''[provider:OSF]
 url_re = .*osf\\.io.*
 authentication_type = bearer_token
 credential = OSF

@@ -1,6 +1,5 @@
 from scripts.Crawlers.OSFCrawler import OSFCrawler
-from unittest import TestCase
-import mock
+from unittest import TestCase, mock
 
 
 class TestOSFCrawler(TestCase):
@@ -18,6 +17,6 @@ class TestOSFCrawler(TestCase):
                                 mock_get_all_dataset_description, mock_create_osf_tracker,
                                 mock_create_new_dats, mock_get_readme, mock_create_readme, mock_create_pr):
         try:
-            OSFCrawler("github token", "path/to/config", True, False).run()
+            OSFCrawler("github token", "path/to/config", True, False, True).run()
         except Exception as e:
             self.fail("Unexpected Exception raised: " + str(e))
