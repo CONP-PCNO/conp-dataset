@@ -154,3 +154,6 @@
 [submodule "projects/multicenter-phantom"]
 	path = projects/multicenter-phantom
 	url = https://github.com/conpdatasets/multicenter-phantom.git
+[submodule "projects/Another_Private_Test"]
+	path = projects/Another_Private_Test
+	url = https://github.com/conp-bot/conp-dataset-Another_Private_Test.git
