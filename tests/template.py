@@ -7,6 +7,7 @@ from threading import Lock
 
 from datalad import api
 import git
+import humanfriendly
 import pytest
 
 from scripts.dats_validator.validator import (
@@ -19,10 +20,7 @@ from tests.functions import (
     authenticate,
     download_files,
     eval_config,
-    get_approx_ksmallests,
-    get_filenames,
     get_proper_submodules,
-    project_name2env,
     timeout,
 )
 
@@ -106,20 +104,20 @@ class Template(object):
         eval_config(dataset)
         authenticate(dataset)
 
-        k_smallest = get_approx_ksmallests(dataset, get_filenames(dataset))
+        with open(os.path.join(dataset, "DATS.json"), "rb") as fin:
+            dats = json.load(fin)
+            dataset_size: float = 0.0
 
-        # Restricted Zenodo datasets require to download the whole archive before
-        # downloading individual files.
-        project = project_name2env(dataset.split("/")[-1])
-        if os.getenv(project + "_ZENODO_TOKEN", None):
-            with timeout(300):
-                api.get(path=dataset, on_failure="ignore")
-        download_files(dataset, k_smallest)
+            for distribution in dats.get("distributions", list()):
+                dataset_size += humanfriendly.parse_size(
+                    f"{distribution['size']} {distribution['unit']['value']}"
+                )
+
+        download_files(dataset, dataset_size)
 
         # Test the download of proper submodules.
         for submodule in get_proper_submodules(dataset):
-            k_smallest = get_approx_ksmallests(submodule, get_filenames(submodule))
-            download_files(submodule, k_smallest)
+            download_files(submodule, dataset_size)
 
     def test_files_integrity(self, dataset):
         TIME_LIMIT = 300

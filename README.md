@@ -1,6 +1,5 @@
 # CONP dataset
 
-[![Build Status](https://travis-ci.org/CONP-PCNO/conp-dataset.svg?branch=master)](https://travis-ci.org/CONP-PCNO/conp-dataset)
 [![CircleCI](https://circleci.com/gh/CONP-PCNO/conp-dataset.svg?style=shield)](https://circleci.com/gh/CONP-PCNO/conp-dataset)
 
 CONP dataset is a repository containing the datasets available in the
