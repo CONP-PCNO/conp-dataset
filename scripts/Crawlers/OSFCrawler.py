@@ -1,6 +1,5 @@
-from typing import Callable, List, Dict, Union, Any
+from typing import Callable, List, Dict, Any
 
-from annexremote import SpecialRemote
 from datalad.distribution.dataset import Dataset
 
 from scripts.Crawlers.BaseCrawler import BaseCrawler
