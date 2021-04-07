@@ -93,13 +93,9 @@
 [submodule "projects/multicenter-phantom"]
 	path = projects/multicenter-phantom
 	url = https://github.com/emmetaobrien/multicenter-phantom.git
-[submodule "projects/Khanlab/HCPUR100-Template"]
-	path = projects/Khanlab/HCPUR100-Template
-	url = https://github.com/emmetaobrien/HCPUR100-Template.git
 [submodule "projects/Intracellular_Recordings_of_Murine_Neocortical_Neurons"]
 	path = projects/Intracellular_Recordings_of_Murine_Neocortical_Neurons
 	url = https://github.com/conp-bot/conp-dataset-Intracellular-Recordings-of-Murine-Neocortical-Neurons.git
-
 [submodule "projects/Khanlab/BigBrainMRICoreg"]
 	path = projects/Khanlab/BigBrainMRICoreg
 	url = https://github.com/conpdatasets/BigBrainMRICoreg
@@ -108,7 +104,6 @@
 [submodule "projects/preventad-open-bids"]
 	path = projects/preventad-open-bids
 	url = https://github.com/conpdatasets/preventad-open-bids.git
-
 [submodule "projects/cneuromod"]
 	path = projects/cneuromod
 	url = https://github.com/glatard/cneuromod.git
@@ -127,6 +122,21 @@
 [submodule "projects/1000GenomesProject"]
 	path = projects/1000GenomesProject
 	url = https://github.com/conpdatasets/1000GenomesProject
+[submodule "projects/Systematic_phenomics_analysis_of_autism-associated_genes"]
+	path = projects/Systematic_phenomics_analysis_of_autism-associated_genes
+	url = https://github.com/conpdatasets/Systematic_phenomics_analysis_of_autism-associated_genes.git
 [submodule "projects/Multimodal_data_with_wide_field_GCaMP_imaging"]
 	path = projects/Multimodal_data_with_wide_field_GCaMP_imaging
 	url = https://github.com/conp-bot/conp-dataset-Multimodal-data-with-wide-field-GCaMP-imaging.git
+[submodule "projects/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations"]
+	path = projects/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations
+	url = https://github.com/conpdatasets/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations.git
+[submodule "projects/Khanlab/HCPUR100-Template"]
+	path = projects/Khanlab/HCPUR100-Template
+	url = https://github.com/conpdatasets/HCPUR100-Template.git
+[submodule "projects/Numerically_Perturbed_Structural_Connectomes_from_100_individuals_in_the_NKI_Rockland_Dataset"]
+	path = projects/Numerically_Perturbed_Structural_Connectomes_from_100_individuals_in_the_NKI_Rockland_Dataset
+	url = https://github.com/conp-bot/conp-dataset-Numerically-Perturbed-Structural-Connectomes-from-100-individuals-in-the-NKI-Rockland-D.git
+[submodule "projects/Expression_based_polygenic_score_from_the_amygdala_5HTT_gene_network"]
+	path = projects/Expression_based_polygenic_score_from_the_amygdala_5HTT_gene_network
+	url = https://github.com/conp-bot/conp-dataset-Expression-based-polygenic-score-from-the-amygdala-5HTT-gene-network.git

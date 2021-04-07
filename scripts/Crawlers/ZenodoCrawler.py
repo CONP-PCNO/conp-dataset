@@ -55,6 +55,9 @@ class ZenodoCrawler(BaseCrawler):
         link = bucket["links"]["self"]
         repo = self.git.Repo(dataset_dir)
         annex = repo.git.annex
+        if bucket['key'] in ['DATS.json', 'README.md']:
+            d.download_url(link)
+            return
         if "access_token" not in link:
             if bucket["type"] == "zip":
                 d.download_url(link, archive=True)
@@ -172,17 +175,19 @@ class ZenodoCrawler(BaseCrawler):
                                     "roles": [{"value": "Principal Investigator"}]}
                             )
 
+            identifier = dataset["conceptdoi"] if "conceptdoi" in dataset.keys() else dataset["doi"]
+
             zenodo_dois.append(
                 {
                     "identifier": {
-                        "identifier": "https://doi.org/{}".format(dataset["conceptdoi"]),
+                        "identifier": "https://doi.org/{}".format(identifier),
                         "identifierSource": "DOI",
                     },
                     "concept_doi": dataset["conceptrecid"],
                     "latest_version": latest_version_doi,
                     "title": metadata["title"],
                     "files": files,
-                    "doi_badge": dataset["conceptdoi"],
+                    "doi_badge": identifier,
                     "creators": creators,
                     "description": metadata["description"],
                     "version": metadata["version"]
@@ -286,7 +291,7 @@ class ZenodoCrawler(BaseCrawler):
 
             # Remove all data and DATS.json files
             for file_name in os.listdir(dataset_dir):
-                if file_name[0] == "." or file_name == "README.md":
+                if file_name[0] == ".":
                     continue
                 self.datalad.remove(os.path.join(dataset_dir, file_name), check=False)
 
