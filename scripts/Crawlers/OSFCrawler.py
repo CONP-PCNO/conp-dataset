@@ -11,7 +11,7 @@ def _create_osf_tracker(path, dataset):
     with open(path, "w") as f:
         data = {
             "version": dataset["version"],
-            "title": dataset["title"]
+            "title": dataset["title"],
         }
         json.dump(data, f, indent=4)
 
@@ -76,7 +76,7 @@ class OSFCrawler(BaseCrawler):
                     file["relationships"]["files"]["links"]["related"]["href"],
                     folder_path,
                     os.path.join(inner_path, file["attributes"]["name"]),
-                    d, annex, sizes
+                    d, annex, sizes,
                 )
 
             # Handle single files
@@ -86,7 +86,8 @@ class OSFCrawler(BaseCrawler):
                 r = requests.get(file["links"]["download"], allow_redirects=False)
                 if 'https://accounts.osf.io/login' in r.headers['location']:  # Redirects to login, private file
                     correct_download_link = self._get_request_with_bearer_token(
-                        file["links"]["download"], redirect=False).headers['location']
+                        file["links"]["download"], redirect=False,
+                    ).headers['location']
                     if 'https://accounts.osf.io/login' not in correct_download_link:
                         zip_file = True if file["attributes"]["name"].split(".")[-1] == "zip" else False
                         d.download_url(correct_download_link, path=os.path.join(inner_path, ""), archive=zip_file)
@@ -102,8 +103,10 @@ class OSFCrawler(BaseCrawler):
                     elif file['attributes']['name'] in ['DATS.json', 'README.md']:
                         d.download_url(file['links']['download'], path=os.path.join(inner_path, ''))
                     else:
-                        annex("addurl", file["links"]["download"], "--fast", "--file",
-                              os.path.join(inner_path, file["attributes"]["name"]))
+                        annex(
+                            "addurl", file["links"]["download"], "--fast", "--file",
+                            os.path.join(inner_path, file["attributes"]["name"]),
+                        )
                         d.save()
 
                 # append the size of the downloaded file to the sizes array
@@ -127,12 +130,13 @@ class OSFCrawler(BaseCrawler):
                 component_inner_path,
                 d,
                 annex,
-                dataset_size
+                dataset_size,
             )
 
             # check if the component contains (sub)components, in which case, download the (sub)components data
             subcomponents_list = self._get_components(
-                component['relationships']['children']['links']['related']['href'])
+                component['relationships']['children']['links']['related']['href'],
+            )
             if subcomponents_list:
                 self._download_components(
                     subcomponents_list,
@@ -140,7 +144,7 @@ class OSFCrawler(BaseCrawler):
                     os.path.join(component_inner_path),
                     d,
                     annex,
-                    dataset_size
+                    dataset_size,
                 )
 
         # Once we have downloaded all the components files, check to see if there are any empty
@@ -197,7 +201,8 @@ class OSFCrawler(BaseCrawler):
 
             # Retrieve contributors/creators
             contributors = self._get_contributors(
-                dataset["relationships"]["contributors"]["links"]["related"]["href"])
+                dataset["relationships"]["contributors"]["links"]["related"]["href"],
+            )
 
             # Retrieve license
             license_ = "None"
@@ -206,7 +211,8 @@ class OSFCrawler(BaseCrawler):
 
             # Retrieve institution information
             institutions = self._get_institutions(
-                dataset['relationships']['affiliated_institutions']['links']['related']['href'])
+                dataset['relationships']['affiliated_institutions']['links']['related']['href'],
+            )
 
             # Retrieve identifier information
             identifier = self._get_identifier(dataset['relationships']['identifiers']['links']['related']['href'])
@@ -223,19 +229,19 @@ class OSFCrawler(BaseCrawler):
                     "category": "logo",
                     "values": [
                         {
-                            "value": "https://osf.io/static/img/institutions/shields/cos-shield.png"
-                        }
+                            "value": "https://osf.io/static/img/institutions/shields/cos-shield.png",
+                        },
                     ],
-                }
+                },
             ]
             if institutions:
                 extra_properties.append(
                     {
                         "category": "origin_institution",
                         "values": list(
-                            map(lambda x: {'value': x}, institutions)
-                        )
-                    }
+                            map(lambda x: {'value': x}, institutions),
+                        ),
+                    },
                 )
 
             # Retrieve dates
@@ -248,28 +254,28 @@ class OSFCrawler(BaseCrawler):
                 "components_list": components_list,
                 "homepage": dataset["links"]["html"],
                 "creators": list(
-                    map(lambda x: {"name": x}, contributors)
+                    map(lambda x: {"name": x}, contributors),
                 ),
                 "description": attributes["description"],
                 "version": attributes["date_modified"],
                 "licenses": [
                     {
-                        "name": license_
-                    }
+                        "name": license_,
+                    },
                 ],
                 "dates": [
                     {
                         "date": date_created.strftime('%Y-%m-%d %H:%M:%S'),
                         "type": {
-                            "value": "Date Created"
-                        }
+                            "value": "Date Created",
+                        },
                     },
                     {
                         "date": date_modified.strftime('%Y-%m-%d %H:%M:%S'),
                         "type": {
-                            "value": "Date Modified"
-                        }
-                    }
+                            "value": "Date Modified",
+                        },
+                    },
                 ],
                 "keywords": keywords,
                 "distributions": [
@@ -280,20 +286,20 @@ class OSFCrawler(BaseCrawler):
                             "landingPage": dataset["links"]["html"],
                             "authorizations": [
                                 {
-                                    "value": "public" if attributes['public'] else "private"
-                                }
+                                    "value": "public" if attributes['public'] else "private",
+                                },
                             ],
                         },
-                    }
+                    },
                 ],
-                "extraProperties": extra_properties
+                "extraProperties": extra_properties,
             }
 
             if identifier:
                 source = 'OSF DOI' if 'OSF.IO' in identifier else 'DOI'
                 dataset_dats_content['identifier'] = {
                     "identifier": identifier,
-                    "identifierSource": source
+                    "identifierSource": source,
                 }
 
             osf_dois.append(dataset_dats_content)
@@ -304,8 +310,8 @@ class OSFCrawler(BaseCrawler):
                 print(
                     "- Title: {}, Last modified: {}".format(
                         osf_doi["title"],
-                        osf_doi["version"]
-                    )
+                        osf_doi["version"],
+                    ),
                 )
 
         return osf_dois
@@ -325,7 +331,8 @@ class OSFCrawler(BaseCrawler):
 
         # Add .conp-osf-crawler.json tracker file
         _create_osf_tracker(
-            os.path.join(dataset_dir, ".conp-osf-crawler.json"), dataset)
+            os.path.join(dataset_dir, ".conp-osf-crawler.json"), dataset,
+        )
 
     def update_if_necessary(self, dataset_description, dataset_dir):
         tracker_path = os.path.join(dataset_dir, ".conp-osf-crawler.json")
@@ -337,14 +344,18 @@ class OSFCrawler(BaseCrawler):
         if tracker["version"] == dataset_description["version"]:
             # Same version, no need to update
             if self.verbose:
-                print("{}, version {} same as OSF version DOI, no need to update"
-                      .format(dataset_description["title"], dataset_description["version"]))
+                print(
+                    "{}, version {} same as OSF version DOI, no need to update"
+                    .format(dataset_description["title"], dataset_description["version"]),
+                )
             return False
         else:
             # Update dataset
             if self.verbose:
-                print("{}, version {} different from OSF version DOI {}, updating"
-                      .format(dataset_description["title"], tracker["version"], dataset_description["version"]))
+                print(
+                    "{}, version {} different from OSF version DOI {}, updating"
+                    .format(dataset_description["title"], tracker["version"], dataset_description["version"]),
+                )
 
             # Remove all data and DATS.json files
             for file_name in os.listdir(dataset_dir):
@@ -359,14 +370,16 @@ class OSFCrawler(BaseCrawler):
             self._download_files(dataset_description["files"], dataset_dir, "", d, annex, dataset_size)
             if dataset_description['components_list']:
                 self._download_components(
-                    dataset_description['components_list'], dataset_dir, '', d, annex, dataset_size)
+                    dataset_description['components_list'], dataset_dir, '', d, annex, dataset_size,
+                )
             dataset_size, dataset_unit = humanize.naturalsize(sum(dataset_size)).split(" ")
             dataset_description["distributions"][0]["size"] = float(dataset_size)
             dataset_description["distributions"][0]["unit"]["value"] = dataset_unit
 
             # Add .conp-osf-crawler.json tracker file
             _create_osf_tracker(
-                os.path.join(dataset_dir, ".conp-osf-crawler.json"), dataset_description)
+                os.path.join(dataset_dir, ".conp-osf-crawler.json"), dataset_description,
+            )
 
             return True
 

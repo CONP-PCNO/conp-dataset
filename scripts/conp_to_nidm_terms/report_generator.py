@@ -7,8 +7,12 @@ from functions import collect_values, find_duplicates
 
 def main(argv):
     timestamp = date.today()
-    opts, args = getopt.getopt(argv, "", ["filename=", "privacy=", "types=", "licenses=",
-                                          "is_about=", "formats=", "keywords=", "help"])
+    opts, args = getopt.getopt(
+        argv, "", [
+            "filename=", "privacy=", "types=", "licenses=",
+            "is_about=", "formats=", "keywords=", "help",
+        ],
+    )
 
     options = dict(privacy=True, types=True, licenses=True, is_about=True, formats=True, keywords=True)
     filename = f"report_{timestamp}"
@@ -29,7 +33,7 @@ def main(argv):
         licenses=options["licenses"],
         is_about=options["is_about"],
         formats=options["formats"],
-        keywords=options["keywords"]
+        keywords=options["keywords"],
     )
     print(f"DATS files processed: {dats_files_count}")
     # check if duplicate terms exist
@@ -47,9 +51,11 @@ def main(argv):
 
 
 def help_info():
-    print("Usage:"
-          "python report_generator.py [--privacy=False --types=False --licenses=False "
-          "--is_about= --formats=False --keywords=False --help]")
+    print(
+        "Usage:"
+        "python report_generator.py [--privacy=False --types=False --licenses=False "
+        "--is_about= --formats=False --keywords=False --help]",
+    )
 
 
 if __name__ == "__main__":

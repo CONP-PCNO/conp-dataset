@@ -4,11 +4,12 @@ import os
 import sys
 import copy
 sys.path.append(os.path.join(os.getcwd(), 'scripts'))
-from dats_validator.validator import (validate_json,  # noqa: E402
-                                      validate_non_schema_required,
-                                      validate_extra_properties,
-                                      REQUIRED_EXTRA_PROPERTIES
-                                      )
+from dats_validator.validator import (
+    validate_json,  # noqa: E402
+    validate_non_schema_required,
+    validate_extra_properties,
+    REQUIRED_EXTRA_PROPERTIES,
+)
 
 
 EXAMPLES = os.path.join(os.getcwd(), 'scripts', 'dats_validator', 'examples')
@@ -64,7 +65,7 @@ class ExtraPropertiesTest(unittest.TestCase):
                     {"value": "conp"},
                     {"value": "External"},
                     {"value": "random"},
-                    {"value": "canadian"}
+                    {"value": "canadian"},
                 ]
         invalid_validation, errors = validate_extra_properties(modified_copy)
         for error in errors:

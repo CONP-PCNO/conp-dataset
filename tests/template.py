@@ -78,10 +78,10 @@ class Template:
             # For datasets crawled with Zenodo: check the formats extra property only
             # For datasets crawled with OSF: skip validation of extra properties
             is_osf_dataset = os.path.exists(
-                os.path.join(dataset, ".conp-osf-crawler.json")
+                os.path.join(dataset, ".conp-osf-crawler.json"),
             )
             is_zenodo_dataset = os.path.exists(
-                os.path.join(dataset, ".conp-zenodo-crawler.json")
+                os.path.join(dataset, ".conp-zenodo-crawler.json"),
             )
             is_valid, errors = (
                 validate_formats(json_obj)
@@ -110,7 +110,7 @@ class Template:
 
             for distribution in dats.get("distributions", list()):
                 dataset_size += humanfriendly.parse_size(
-                    f"{distribution['size']} {distribution['unit']['value']}"
+                    f"{distribution['size']} {distribution['unit']['value']}",
                 )
 
         download_files(dataset, dataset_size)
@@ -146,5 +146,5 @@ class Template:
         if not completed:
             pytest.fail(
                 f"The dataset timed out after {TIME_LIMIT} seconds before retrieving a file."
-                "\nCannot determine if the test is valid."
+                "\nCannot determine if the test is valid.",
             )

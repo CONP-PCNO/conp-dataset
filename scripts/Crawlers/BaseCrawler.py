@@ -248,7 +248,8 @@ class BaseCrawler:
                     repo_title,
                     name="origin",
                     github_login=self.github_token,
-                    github_passwd=self.github_token)
+                    github_passwd=self.github_token,
+                )
                 self._add_github_repo_description(repo_title, dataset_description)
                 d.no_annex("DATS.json")
                 d.no_annex("README.md")
@@ -265,7 +266,8 @@ class BaseCrawler:
                 self.repo.git.submodule(
                     "add",
                     r[0][1].replace(self.github_token + "@", ""),
-                    dataset_dir)
+                    dataset_dir,
+                )
                 modified = True
                 commit_msg = "Created " + dataset_description["title"]
             else:  # Dataset already existing locally
@@ -292,7 +294,8 @@ class BaseCrawler:
 
     def _add_github_repo_description(self, repo_title, dataset_description):
         url = "https://api.github.com/repos/{}/{}".format(
-            self.username, repo_title)
+            self.username, repo_title,
+        )
         head = {"Authorization": "token {}".format(self.github_token)}
         description = "Please don't submit any PR to this repository. "
         if "creators" in dataset_description.keys():
@@ -301,8 +304,10 @@ class BaseCrawler:
         payload = {"description": description}
         r = requests.patch(url, data=json.dumps(payload), headers=head)
         if not r.ok:
-            print("Problem adding description to repository {}:"
-                  .format(repo_title))
+            print(
+                "Problem adding description to repository {}:"
+                .format(repo_title),
+            )
             print(r.content)
 
     def _check_requirements(self):
@@ -364,12 +369,12 @@ Functional checks:
 - [ ] `DATS.json` is a valid DATs model
 - [ ] If dataset is derived data, raw data is a sub-dataset
 """.format(
-                    msg + "\n"
+                    msg + "\n",
                 ),
                 "head": self.username + ":conp-bot/" + clean_title,
                 "base": "master",
             },
-            headers={"Authorization": "token {}".format(self.github_token)}
+            headers={"Authorization": "token {}".format(self.github_token)},
         )
         if r.status_code != 201:
             raise Exception("Error while creating pull request: " + r.text)
@@ -380,12 +385,14 @@ Functional checks:
     def _create_new_dats(self, dataset_dir, dats_path, dataset):
         # Fields/properties that are acceptable in DATS schema according to
         # https://github.com/CONP-PCNO/schema/blob/master/dataset_schema.json
-        dats_fields = ["title", "identifier", "creators", "description", "version", "licenses",
-                       "keywords", "distributions", "extraProperties", "alternateIdentifiers",
-                       "relatedIdentifiers", "dates", "storedIn", "spatialCoverage", "types",
-                       "availability", "refinement", "aggregation", "privacy", "dimensions",
-                       "primaryPublications", "citations", "citationCount", "producedBy",
-                       "isAbout", "hasPart", "acknowledges"]
+        dats_fields = [
+            "title", "identifier", "creators", "description", "version", "licenses",
+            "keywords", "distributions", "extraProperties", "alternateIdentifiers",
+            "relatedIdentifiers", "dates", "storedIn", "spatialCoverage", "types",
+            "availability", "refinement", "aggregation", "privacy", "dimensions",
+            "primaryPublications", "citations", "citationCount", "producedBy",
+            "isAbout", "hasPart", "acknowledges",
+        ]
 
         # Check required properties
         required_fields = ["title", "types", "creators", "licenses", "description", "keywords", "version"]
@@ -410,7 +417,7 @@ Functional checks:
             data["extraProperties"] = [{"category": "files", "values": [{"value": str(num)}]}]
         else:
             data["extraProperties"].append(
-                {"category": "files", "values": [{"value": str(num)}]}
+                {"category": "files", "values": [{"value": str(num)}]},
             )
 
         # Retrieve modalities from files
@@ -419,7 +426,7 @@ Functional checks:
             filter(lambda x: " " in x, git.Repo(dataset_dir).git.annex("list").split("\n")),
         )  # Get file paths
         file_names = list(
-            map(lambda x: x.split("/")[-1] if "/" in x else x, file_paths)
+            map(lambda x: x.split("/")[-1] if "/" in x else x, file_paths),
         )  # Get file names from path
         modalities = {self._guess_modality(file_name) for file_name in file_names}
         if len(modalities) == 0:

@@ -27,8 +27,8 @@ def main(argv):
             'Number Of Datasets Requiring Authentication',
             'Total Number Of Files',
             'Total Size (GB)',
-            'Keywords Describing The Data'
-        ]
+            'Keywords Describing The Data',
+        ],
     ]
     for data_provider in ['braincode', 'frdr', 'loris', 'osf', 'zenodo']:
         summary_list = get_stats_for_data_provider(datasets_summary_dict, data_provider)
@@ -107,7 +107,7 @@ def parse_dats_information(dats_dict):
 
     values_dict = {
         'extraProperties': {},
-        'keywords': []
+        'keywords': [],
     }
     for extra_property in extra_properties:
         values_dict[extra_property['category']] = extra_property['values'][0]['value']
@@ -189,7 +189,7 @@ def get_stats_for_data_provider(dataset_summary_dict, data_provider):
         str(requires_login),
         str(total_files),
         str(round(total_size)),
-        ', '.join(keywords_list)
+        ', '.join(keywords_list),
     ]
 
 

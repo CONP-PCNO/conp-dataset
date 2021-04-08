@@ -27,8 +27,8 @@ def main(argv):
             'Domain of Application',
             'Number Of Tools',
             'Containers',
-            'Execution Capacity'
-        ]
+            'Execution Capacity',
+        ],
     ]
     for field in ['Neuroinformatics', 'Bioinformatics', 'MRI', 'EEG', 'Connectome', 'BIDS-App']:
         summary_list = get_stats_per_domain(tools_summary_dict, field)
@@ -77,8 +77,10 @@ def parse_input(argv):
             tools_dir_path = arg
 
     if not tools_dir_path:
-        print('a path to the Boutiques\'s JSON cached directory needs to be '
-              'given as an argument to the script by using the option `-d`')
+        print(
+            'a path to the Boutiques\'s JSON cached directory needs to be '
+            'given as an argument to the script by using the option `-d`',
+        )
         print(description + usage)
         sys.exit()
 
@@ -107,7 +109,7 @@ def parse_json_information(json_dict):
         'title': json_dict['name'],
         'container_type': None,
         'domain': None,
-        'online_platform_urls': None
+        'online_platform_urls': None,
     }
 
     if 'container-image' in json_dict and 'type' in json_dict['container-image']:
@@ -138,7 +140,7 @@ def get_stats_per_domain(tool_summary_dict, domain):
 
     container = {
         'docker': 0,
-        'singularity': 0
+        'singularity': 0,
     }
     number_of_tools = 0
     number_of_cbrain_tools = 0
@@ -173,7 +175,7 @@ def get_stats_per_domain(tool_summary_dict, domain):
         domain,
         str(number_of_tools),
         f'Docker ({str(container["docker"])}); Singularity ({str(container["singularity"])})',
-        'CBRAIN (' + str(number_of_cbrain_tools) + ')'
+        'CBRAIN (' + str(number_of_cbrain_tools) + ')',
     ]
 
 

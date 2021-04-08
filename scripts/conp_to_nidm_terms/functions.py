@@ -118,13 +118,17 @@ def collect_values(privacy=True, types=True, licenses=True, is_about=True, forma
                     keywords_values.update({k["value"] for k in dats_data["keywords"]})
 
     report = dict()
-    for key, value in zip(["privacy", "licenses", "types", "is_about", "formats", "keywords"],
-                          [privacy_values, licenses_values, types_datatype_values, is_about_values,
-                           distributions_formats, keywords_values]):
+    for key, value in zip(
+        ["privacy", "licenses", "types", "is_about", "formats", "keywords"],
+        [
+            privacy_values, licenses_values, types_datatype_values, is_about_values,
+            distributions_formats, keywords_values,
+        ],
+    ):
         if value:
             report[key] = {
                 "count": len(value),
-                "values": list(value)
+                "values": list(value),
             }
     return report, dats_files_count
 

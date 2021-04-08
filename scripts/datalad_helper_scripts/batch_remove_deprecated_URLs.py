@@ -66,7 +66,7 @@ def parse_input(argv):
         print(
             '\n\t* ----------------------------------------------------------------------------------------------------------------------- *'  # noqa: E501
             '\n\t* ERROR: a path to the DataLad dataset to process needs to be given as an argument to the script by using the option `-d` *'  # noqa: E501
-            '\n\t* ----------------------------------------------------------------------------------------------------------------------- *'  # noqa: E501
+            '\n\t* ----------------------------------------------------------------------------------------------------------------------- *',  # noqa: E501
         )
         print(description + usage)
         sys.exit()
@@ -75,7 +75,7 @@ def parse_input(argv):
         print(
             f"\n\t* ------------------------------------------------------------------------------ *"
             f"\n\t* ERROR: {script_options['dataset_path']} does not appear to be a valid path   "
-            f"\n\t* ------------------------------------------------------------------------------ *"
+            f"\n\t* ------------------------------------------------------------------------------ *",
         )
         print(description + usage)
         sys.exit()
@@ -84,7 +84,7 @@ def parse_input(argv):
         print(
             f"\n\t* ----------------------------------------------------------------------------------- *"
             f"\n\t* ERROR: {script_options['dataset_path']} does not appear to be a DataLad dataset   "
-            f"\n\t* ----------------------------------------------------------------------------------- *"
+            f"\n\t* ----------------------------------------------------------------------------------- *",
         )
         print(description + usage)
         sys.exit()
@@ -93,7 +93,7 @@ def parse_input(argv):
         print(
             '\n\t* --------------------------------------------------------------------------------------------------- *'  # noqa: E501
             '\n\t* ERROR: a regex for invalid URLs to remove should be provided to the script by using the option `-u` *'  # noqa: E501
-            '\n\t* --------------------------------------------------------------------------------------------------- *'  # noqa: E501
+            '\n\t* --------------------------------------------------------------------------------------------------- *',  # noqa: E501
         )
         print(description + usage)
         sys.exit()
@@ -161,7 +161,7 @@ def filter_invalid_urls(files_and_urls_dict, regex_pattern):
     for file_path in files_and_urls_dict.keys():
         filtered_urls_list = filter(
             lambda x: re.search(regex_pattern, x),
-            files_and_urls_dict[file_path]
+            files_and_urls_dict[file_path],
         )
         filtered_dict[file_path] = filtered_urls_list
 
@@ -193,7 +193,7 @@ def remove_invalid_urls(filtered_file_urls_dict, script_options, annex):
                     annex('rmurl', file_path, url)
                 else:
                     print(
-                        f"\nWill be running `git annex rmurl {file_path} {url}`\n"
+                        f"\nWill be running `git annex rmurl {file_path} {url}`\n",
                     )
     except Exception:
         traceback.print_exc()

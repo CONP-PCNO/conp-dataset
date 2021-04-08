@@ -59,7 +59,7 @@ def read_conp_dataset_dir(conp_dataset_dir):
     dataset_dirs_list = os.listdir(conp_dataset_dir + '/projects')
 
     csv_content = [
-        ['Dataset', 'Principal Investigator', 'Consortium', 'Institution', 'City', 'Province', 'Country']
+        ['Dataset', 'Principal Investigator', 'Consortium', 'Institution', 'City', 'Province', 'Country'],
     ]
 
     for dataset in dataset_dirs_list:
@@ -102,7 +102,8 @@ def parse_dats_json_file(dats_path):
     values_dict = {}
     for extra_property in extra_properties:
         values_dict[extra_property['category']] = ", ".join(
-            str(value) for value in [exp["value"] for exp in extra_property["values"]])
+            str(value) for value in [exp["value"] for exp in extra_property["values"]]
+        )
 
     creators = dats_dict['creators']
     for creator in creators:
@@ -118,7 +119,7 @@ def parse_dats_json_file(dats_path):
         values_dict['origin_institution'] if 'origin_institution' in values_dict else '',
         values_dict['origin_city'] if 'origin_city' in values_dict else '',
         values_dict['origin_province'] if 'origin_province' in values_dict else '',
-        values_dict['origin_country'] if 'origin_country' in values_dict else ''
+        values_dict['origin_country'] if 'origin_country' in values_dict else '',
     ]
 
 

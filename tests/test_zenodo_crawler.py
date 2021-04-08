@@ -20,8 +20,8 @@ def mock_zenodo_query():
                 "title": "Generic Title",
                 "creators": [
                     {
-                        "name": "Test"
-                    }
+                        "name": "Test",
+                    },
                 ],
                 "description": "Generic description",
                 "access_right": "open",
@@ -29,25 +29,25 @@ def mock_zenodo_query():
                     "version": [
                         {
                             "last_child": {
-                                "pid_value": "7654321"
-                            }
-                        }
-                    ]
-                }
+                                "pid_value": "7654321",
+                            },
+                        },
+                    ],
+                },
             },
             "links": {
-                "html": "https://www.fake.link.com"
+                "html": "https://www.fake.link.com",
             },
             "files": [
                 {
                     "links": {
-                        "self": "https://www.test.file.com/nofilehere"
+                        "self": "https://www.test.file.com/nofilehere",
                     },
                     "type": "json",
-                    "size": 45346
-                }
-            ]
-        }
+                    "size": 45346,
+                },
+            ],
+        },
     ]
 
 
@@ -68,14 +68,16 @@ class TestZenodoCrawler(TestCase):
     @mock.patch("scripts.Crawlers.ZenodoCrawler._create_zenodo_tracker")
     @mock.patch(
         "scripts.Crawlers.ZenodoCrawler.ZenodoCrawler.get_all_dataset_description",
-        return_value=[{"title": "Test", "files": []}]
+        return_value=[{"title": "Test", "files": []}],
     )
     @mock.patch("scripts.Crawlers.ZenodoCrawler.ZenodoCrawler._check_requirements", return_value="username")
     @mock.patch("git.Repo")
     @mock.patch("datalad.api.Dataset")
-    def test_create_new_dataset(self, mock_dataset, mock_repo, mock_check_requirements,
-                                mock_get_all_dataset_description, mock_create_zenodo_tracker,
-                                mock_create_new_dats, mock_get_readme, mock_create_readme, mock_create_pr):
+    def test_create_new_dataset(
+        self, mock_dataset, mock_repo, mock_check_requirements,
+        mock_get_all_dataset_description, mock_create_zenodo_tracker,
+        mock_create_new_dats, mock_get_readme, mock_create_readme, mock_create_pr,
+    ):
         try:
             ZenodoCrawler("github token", "path/to/config", True, False).run()
         except Exception as e:

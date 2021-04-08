@@ -17,7 +17,7 @@ SCHEMA_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'conp-da
 REQUIRED_EXTRA_PROPERTIES = {
     "files": 0,
     "subjects": 0,
-    "CONP_status": ["CONP", "Canadian", "external"]
+    "CONP_status": ["CONP", "Canadian", "external"],
 }
 
 
@@ -66,8 +66,10 @@ def validate_extra_properties(dataset):
 
     try:
         errors = []
-        extra_prop_categories = {prop["category"]: [value["value"] for value in prop["values"]]
-                                 for prop in dataset["extraProperties"] if "extraProperties" in dataset}
+        extra_prop_categories = {
+            prop["category"]: [value["value"] for value in prop["values"]]
+            for prop in dataset["extraProperties"] if "extraProperties" in dataset
+        }
         # first checks if required extraProperties categories are present
         for category in REQUIRED_EXTRA_PROPERTIES:
             if category not in extra_prop_categories:
@@ -100,9 +102,11 @@ def validate_extra_properties(dataset):
     # extraProperties is only required property which is not required on dataset_schema level,
     # if it's not present an Exception is raised
     except KeyError as e:
-        raise Exception(f"{e} is required."
-                        f"The following extra properties categories are required: "
-                        f"{[k for k in REQUIRED_EXTRA_PROPERTIES.keys()]}")
+        raise Exception(
+            f"{e} is required."
+            f"The following extra properties categories are required: "
+            f"{[k for k in REQUIRED_EXTRA_PROPERTIES.keys()]}",
+        )
 
 
 def validate_formats(dataset):

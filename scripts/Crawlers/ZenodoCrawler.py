@@ -135,7 +135,7 @@ class ZenodoCrawler(BaseCrawler):
                     if "files" not in data.keys():
                         print(
                             "Unable to access {} using stored tokens, "
-                            "skipping this dataset".format(clean_title)
+                            "skipping this dataset".format(clean_title),
                         )
                         continue
                     else:
@@ -163,7 +163,7 @@ class ZenodoCrawler(BaseCrawler):
                 keywords = list(map(lambda x: {"value": x}, metadata["keywords"]))
 
             dataset_size, dataset_unit = humanize.naturalsize(
-                sum([filename["size"] for filename in files])
+                sum([filename["size"] for filename in files]),
             ).split(" ")
             dataset_size = float(dataset_size)
 
@@ -180,7 +180,8 @@ class ZenodoCrawler(BaseCrawler):
                             creators.append(
                                 {
                                     "name": contributor["name"],
-                                    "roles": [{"value": "Principal Investigator"}]}
+                                    "roles": [{"value": "Principal Investigator"}],
+                                },
                             )
 
             # Get identifier
@@ -210,8 +211,8 @@ class ZenodoCrawler(BaseCrawler):
                         {
                             "name": metadata["license"]["id"]
                             if "license" in metadata.keys()
-                            else "None"
-                        }
+                            else "None",
+                        },
                     ],
                     "keywords": keywords,
                     "distributions": [
@@ -230,37 +231,37 @@ class ZenodoCrawler(BaseCrawler):
                                     {
                                         "value": "public"
                                         if metadata["access_right"] == "open"
-                                        else "private"
-                                    }
+                                        else "private",
+                                    },
                                 ],
                             },
-                        }
+                        },
                     ],
                     "extraProperties": [
                         {
                             "category": "logo",
                             "values": [
                                 {
-                                    "value": "https://about.zenodo.org/static/img/logos/zenodo-gradient-round.svg"
-                                }
+                                    "value": "https://about.zenodo.org/static/img/logos/zenodo-gradient-round.svg",
+                                },
                             ],
-                        }
+                        },
                     ],
                     "dates": [
                         {
                             "date": date_created.strftime('%Y-%m-%d %H:%M:%S'),
                             "type": {
-                                "value": "date created"
-                            }
+                                "value": "date created",
+                            },
                         },
                         {
                             "date": date_modified.strftime('%Y-%m-%d %H:%M:%S'),
                             "type": {
-                                "value": "date modified"
-                            }
-                        }
+                                "value": "date modified",
+                            },
+                        },
                     ],
-                }
+                },
             )
 
         if self.verbose:
@@ -271,7 +272,7 @@ class ZenodoCrawler(BaseCrawler):
                         zenodo_doi["title"],
                         zenodo_doi["concept_doi"],
                         zenodo_doi["latest_version"],
-                    )
+                    ),
                 )
 
         return zenodo_dois
@@ -286,7 +287,8 @@ class ZenodoCrawler(BaseCrawler):
         for bucket in dataset["files"]:
             self._download_file(bucket, d, dataset_dir, private_files)
         restricted_dataset = True if len(private_files["archive_links"]) > 0 or len(
-            private_files["files"]) > 0 else False
+            private_files["files"],
+        ) > 0 else False
 
         # If dataset is a restricted dataset, create a script which allows to unlock downloading files in dataset
         if restricted_dataset:
@@ -294,7 +296,7 @@ class ZenodoCrawler(BaseCrawler):
 
         # Add .conp-zenodo-crawler.json tracker file
         _create_zenodo_tracker(
-            os.path.join(dataset_dir, ".conp-zenodo-crawler.json"), dataset, private_files, restricted_dataset
+            os.path.join(dataset_dir, ".conp-zenodo-crawler.json"), dataset, private_files, restricted_dataset,
         )
 
     def update_if_necessary(self, dataset_description, dataset_dir):
@@ -307,14 +309,18 @@ class ZenodoCrawler(BaseCrawler):
         if tracker["zenodo"]["version"] == dataset_description["latest_version"]:
             # Same version, no need to update
             if self.verbose:
-                print("{}, version {} same as Zenodo vesion DOI, no need to update"
-                      .format(dataset_description["title"], dataset_description["latest_version"]))
+                print(
+                    "{}, version {} same as Zenodo vesion DOI, no need to update"
+                    .format(dataset_description["title"], dataset_description["latest_version"]),
+                )
             return False
         else:
             # Update dataset
             if self.verbose:
-                print(f"{dataset_description['title']}, version {tracker['zenodo']['version']} different "
-                      f"from Zenodo vesion DOI {dataset_description['latest_version']}, updating")
+                print(
+                    f"{dataset_description['title']}, version {tracker['zenodo']['version']} different "
+                    f"from Zenodo vesion DOI {dataset_description['latest_version']}, updating",
+                )
 
             # Remove all data and DATS.json files
             for file_name in os.listdir(dataset_dir):
@@ -328,7 +334,8 @@ class ZenodoCrawler(BaseCrawler):
             for bucket in dataset_description["files"]:
                 self._download_file(bucket, d, dataset_dir, private_files)
             restricted_dataset = True if len(private_files["archive_links"]) > 0 or len(
-                private_files["files"]) > 0 else False
+                private_files["files"],
+            ) > 0 else False
 
             # If dataset is a restricted dataset, create a script which allows to unlock downloading files in dataset
             if restricted_dataset:
@@ -348,7 +355,9 @@ Crawled from Zenodo
 
 ## Description
 
-{2}""".format(dataset["title"], dataset["doi_badge"],
-              html2markdown.convert(
-                  dataset["description"]).replace("\n", "<br />")
-              )
+{2}""".format(
+            dataset["title"], dataset["doi_badge"],
+            html2markdown.convert(
+                dataset["description"],
+            ).replace("\n", "<br />"),
+        )

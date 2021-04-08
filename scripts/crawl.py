@@ -30,7 +30,8 @@ def parse_args():
     config_path = args.config_path
     if not config_path:
         config_path = os.path.join(
-            os.path.expanduser("~"), ".conp_crawler_config.json")
+            os.path.expanduser("~"), ".conp_crawler_config.json",
+        )
 
     # If config file does not exist, create an empty one
     if not os.path.isfile(config_path):
@@ -44,14 +45,14 @@ def parse_args():
         raise Exception(
             '"conp-dataset_path" not configured in ' + config_path + ','
             'please configure it as follows: \n'
-            '  "conp-dataset_path": "PATH TO conp-dataset DIRECTORY",'
+            '  "conp-dataset_path": "PATH TO conp-dataset DIRECTORY",',
         )
 
     if not github_token and "github_token" not in config.keys():
         raise Exception(
             "Github token not passed by command line argument "
             "nor found in config file " + config_path + ", "
-            "please pass your github access token via the command line"
+            "please pass your github access token via the command line",
         )
     elif github_token:
         config["github_token"] = github_token

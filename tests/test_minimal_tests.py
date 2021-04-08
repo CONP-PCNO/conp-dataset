@@ -15,7 +15,7 @@ def retrieve_submodule():
     yield
 
 
-@pytest.mark.parametrize("pr_files", [[], ])
+@pytest.mark.parametrize("pr_files", [[]])
 def test_empty_pr(pr_files):
     """Test pull requests that modify no file."""
     assert minimal_tests(pytest.datasets, pr_files) == []
@@ -23,7 +23,7 @@ def test_empty_pr(pr_files):
 
 @pytest.mark.parametrize(
     "pr_files",
-    [("projects/preventad-open",), ("projects/PERFORM_Dataset__one_control_subject",), ],
+    [("projects/preventad-open",), ("projects/PERFORM_Dataset__one_control_subject",)],
 )
 def test_modify_single_project(pr_files):
     """Test pull requests that modify a single project."""

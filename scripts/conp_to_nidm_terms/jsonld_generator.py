@@ -4,9 +4,13 @@ from functions import generate_jsonld_files, collect_values, API_KEY
 
 
 def main(argv):
-    opts, args = getopt.getopt(argv, "", ["privacy=", "types=", "licenses=",
-                                          "is_about=", "formats=", "keywords=",
-                                          "use_api=", "help"])
+    opts, args = getopt.getopt(
+        argv, "", [
+            "privacy=", "types=", "licenses=",
+            "is_about=", "formats=", "keywords=",
+            "use_api=", "help",
+        ],
+    )
 
     options = dict(privacy=True, types=True, licenses=True, is_about=True, formats=True, keywords=True)
     use_api = True
@@ -31,7 +35,7 @@ def main(argv):
         licenses=options["licenses"],
         is_about=options["is_about"],
         formats=options["formats"],
-        keywords=options["keywords"]
+        keywords=options["keywords"],
     )
     print(f"DATS files processed: {dats_files_count}")
 
@@ -39,9 +43,11 @@ def main(argv):
 
 
 def help_info():
-    print("Usage:"
-          "python jsonld_generator.py [--privacy=False --types=False --licenses=False "
-          "--is_about= --formats=False --keywords=False --use_api=False --help]")
+    print(
+        "Usage:"
+        "python jsonld_generator.py [--privacy=False --types=False --licenses=False "
+        "--is_about= --formats=False --keywords=False --use_api=False --help]",
+    )
 
 
 if __name__ == "__main__":
