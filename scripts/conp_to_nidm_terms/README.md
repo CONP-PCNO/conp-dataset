@@ -14,5 +14,3 @@ Otherwise, set `--use_api` to `False`, in that case the JSON-LD files will be cr
 By default, it creates a directory for each of the above properties and saves JSON-LD files in the respective directory.
 
 <pre>python jsonld_generator.py [--privacy=False --types=False --licenses=False --is_about= --formats=False --keywords=False --use_api=False --help]</pre>
-
-
