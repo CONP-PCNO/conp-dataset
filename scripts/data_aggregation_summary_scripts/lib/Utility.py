@@ -29,7 +29,8 @@ def read_conp_dataset_dir(conp_dataset_dir_path):
         dats_path = conp_dataset_dir_path + "/projects/" + dataset + "/DATS.json"
         if not (os.path.exists(dats_path)):
             subdataset_content_list = read_dats_file_from_subdataset_folders(
-                conp_dataset_dir_path, dataset
+                conp_dataset_dir_path,
+                dataset,
             )
             dataset_descriptor_list.extend(subdataset_content_list)
             continue
@@ -57,14 +58,18 @@ def read_dats_file_from_subdataset_folders(conp_dataset_dir_path, dataset_name):
     """
 
     subdataset_dirs_list = os.listdir(
-        conp_dataset_dir_path + "/projects/" + dataset_name
+        conp_dataset_dir_path + "/projects/" + dataset_name,
     )
 
     subdataset_content = []
 
     for subdataset in subdataset_dirs_list:
         dats_path = os.path.join(
-            conp_dataset_dir_path, "projects", dataset_name, subdataset, "DATS.json"
+            conp_dataset_dir_path,
+            "projects",
+            dataset_name,
+            subdataset,
+            "DATS.json",
         )
         print("Reading file: " + dats_path)
         with open(dats_path) as dats_file:

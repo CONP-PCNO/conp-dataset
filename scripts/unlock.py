@@ -41,7 +41,7 @@ def unlock():
 
     if not token:
         raise Exception(
-            f"{project}_ZENODO_TOKEN not found. Cannot inject the Zenodo token into the git-annex urls."
+            f"{project}_ZENODO_TOKEN not found. Cannot inject the Zenodo token into the git-annex urls.",
         )
 
     annex = repo.git.annex

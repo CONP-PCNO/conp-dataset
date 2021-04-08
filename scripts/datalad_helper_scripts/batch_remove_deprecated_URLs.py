@@ -214,7 +214,7 @@ if __name__ == "__main__":
     # fetch files and urls attached to the file
     if script_options["verbose"]:
         print(
-            f"\n => Reading {script_options['dataset_path']} and grep annexed files with their URLs\n"
+            f"\n => Reading {script_options['dataset_path']} and grep annexed files with their URLs\n",
         )
     files_and_urls_dict = get_files_and_urls(script_options["dataset_path"], annex)
 
@@ -222,7 +222,7 @@ if __name__ == "__main__":
     regex_pattern = re.compile(script_options["invalid_url_regex"])
     if script_options["verbose"]:
         print(
-            f"\n => Grep the invalid URLs based on the regular expression {regex_pattern}"
+            f"\n => Grep the invalid URLs based on the regular expression {regex_pattern}",
         )
     filtered_file_urls_dict = filter_invalid_urls(files_and_urls_dict, regex_pattern)
 

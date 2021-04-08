@@ -114,7 +114,7 @@ class ZenodoCrawler(BaseCrawler):
                 annex("rmurl", file_name, link)
                 annex("addurl", tokenless_link, "--file", file_name, "--relaxed")
                 private_files["files"].append(
-                    {"name": file_name, "link": tokenless_link}
+                    {"name": file_name, "link": tokenless_link},
                 )
         d.save()
 
@@ -156,8 +156,8 @@ class ZenodoCrawler(BaseCrawler):
                 else:
                     print(
                         "No available tokens to access files of {}".format(
-                            metadata["title"]
-                        )
+                            metadata["title"],
+                        ),
                     )
                     continue
             else:
@@ -211,10 +211,12 @@ class ZenodoCrawler(BaseCrawler):
 
             # Get date created and date modified
             date_created = datetime.datetime.strptime(
-                dataset["created"], "%Y-%m-%dT%H:%M:%S.%f%z"
+                dataset["created"],
+                "%Y-%m-%dT%H:%M:%S.%f%z",
             )
             date_modified = datetime.datetime.strptime(
-                dataset["updated"], "%Y-%m-%dT%H:%M:%S.%f%z"
+                dataset["updated"],
+                "%Y-%m-%dT%H:%M:%S.%f%z",
             )
 
             zenodo_dois.append(
@@ -386,7 +388,10 @@ class ZenodoCrawler(BaseCrawler):
 
             # Add/update .conp-zenodo-crawler.json tracker file
             _create_zenodo_tracker(
-                tracker_path, dataset_description, private_files, restricted_dataset
+                tracker_path,
+                dataset_description,
+                private_files,
+                restricted_dataset,
             )
 
             return True

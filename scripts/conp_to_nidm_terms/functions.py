@@ -38,13 +38,14 @@ def get_api_response(term):
     # API Key must be provided
     if not API_KEY:
         raise Exception(
-            "Add your API Key for the NIF data services to the api_key.json file."
+            "Add your API Key for the NIF data services to the api_key.json file.",
         )
 
     try:
         api_key = f"?key={API_KEY}"
         r = requests.get(
-            NIF_API_URL + term + api_key, headers={"accept": "application/json"}
+            NIF_API_URL + term + api_key,
+            headers={"accept": "application/json"},
         )
         r.raise_for_status()
         response = json.loads(r.content.decode("utf-8"))
@@ -65,7 +66,12 @@ def get_api_response(term):
 
 
 def collect_values(
-    privacy=True, types=True, licenses=True, is_about=True, formats=True, keywords=True
+    privacy=True,
+    types=True,
+    licenses=True,
+    is_about=True,
+    formats=True,
+    keywords=True,
 ):
     """
     Iterates over the projects directory content retrieving DATS file for each project.
@@ -107,13 +113,13 @@ def collect_values(
                             "instrument",
                         ]
                         types_datatype_values.update(
-                            {typ[t]["value"] for t in datatype_schemas if t in typ}
+                            {typ[t]["value"] for t in datatype_schemas if t in typ},
                         )
 
                 if licenses:
                     # licenses is required
                     licenses_values.update(
-                        {licence["name"] for licence in dats_data["licenses"]}
+                        {licence["name"] for licence in dats_data["licenses"]},
                     )
 
                 # isAbout is not required

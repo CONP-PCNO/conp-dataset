@@ -241,8 +241,9 @@ class BaseCrawler:
                 if "@" not in origin_url:
                     origin.set_url(
                         origin_url.replace(
-                            "https://", "https://" + self.github_token + "@"
-                        )
+                            "https://",
+                            "https://" + self.github_token + "@",
+                        ),
                     )
             except git.exc.NoSuchPathError:
                 pass
@@ -295,7 +296,8 @@ class BaseCrawler:
                     if not os.path.isfile(os.path.join(dataset_dir, "README.md")):
                         readme = self.get_readme_content(dataset_description)
                         self._create_readme(
-                            readme, os.path.join(dataset_dir, "README.md")
+                            readme,
+                            os.path.join(dataset_dir, "README.md"),
                         )
                     d.save()
                     d.publish(to="origin")
@@ -304,7 +306,9 @@ class BaseCrawler:
             # If modification detected in dataset, push to branch and create PR
             if modified:
                 self._push_and_pull_request(
-                    commit_msg, dataset_dir, dataset_description["title"]
+                    commit_msg,
+                    dataset_dir,
+                    dataset_description["title"],
                 )
 
             # Go back to master
@@ -361,7 +365,7 @@ class BaseCrawler:
         origin_url = next(origin.urls)
         if "@" not in origin_url:
             origin.set_url(
-                origin_url.replace("https://", "https://" + self.github_token + "@")
+                origin_url.replace("https://", "https://" + self.github_token + "@"),
             )
         self.repo.git.push("--set-upstream", "origin", "conp-bot/" + clean_title)
 
@@ -451,8 +455,8 @@ Functional checks:
             if field not in dataset.keys():
                 print(
                     "Warning: required property {} not found in dataset description".format(
-                        field
-                    )
+                        field,
+                    ),
                 )
 
         # Add all dats properties from dataset description
@@ -470,7 +474,7 @@ Functional checks:
                 num += 1
         if "extraProperties" not in data.keys():
             data["extraProperties"] = [
-                {"category": "files", "values": [{"value": str(num)}]}
+                {"category": "files", "values": [{"value": str(num)}]},
             ]
         else:
             data["extraProperties"].append(
@@ -481,7 +485,8 @@ Functional checks:
         file_paths = map(
             lambda x: x.split(" ")[-1],
             filter(
-                lambda x: " " in x, git.Repo(dataset_dir).git.annex("list").split("\n")
+                lambda x: " " in x,
+                git.Repo(dataset_dir).git.annex("list").split("\n"),
             ),
         )  # Get file paths
         file_names = list(

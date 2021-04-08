@@ -11,7 +11,9 @@ import requests
 logger = logging.getLogger(__name__)
 # path to a top-level schema
 SCHEMA_PATH = os.path.join(
-    os.path.dirname(os.path.realpath(__file__)), "conp-dats", "dataset_schema.json"
+    os.path.dirname(os.path.realpath(__file__)),
+    "conp-dats",
+    "dataset_schema.json",
 )
 
 
@@ -49,12 +51,15 @@ def validate_json(json_obj):
         json_schema = json.load(s)
     # first validate schema file
     v = jsonschema.Draft4Validator(
-        json_schema, format_checker=jsonschema.FormatChecker()
+        json_schema,
+        format_checker=jsonschema.FormatChecker(),
     )
     # now validate json file
     try:
         jsonschema.validate(
-            json_obj, json_schema, format_checker=jsonschema.FormatChecker()
+            json_obj,
+            json_schema,
+            format_checker=jsonschema.FormatChecker(),
         )
         logger.info("JSON schema validation passed.")
         return True
@@ -63,7 +68,7 @@ def validate_json(json_obj):
         logger.info(f"The file is not valid. Total json schema errors: {len(errors)}")
         for i, error in enumerate(errors, 1):
             logger.error(
-                f"{i} Validation error in {'.'.join(str(v) for v in error.path)}: {error.message}"
+                f"{i} Validation error in {'.'.join(str(v) for v in error.path)}: {error.message}",
             )
         logger.info("JSON schema validation failed.")
         return False
@@ -197,7 +202,8 @@ def validate_date_types(dataset):
         for publication in dataset["primaryPublications"]:
             if "dates" in publication:
                 dates_errors_list = date_type_validation(
-                    publication["dates"], dataset["title"]
+                    publication["dates"],
+                    dataset["title"],
                 )
                 errors_list.extend(dates_errors_list)
 

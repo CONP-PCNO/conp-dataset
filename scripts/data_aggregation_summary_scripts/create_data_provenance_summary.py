@@ -45,7 +45,7 @@ def parse_input(argv):
 
     if not conp_dataset_dir:
         print(
-            "a path to the conp-dataset needs to be given as an argument to the script by using the option `-d`"
+            "a path to the conp-dataset needs to be given as an argument to the script by using the option `-d`",
         )
         print(description + usage)
         sys.exit()
@@ -53,7 +53,7 @@ def parse_input(argv):
     if not os.path.exists(conp_dataset_dir + "/projects"):
         print(
             conp_dataset_dir
-            + "does not appear to be a valid path and does not include a `projects` directory"
+            + "does not appear to be a valid path and does not include a `projects` directory",
         )
         print(description + usage)
         sys.exit()
@@ -83,7 +83,8 @@ def read_conp_dataset_dir(conp_dataset_dir):
         dats_path = conp_dataset_dir + "/projects/" + dataset + "/DATS.json"
         if not (os.path.exists(dats_path)):
             subdataset_content_list = look_for_dats_file_in_subfolders(
-                conp_dataset_dir, dataset
+                conp_dataset_dir,
+                dataset,
             )
             csv_content.extend(subdataset_content_list)
             continue

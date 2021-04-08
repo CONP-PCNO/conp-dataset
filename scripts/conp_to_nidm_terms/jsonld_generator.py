@@ -51,7 +51,7 @@ def main(argv):
 
     if use_api and not API_KEY:
         print(
-            "The API key is not set in the api_key.json. Add your API Key or set --use_api=False"
+            "The API key is not set in the api_key.json. Add your API Key or set --use_api=False",
         )
         exit()
 

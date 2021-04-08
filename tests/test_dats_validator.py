@@ -69,7 +69,8 @@ class ExtraPropertiesTest(unittest.TestCase):
         invalid_validation, errors = validate_extra_properties(modified_copy)
         for error in errors:
             self.assertIn(
-                f"Allowed values are {REQUIRED_EXTRA_PROPERTIES['CONP_status']}", error
+                f"Allowed values are {REQUIRED_EXTRA_PROPERTIES['CONP_status']}",
+                error,
             )
 
     def test_subject(self):

@@ -81,7 +81,7 @@ def parse_input(argv):
 
     if not conp_dataset_dir_path:
         print(
-            "a path to the conp-dataset needs to be given as an argument to the script by using the option `-d`"
+            "a path to the conp-dataset needs to be given as an argument to the script by using the option `-d`",
         )
         print(description + usage)
         sys.exit()
@@ -89,7 +89,7 @@ def parse_input(argv):
     if not os.path.exists(conp_dataset_dir_path + "/projects"):
         print(
             conp_dataset_dir_path
-            + "does not appear to be a valid path and does not include a `projects` directory"
+            + "does not appear to be a valid path and does not include a `projects` directory",
         )
         print(description + usage)
         sys.exit()

@@ -9,7 +9,7 @@ from scripts.Crawlers.ZenodoCrawler import ZenodoCrawler
 
 def mock_input():
     token = "".join(
-        [random.choice(string.ascii_letters + string.digits) for n in range(32)]
+        [random.choice(string.ascii_letters + string.digits) for n in range(32)],
     )
     return token, {}, [], False, False
 

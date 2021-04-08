@@ -22,13 +22,21 @@ def parse_args():
     """,
     )
     parser.add_argument(
-        "github_token", action="store", nargs="?", help="GitHub access token"
+        "github_token",
+        action="store",
+        nargs="?",
+        help="GitHub access token",
     )
     parser.add_argument(
-        "config_path", action="store", nargs="?", help="Path to config file to use"
+        "config_path",
+        action="store",
+        nargs="?",
+        help="Path to config file to use",
     )
     parser.add_argument(
-        "--verbose", action="store_true", help="Print debug information"
+        "--verbose",
+        action="store_true",
+        help="Print debug information",
     )
     parser.add_argument("--force", action="store_true", help="Force updates")
     args = parser.parse_args()
@@ -91,7 +99,7 @@ if __name__ == "__main__":
         if verbose:
             print(
                 "==================== Zenodo Crawler Running ===================="
-                + os.linesep
+                + os.linesep,
             )
         ZenodoCrawlerObj = ZenodoCrawler(github_token, config_path, verbose, force)
         ZenodoCrawlerObj.run()
@@ -100,7 +108,7 @@ if __name__ == "__main__":
             print(
                 os.linesep
                 + "==================== OSF Crawler Running ===================="
-                + os.linesep
+                + os.linesep,
             )
         OSFCrawlerObj = OSFCrawler(github_token, config_path, verbose, force)
         OSFCrawlerObj.run()

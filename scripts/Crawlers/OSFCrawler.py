@@ -109,7 +109,7 @@ class OSFCrawler(BaseCrawler):
                         )
                     else:  # Token did not work for downloading file, return
                         print(
-                            f'Unable to download file {file["links"]["download"]} with current token, skipping file'
+                            f'Unable to download file {file["links"]["download"]} with current token, skipping file',
                         )
                         return
 
@@ -124,7 +124,8 @@ class OSFCrawler(BaseCrawler):
                         )
                     elif file["attributes"]["name"] in ["DATS.json", "README.md"]:
                         d.download_url(
-                            file["links"]["download"], path=os.path.join(inner_path, "")
+                            file["links"]["download"],
+                            path=os.path.join(inner_path, ""),
                         )
                     else:
                         annex(
@@ -141,24 +142,33 @@ class OSFCrawler(BaseCrawler):
                 if not file_size:
                     # if the file size cannot be found in the OSF API response, then get it from git annex info
                     inner_file_path = os.path.join(
-                        inner_path, file["attributes"]["name"]
+                        inner_path,
+                        file["attributes"]["name"],
                     )
                     annex_info_dict = json.loads(
-                        annex("info", "--bytes", "--json", inner_file_path)
+                        annex("info", "--bytes", "--json", inner_file_path),
                     )
                     file_size = int(annex_info_dict["size"])
                 sizes.append(file_size)
 
     def _download_components(
-        self, components_list, current_dir, inner_path, d, annex, dataset_size
+        self,
+        components_list,
+        current_dir,
+        inner_path,
+        d,
+        annex,
+        dataset_size,
     ):
         # Loop through each available components and download their files
         for component in components_list:
             component_title = self._clean_dataset_title(
-                component["attributes"]["title"]
+                component["attributes"]["title"],
             )
             component_inner_path = os.path.join(
-                inner_path, "components", component_title
+                inner_path,
+                "components",
+                component_title,
             )
             os.makedirs(os.path.join(current_dir, component_inner_path))
             self._download_files(
@@ -245,7 +255,7 @@ class OSFCrawler(BaseCrawler):
             license_ = "None"
             if "license" in dataset["relationships"].keys():
                 license_ = self._get_license(
-                    dataset["relationships"]["license"]["links"]["related"]["href"]
+                    dataset["relationships"]["license"]["links"]["related"]["href"],
                 )
 
             # Retrieve institution information
@@ -257,7 +267,7 @@ class OSFCrawler(BaseCrawler):
 
             # Retrieve identifier information
             identifier = self._get_identifier(
-                dataset["relationships"]["identifiers"]["links"]["related"]["href"]
+                dataset["relationships"]["identifiers"]["links"]["related"]["href"],
             )
 
             # Get link for the dataset files
@@ -265,7 +275,7 @@ class OSFCrawler(BaseCrawler):
 
             # Get components list
             components_list = self._get_components(
-                dataset["relationships"]["children"]["links"]["related"]["href"]
+                dataset["relationships"]["children"]["links"]["related"]["href"],
             )
 
             # Gather extra properties
@@ -291,10 +301,12 @@ class OSFCrawler(BaseCrawler):
 
             # Retrieve dates
             date_created = datetime.datetime.strptime(
-                attributes["date_created"], "%Y-%m-%dT%H:%M:%S.%f"
+                attributes["date_created"],
+                "%Y-%m-%dT%H:%M:%S.%f",
             )
             date_modified = datetime.datetime.strptime(
-                attributes["date_modified"], "%Y-%m-%dT%H:%M:%S.%f"
+                attributes["date_modified"],
+                "%Y-%m-%dT%H:%M:%S.%f",
             )
 
             dataset_dats_content = {
@@ -376,7 +388,12 @@ class OSFCrawler(BaseCrawler):
         self._download_files(dataset["files"], dataset_dir, "", d, annex, dataset_size)
         if dataset["components_list"]:
             self._download_components(
-                dataset["components_list"], dataset_dir, "", d, annex, dataset_size
+                dataset["components_list"],
+                dataset_dir,
+                "",
+                d,
+                annex,
+                dataset_size,
             )
         dataset_size, dataset_unit = humanize.naturalsize(sum(dataset_size)).split(" ")
         dataset["distributions"][0]["size"] = float(dataset_size)
@@ -400,7 +417,8 @@ class OSFCrawler(BaseCrawler):
             if self.verbose:
                 print(
                     "{}, version {} same as OSF version DOI, no need to update".format(
-                        dataset_description["title"], dataset_description["version"]
+                        dataset_description["title"],
+                        dataset_description["version"],
                     ),
                 )
             return False
@@ -426,7 +444,12 @@ class OSFCrawler(BaseCrawler):
 
             dataset_size = []
             self._download_files(
-                dataset_description["files"], dataset_dir, "", d, annex, dataset_size
+                dataset_description["files"],
+                dataset_dir,
+                "",
+                d,
+                annex,
+                dataset_size,
             )
             if dataset_description["components_list"]:
                 self._download_components(
@@ -438,7 +461,7 @@ class OSFCrawler(BaseCrawler):
                     dataset_size,
                 )
             dataset_size, dataset_unit = humanize.naturalsize(sum(dataset_size)).split(
-                " "
+                " ",
             )
             dataset_description["distributions"][0]["size"] = float(dataset_size)
             dataset_description["distributions"][0]["unit"]["value"] = dataset_unit
@@ -459,14 +482,16 @@ Crawled from [OSF]({})
 ## Description
 
 {}""".format(
-            dataset["title"], dataset["homepage"], dataset["description"]
+            dataset["title"],
+            dataset["homepage"],
+            dataset["description"],
         )
 
         if "identifier" in dataset:
             readme_content += """
 
 DOI: {}""".format(
-                dataset["identifier"]["identifier"]
+                dataset["identifier"]["identifier"],
             )
 
         return readme_content
