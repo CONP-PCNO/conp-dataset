@@ -11,6 +11,7 @@ from typing import List, Set, Union
 import datalad.api as api
 import git
 from git.exc import InvalidGitRepositoryError
+import humanize
 import keyring
 import pytest
 
@@ -87,7 +88,6 @@ def get_annexed_file_size(dataset, file_path):
     try:
         return int(metadata["size"])
     except Exception:
-        print(file_path)
         return float("inf")
 
 
@@ -227,19 +227,62 @@ def authenticate(dataset):
         )
 
 
-def get_filenames(dataset):
-    annex_list: str = git.Repo(dataset).git.annex("list")
-    filenames: List[str] = re.split(r"\n[_X]+\s", annex_list)[1:]
-    return filenames
+def get_filenames(dataset, *, minimum):
+    contains_archived_files = False
+    annex_list: str = iter(git.Repo(dataset).git.annex("list").split("\n"))
+    remotes = list()
+
+    # Retrieve remotes from the header.
+    for line in annex_list:
+        if re.match(r"^\|+$", line):
+            break
+        remotes.append(re.sub(r"^\|*", "", line))
+
+    if "datalad-archives" in remotes:
+        archived_files = list()
+        independent_files = list()
+        archive_index = remotes.index("datalad-archives")
+
+        for line in annex_list:
+            # Split only for first occurence to prevent failure when filename has spaces.
+            in_remote, filename = line.split(" ", maxsplit=1)
+
+            if in_remote[archive_index] == "X":
+                archived_files.append(filename)
+            else:
+                independent_files.append(filename)
+
+        if len(independent_files) > minimum:
+            filenames = independent_files
+        else:
+            contains_archived_files = True
+            filenames = archived_files + independent_files
+
+    else:
+        filenames = [x.split()[1] for x in annex_list]
+
+    return filenames, contains_archived_files
 
 
-def download_files(dataset, filenames, time_limit=120):
-    if len(filenames) == 0:
+def download_files(dataset, dataset_size, *, num=4):
+    filenames, contains_archived_files = get_filenames(dataset, minimum=num)
+    k_smallest = get_approx_ksmallests(dataset, filenames)
+
+    if len(k_smallest) == 0:
         return
+
+    download_size = (
+        dataset_size
+        if contains_archived_files
+        else get_sample_files_size(dataset, k_smallest)
+    )
+    # Set a time limit based on the download size.
+    # Limit between 20 sec and 10 minutes to avoid test to fail/hang.
+    time_limit = int(max(20, min(download_size * 1.2 // 2e6, 600)))
 
     responses = []
     with timeout(time_limit):
-        for filename in filenames:
+        for filename in k_smallest:
             full_path = os.path.join(dataset, filename)
             responses = api.get(path=full_path, on_failure="ignore")
 
@@ -255,7 +298,7 @@ def download_files(dataset, filenames, time_limit=120):
         pytest.fail(
             f"The dataset timed out after {time_limit} seconds before retrieving a file."
             " Cannot to tell if the download would be sucessful."
-            f"\n{filename} has size of {get_annexed_file_size(dataset, full_path)} Bytes.",
+            f"\n{filename} has size of {humanize.naturalsize(get_annexed_file_size(dataset, filename))}.",
             pytrace=False,
         )
 
@@ -320,3 +363,7 @@ def get_proper_submodules(dataset: str) -> List[str]:
         api.install(path=submodule, recursive=True)
 
     return proper_submodules
+
+
+def get_sample_files_size(dir_root, files):
+    return sum([get_annexed_file_size(dir_root, f) for f in files])

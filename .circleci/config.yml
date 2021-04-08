@@ -70,7 +70,6 @@ jobs:
           name: Run Tests
           command: |
             . ~/venv/bin/activate
-            ./lint.sh
             export PATH=~/git-annex.linux:$PATH
             python tests/create_tests.py
             circleci tests glob tests/test_* | circleci tests split > /tmp/tests-to-run
