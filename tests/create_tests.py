@@ -2,8 +2,9 @@ import os
 import re
 import string
 from typing import List
-from git import Repo
+
 import requests
+from git import Repo
 
 
 def get_datasets():

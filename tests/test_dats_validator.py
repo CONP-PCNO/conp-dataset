@@ -1,8 +1,8 @@
-import unittest
+import copy
 import json
 import os
 import sys
-import copy
+import unittest
 
 sys.path.append(os.path.join(os.getcwd(), "scripts"))
 from dats_validator.validator import (

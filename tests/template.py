@@ -5,24 +5,20 @@ import os
 import time
 from threading import Lock
 
-from datalad import api
 import git
 import humanfriendly
 import pytest
+from datalad import api
 
-from scripts.dats_validator.validator import (
-    validate_json,
-    validate_non_schema_required,
-    validate_formats,
-    validate_date_types,
-)
-from tests.functions import (
-    authenticate,
-    download_files,
-    eval_config,
-    get_proper_submodules,
-    timeout,
-)
+from scripts.dats_validator.validator import validate_date_types
+from scripts.dats_validator.validator import validate_formats
+from scripts.dats_validator.validator import validate_json
+from scripts.dats_validator.validator import validate_non_schema_required
+from tests.functions import authenticate
+from tests.functions import download_files
+from tests.functions import eval_config
+from tests.functions import get_proper_submodules
+from tests.functions import timeout
 
 
 def delay_rerun(*args):

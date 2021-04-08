@@ -1,11 +1,11 @@
-import jsonschema
-import requests
-
-import os
+import getopt
 import json
 import logging
-import getopt
+import os
 from sys import argv
+
+import jsonschema
+import requests
 
 
 logger = logging.getLogger(__name__)

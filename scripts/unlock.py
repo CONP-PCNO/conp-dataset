@@ -4,8 +4,8 @@ import os
 import re
 import traceback
 
-from git import Repo
 from datalad import api
+from git import Repo
 
 
 def project_name2env(project_name: str) -> str:

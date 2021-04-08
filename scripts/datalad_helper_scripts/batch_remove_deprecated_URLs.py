@@ -1,10 +1,11 @@
-import json
 import getopt
-import sys
+import json
 import os
-import git
-import traceback
 import re
+import sys
+import traceback
+
+import git
 
 
 def parse_input(argv):

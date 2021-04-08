@@ -1,7 +1,7 @@
-import os
-import json
 import csv
 import datetime
+import json
+import os
 
 
 def read_conp_dataset_dir(conp_dataset_dir_path):

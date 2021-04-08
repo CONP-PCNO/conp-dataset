@@ -1,19 +1,21 @@
-from contextlib import contextmanager
-from functools import reduce
 import json
 import os
 import random
 import re
 import signal
 import subprocess
-from typing import List, Set, Union
+from contextlib import contextmanager
+from functools import reduce
+from typing import List
+from typing import Set
+from typing import Union
 
 import datalad.api as api
 import git
-from git.exc import InvalidGitRepositoryError
 import humanize
 import keyring
 import pytest
+from git.exc import InvalidGitRepositoryError
 
 
 @contextmanager

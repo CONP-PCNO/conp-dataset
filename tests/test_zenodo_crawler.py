@@ -1,9 +1,10 @@
-from scripts.Crawlers.ZenodoCrawler import ZenodoCrawler
-from unittest import TestCase
-from unittest import mock
+import os
 import random
 import string
-import os
+from unittest import mock
+from unittest import TestCase
+
+from scripts.Crawlers.ZenodoCrawler import ZenodoCrawler
 
 
 def mock_input():

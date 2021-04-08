@@ -1,6 +1,7 @@
-from scripts.Crawlers.OSFCrawler import OSFCrawler
-from unittest import TestCase
 from unittest import mock
+from unittest import TestCase
+
+from scripts.Crawlers.OSFCrawler import OSFCrawler
 
 
 class TestOSFCrawler(TestCase):

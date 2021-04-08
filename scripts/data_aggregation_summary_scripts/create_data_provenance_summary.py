@@ -1,9 +1,9 @@
-import json
-import getopt
-import sys
-import os
 import csv
 import datetime
+import getopt
+import json
+import os
+import sys
 
 
 def main(argv):

@@ -1,6 +1,7 @@
 import getopt
-import sys
 import os
+import sys
+
 import lib.Utility as Utility
 
 

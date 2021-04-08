@@ -1,9 +1,10 @@
-from git import Repo
-import json
 import argparse
+import json
 import os
 import sys
 import traceback
+
+from git import Repo
 
 
 def parse_args():

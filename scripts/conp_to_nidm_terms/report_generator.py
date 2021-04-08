@@ -1,8 +1,10 @@
 import getopt
-from sys import argv
-from datetime import date
 import json
-from functions import collect_values, find_duplicates
+from datetime import date
+from sys import argv
+
+from functions import collect_values
+from functions import find_duplicates
 
 
 def main(argv):
