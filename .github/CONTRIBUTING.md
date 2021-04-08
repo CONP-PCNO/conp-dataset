@@ -1,4 +1,4 @@
-# Contribution			
+# Contribution
 
 New contributions are more than welcome! ❤️
 
@@ -158,15 +158,15 @@ c. Release your dataset on GitHub (see instructions
 d. This will create a DOI and archive your dataset on Zenodo. Get the DOI
 badge from [here](https://zenodo.org/account/settings/github/) and add it
 to the `README.md` file of your dataset.
-e. The DOI badge links to the DOI associated with the latest DOI of your dataset. 
+e. The DOI badge links to the DOI associated with the latest DOI of your dataset.
    Add this link to your DATS model.
-   
-   
+
+
 ### Updating the dataset manually
 
 #### Dataset as git submodules
 
-Any existing dataset can be added to CONP-PCNO repository as a git submodule. By doing that, the original dataset repository will be added as a subdirectory of CONP-PCNO which will manage it independently. 
+Any existing dataset can be added to CONP-PCNO repository as a git submodule. By doing that, the original dataset repository will be added as a subdirectory of CONP-PCNO which will manage it independently.
 Therefore, by definition of submodules, CONP-PCNO will only hold a reference to the actual dataset which will continue to live in its original space. Additional information on how submodules work can be found [here](https://git-scm.com/book/it/v2/Git-Tools-Submodules).
 The current list of submodules in CONP-PCNO can be found under the [CONP-datasets/project](https://github.com/CONP-PCNO/conp-dataset/tree/master/projects) folder.
 
@@ -176,11 +176,11 @@ The current list of submodules in CONP-PCNO can be found under the [CONP-dataset
 Often a dataset will need to be updated with recent additions. Here we describe the full dataset and git submodule update
 procedural steps with a schematic summary shown below:
 
-1 - Given the nature of a submodule reference, users accessing a dataset in CONP-PCNO will be redirected 
+1 - Given the nature of a submodule reference, users accessing a dataset in CONP-PCNO will be redirected
 to the original dataset location, or origin. Therefore the origin is the first place where a dataset update process starts.
 In the schematic below the reference between a dataset in CONP-dataset and the dataset origin is represented with a long arrow. The
 original dataset repository is shown as [conpdataset repository](https://github.com/conpdatasets) as an example.
-The first step consists in cloning the original dataset repository to develop changes. 
+The first step consists in cloning the original dataset repository to develop changes.
 
 2 - Dataset changes must be approved and merged to master so that the corresponding git submodule in CONP-PCNO
 will be able to update its reference and point to the latest commit at the origin

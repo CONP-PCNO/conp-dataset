@@ -1,7 +1,7 @@
 ### Scripts for creating report about distinct values and generating jsonld files for them
 
 
-- Create report about distinct values in each of the following properties: `privacy`, `types`, `licenses`, `isAbout`, `formats`, `keywords`. 
+- Create report about distinct values in each of the following properties: `privacy`, `types`, `licenses`, `isAbout`, `formats`, `keywords`.
 By default generates report for all properties.
 
 <pre>python report_generator.py [--privacy=False --types=False --licenses=False --is_about= --formats=False --keywords=False --help]</pre>
