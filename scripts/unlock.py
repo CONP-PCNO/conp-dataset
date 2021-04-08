@@ -40,7 +40,9 @@ def unlock():
     token: (str | None) = os.getenv(project + "_ZENODO_TOKEN", None)
 
     if not token:
-        raise Exception(f"{project}_ZENODO_TOKEN not found. Cannot inject the Zenodo token into the git-annex urls.")
+        raise Exception(
+            f"{project}_ZENODO_TOKEN not found. Cannot inject the Zenodo token into the git-annex urls."
+        )
 
     annex = repo.git.annex
     if repo.active_branch.name != "master":
@@ -55,7 +57,10 @@ def unlock():
     # Ensure correct data
     if not metadata["restricted"]:
         raise Exception("Dataset not restricted, no need to unlock")
-    if len(metadata["private_files"]["archive_links"]) == 0 and len(metadata["private_files"]["files"]) == 0:
+    if (
+        len(metadata["private_files"]["archive_links"]) == 0
+        and len(metadata["private_files"]["files"]) == 0
+    ):
         raise Exception("No restricted files to unlock")
 
     # Set token in archive link URLs
@@ -85,7 +90,13 @@ def unlock():
         datalad = api.Dataset(".")
         for file in metadata["private_files"]["files"]:
             annex("rmurl", file["name"], file["link"])
-            annex("addurl", file["link"] + "?access_token=" + token, "--file", file["name"], "--relaxed")
+            annex(
+                "addurl",
+                file["link"] + "?access_token=" + token,
+                "--file",
+                file["name"],
+                "--relaxed",
+            )
             datalad.save()
 
     print("Done")

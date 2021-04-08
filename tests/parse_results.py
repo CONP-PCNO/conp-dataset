@@ -56,8 +56,11 @@ def get_test_case_output(case, previous_test_results):
 
 def case2datasetname(case):
     return (
-        case.classname.replace("tests.test_projects_", "", 1).replace(".TestDataset", "", 1) + ":" +
-        case.name.replace("test_", "", 1).split("[")[0]
+        case.classname.replace("tests.test_projects_", "", 1).replace(
+            ".TestDataset", "", 1
+        )
+        + ":"
+        + case.name.replace("test_", "", 1).split("[")[0]
     )
 
 
@@ -80,7 +83,9 @@ def parse_test_results():
         }
 
         json.dump(
-            output_result, fout, indent=4,
+            output_result,
+            fout,
+            indent=4,
         )
 
 

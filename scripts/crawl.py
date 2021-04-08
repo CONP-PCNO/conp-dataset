@@ -20,9 +20,15 @@ def parse_args():
     * Local Git clone must be set to branch 'master'
     """,
     )
-    parser.add_argument("github_token", action="store", nargs="?", help="GitHub access token")
-    parser.add_argument("config_path", action="store", nargs="?", help="Path to config file to use")
-    parser.add_argument("--verbose", action="store_true", help="Print debug information")
+    parser.add_argument(
+        "github_token", action="store", nargs="?", help="GitHub access token"
+    )
+    parser.add_argument(
+        "config_path", action="store", nargs="?", help="Path to config file to use"
+    )
+    parser.add_argument(
+        "--verbose", action="store_true", help="Print debug information"
+    )
     parser.add_argument("--force", action="store_true", help="Force updates")
     args = parser.parse_args()
 
@@ -30,7 +36,8 @@ def parse_args():
     config_path = args.config_path
     if not config_path:
         config_path = os.path.join(
-            os.path.expanduser("~"), ".conp_crawler_config.json",
+            os.path.expanduser("~"),
+            ".conp_crawler_config.json",
         )
 
     # If config file does not exist, create an empty one
@@ -41,10 +48,10 @@ def parse_args():
     with open(config_path) as f:
         config = json.load(f)
 
-    if 'conp-dataset_path' not in config.keys():
+    if "conp-dataset_path" not in config.keys():
         raise Exception(
-            '"conp-dataset_path" not configured in ' + config_path + ','
-            'please configure it as follows: \n'
+            '"conp-dataset_path" not configured in ' + config_path + ","
+            "please configure it as follows: \n"
             '  "conp-dataset_path": "PATH TO conp-dataset DIRECTORY",',
         )
 
@@ -62,7 +69,13 @@ def parse_args():
     else:  # Retrieve github token from config file
         github_token = config["github_token"]
 
-    return github_token, config_path, args.verbose, args.force, config['conp-dataset_path']
+    return (
+        github_token,
+        config_path,
+        args.verbose,
+        args.force,
+        config["conp-dataset_path"],
+    )
 
 
 if __name__ == "__main__":
@@ -75,12 +88,19 @@ if __name__ == "__main__":
 
     try:
         if verbose:
-            print("==================== Zenodo Crawler Running ====================" + os.linesep)
+            print(
+                "==================== Zenodo Crawler Running ===================="
+                + os.linesep
+            )
         ZenodoCrawlerObj = ZenodoCrawler(github_token, config_path, verbose, force)
         ZenodoCrawlerObj.run()
 
         if verbose:
-            print(os.linesep + "==================== OSF Crawler Running ====================" + os.linesep)
+            print(
+                os.linesep
+                + "==================== OSF Crawler Running ===================="
+                + os.linesep
+            )
         OSFCrawlerObj = OSFCrawler(github_token, config_path, verbose, force)
         OSFCrawlerObj.run()
 

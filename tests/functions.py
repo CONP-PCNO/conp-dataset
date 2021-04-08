@@ -137,7 +137,10 @@ def generate_datalad_provider(loris_api):
     re_loris_api = loris_api.replace(".", "\\.")
 
     datalad_provider_path = os.path.join(
-        os.path.expanduser("~"), ".config", "datalad", "providers",
+        os.path.expanduser("~"),
+        ".config",
+        "datalad",
+        "providers",
     )
     os.makedirs(datalad_provider_path, exist_ok=True)
     with open(
@@ -291,7 +294,8 @@ def download_files(dataset, dataset_size, *, num=4):
                     continue
                 if response.get("status") in ["impossible", "error"]:
                     pytest.fail(
-                        f"{full_path}\n{response.get('message')}", pytrace=False,
+                        f"{full_path}\n{response.get('message')}",
+                        pytrace=False,
                     )
 
     if not responses:

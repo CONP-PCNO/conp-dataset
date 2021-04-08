@@ -8,20 +8,42 @@ from functions import collect_values, find_duplicates
 def main(argv):
     timestamp = date.today()
     opts, args = getopt.getopt(
-        argv, "", [
-            "filename=", "privacy=", "types=", "licenses=",
-            "is_about=", "formats=", "keywords=", "help",
+        argv,
+        "",
+        [
+            "filename=",
+            "privacy=",
+            "types=",
+            "licenses=",
+            "is_about=",
+            "formats=",
+            "keywords=",
+            "help",
         ],
     )
 
-    options = dict(privacy=True, types=True, licenses=True, is_about=True, formats=True, keywords=True)
+    options = dict(
+        privacy=True,
+        types=True,
+        licenses=True,
+        is_about=True,
+        formats=True,
+        keywords=True,
+    )
     filename = f"report_{timestamp}"
 
     for opt, arg in opts:
-        opt_properties = ["--privacy", "--types", "--licenses", "--is_about", "--formats", "--keywords"]
+        opt_properties = [
+            "--privacy",
+            "--types",
+            "--licenses",
+            "--is_about",
+            "--formats",
+            "--keywords",
+        ]
         if opt in opt_properties and arg == "False":
             options[opt.replace("--", "")] = False
-        elif opt == '--filename':
+        elif opt == "--filename":
             filename = arg
         else:
             help_info()

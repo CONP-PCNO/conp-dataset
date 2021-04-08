@@ -48,14 +48,18 @@ class ZenodoCrawler(BaseCrawler):
             'q=keywords:"canadian-open-neuroscience-platform"'
         )
         r_json = requests.get(query).json()
-        results = r_json['hits']['hits']
+        results = r_json["hits"]["hits"]
 
-        if r_json['links']['next']:
-            next_page = r_json['links']['next']
+        if r_json["links"]["next"]:
+            next_page = r_json["links"]["next"]
             while next_page is not None:
                 next_page_json = requests.get(next_page).json()
-                results.extend(next_page_json['hits']['hits'])
-                next_page = next_page_json['links']['next'] if 'next' in next_page_json['links'] else None
+                results.extend(next_page_json["hits"]["hits"])
+                next_page = (
+                    next_page_json["links"]["next"]
+                    if "next" in next_page_json["links"]
+                    else None
+                )
 
         if self.verbose:
             print("Zenodo query: {}".format(query))
@@ -65,7 +69,7 @@ class ZenodoCrawler(BaseCrawler):
         link = bucket["links"]["self"]
         repo = self.git.Repo(dataset_dir)
         annex = repo.git.annex
-        if bucket['key'] in ['DATS.json', 'README.md']:
+        if bucket["key"] in ["DATS.json", "README.md"]:
             d.download_url(link)
             return
         if "access_token" not in link:
@@ -107,7 +111,9 @@ class ZenodoCrawler(BaseCrawler):
                 file_name = json.load(annex("addurl", link, "--fast", "--json"))["file"]
                 annex("rmurl", file_name, link)
                 annex("addurl", tokenless_link, "--file", file_name, "--relaxed")
-                private_files["files"].append({"name": file_name, "link": tokenless_link})
+                private_files["files"].append(
+                    {"name": file_name, "link": tokenless_link}
+                )
         d.save()
 
     def _put_unlock_script(self, dataset_dir):
@@ -141,19 +147,29 @@ class ZenodoCrawler(BaseCrawler):
                     else:
                         # Append access token to each file url
                         for bucket in data["files"]:
-                            bucket["links"]["self"] += "?access_token=" + self.zenodo_tokens[clean_title]
+                            bucket["links"]["self"] += (
+                                "?access_token=" + self.zenodo_tokens[clean_title]
+                            )
                             files.append(bucket)
                 else:
-                    print("No available tokens to access files of {}".format(metadata["title"]))
+                    print(
+                        "No available tokens to access files of {}".format(
+                            metadata["title"]
+                        )
+                    )
                     continue
             else:
                 for bucket in dataset["files"]:
                     files.append(bucket)
 
-            latest_version_doi = metadata["relations"]["version"][0]["last_child"]["pid_value"]
+            latest_version_doi = metadata["relations"]["version"][0]["last_child"][
+                "pid_value"
+            ]
 
             # Retrieve and clean file formats/extensions
-            file_formats = (list(set(map(lambda x: x["type"], files))) if len(files) > 0 else None)
+            file_formats = (
+                list(set(map(lambda x: x["type"], files))) if len(files) > 0 else None
+            )
             if "" in file_formats:
                 file_formats.remove("")
 
@@ -185,11 +201,19 @@ class ZenodoCrawler(BaseCrawler):
                             )
 
             # Get identifier
-            identifier = dataset["conceptdoi"] if "conceptdoi" in dataset.keys() else dataset["doi"]
+            identifier = (
+                dataset["conceptdoi"]
+                if "conceptdoi" in dataset.keys()
+                else dataset["doi"]
+            )
 
             # Get date created and date modified
-            date_created = datetime.datetime.strptime(dataset['created'], '%Y-%m-%dT%H:%M:%S.%f%z')
-            date_modified = datetime.datetime.strptime(dataset['updated'], '%Y-%m-%dT%H:%M:%S.%f%z')
+            date_created = datetime.datetime.strptime(
+                dataset["created"], "%Y-%m-%dT%H:%M:%S.%f%z"
+            )
+            date_modified = datetime.datetime.strptime(
+                dataset["updated"], "%Y-%m-%dT%H:%M:%S.%f%z"
+            )
 
             zenodo_dois.append(
                 {
@@ -249,13 +273,13 @@ class ZenodoCrawler(BaseCrawler):
                     ],
                     "dates": [
                         {
-                            "date": date_created.strftime('%Y-%m-%d %H:%M:%S'),
+                            "date": date_created.strftime("%Y-%m-%d %H:%M:%S"),
                             "type": {
                                 "value": "date created",
                             },
                         },
                         {
-                            "date": date_modified.strftime('%Y-%m-%d %H:%M:%S'),
+                            "date": date_modified.strftime("%Y-%m-%d %H:%M:%S"),
                             "type": {
                                 "value": "date modified",
                             },
@@ -286,9 +310,15 @@ class ZenodoCrawler(BaseCrawler):
         private_files = {"archive_links": [], "files": []}
         for bucket in dataset["files"]:
             self._download_file(bucket, d, dataset_dir, private_files)
-        restricted_dataset = True if len(private_files["archive_links"]) > 0 or len(
-            private_files["files"],
-        ) > 0 else False
+        restricted_dataset = (
+            True
+            if len(private_files["archive_links"]) > 0
+            or len(
+                private_files["files"],
+            )
+            > 0
+            else False
+        )
 
         # If dataset is a restricted dataset, create a script which allows to unlock downloading files in dataset
         if restricted_dataset:
@@ -296,7 +326,10 @@ class ZenodoCrawler(BaseCrawler):
 
         # Add .conp-zenodo-crawler.json tracker file
         _create_zenodo_tracker(
-            os.path.join(dataset_dir, ".conp-zenodo-crawler.json"), dataset, private_files, restricted_dataset,
+            os.path.join(dataset_dir, ".conp-zenodo-crawler.json"),
+            dataset,
+            private_files,
+            restricted_dataset,
         )
 
     def update_if_necessary(self, dataset_description, dataset_dir):
@@ -310,8 +343,10 @@ class ZenodoCrawler(BaseCrawler):
             # Same version, no need to update
             if self.verbose:
                 print(
-                    "{}, version {} same as Zenodo vesion DOI, no need to update"
-                    .format(dataset_description["title"], dataset_description["latest_version"]),
+                    "{}, version {} same as Zenodo vesion DOI, no need to update".format(
+                        dataset_description["title"],
+                        dataset_description["latest_version"],
+                    ),
                 )
             return False
         else:
@@ -333,16 +368,24 @@ class ZenodoCrawler(BaseCrawler):
             private_files = {"archive_links": [], "files": []}
             for bucket in dataset_description["files"]:
                 self._download_file(bucket, d, dataset_dir, private_files)
-            restricted_dataset = True if len(private_files["archive_links"]) > 0 or len(
-                private_files["files"],
-            ) > 0 else False
+            restricted_dataset = (
+                True
+                if len(private_files["archive_links"]) > 0
+                or len(
+                    private_files["files"],
+                )
+                > 0
+                else False
+            )
 
             # If dataset is a restricted dataset, create a script which allows to unlock downloading files in dataset
             if restricted_dataset:
                 self._put_unlock_script(dataset_dir)
 
             # Add/update .conp-zenodo-crawler.json tracker file
-            _create_zenodo_tracker(tracker_path, dataset_description, private_files, restricted_dataset)
+            _create_zenodo_tracker(
+                tracker_path, dataset_description, private_files, restricted_dataset
+            )
 
             return True
 
@@ -356,7 +399,8 @@ Crawled from Zenodo
 ## Description
 
 {2}""".format(
-            dataset["title"], dataset["doi_badge"],
+            dataset["title"],
+            dataset["doi_badge"],
             html2markdown.convert(
                 dataset["description"],
             ).replace("\n", "<br />"),
