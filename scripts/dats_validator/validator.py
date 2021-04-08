@@ -243,7 +243,7 @@ def validate_non_schema_required(json_obj):
 
 
 # cache responses to avoid redundant calls
-cache = dict()
+cache = {}
 
 
 def dataset_exists(derived_from_url):

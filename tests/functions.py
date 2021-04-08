@@ -235,7 +235,7 @@ def authenticate(dataset):
 def get_filenames(dataset, *, minimum):
     contains_archived_files = False
     annex_list: str = iter(git.Repo(dataset).git.annex("list").split("\n"))
-    remotes = list()
+    remotes = []
 
     # Retrieve remotes from the header.
     for line in annex_list:
@@ -244,8 +244,8 @@ def get_filenames(dataset, *, minimum):
         remotes.append(re.sub(r"^\|*", "", line))
 
     if "datalad-archives" in remotes:
-        archived_files = list()
-        independent_files = list()
+        archived_files = []
+        independent_files = []
         archive_index = remotes.index("datalad-archives")
 
         for line in annex_list:

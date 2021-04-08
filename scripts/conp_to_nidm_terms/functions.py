@@ -141,7 +141,7 @@ def collect_values(
                 if keywords:
                     keywords_values.update({k["value"] for k in dats_data["keywords"]})
 
-    report = dict()
+    report = {}
     for key, value in zip(
         ["privacy", "licenses", "types", "is_about", "formats", "keywords"],
         [
@@ -167,11 +167,11 @@ def find_duplicates(report):
     :param report: json object returned by collect_values()
     :return: list of errors describing where duplicates occur
     """
-    errors = list()
+    errors = []
     for key in ["privacy", "licenses", "types", "is_about", "formats", "keywords"]:
         if key in report:
             terms = report[key]["values"]
-            normilized_terms = dict()
+            normilized_terms = {}
             for term in terms:
                 if term.lower() in normilized_terms:
                     normilized_terms[term.lower()].append(term)
