@@ -1,6 +1,5 @@
 # CONP dataset
 
-[![Build Status](https://travis-ci.org/CONP-PCNO/conp-dataset.svg?branch=master)](https://travis-ci.org/CONP-PCNO/conp-dataset)
 [![CircleCI](https://circleci.com/gh/CONP-PCNO/conp-dataset.svg?style=shield)](https://circleci.com/gh/CONP-PCNO/conp-dataset)
 
 CONP dataset is a repository containing the datasets available in the
@@ -88,4 +87,15 @@ For detailed explanations of the tests, please consult the [test suite documenta
 
 ## Coding standards
 
-In order to keep the Python code maintainable and readable, please run `./lint.sh` to make sure the coding is up to standards. CircleCI will be checking this.
+To keep the Python code maintainable and readable a suite of QA pipelines is testing the code assuring code standards.
+Pull requests will trigger a GitHub workflow executing pre-commit.
+
+To execute pre-commit locally, you will need to [install pre-commit](https://pre-commit.com/#installation) using your favorite method.
+Then, run:
+```bash
+pre-commit install
+
+pre-commit run --all-files
+```
+Pre-commit won't let you commit until reported issue are fixed.
+If problematic, you can optionally skip the pre-commit for a local commit using the `--no-verify` flag when commiting, however this will still perform QA test on your PR.
