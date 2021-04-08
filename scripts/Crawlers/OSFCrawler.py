@@ -23,7 +23,7 @@ class OSFCrawler(BaseCrawler):
 
     def _get_token(self):
         if os.path.isfile(self.config_path):
-            with open(self.config_path, "r") as f:
+            with open(self.config_path) as f:
                 data = json.load(f)
             if "osf_token" in data.keys():
                 return data["osf_token"]
@@ -332,7 +332,7 @@ class OSFCrawler(BaseCrawler):
         if not os.path.isfile(tracker_path):
             print("{} does not exist in dataset, skipping".format(tracker_path))
             return False
-        with open(tracker_path, "r") as f:
+        with open(tracker_path) as f:
             tracker = json.load(f)
         if tracker["version"] == dataset_description["version"]:
             # Same version, no need to update

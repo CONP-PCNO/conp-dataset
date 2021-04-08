@@ -1,6 +1,6 @@
 from scripts.Crawlers.ZenodoCrawler import ZenodoCrawler
 from unittest import TestCase
-import mock
+from unittest import mock
 import random
 import string
 import os

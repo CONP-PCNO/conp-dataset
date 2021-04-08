@@ -18,12 +18,12 @@ CURRENT_WORKING_DIR = os.path.dirname(os.path.realpath(__file__))
 NIF_API_URL = "https://scicrunch.org/api/1/ilx/search/term/"
 
 # Load JSON-LD template
-with open("template.jsonld", "r", encoding="utf-8") as template_file:
+with open("template.jsonld", encoding="utf-8") as template_file:
     JSONLD_TEMPLATE = json.load(template_file)
 
 
 # Set API key
-with open("api_key.json", "r", encoding="utf-8") as api_key_file:
+with open("api_key.json", encoding="utf-8") as api_key_file:
     API_KEY = json.load(api_key_file)["api_key"]
 
 
@@ -43,7 +43,7 @@ def get_api_response(term):
         r = requests.get(NIF_API_URL + term + api_key, headers={'accept': 'application/json'})
         r.raise_for_status()
         response = json.loads(r.content.decode('utf-8'))
-        match = str()
+        match = ''
         # Standard response will have existing_ids key
         if "existing_ids" in response["data"] and response["data"]["existing_ids"]:
             for i in response["data"]["existing_ids"]:
@@ -80,7 +80,7 @@ def collect_values(privacy=True, types=True, licenses=True, is_about=True, forma
         if "DATS.json" in files:
             dats_files_count += 1
             dats_file = os.path.join(path, "DATS.json")
-            with open(dats_file, "r", encoding="utf-8") as json_file:
+            with open(dats_file, encoding="utf-8") as json_file:
                 dats_data = json.load(json_file)
 
                 # privacy is not required
@@ -92,11 +92,11 @@ def collect_values(privacy=True, types=True, licenses=True, is_about=True, forma
                     for typ in dats_data["types"]:
                         # types takes four possible datatype schemas
                         datatype_schemas = ["information", "method", "platform", "instrument"]
-                        types_datatype_values.update(set(typ[t]["value"] for t in datatype_schemas if t in typ))
+                        types_datatype_values.update({typ[t]["value"] for t in datatype_schemas if t in typ})
 
                 if licenses:
                     # licenses is required
-                    licenses_values.update(set(licence["name"] for licence in dats_data["licenses"]))
+                    licenses_values.update({licence["name"] for licence in dats_data["licenses"]})
 
                 # isAbout is not required
                 if is_about and "isAbout" in dats_data:
@@ -112,10 +112,10 @@ def collect_values(privacy=True, types=True, licenses=True, is_about=True, forma
                 if formats:
                     for dist in dats_data["distributions"]:
                         if "formats" in dist:
-                            distributions_formats.update(set(f for f in dist["formats"]))
+                            distributions_formats.update({f for f in dist["formats"]})
 
                 if keywords:
-                    keywords_values.update(set(k["value"] for k in dats_data["keywords"]))
+                    keywords_values.update({k["value"] for k in dats_data["keywords"]})
 
     report = dict()
     for key, value in zip(["privacy", "licenses", "types", "is_about", "formats", "keywords"],

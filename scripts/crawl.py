@@ -37,7 +37,7 @@ def parse_args():
         with open(config_path, "w") as f:
             json.dump({}, f)
 
-    with open(config_path, "r") as f:
+    with open(config_path) as f:
         config = json.load(f)
 
     if 'conp-dataset_path' not in config.keys():

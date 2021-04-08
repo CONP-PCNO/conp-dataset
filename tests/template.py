@@ -33,7 +33,7 @@ def delay_rerun(*args):
 lock = Lock()
 
 
-class Template(object):
+class Template:
     @pytest.fixture(autouse=True)
     def install_dataset(self, dataset):
 

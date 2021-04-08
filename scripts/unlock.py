@@ -49,7 +49,7 @@ def unlock():
     if not os.path.isfile(".conp-zenodo-crawler.json"):
         raise Exception("'.conp-zenodo-crawler.json file not found")
 
-    with open(".conp-zenodo-crawler.json", "r") as f:
+    with open(".conp-zenodo-crawler.json") as f:
         metadata = json.load(f)
 
     # Ensure correct data
@@ -68,7 +68,7 @@ def unlock():
                     file_path = os.path.join(dir_name, file_name)
                     if ".git" in file_path:
                         continue
-                    with open(file_path, "r") as f:
+                    with open(file_path) as f:
                         s = f.read()
                     if link in s and "access_token" not in s:
                         changes = True

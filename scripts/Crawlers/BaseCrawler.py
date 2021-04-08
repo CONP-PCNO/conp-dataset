@@ -421,7 +421,7 @@ Functional checks:
         file_names = list(
             map(lambda x: x.split("/")[-1] if "/" in x else x, file_paths)
         )  # Get file names from path
-        modalities = set([self._guess_modality(file_name) for file_name in file_names])
+        modalities = {self._guess_modality(file_name) for file_name in file_names}
         if len(modalities) == 0:
             modalities.add("unknown")
         elif len(modalities) > 1 and "unknown" in modalities:

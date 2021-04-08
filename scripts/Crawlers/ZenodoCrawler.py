@@ -8,7 +8,7 @@ import datetime
 
 
 def _get_unlock_script():
-    with open(os.path.join("scripts", "unlock.py"), "r") as f:
+    with open(os.path.join("scripts", "unlock.py")) as f:
         return f.read()
 
 
@@ -34,7 +34,7 @@ class ZenodoCrawler(BaseCrawler):
 
     def _get_tokens(self):
         if os.path.isfile(self.config_path):
-            with open(self.config_path, "r") as f:
+            with open(self.config_path) as f:
                 data = json.load(f)
             if "zenodo_tokens" in data.keys():
                 return data["zenodo_tokens"]
@@ -86,7 +86,7 @@ class ZenodoCrawler(BaseCrawler):
                         file_path = os.path.join(dir_name, file_name)
                         if ".git" in file_path:
                             continue
-                        with open(file_path, "r") as f:
+                        with open(file_path) as f:
                             s = f.read()
                         if link in s:
                             s = s.replace(link, tokenless_link)
@@ -302,7 +302,7 @@ class ZenodoCrawler(BaseCrawler):
         if not os.path.isfile(tracker_path):
             print("{} does not exist in dataset, skipping".format(tracker_path))
             return False
-        with open(tracker_path, "r") as f:
+        with open(tracker_path) as f:
             tracker = json.load(f)
         if tracker["zenodo"]["version"] == dataset_description["latest_version"]:
             # Same version, no need to update
