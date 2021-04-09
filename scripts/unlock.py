@@ -68,7 +68,7 @@ def unlock():
         repo.git.checkout("git-annex")
         changes = False
         for link in metadata["private_files"]["archive_links"]:
-            for dir_name, dirs, files in os.walk("."):
+            for dir_name, _, files in os.walk("."):
                 for file_name in files:
                     file_path = os.path.join(dir_name, file_name)
                     if ".git" in file_path:
