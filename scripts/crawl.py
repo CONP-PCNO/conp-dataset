@@ -1,9 +1,10 @@
-from git import Repo
-import json
 import argparse
+import json
 import os
 import sys
 import traceback
+
+from git import Repo
 
 
 def parse_args():
@@ -20,39 +21,59 @@ def parse_args():
     * Local Git clone must be set to branch 'master'
     """,
     )
-    parser.add_argument("github_token", action="store", nargs="?", help="GitHub access token")
-    parser.add_argument("config_path", action="store", nargs="?", help="Path to config file to use")
-    parser.add_argument("--verbose", action="store_true", help="Print debug information")
+    parser.add_argument(
+        "github_token",
+        action="store",
+        nargs="?",
+        help="GitHub access token",
+    )
+    parser.add_argument(
+        "config_path",
+        action="store",
+        nargs="?",
+        help="Path to config file to use",
+    )
+    parser.add_argument(
+        "--verbose",
+        action="store_true",
+        help="Print debug information",
+    )
     parser.add_argument("--force", action="store_true", help="Force updates")
-    parser.add_argument("--no_pr", action="store_true", help="Don't create a pull request at the end")
+    parser.add_argument(
+        "--no_pr",
+        action="store_true",
+        help="Don't create a pull request at the end",
+    )
     args = parser.parse_args()
 
     github_token = args.github_token
     config_path = args.config_path
     if not config_path:
         config_path = os.path.join(
-            os.path.expanduser("~"), ".conp_crawler_config.json")
+            os.path.expanduser("~"),
+            ".conp_crawler_config.json",
+        )
 
     # If config file does not exist, create an empty one
     if not os.path.isfile(config_path):
         with open(config_path, "w") as f:
             json.dump({}, f)
 
-    with open(config_path, "r") as f:
+    with open(config_path) as f:
         config = json.load(f)
 
-    if 'conp-dataset_path' not in config.keys():
+    if "conp-dataset_path" not in config.keys():
         raise Exception(
-            '"conp-dataset_path" not configured in ' + config_path + ','
-            'please configure it as follows: \n'
-            '  "conp-dataset_path": "PATH TO conp-dataset DIRECTORY",'
+            '"conp-dataset_path" not configured in ' + config_path + ","
+            "please configure it as follows: \n"
+            '  "conp-dataset_path": "PATH TO conp-dataset DIRECTORY",',
         )
 
     if not github_token and "github_token" not in config.keys():
         raise Exception(
             "Github token not passed by command line argument "
             "nor found in config file " + config_path + ", "
-            "please pass your github access token via the command line"
+            "please pass your github access token via the command line",
         )
     elif github_token:
         config["github_token"] = github_token
@@ -62,11 +83,25 @@ def parse_args():
     else:  # Retrieve github token from config file
         github_token = config["github_token"]
 
-    return github_token, config_path, args.verbose, args.force, config['conp-dataset_path'], args.no_pr
+    return (
+        github_token,
+        config_path,
+        args.verbose,
+        args.force,
+        config["conp-dataset_path"],
+        args.no_pr,
+    )
 
 
 if __name__ == "__main__":
-    github_token, config_path, verbose, force, conp_dataset_dir_path, no_pr = parse_args()
+    (
+        github_token,
+        config_path,
+        verbose,
+        force,
+        conp_dataset_dir_path,
+        no_pr,
+    ) = parse_args()
 
     # import the crawler packages
     sys.path.append(conp_dataset_dir_path)
@@ -75,12 +110,25 @@ if __name__ == "__main__":
 
     try:
         if verbose:
-            print("==================== Zenodo Crawler Running ====================" + os.linesep)
-        ZenodoCrawlerObj = ZenodoCrawler(github_token, config_path, verbose, force, no_pr)
+            print(
+                "==================== Zenodo Crawler Running ===================="
+                + os.linesep,
+            )
+        ZenodoCrawlerObj = ZenodoCrawler(
+            github_token,
+            config_path,
+            verbose,
+            force,
+            no_pr,
+        )
         ZenodoCrawlerObj.run()
 
         if verbose:
-            print(os.linesep + "==================== OSF Crawler Running ====================" + os.linesep)
+            print(
+                os.linesep
+                + "==================== OSF Crawler Running ===================="
+                + os.linesep,
+            )
         OSFCrawlerObj = OSFCrawler(github_token, config_path, verbose, force, no_pr)
         OSFCrawlerObj.run()
 

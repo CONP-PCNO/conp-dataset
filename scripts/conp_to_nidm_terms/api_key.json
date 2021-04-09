@@ -1,4 +1,4 @@
 {
-  "api_key": "",
-  "_comment": "Add your API Key for the NIF data services above. More information on how to obtain API Key can be found here https://neuinfo.org/about/webservices"
+  "_comment": "Add your API Key for the NIF data services above. More information on how to obtain API Key can be found here https://neuinfo.org/about/webservices",
+  "api_key": ""
 }
