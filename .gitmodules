@@ -143,3 +143,8 @@
 [submodule "projects/multicenter-phantom"]
 	path = projects/multicenter-phantom
 	url = https://github.com/conpdatasets/multicenter-phantom.git
+[submodule "BigBrain_3DClassifiedVolumes"]
+	path = BigBrain_3DClassifiedVolumes
+	url = https://github.com/conpdatasets/BigBrain_3DClassifiedVolumes.git
+	branch = master
+	datalad-id = 8323efe2-72aa-11ea-a364-0800277806bd
