@@ -143,13 +143,12 @@
 [submodule "projects/multicenter-phantom"]
 	path = projects/multicenter-phantom
 	url = https://github.com/conpdatasets/multicenter-phantom.git
-
 [submodule "projects/BigBrain_3DClassifiedVolumes"]
 	path = projects/BigBrain_3DClassifiedVolumes
-	url = https://github.com/conpdatasets/BigBrain_3DClassifiedVolumes
+	url = https://github.com/conpdatasets/BigBrain_3DClassifiedVolumes.git
 [submodule "projects/BigBrain_3DSurfaces"]
 	path = projects/BigBrain_3DSurfaces
-	url = https://github.com/conpdatasets/BigBrain_3DSurfaces
+	url = https://github.com/conpdatasets/BigBrain_3DSurfaces.git
 [submodule "projects/mcgill-emc-rna-seq-experiment"]
 	path = projects/mcgill-emc-rna-seq-experiment
-	url = https://github.com/conpdatasets/mcgill-emc-rna-seq-experiment
+	url = https://github.com/conpdatasets/mcgill-emc-rna-seq-experiment.git
