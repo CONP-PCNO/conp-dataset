@@ -147,3 +147,9 @@
 [submodule "projects/BigBrain_3DClassifiedVolumes"]
 	path = projects/BigBrain_3DClassifiedVolumes
 	url = https://github.com/conpdatasets/BigBrain_3DClassifiedVolumes
+[submodule "projects/BigBrain_3DSurfaces"]
+	path = projects/BigBrain_3DSurfaces
+	url = https://github.com/conpdatasets/BigBrain_3DSurfaces
+[submodule "projects/mcgill-emc-rna-seq-experiment"]
+	path = projects/mcgill-emc-rna-seq-experiment
+	url = https://github.com/conpdatasets/mcgill-emc-rna-seq-experiment
