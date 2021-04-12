@@ -46,9 +46,6 @@
 [submodule "projects/Learning_Naturalistic_Structure__Processed_fMRI_dataset"]
   path = projects/Learning_Naturalistic_Structure__Processed_fMRI_dataset
   url = https://github.com/conp-bot/conp-dataset-Learning_Naturalistic_Structure__Processed_fMRI_dataset.git
-[submodule "projects/mcgill-emc-rna-seq-experiment"]
-	path = projects/mcgill-emc-rna-seq-experiment
-	url = https://github.com/zxenia/mcgill-emc-rna-seq-experiment.git
 [submodule "projects/VFA_T1_mapping___RTHawk__open__vs_Siemens__commercial_"]
   path = projects/VFA_T1_mapping___RTHawk__open__vs_Siemens__commercial_
   url = https://github.com/conp-bot/conp-dataset-VFA_T1_mapping___RTHawk__open__vs_Siemens__commercial_.git
@@ -73,14 +70,6 @@
 [submodule "projects/Reusing-Neuro-Data"]
 	path = projects/Reusing-Neuro-Data
 	url = https://github.com/conpdatasets/Reusing-Neuro-Data.git
-[submodule "projects/BigBrain_3DClassifiedVolumes"]
-	path = projects/BigBrain_3DClassifiedVolumes
-	url = https://github.com/emmetaobrien/BigBrain_3DClassifiedVolumes.git
-	branch = master
-	datalad-id = 8323efe2-72aa-11ea-a364-0800277806bd
-[submodule "projects/BigBrain_3DSurfaces"]
-	path = projects/BigBrain_3DSurfaces
-	url = https://github.com/emmetaobrien/BigBrain_3DSurfaces.git
 [submodule "projects/visual-working-memory"]
 	path = projects/visual-working-memory
 	url = https://github.com/conpdatasets/ds001634.git
