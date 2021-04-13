@@ -146,3 +146,6 @@
 [submodule "projects/mcgill-emc-rna-seq-experiment"]
 	path = projects/mcgill-emc-rna-seq-experiment
 	url = https://github.com/conpdatasets/mcgill-emc-rna-seq-experiment.git
+[submodule "projects/preventad-open"]
+	path = projects/preventad-open
+	url = https://github.com/conpdatasets/preventad-open/
