@@ -149,3 +149,6 @@
 [submodule "projects/preventad-open"]
 	path = projects/preventad-open
 	url = https://github.com/conpdatasets/preventad-open/
+[submodule "projects/openpain/subacute_longitudinal_study"]
+	path = projects/openpain/subacute_longitudinal_study
+	url = https://github.com/conpdatasets/openpain-subacute_longitudinal_study/
