@@ -1,6 +1,3 @@
-[submodule "projects/preventad-open"]
-  path = projects/preventad-open
-  url = https://github.com/conpdatasets/preventad-open.git
 [submodule "projects/SIMON-dataset"]  
   path = projects/SIMON-dataset
   url = https://github.com/conpdatasets/SIMON-dataset.git
@@ -19,9 +16,6 @@
 [submodule "openpain-placebo_1"]
 	path = projects/openpain/placebo_1
 	url = https://github.com/conpdatasets/openpain-placebo_1.git
-[submodule "openpain-subacute_longitudinal_study"]
-	path = projects/openpain/subacute_longitudinal_study
-	url = https://github.com/conpdatasets/openpain-subacute_longitudinal_study.git
 [submodule "openpain-placebo_predict_tetreault"]
 	path = projects/openpain/placebo_predict_tetreault
 	url = https://github.com/conpdatasets/openpain-placebo_predict_tetreault.git
