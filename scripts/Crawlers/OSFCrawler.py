@@ -328,15 +328,15 @@ class OSFCrawler(BaseCrawler):
                     {
                         "date": date_created.strftime("%Y-%m-%d %H:%M:%S"),
                         "type": {
-                            "value": "Date Created",
-                        },
+                            "value": "date created"
+                        }
                     },
                     {
                         "date": date_modified.strftime("%Y-%m-%d %H:%M:%S"),
                         "type": {
-                            "value": "Date Modified",
-                        },
-                    },
+                            "value": "date modified"
+                        }
+                    }
                 ],
                 "keywords": keywords,
                 "distributions": [
