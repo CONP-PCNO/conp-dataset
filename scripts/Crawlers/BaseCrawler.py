@@ -284,7 +284,14 @@ class BaseCrawler:
                 commit_msg = "Created " + dataset_description["title"]
             else:  # Dataset already existing locally
                 self.repo.git.checkout("-f", branch_name)
-                self.repo.git.merge("-n", "master")
+                try:
+                    self.repo.git.merge("-n", "--no-verify", "master")
+                except Exception as e:
+                    print(f"Error while merging master into {branch_name}: {e}")
+                    print("Skipping this dataset")
+                    self.repo.git.checkout("master")
+                    continue
+
                 modified = self.update_if_necessary(dataset_description, dataset_dir)
                 if modified:
                     # Create DATS.json if it doesn't exist
