@@ -1,21 +1,18 @@
-from contextlib import contextmanager
-from functools import reduce
 import json
 import os
 import random
 import re
 import signal
 import subprocess
-import sys
-from typing import List, Set, Union
+from contextlib import contextmanager
+from functools import reduce
 
 import datalad.api as api
 import git
-from git.exc import InvalidGitRepositoryError
+import humanize
 import keyring
 import pytest
-
-from scripts.dats_validator.validator import validate_json
+from git.exc import InvalidGitRepositoryError
 
 
 @contextmanager
@@ -66,39 +63,41 @@ def project_name2env(project_name: str) -> str:
 
 def get_annexed_file_size(dataset, file_path):
     """Get the size of an annexed file in Bytes.
-    
+
     Parameters
     ----------
     dataset : string
         Path to the dataset containing the file.
     file_path : str
         Realative path of the file within a dataset
-    
+
     Returns
     -------
     float
         Size of the annexed file in Bytes.
     """
     info_output = git.Repo(dataset).git.annex(
-        "info", file_path, json=True, bytes=True,
+        "info",
+        file_path,
+        json=True,
+        bytes=True,
     )
     metadata = json.loads(info_output)
 
     try:
         return int(metadata["size"])
-    except Exception as e:
-        print(file_path)
+    except Exception:
         return float("inf")
 
 
 def is_authentication_required(dataset):
     """Verify in the dataset DATS file if authentication is required.
-    
+
     Parameters
     ----------
     dataset : str
         Relative path to the dataset root.
-    
+
     Returns
     -------
     bool
@@ -117,7 +116,7 @@ def is_authentication_required(dataset):
                         [
                             authorization["value"] != "public"
                             for authorization in authorizations
-                        ]
+                        ],
                     ):
                         return True
 
@@ -134,44 +133,48 @@ def is_authentication_required(dataset):
 def generate_datalad_provider(loris_api):
 
     # Regex for provider
-    re_loris_api = loris_api.replace(".", "\.")
+    re_loris_api = loris_api.replace(".", "\\.")
 
     datalad_provider_path = os.path.join(
-        os.path.expanduser("~"), ".config", "datalad", "providers"
+        os.path.expanduser("~"),
+        ".config",
+        "datalad",
+        "providers",
     )
     os.makedirs(datalad_provider_path, exist_ok=True)
-    with open(os.path.join(datalad_provider_path, "loris.cfg"), "w+",) as fout:
+    with open(
+        os.path.join(datalad_provider_path, "loris.cfg"),
+        "w+",
+    ) as fout:
         fout.write(
-            f"""[provider:loris]                                                                    
-url_re = {re_loris_api}/*                             
-authentication_type = loris-token                                                           
-credential = loris                                                                  
-                                                                                            
-[credential:loris]                                                                  
-url = {loris_api}/login                                           
-type = loris-token  
-"""
+            f"""[provider:loris]
+url_re = {re_loris_api}/*
+authentication_type = loris-token
+credential = loris
+
+[credential:loris]
+url = {loris_api}/login
+type = loris-token
+""",
         )
 
 
 def get_submodules(root: str) -> set:
     """Return recursively all submodule of a dataset.
-    
+
     Parameters
     ----------
     root : str
         Absolute path of the submodule root.
-    
+
     Returns
     -------
     set
         All submodules path of a dataset.
     """
     try:
-        submodules: Union[Set[str], None] = {
-            submodule.path for submodule in git.Repo(root).submodules
-        }
-    except InvalidGitRepositoryError as e:
+        submodules = {submodule.path for submodule in git.Repo(root).submodules}
+    except InvalidGitRepositoryError:
         submodules = None
 
     if submodules:
@@ -210,30 +213,76 @@ def authenticate(dataset):
         generate_datalad_provider(loris_api)
     elif zenodo_token:
         pass
-    elif is_authentication_required(dataset) == True:
+    elif is_authentication_required(dataset):
         if os.getenv("CIRCLE_PR_NUMBER", False):
             pytest.skip(
-                f"WARNING: {dataset} cannot be test on Pull Requests to protect secrets."
+                f"WARNING: {dataset} cannot be test on Pull Requests to protect secrets.",
             )
 
         pytest.fail(
             "Cannot download file (dataset requires authentication, make sure "
-            + f"that environment variables {project}_USERNAME, {project}_PASSWORD, "
-            + f"and {project}_LORIS_API are defined in CircleCI).",
+            f"that environment variables {project}_USERNAME, {project}_PASSWORD, "
+            f"and {project}_LORIS_API are defined in CircleCI).",
             pytrace=False,
         )
 
 
-def get_filenames(dataset):
-    annex_list: str = git.Repo(dataset).git.annex("list")
-    filenames: List[str] = re.split(r"\n[_X]+\s", annex_list)[1:]
-    return filenames
+def get_filenames(dataset, *, minimum):
+    contains_archived_files = False
+    annex_list: str = iter(git.Repo(dataset).git.annex("list").split("\n"))
+    remotes = []
+
+    # Retrieve remotes from the header.
+    for line in annex_list:
+        if re.match(r"^\|+$", line):
+            break
+        remotes.append(re.sub(r"^\|*", "", line))
+
+    if "datalad-archives" in remotes:
+        archived_files = []
+        independent_files = []
+        archive_index = remotes.index("datalad-archives")
+
+        for line in annex_list:
+            # Split only for first occurence to prevent failure when filename has spaces.
+            in_remote, filename = line.split(" ", maxsplit=1)
+
+            if in_remote[archive_index] == "X":
+                archived_files.append(filename)
+            else:
+                independent_files.append(filename)
+
+        if len(independent_files) > minimum:
+            filenames = independent_files
+        else:
+            contains_archived_files = True
+            filenames = archived_files + independent_files
+
+    else:
+        filenames = [x.split()[1] for x in annex_list]
+
+    return filenames, contains_archived_files
 
 
-def download_files(dataset, filenames, time_limit=120):
+def download_files(dataset, dataset_size, *, num=4):
+    filenames, contains_archived_files = get_filenames(dataset, minimum=num)
+    k_smallest = get_approx_ksmallests(dataset, filenames)
+
+    if len(k_smallest) == 0:
+        return
+
+    download_size = (
+        dataset_size
+        if contains_archived_files
+        else get_sample_files_size(dataset, k_smallest)
+    )
+    # Set a time limit based on the download size.
+    # Limit between 20 sec and 10 minutes to avoid test to fail/hang.
+    time_limit = int(max(20, min(download_size * 1.2 // 2e6, 600)))
+
     responses = []
     with timeout(time_limit):
-        for filename in filenames:
+        for filename in k_smallest:
             full_path = os.path.join(dataset, filename)
             responses = api.get(path=full_path, on_failure="ignore")
 
@@ -242,14 +291,15 @@ def download_files(dataset, filenames, time_limit=120):
                     continue
                 if response.get("status") in ["impossible", "error"]:
                     pytest.fail(
-                        f"{full_path}\n{response.get('message')}", pytrace=False
+                        f"{full_path}\n{response.get('message')}",
+                        pytrace=False,
                     )
 
-    if responses == []:
+    if not responses:
         pytest.fail(
             f"The dataset timed out after {time_limit} seconds before retrieving a file."
-            + " Cannot to tell if the download would be sucessful."
-            + f"\n{filename} has size of {get_annexed_file_size(dataset, full_path)} Bytes.",
+            " Cannot to tell if the download would be sucessful."
+            f"\n{filename} has size of {humanize.naturalsize(get_annexed_file_size(dataset, filename))}.",
             pytrace=False,
         )
 
@@ -268,3 +318,53 @@ def get_approx_ksmallests(dataset, filenames, k=4, sample_size=200):
         [filename for filename in sample_files],
         key=lambda x: get_annexed_file_size(dataset, x),
     )[:k]
+
+
+def get_proper_submodules(dataset: str):
+    """Install and Return the non-derivative submodules.
+
+    Parameters
+    ----------
+    dataset: str
+        Path to the root of the dataset.
+
+    Returns
+    -------
+        proper_submodules: list[str]
+            Submodules not derived form another CONP dataset.
+
+    """
+    if "DATS.json" not in os.listdir(dataset):
+        pytest.fail(
+            f"Dataset {dataset} doesn't contain DATS.json in its root directory.",
+            pytrace=False,
+        )
+
+    with open(os.path.join(dataset, "DATS.json")) as fin:
+        dats = json.load(fin)
+
+    parent_dataset_ids = set()
+    if "extraProperties" in dats:
+        for property_ in dats["extraProperties"]:
+            if property_["category"] == "parent_dataset_id":
+                parent_dataset_ids = {x["value"] for x in property_["values"]}
+                break
+
+    submodules = git.Repo(dataset).submodules
+    # Parent dataset should not be tested here but in their own dataset repository.
+    # For this reason we only install submodules for which there is no derivedFrom
+    # value associated with.
+    proper_submodules = [
+        os.path.join(dataset, submodule.path)
+        for submodule in submodules
+        if submodule.path not in parent_dataset_ids
+    ]
+
+    for submodule in proper_submodules:
+        api.install(path=submodule, recursive=True)
+
+    return proper_submodules
+
+
+def get_sample_files_size(dir_root, files):
+    return sum([get_annexed_file_size(dir_root, f) for f in files])
