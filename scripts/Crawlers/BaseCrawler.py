@@ -1,10 +1,11 @@
-from datalad import api
-import git
-import os
-import re
-import requests
 import abc
 import json
+import os
+import re
+
+import git
+import requests
+from datalad import api
 
 
 class BaseCrawler:
@@ -35,7 +36,7 @@ class BaseCrawler:
     (2) It iterates through each dataset description, and switch to a dedicated git branch
     for each dataset.
        (2.a) If the dataset is new, the base class will create a new branch,
-             an empty datalad repository, unannex DATS.json and README.md and create an 
+             an empty datalad repository, unannex DATS.json and README.md and create an
              empty GitHub repository. It will then call abstract method add_new_dataset()
              which will add/download all dataset files under given directory.
              The crawler will then add a custom DATS.json and README.md if those weren't added.
@@ -47,7 +48,7 @@ class BaseCrawler:
              the base class will call abstract method update_if_necessary() which will verify
              if the dataset requires updating and update if so. If the dataset got updated, This method
              will return True which will trigger saving, publishing new content to the dataset's respective
-             repository, creating a new DATS.json if it doesn't exist and creating a pull 
+             repository, creating a new DATS.json if it doesn't exist and creating a pull
              request to CONP-PCNO/conp-dataset.
 
     ==================
@@ -64,7 +65,8 @@ class BaseCrawler:
         (3) In crawl.py, locate the comment where it says to instantiate new crawlers,
             instantiate this new Crawler and call run() on it
     """
-    def __init__(self, github_token, config_path, verbose, force):
+
+    def __init__(self, github_token, config_path, verbose, force, no_pr):
         self.repo = git.Repo()
         self.username = self._check_requirements()
         self.github_token = github_token
@@ -73,6 +75,7 @@ class BaseCrawler:
         self.force = force
         self.git = git
         self.datalad = api
+        self.no_pr = no_pr
 
     @abc.abstractmethod
     def get_all_dataset_description(self):
@@ -80,11 +83,11 @@ class BaseCrawler:
         Get relevant datasets' description from platform.
 
         Retrieves datasets' description that needs to be in CONP-datasets
-        from platform specific to each crawler like Zenodo, OSF, etc. It is up 
+        from platform specific to each crawler like Zenodo, OSF, etc. It is up
         to the crawler to identify which datasets on the platform should be crawled.
         The Zenodo crawler uses keywords for this purpose, but other mechanisms
         could work too.
-        
+
         Each description is required to have the necessary information in order
         to build a valid DATS file from it. The following keys are necessary in
         each description:
@@ -95,13 +98,14 @@ class BaseCrawler:
             description["version"]: A release point for the dataset when applicable
             description["licenses"]: The terms of use of the dataset
             description["keywords"]: Tags associated with the dataset, which will help in its discovery
-            description["types"]: A term, ideally from a controlled terminology, identifying the dataset type or nature of the data, placing it in a typology
+            description["types"]: A term, ideally from a controlled terminology, identifying the dataset type or nature
+                                  of the data, placing it in a typology
         More fields can be added as long as they comply with the DATS schema available at
         https://github.com/CONP-PCNO/schema/blob/master/dataset_schema.json
-        
+
         Any fields/keys not in the schema will be ignored when creating the dataset's DATS.
         It is fine to add more helpful information for other methods which will use them.
-        
+
         Here are some examples of valid DATS.json files:
         https://github.com/conp-bot/conp-dataset-Learning_Naturalistic_Structure__Processed_fMRI_dataset/blob/476a1ee3c4df59aca471499b2e492a65bd389a88/DATS.json
         https://github.com/conp-bot/conp-dataset-MRI_and_unbiased_averages_of_wild_muskrats__Ondatra_zibethicus__and_red_squirrels__Tami/blob/c9e9683fbfec71f44a5fc3576515011f6cd024fe/DATS.json
@@ -159,10 +163,10 @@ class BaseCrawler:
 
         Parameter:
         dataset_description (dict): Dictionary containing information on
-                                    retrieved dataset from platform. Element of 
+                                    retrieved dataset from platform. Element of
                                     the list returned by get_all_dataset_description.
         dataset_dir (str): Local directory path where the newly
-                           created datalad dataset is located. 
+                           created datalad dataset is located.
         """
         return
 
@@ -236,7 +240,12 @@ class BaseCrawler:
                 origin = git.Repo(dataset_dir).remote("origin")
                 origin_url = next(origin.urls)
                 if "@" not in origin_url:
-                    origin.set_url(origin_url.replace("https://", "https://" + self.github_token + "@"))
+                    origin.set_url(
+                        origin_url.replace(
+                            "https://",
+                            "https://" + self.github_token + "@",
+                        ),
+                    )
             except git.exc.NoSuchPathError:
                 pass
             if branch_name not in self.repo.remotes.origin.refs:  # New dataset
@@ -247,14 +256,19 @@ class BaseCrawler:
                     repo_title,
                     name="origin",
                     github_login=self.github_token,
-                    github_passwd=self.github_token)
+                    github_passwd=self.github_token,
+                )
                 self._add_github_repo_description(repo_title, dataset_description)
                 d.no_annex("DATS.json")
                 d.no_annex("README.md")
                 self.add_new_dataset(dataset_description, dataset_dir)
                 # Create DATS.json if it doesn't exist
                 if not os.path.isfile(os.path.join(dataset_dir, "DATS.json")):
-                    self._create_new_dats(dataset_dir, os.path.join(dataset_dir, "DATS.json"), dataset_description)
+                    self._create_new_dats(
+                        dataset_dir,
+                        os.path.join(dataset_dir, "DATS.json"),
+                        dataset_description,
+                    )
                 # Create README.md if it doesn't exist
                 if not os.path.isfile(os.path.join(dataset_dir, "README.md")):
                     readme = self.get_readme_content(dataset_description)
@@ -264,41 +278,69 @@ class BaseCrawler:
                 self.repo.git.submodule(
                     "add",
                     r[0][1].replace(self.github_token + "@", ""),
-                    dataset_dir)
+                    dataset_dir,
+                )
                 modified = True
                 commit_msg = "Created " + dataset_description["title"]
             else:  # Dataset already existing locally
                 self.repo.git.checkout("-f", branch_name)
+                try:
+                    self.repo.git.merge("-n", "--no-verify", "master")
+                except Exception as e:
+                    print(f"Error while merging master into {branch_name}: {e}")
+                    print("Skipping this dataset")
+                    self.repo.git.checkout("master")
+                    continue
+
                 modified = self.update_if_necessary(dataset_description, dataset_dir)
                 if modified:
                     # Create DATS.json if it doesn't exist
                     if not os.path.isfile(os.path.join(dataset_dir, "DATS.json")):
-                        self._create_new_dats(dataset_dir, os.path.join(dataset_dir, "DATS.json"), dataset_description)
+                        self._create_new_dats(
+                            dataset_dir,
+                            os.path.join(dataset_dir, "DATS.json"),
+                            dataset_description,
+                        )
+                    # Create README.md if it doesn't exist
+                    if not os.path.isfile(os.path.join(dataset_dir, "README.md")):
+                        readme = self.get_readme_content(dataset_description)
+                        self._create_readme(
+                            readme,
+                            os.path.join(dataset_dir, "README.md"),
+                        )
                     d.save()
                     d.publish(to="origin")
                 commit_msg = "Updated " + dataset_description["title"]
 
             # If modification detected in dataset, push to branch and create PR
             if modified:
-                self._push_and_pull_request(commit_msg, dataset_dir, dataset_description["title"])
+                self._push_and_pull_request(
+                    commit_msg,
+                    dataset_dir,
+                    dataset_description["title"],
+                )
 
             # Go back to master
             self.repo.git.checkout("master")
 
     def _add_github_repo_description(self, repo_title, dataset_description):
         url = "https://api.github.com/repos/{}/{}".format(
-            self.username, repo_title)
+            self.username,
+            repo_title,
+        )
         head = {"Authorization": "token {}".format(self.github_token)}
         description = "Please don't submit any PR to this repository. "
         if "creators" in dataset_description.keys():
-            description += "If you want to request modifications, " \
-                           "please contact {}".format(
-                            dataset_description["creators"][0]["name"])
+            description += (
+                "If you want to request modifications, please contact "
+                f"{dataset_description['creators'][0]['name']}"
+            )
         payload = {"description": description}
         r = requests.patch(url, data=json.dumps(payload), headers=head)
         if not r.ok:
-            print("Problem adding description to repository {}:"
-                  .format(repo_title))
+            print(
+                "Problem adding description to repository {}:".format(repo_title),
+            )
             print(r.content)
 
     def _check_requirements(self):
@@ -331,17 +373,19 @@ class BaseCrawler:
         origin = self.repo.remote("origin")
         origin_url = next(origin.urls)
         if "@" not in origin_url:
-            origin.set_url(origin_url.replace("https://", "https://" + self.github_token + "@"))
+            origin.set_url(
+                origin_url.replace("https://", "https://" + self.github_token + "@"),
+            )
         self.repo.git.push("--set-upstream", "origin", "conp-bot/" + clean_title)
 
         # Create PR
         print("Creating PR for " + title)
-        r = requests.post(
-            "https://api.github.com/repos/CONP-PCNO/conp-dataset/pulls?access_token="
-            + self.github_token,
-            json={
-                "title": "Crawler result ({})".format(title),
-                "body": """## Description
+        if not self.no_pr:
+            r = requests.post(
+                "https://api.github.com/repos/CONP-PCNO/conp-dataset/pulls",
+                json={
+                    "title": "Crawler result ({})".format(title),
+                    "body": """## Description
 {}
 
 ## Checklist
@@ -349,8 +393,10 @@ class BaseCrawler:
 Mandatory files and elements:
 - [x] A `README.md` file, at the root of the dataset
 - [x] A `DATS.json` file, at the root of the dataset
-- [ ] If configuration is required (for instance to enable a special remote), a `config.sh` script at the root of the dataset
-- [x] A DOI (see instructions in [contribution guide](https://github.com/CONP-PCNO/conp-dataset/blob/master/.github/CONTRIBUTING.md), and corresponding badge in `README.md`
+- [ ] If configuration is required (for instance to enable a special remote),
+ a `config.sh` script at the root of the dataset
+- [x] A DOI (see instructions in [contribution guide]
+(https://github.com/CONP-PCNO/conp-dataset/blob/master/.github/CONTRIBUTING.md), and corresponding badge in `README.md`
 
 Functional checks:
 - [x] Dataset can be installed using DataLad, recursively if it has sub-datasets
@@ -359,33 +405,69 @@ Functional checks:
 - [ ] `DATS.json` is a valid DATs model
 - [ ] If dataset is derived data, raw data is a sub-dataset
 """.format(
-                    msg + "\n"
-                ),
-                "head": self.username + ":conp-bot/" + clean_title,
-                "base": "master",
-            },
-        )
-        if r.status_code != 201:
-            raise Exception("Error while creating pull request: " + r.text)
+                        msg + "\n",
+                    ),
+                    "head": self.username + ":conp-bot/" + clean_title,
+                    "base": "master",
+                },
+                headers={"Authorization": "token {}".format(self.github_token)},
+            )
+            if r.status_code != 201:
+                raise Exception("Error while creating pull request: " + r.text)
 
     def _clean_dataset_title(self, title):
-        return re.sub("\W|^(?=\d)", "_", title)
+        return re.sub(r"\W|^(?=\d)", "_", title)
 
     def _create_new_dats(self, dataset_dir, dats_path, dataset):
         # Fields/properties that are acceptable in DATS schema according to
         # https://github.com/CONP-PCNO/schema/blob/master/dataset_schema.json
-        dats_fields = ["title", "identifier", "creators", "description", "version", "licenses",
-                       "keywords", "distributions", "extraProperties", "alternateIdentifiers",
-                       "relatedIdentifiers", "dates", "storedIn", "spatialCoverage", "types",
-                       "availability", "refinement", "aggregation", "privacy", "dimensions",
-                       "primaryPublications", "citations", "citationCount", "producedBy",
-                       "isAbout", "hasPart", "acknowledges"]
+        dats_fields = [
+            "title",
+            "identifier",
+            "creators",
+            "description",
+            "version",
+            "licenses",
+            "keywords",
+            "distributions",
+            "extraProperties",
+            "alternateIdentifiers",
+            "relatedIdentifiers",
+            "dates",
+            "storedIn",
+            "spatialCoverage",
+            "types",
+            "availability",
+            "refinement",
+            "aggregation",
+            "privacy",
+            "dimensions",
+            "primaryPublications",
+            "citations",
+            "citationCount",
+            "producedBy",
+            "isAbout",
+            "hasPart",
+            "acknowledges",
+        ]
 
         # Check required properties
-        required_fields = ["title", "types", "creators", "licenses", "description", "keywords", "version"]
+        required_fields = [
+            "title",
+            "types",
+            "creators",
+            "licenses",
+            "description",
+            "keywords",
+            "version",
+        ]
         for field in required_fields:
             if field not in dataset.keys():
-                print("Warning: required property {} not found in dataset description".format(field))
+                print(
+                    "Warning: required property {} not found in dataset description".format(
+                        field,
+                    ),
+                )
 
         # Add all dats properties from dataset description
         data = {key: value for key, value in dataset.items() if key in dats_fields}
@@ -401,21 +483,26 @@ Functional checks:
             else:
                 num += 1
         if "extraProperties" not in data.keys():
-            data["extraProperties"] = [{"category": "files", "values": [{"value": str(num)}]}]
+            data["extraProperties"] = [
+                {"category": "files", "values": [{"value": str(num)}]},
+            ]
         else:
             data["extraProperties"].append(
-                {"category": "files", "values": [{"value": str(num)}]}
+                {"category": "files", "values": [{"value": str(num)}]},
             )
 
         # Retrieve modalities from files
         file_paths = map(
             lambda x: x.split(" ")[-1],
-            filter(lambda x: " " in x, git.Repo(dataset_dir).git.annex("list").split("\n")),
+            filter(
+                lambda x: " " in x,
+                git.Repo(dataset_dir).git.annex("list").split("\n"),
+            ),
         )  # Get file paths
         file_names = list(
-            map(lambda x: x.split("/")[-1] if "/" in x else x, file_paths)
+            map(lambda x: x.split("/")[-1] if "/" in x else x, file_paths),
         )  # Get file names from path
-        modalities = set([self._guess_modality(file_name) for file_name in file_names])
+        modalities = {self._guess_modality(file_name) for file_name in file_names}
         if len(modalities) == 0:
             modalities.add("unknown")
         elif len(modalities) > 1 and "unknown" in modalities:
