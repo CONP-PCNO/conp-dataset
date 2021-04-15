@@ -284,6 +284,7 @@ class BaseCrawler:
                 commit_msg = "Created " + dataset_description["title"]
             else:  # Dataset already existing locally
                 self.repo.git.checkout("-f", branch_name)
+                self.repo.git.merge("-n", "master")
                 modified = self.update_if_necessary(dataset_description, dataset_dir)
                 if modified:
                     # Create DATS.json if it doesn't exist
