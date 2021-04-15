@@ -2,6 +2,9 @@
 venv/
 tests/test*
 !tests/test_zenodo_crawler.py
+!tests/test_osf_crawler.py
 !tests/test_dats_validator.py
 __pycache__/
 .DS_Store
+virtualenv
+.mypy_cache/

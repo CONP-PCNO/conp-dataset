@@ -1,1451 +1,2887 @@
 {
-	"version": "1.0",
-	"privacy": "public open",
-	"licenses": [
-		{
-			"name": "BY-NC-SA"
-		}
-	],
-	"creators": [
-		{
-			"name": "1000 Genomes Project"
-		}
-	],
-	"types": [
-		{
-			"information": {
-				"value": "genomics"
-			}
-		}
-	],
-	"title": "1000 Genomes Project",
-	"description": "The 1000 Genomes Project provides a comprehensive description of common human variation by applying a combination of whole-genome sequencing, deep exome sequencing and dense microarray genotyping to a diverse set of 2504 individuals from 26 populations.  Over 88 million variants are characterised, including >99% of SNP variants with a frequency of >1% for a variety of ancestries.",
-	"storedIn": {
-		"name" : "European Bioinformatics Institute"
-	},
-	"primaryPublications" : [
-		{
-			"identifier": {
-				"identifier": "https://doi.org/10.1038/nature15393"
-			},
-			"title": "A global reference for human genetic variation",
-			"dates": [
-				{
-					"type": {
-						"value":"Primary reference publication date"
-					},
-					"date": "2015-10-01 00:00:00"
-				}
-			],
-			"authors": [
-				{
-				"name":"1000 Genomes Project"
-				}
-			]
-		}
-	],
-	"isAbout": [
-		{
-			"identifier": {
-				"identifier": "9606",
-				"identifierSource":"https://www.ncbi.nlm.nih.gov/taxonomy/9606"
-			},
-			"name":"Homo sapiens"
-		}
-	],
-	"dates": [
-		{
-			"type": {
-				"value":"CONP DATS JSON fileset creation date"
-			},
-			"date": "2019-06-17 13:16:33"
-		}
-	],
-	"hasPart": [
-		{
-			"title":"Chromosome 1",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
-					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr1.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"6056764"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"235061"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
-				}
-			]
-		},
-		{
-			"title":"Chromosome 10",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
-					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr10.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"3769238"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"144656"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
-				}
-			]
-		},
-		{
-			"title":"Chromosome 11",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
-					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr11.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"3793612"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"143588"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
-				}
-			]
-		},
-		{
-			"title":"Chromosome 12",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
-					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr12.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"3629625"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"146902"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
-				}
-			]
-		},
-		{
-			"title":"Chromosome 13",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
-					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr13.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"2705190"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"113204"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
-				}
-			]
-		},
-		{
-			"title":"Chromosome 14",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
-					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr14.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"2490590"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"99773"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
-				}
-			]
-		},
-		{
-			"title":"Chromosome 15",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
-					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr15.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"2273944"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"89809"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
-				}
-			]
-		},
-		{
-			"title":"Chromosome 16",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
-					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr16.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"2528069"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"84171"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
-				}
-			]
-		},
-		{
-			"title":"Chromosome 17",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
-					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr17.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"2143622"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"87646"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
-				}
-			]
-		},
-		{
-			"title":"Chromosome 18",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
-					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr18.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"2151346"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"82396"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
-				}
-			]
-		},
-		{
-			"title":"Chromosome 19",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
-					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr19.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"1648250"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"67728"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
-				}
-			]
-		},
-		{
-			"title":"Chromosome 2",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
-					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr2.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"6689892"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"254832"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
-				}
-			]
-		},
-		{
-			"title":"Chromosome 20",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
-					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr20.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"1702558"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"62847"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
-				}
-			]
-		},
-		{
-			"title":"Chromosome 21",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
-					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr21.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"1037591"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"43733"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
-				}
-			]
-		},
-		{
-			"title":"Chromosome 22",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
-					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr22.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"1019265"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"40550"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
-				}
-			]
-		},
-		{
-			"title":"Chromosome 3",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
-					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr3.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"5510472"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"213759"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
-				}
-			]
-		},
-		{
-			"title":"Chromosome 4",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
-					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr4.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"5430270"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"217157"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
-				}
-			]
-		},
-		{
-			"title":"Chromosome 5",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
-					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr5.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"4978871"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"196285"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
-				}
-			]
-		},
-		{
-			"title":"Chromosome 6",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
-					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr6.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"4732160"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"193158"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
-				}
-			]
-		},
-		{
-			"title":"Chromosome 7",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
-					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr7.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"4450904"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"170788"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
-				}
-			]
-		},
-		{
-			"title":"Chromosome 8",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
-					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr8.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"4368964"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"151538"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
-				}
-			]
-		},
-		{
-			"title":"Chromosome 9",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
-					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr9.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"3355633"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"124138"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
-				}
-			]
-		},
-		{
-			"title":"Mitochondrial genome",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
-					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-10-02 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chrMT.phase3_callmom-v0_4.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"3587"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"20"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": ""
-						}
-					]
-				}
-			]
-		},
-		{
-			"title":"Chromosome X",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
-					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chrX.phase3_shapeit2_mvncall_integrated_v1b.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"3191768"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"210679"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
-				}
-			]
-		},
-		{
-			"title":"Chromosome Y",
-			"creators": [
-				{
-					"name": "1000 Genomes Project"
-				}
-			],
-			"types": [
-				{
-					"information": {
-						"value": "genomics"
-					}
-				}
-			],
-			"dates": [
-				{
-					"type": {
-						"value":"source .vcf file creation date"
-					},
-					"date": "2015-02-18 00:00:00"
-				}
-			],
-			"storedIn": {
-				"name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chrY.phase3_integrated_v2a.20130502.genotypes.vcf.gz",
-				"description": "Gzipped .vcf file containing sequence variations"
-			},
-			"dimensions": [
-				{
-					"name": {
-						"value": "Count of Single Nucleotide Polymorphism variants"
-					},
-					"values": [
-						"60505"
-					]
-				},
-				{
-					"name": {
-						"value": "Count of single-nucleotide insertion and deletion events"
-					},
-					"values": [
-						"1314"
-					]
-				}
-			],
-			"extraProperties": [
-				{
-					"category": "FTP link to gzipped FASTA file containing reference DNA sequence",
-					"values": [
-						{
-							"value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
-						}
-					]
-				}
-			]
-		}
-	],
-	"extraProperties": [
-		{
-			"category": "contact",
-			"values": [
-				{
-					"value": "Jennifer Tremblay-Mercier, Research Co-ordinator, jennifer.tremblay-mercier@douglas.mcgill.ca, 514-761-6131 #3329"
-				}
-			]
-		}
-	]
+  "creators": [
+    {
+      "name": "1000 Genomes Project"
+    }
+  ],
+  "dates": [
+    {
+      "date": "2019-07-31 11:21:58",
+      "type": {
+        "value": "CONP DATS JSON fileset creation date"
+      }
+    }
+  ],
+  "description": "The 1000 Genomes Project provides a comprehensive description of common human variation by applying a combination of whole-genome sequencing, deep exome sequencing and dense microarray genotyping to a diverse set of 2504 individuals from 26 populations.  Over 88 million variants are characterised, including >99% of SNP variants with a frequency of >1% for a variety of ancestries.",
+  "distributions": [
+    {
+      "access": {
+        "authorizations": [
+          {
+            "value": "public"
+          }
+        ],
+        "landingPage": "https://www.internationalgenome.org/"
+      },
+      "formats": [
+        "VCF",
+        "FASTA"
+      ],
+      "size": 16.2,
+      "unit": {
+        "value": "GB"
+      }
+    }
+  ],
+  "extraProperties": [
+    {
+      "category": "contact",
+      "values": [
+        {
+          "value": "info@1000genomes.org"
+        }
+      ]
+    },
+    {
+      "category": "CONP_status",
+      "values": [
+        {
+          "value": "external"
+        }
+      ]
+    },
+    {
+      "category": "files",
+      "values": [
+        {
+          "value": "25"
+        }
+      ]
+    },
+    {
+      "category": "subjects",
+      "values": [
+        {
+          "value": "2504"
+        }
+      ]
+    },
+    {
+      "category": "logo",
+      "values": [
+        {
+          "value": "logo.png"
+        }
+      ]
+    }
+  ],
+  "hasPart": [
+    {
+      "creators": [
+        {
+          "name": "1000 Genomes Project"
+        }
+      ],
+      "dates": [
+        {
+          "date": "2015-02-18 00:00:00",
+          "type": {
+            "value": "source .vcf file creation date"
+          }
+        }
+      ],
+      "description": "Chromosome 1",
+      "dimensions": [
+        {
+          "name": {
+            "value": "Count of Single Nucleotide Polymorphism variants"
+          },
+          "values": [
+            "6056764"
+          ]
+        },
+        {
+          "name": {
+            "value": "Count of single-nucleotide insertion and deletion events"
+          },
+          "values": [
+            "235061"
+          ]
+        }
+      ],
+      "distributions": [
+        {
+          "access": {
+            "authorizations": [
+              {
+                "value": "public"
+              }
+            ],
+            "landingPage": "https://www.internationalgenome.org/"
+          },
+          "formats": [
+            "VCF"
+          ],
+          "size": 1.19,
+          "unit": {
+            "value": "GB"
+          }
+        }
+      ],
+      "extraProperties": [
+        {
+          "category": "FTP link to gzipped FASTA file containing reference DNA sequence",
+          "values": [
+            {
+              "value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
+            }
+          ]
+        },
+        {
+          "category": "CONP_status",
+          "values": [
+            {
+              "value": "external"
+            }
+          ]
+        },
+        {
+          "category": "files",
+          "values": [
+            {
+              "value": "25"
+            }
+          ]
+        },
+        {
+          "category": "subjects",
+          "values": [
+            {
+              "value": "2504"
+            }
+          ]
+        }
+      ],
+      "keywords": [
+        {
+          "value": "genomics"
+        }
+      ],
+      "licenses": [
+        {
+          "name": "BY-NC-SA"
+        }
+      ],
+      "storedIn": {
+        "description": "Gzipped .vcf file containing sequence variations",
+        "name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr1.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz"
+      },
+      "title": "Chromosome 1",
+      "types": [
+        {
+          "information": {
+            "value": "genomics"
+          }
+        }
+      ],
+      "version": "1.0"
+    },
+    {
+      "creators": [
+        {
+          "name": "1000 Genomes Project"
+        }
+      ],
+      "dates": [
+        {
+          "date": "2015-02-18 00:00:00",
+          "type": {
+            "value": "source .vcf file creation date"
+          }
+        }
+      ],
+      "description": "Chromosome 10",
+      "dimensions": [
+        {
+          "name": {
+            "value": "Count of Single Nucleotide Polymorphism variants"
+          },
+          "values": [
+            "3769238"
+          ]
+        },
+        {
+          "name": {
+            "value": "Count of single-nucleotide insertion and deletion events"
+          },
+          "values": [
+            "144656"
+          ]
+        }
+      ],
+      "distributions": [
+        {
+          "access": {
+            "authorizations": [
+              {
+                "value": "public"
+              }
+            ],
+            "landingPage": "https://www.internationalgenome.org/"
+          },
+          "formats": [
+            "VCF"
+          ],
+          "size": 755,
+          "unit": {
+            "value": "MB"
+          }
+        }
+      ],
+      "extraProperties": [
+        {
+          "category": "FTP link to gzipped FASTA file containing reference DNA sequence",
+          "values": [
+            {
+              "value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
+            }
+          ]
+        },
+        {
+          "category": "CONP_status",
+          "values": [
+            {
+              "value": "external"
+            }
+          ]
+        },
+        {
+          "category": "files",
+          "values": [
+            {
+              "value": "25"
+            }
+          ]
+        },
+        {
+          "category": "subjects",
+          "values": [
+            {
+              "value": "2504"
+            }
+          ]
+        }
+      ],
+      "keywords": [
+        {
+          "value": "genomics"
+        }
+      ],
+      "licenses": [
+        {
+          "name": "BY-NC-SA"
+        }
+      ],
+      "storedIn": {
+        "description": "Gzipped .vcf file containing sequence variations",
+        "name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr10.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz"
+      },
+      "title": "Chromosome 10",
+      "types": [
+        {
+          "information": {
+            "value": "genomics"
+          }
+        }
+      ],
+      "version": "1.0"
+    },
+    {
+      "creators": [
+        {
+          "name": "1000 Genomes Project"
+        }
+      ],
+      "dates": [
+        {
+          "date": "2015-02-18 00:00:00",
+          "type": {
+            "value": "source .vcf file creation date"
+          }
+        }
+      ],
+      "description": "Chromosome 11",
+      "dimensions": [
+        {
+          "name": {
+            "value": "Count of Single Nucleotide Polymorphism variants"
+          },
+          "values": [
+            "3793612"
+          ]
+        },
+        {
+          "name": {
+            "value": "Count of single-nucleotide insertion and deletion events"
+          },
+          "values": [
+            "143588"
+          ]
+        }
+      ],
+      "distributions": [
+        {
+          "access": {
+            "authorizations": [
+              {
+                "value": "public"
+              }
+            ],
+            "landingPage": "https://www.internationalgenome.org/"
+          },
+          "formats": [
+            "VCF"
+          ],
+          "size": 749,
+          "unit": {
+            "value": "MB"
+          }
+        }
+      ],
+      "extraProperties": [
+        {
+          "category": "FTP link to gzipped FASTA file containing reference DNA sequence",
+          "values": [
+            {
+              "value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
+            }
+          ]
+        },
+        {
+          "category": "CONP_status",
+          "values": [
+            {
+              "value": "external"
+            }
+          ]
+        },
+        {
+          "category": "files",
+          "values": [
+            {
+              "value": "25"
+            }
+          ]
+        },
+        {
+          "category": "subjects",
+          "values": [
+            {
+              "value": "2504"
+            }
+          ]
+        }
+      ],
+      "keywords": [
+        {
+          "value": "genomics"
+        }
+      ],
+      "licenses": [
+        {
+          "name": "BY-NC-SA"
+        }
+      ],
+      "storedIn": {
+        "description": "Gzipped .vcf file containing sequence variations",
+        "name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr11.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz"
+      },
+      "title": "Chromosome 11",
+      "types": [
+        {
+          "information": {
+            "value": "genomics"
+          }
+        }
+      ],
+      "version": "1.0"
+    },
+    {
+      "creators": [
+        {
+          "name": "1000 Genomes Project"
+        }
+      ],
+      "dates": [
+        {
+          "date": "2015-02-18 00:00:00",
+          "type": {
+            "value": "source .vcf file creation date"
+          }
+        }
+      ],
+      "description": "Chromosome 12",
+      "dimensions": [
+        {
+          "name": {
+            "value": "Count of Single Nucleotide Polymorphism variants"
+          },
+          "values": [
+            "3629625"
+          ]
+        },
+        {
+          "name": {
+            "value": "Count of single-nucleotide insertion and deletion events"
+          },
+          "values": [
+            "146902"
+          ]
+        }
+      ],
+      "distributions": [
+        {
+          "access": {
+            "authorizations": [
+              {
+                "value": "public"
+              }
+            ],
+            "landingPage": "https://www.internationalgenome.org/"
+          },
+          "formats": [
+            "VCF"
+          ],
+          "size": 723,
+          "unit": {
+            "value": "MB"
+          }
+        }
+      ],
+      "extraProperties": [
+        {
+          "category": "FTP link to gzipped FASTA file containing reference DNA sequence",
+          "values": [
+            {
+              "value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
+            }
+          ]
+        },
+        {
+          "category": "CONP_status",
+          "values": [
+            {
+              "value": "external"
+            }
+          ]
+        },
+        {
+          "category": "files",
+          "values": [
+            {
+              "value": "25"
+            }
+          ]
+        },
+        {
+          "category": "subjects",
+          "values": [
+            {
+              "value": "2504"
+            }
+          ]
+        }
+      ],
+      "keywords": [
+        {
+          "value": "genomics"
+        }
+      ],
+      "licenses": [
+        {
+          "name": "BY-NC-SA"
+        }
+      ],
+      "storedIn": {
+        "description": "Gzipped .vcf file containing sequence variations",
+        "name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr12.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz"
+      },
+      "title": "Chromosome 12",
+      "types": [
+        {
+          "information": {
+            "value": "genomics"
+          }
+        }
+      ],
+      "version": "1.0"
+    },
+    {
+      "creators": [
+        {
+          "name": "1000 Genomes Project"
+        }
+      ],
+      "dates": [
+        {
+          "date": "2015-02-18 00:00:00",
+          "type": {
+            "value": "source .vcf file creation date"
+          }
+        }
+      ],
+      "description": "Chromosome 13",
+      "dimensions": [
+        {
+          "name": {
+            "value": "Count of Single Nucleotide Polymorphism variants"
+          },
+          "values": [
+            "2705190"
+          ]
+        },
+        {
+          "name": {
+            "value": "Count of single-nucleotide insertion and deletion events"
+          },
+          "values": [
+            "113204"
+          ]
+        }
+      ],
+      "distributions": [
+        {
+          "access": {
+            "authorizations": [
+              {
+                "value": "public"
+              }
+            ],
+            "landingPage": "https://www.internationalgenome.org/"
+          },
+          "formats": [
+            "VCF"
+          ],
+          "size": 543,
+          "unit": {
+            "value": "MB"
+          }
+        }
+      ],
+      "extraProperties": [
+        {
+          "category": "FTP link to gzipped FASTA file containing reference DNA sequence",
+          "values": [
+            {
+              "value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
+            }
+          ]
+        },
+        {
+          "category": "CONP_status",
+          "values": [
+            {
+              "value": "external"
+            }
+          ]
+        },
+        {
+          "category": "files",
+          "values": [
+            {
+              "value": "25"
+            }
+          ]
+        },
+        {
+          "category": "subjects",
+          "values": [
+            {
+              "value": "2504"
+            }
+          ]
+        }
+      ],
+      "keywords": [
+        {
+          "value": "genomics"
+        }
+      ],
+      "licenses": [
+        {
+          "name": "BY-NC-SA"
+        }
+      ],
+      "storedIn": {
+        "description": "Gzipped .vcf file containing sequence variations",
+        "name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr13.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz"
+      },
+      "title": "Chromosome 13",
+      "types": [
+        {
+          "information": {
+            "value": "genomics"
+          }
+        }
+      ],
+      "version": "1.0"
+    },
+    {
+      "creators": [
+        {
+          "name": "1000 Genomes Project"
+        }
+      ],
+      "dates": [
+        {
+          "date": "2015-02-18 00:00:00",
+          "type": {
+            "value": "source .vcf file creation date"
+          }
+        }
+      ],
+      "description": "Chromosome 14",
+      "dimensions": [
+        {
+          "name": {
+            "value": "Count of Single Nucleotide Polymorphism variants"
+          },
+          "values": [
+            "2490590"
+          ]
+        },
+        {
+          "name": {
+            "value": "Count of single-nucleotide insertion and deletion events"
+          },
+          "values": [
+            "99773"
+          ]
+        }
+      ],
+      "distributions": [
+        {
+          "access": {
+            "authorizations": [
+              {
+                "value": "public"
+              }
+            ],
+            "landingPage": "https://www.internationalgenome.org/"
+          },
+          "formats": [
+            "VCF"
+          ],
+          "size": 494,
+          "unit": {
+            "value": "MB"
+          }
+        }
+      ],
+      "extraProperties": [
+        {
+          "category": "FTP link to gzipped FASTA file containing reference DNA sequence",
+          "values": [
+            {
+              "value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
+            }
+          ]
+        },
+        {
+          "category": "CONP_status",
+          "values": [
+            {
+              "value": "external"
+            }
+          ]
+        },
+        {
+          "category": "files",
+          "values": [
+            {
+              "value": "25"
+            }
+          ]
+        },
+        {
+          "category": "subjects",
+          "values": [
+            {
+              "value": "2504"
+            }
+          ]
+        }
+      ],
+      "keywords": [
+        {
+          "value": "genomics"
+        }
+      ],
+      "licenses": [
+        {
+          "name": "BY-NC-SA"
+        }
+      ],
+      "storedIn": {
+        "description": "Gzipped .vcf file containing sequence variations",
+        "name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr14.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz"
+      },
+      "title": "Chromosome 14",
+      "types": [
+        {
+          "information": {
+            "value": "genomics"
+          }
+        }
+      ],
+      "version": "1.0"
+    },
+    {
+      "creators": [
+        {
+          "name": "1000 Genomes Project"
+        }
+      ],
+      "dates": [
+        {
+          "date": "2015-02-18 00:00:00",
+          "type": {
+            "value": "source .vcf file creation date"
+          }
+        }
+      ],
+      "description": "Chromosome 15",
+      "dimensions": [
+        {
+          "name": {
+            "value": "Count of Single Nucleotide Polymorphism variants"
+          },
+          "values": [
+            "2273944"
+          ]
+        },
+        {
+          "name": {
+            "value": "Count of single-nucleotide insertion and deletion events"
+          },
+          "values": [
+            "89809"
+          ]
+        }
+      ],
+      "distributions": [
+        {
+          "access": {
+            "authorizations": [
+              {
+                "value": "public"
+              }
+            ],
+            "landingPage": "https://www.internationalgenome.org/"
+          },
+          "formats": [
+            "VCF"
+          ],
+          "size": 447,
+          "unit": {
+            "value": "MB"
+          }
+        }
+      ],
+      "extraProperties": [
+        {
+          "category": "FTP link to gzipped FASTA file containing reference DNA sequence",
+          "values": [
+            {
+              "value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
+            }
+          ]
+        },
+        {
+          "category": "CONP_status",
+          "values": [
+            {
+              "value": "external"
+            }
+          ]
+        },
+        {
+          "category": "files",
+          "values": [
+            {
+              "value": "25"
+            }
+          ]
+        },
+        {
+          "category": "subjects",
+          "values": [
+            {
+              "value": "2504"
+            }
+          ]
+        }
+      ],
+      "keywords": [
+        {
+          "value": "genomics"
+        }
+      ],
+      "licenses": [
+        {
+          "name": "BY-NC-SA"
+        }
+      ],
+      "storedIn": {
+        "description": "Gzipped .vcf file containing sequence variations",
+        "name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr15.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz"
+      },
+      "title": "Chromosome 15",
+      "types": [
+        {
+          "information": {
+            "value": "genomics"
+          }
+        }
+      ],
+      "version": "1.0"
+    },
+    {
+      "creators": [
+        {
+          "name": "1000 Genomes Project"
+        }
+      ],
+      "dates": [
+        {
+          "date": "2015-02-18 00:00:00",
+          "type": {
+            "value": "source .vcf file creation date"
+          }
+        }
+      ],
+      "description": "Chromosome 16",
+      "dimensions": [
+        {
+          "name": {
+            "value": "Count of Single Nucleotide Polymorphism variants"
+          },
+          "values": [
+            "2528069"
+          ]
+        },
+        {
+          "name": {
+            "value": "Count of single-nucleotide insertion and deletion events"
+          },
+          "values": [
+            "84171"
+          ]
+        }
+      ],
+      "distributions": [
+        {
+          "access": {
+            "authorizations": [
+              {
+                "value": "public"
+              }
+            ],
+            "landingPage": "https://www.internationalgenome.org/"
+          },
+          "formats": [
+            "VCF"
+          ],
+          "size": 483,
+          "unit": {
+            "value": "MB"
+          }
+        }
+      ],
+      "extraProperties": [
+        {
+          "category": "FTP link to gzipped FASTA file containing reference DNA sequence",
+          "values": [
+            {
+              "value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
+            }
+          ]
+        },
+        {
+          "category": "CONP_status",
+          "values": [
+            {
+              "value": "external"
+            }
+          ]
+        },
+        {
+          "category": "files",
+          "values": [
+            {
+              "value": "25"
+            }
+          ]
+        },
+        {
+          "category": "subjects",
+          "values": [
+            {
+              "value": "2504"
+            }
+          ]
+        }
+      ],
+      "keywords": [
+        {
+          "value": "genomics"
+        }
+      ],
+      "licenses": [
+        {
+          "name": "BY-NC-SA"
+        }
+      ],
+      "storedIn": {
+        "description": "Gzipped .vcf file containing sequence variations",
+        "name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr16.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz"
+      },
+      "title": "Chromosome 16",
+      "types": [
+        {
+          "information": {
+            "value": "genomics"
+          }
+        }
+      ],
+      "version": "1.0"
+    },
+    {
+      "creators": [
+        {
+          "name": "1000 Genomes Project"
+        }
+      ],
+      "dates": [
+        {
+          "date": "2015-02-18 00:00:00",
+          "type": {
+            "value": "source .vcf file creation date"
+          }
+        }
+      ],
+      "description": "Chromosome 17",
+      "dimensions": [
+        {
+          "name": {
+            "value": "Count of Single Nucleotide Polymorphism variants"
+          },
+          "values": [
+            "2143622"
+          ]
+        },
+        {
+          "name": {
+            "value": "Count of single-nucleotide insertion and deletion events"
+          },
+          "values": [
+            "87646"
+          ]
+        }
+      ],
+      "distributions": [
+        {
+          "access": {
+            "authorizations": [
+              {
+                "value": "public"
+              }
+            ],
+            "landingPage": "https://www.internationalgenome.org/"
+          },
+          "formats": [
+            "VCF"
+          ],
+          "size": 424,
+          "unit": {
+            "value": "MB"
+          }
+        }
+      ],
+      "extraProperties": [
+        {
+          "category": "FTP link to gzipped FASTA file containing reference DNA sequence",
+          "values": [
+            {
+              "value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
+            }
+          ]
+        },
+        {
+          "category": "CONP_status",
+          "values": [
+            {
+              "value": "external"
+            }
+          ]
+        },
+        {
+          "category": "files",
+          "values": [
+            {
+              "value": "25"
+            }
+          ]
+        },
+        {
+          "category": "subjects",
+          "values": [
+            {
+              "value": "2504"
+            }
+          ]
+        }
+      ],
+      "keywords": [
+        {
+          "value": "genomics"
+        }
+      ],
+      "licenses": [
+        {
+          "name": "BY-NC-SA"
+        }
+      ],
+      "storedIn": {
+        "description": "Gzipped .vcf file containing sequence variations",
+        "name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr17.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz"
+      },
+      "title": "Chromosome 17",
+      "types": [
+        {
+          "information": {
+            "value": "genomics"
+          }
+        }
+      ],
+      "version": "1.0"
+    },
+    {
+      "creators": [
+        {
+          "name": "1000 Genomes Project"
+        }
+      ],
+      "dates": [
+        {
+          "date": "2015-02-18 00:00:00",
+          "type": {
+            "value": "source .vcf file creation date"
+          }
+        }
+      ],
+      "description": "Chromosome 18",
+      "dimensions": [
+        {
+          "name": {
+            "value": "Count of Single Nucleotide Polymorphism variants"
+          },
+          "values": [
+            "2151346"
+          ]
+        },
+        {
+          "name": {
+            "value": "Count of single-nucleotide insertion and deletion events"
+          },
+          "values": [
+            "82396"
+          ]
+        }
+      ],
+      "distributions": [
+        {
+          "access": {
+            "authorizations": [
+              {
+                "value": "public"
+              }
+            ],
+            "landingPage": "https://www.internationalgenome.org/"
+          },
+          "formats": [
+            "VCF"
+          ],
+          "size": 426,
+          "unit": {
+            "value": "MB"
+          }
+        }
+      ],
+      "extraProperties": [
+        {
+          "category": "FTP link to gzipped FASTA file containing reference DNA sequence",
+          "values": [
+            {
+              "value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
+            }
+          ]
+        },
+        {
+          "category": "CONP_status",
+          "values": [
+            {
+              "value": "external"
+            }
+          ]
+        },
+        {
+          "category": "files",
+          "values": [
+            {
+              "value": "25"
+            }
+          ]
+        },
+        {
+          "category": "subjects",
+          "values": [
+            {
+              "value": "2504"
+            }
+          ]
+        }
+      ],
+      "keywords": [
+        {
+          "value": "genomics"
+        }
+      ],
+      "licenses": [
+        {
+          "name": "BY-NC-SA"
+        }
+      ],
+      "storedIn": {
+        "description": "Gzipped .vcf file containing sequence variations",
+        "name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr18.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz"
+      },
+      "title": "Chromosome 18",
+      "types": [
+        {
+          "information": {
+            "value": "genomics"
+          }
+        }
+      ],
+      "version": "1.0"
+    },
+    {
+      "creators": [
+        {
+          "name": "1000 Genomes Project"
+        }
+      ],
+      "dates": [
+        {
+          "date": "2015-02-18 00:00:00",
+          "type": {
+            "value": "source .vcf file creation date"
+          }
+        }
+      ],
+      "description": "Chromosome 19",
+      "dimensions": [
+        {
+          "name": {
+            "value": "Count of Single Nucleotide Polymorphism variants"
+          },
+          "values": [
+            "1648250"
+          ]
+        },
+        {
+          "name": {
+            "value": "Count of single-nucleotide insertion and deletion events"
+          },
+          "values": [
+            "67728"
+          ]
+        }
+      ],
+      "distributions": [
+        {
+          "access": {
+            "authorizations": [
+              {
+                "value": "public"
+              }
+            ],
+            "landingPage": "https://www.internationalgenome.org/"
+          },
+          "formats": [
+            "VCF"
+          ],
+          "size": 351,
+          "unit": {
+            "value": "MB"
+          }
+        }
+      ],
+      "extraProperties": [
+        {
+          "category": "FTP link to gzipped FASTA file containing reference DNA sequence",
+          "values": [
+            {
+              "value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
+            }
+          ]
+        },
+        {
+          "category": "CONP_status",
+          "values": [
+            {
+              "value": "external"
+            }
+          ]
+        },
+        {
+          "category": "files",
+          "values": [
+            {
+              "value": "25"
+            }
+          ]
+        },
+        {
+          "category": "subjects",
+          "values": [
+            {
+              "value": "2504"
+            }
+          ]
+        }
+      ],
+      "keywords": [
+        {
+          "value": "genomics"
+        }
+      ],
+      "licenses": [
+        {
+          "name": "BY-NC-SA"
+        }
+      ],
+      "storedIn": {
+        "description": "Gzipped .vcf file containing sequence variations",
+        "name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr19.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz"
+      },
+      "title": "Chromosome 19",
+      "types": [
+        {
+          "information": {
+            "value": "genomics"
+          }
+        }
+      ],
+      "version": "1.0"
+    },
+    {
+      "creators": [
+        {
+          "name": "1000 Genomes Project"
+        }
+      ],
+      "dates": [
+        {
+          "date": "2015-02-18 00:00:00",
+          "type": {
+            "value": "source .vcf file creation date"
+          }
+        }
+      ],
+      "description": "Chromosome 2",
+      "dimensions": [
+        {
+          "name": {
+            "value": "Count of Single Nucleotide Polymorphism variants"
+          },
+          "values": [
+            "6689892"
+          ]
+        },
+        {
+          "name": {
+            "value": "Count of single-nucleotide insertion and deletion events"
+          },
+          "values": [
+            "254832"
+          ]
+        }
+      ],
+      "distributions": [
+        {
+          "access": {
+            "authorizations": [
+              {
+                "value": "public"
+              }
+            ],
+            "landingPage": "https://www.internationalgenome.org/"
+          },
+          "formats": [
+            "VCF"
+          ],
+          "size": 1.28,
+          "unit": {
+            "value": "GB"
+          }
+        }
+      ],
+      "extraProperties": [
+        {
+          "category": "FTP link to gzipped FASTA file containing reference DNA sequence",
+          "values": [
+            {
+              "value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
+            }
+          ]
+        },
+        {
+          "category": "CONP_status",
+          "values": [
+            {
+              "value": "external"
+            }
+          ]
+        },
+        {
+          "category": "files",
+          "values": [
+            {
+              "value": "25"
+            }
+          ]
+        },
+        {
+          "category": "subjects",
+          "values": [
+            {
+              "value": "2504"
+            }
+          ]
+        }
+      ],
+      "keywords": [
+        {
+          "value": "genomics"
+        }
+      ],
+      "licenses": [
+        {
+          "name": "BY-NC-SA"
+        }
+      ],
+      "storedIn": {
+        "description": "Gzipped .vcf file containing sequence variations",
+        "name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr2.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz"
+      },
+      "title": "Chromosome 2",
+      "types": [
+        {
+          "information": {
+            "value": "genomics"
+          }
+        }
+      ],
+      "version": "1.0"
+    },
+    {
+      "creators": [
+        {
+          "name": "1000 Genomes Project"
+        }
+      ],
+      "dates": [
+        {
+          "date": "2015-02-18 00:00:00",
+          "type": {
+            "value": "source .vcf file creation date"
+          }
+        }
+      ],
+      "description": "Chromosome 20",
+      "dimensions": [
+        {
+          "name": {
+            "value": "Count of Single Nucleotide Polymorphism variants"
+          },
+          "values": [
+            "1702558"
+          ]
+        },
+        {
+          "name": {
+            "value": "Count of single-nucleotide insertion and deletion events"
+          },
+          "values": [
+            "62847"
+          ]
+        }
+      ],
+      "distributions": [
+        {
+          "access": {
+            "authorizations": [
+              {
+                "value": "public"
+              }
+            ],
+            "landingPage": "https://www.internationalgenome.org/"
+          },
+          "formats": [
+            "VCF"
+          ],
+          "size": 334,
+          "unit": {
+            "value": "MB"
+          }
+        }
+      ],
+      "extraProperties": [
+        {
+          "category": "FTP link to gzipped FASTA file containing reference DNA sequence",
+          "values": [
+            {
+              "value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
+            }
+          ]
+        },
+        {
+          "category": "CONP_status",
+          "values": [
+            {
+              "value": "external"
+            }
+          ]
+        },
+        {
+          "category": "files",
+          "values": [
+            {
+              "value": "25"
+            }
+          ]
+        },
+        {
+          "category": "subjects",
+          "values": [
+            {
+              "value": "2504"
+            }
+          ]
+        }
+      ],
+      "keywords": [
+        {
+          "value": "genomics"
+        }
+      ],
+      "licenses": [
+        {
+          "name": "BY-NC-SA"
+        }
+      ],
+      "storedIn": {
+        "description": "Gzipped .vcf file containing sequence variations",
+        "name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr20.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz"
+      },
+      "title": "Chromosome 20",
+      "types": [
+        {
+          "information": {
+            "value": "genomics"
+          }
+        }
+      ],
+      "version": "1.0"
+    },
+    {
+      "creators": [
+        {
+          "name": "1000 Genomes Project"
+        }
+      ],
+      "dates": [
+        {
+          "date": "2015-02-18 00:00:00",
+          "type": {
+            "value": "source .vcf file creation date"
+          }
+        }
+      ],
+      "description": "Chromosome 21",
+      "dimensions": [
+        {
+          "name": {
+            "value": "Count of Single Nucleotide Polymorphism variants"
+          },
+          "values": [
+            "1037591"
+          ]
+        },
+        {
+          "name": {
+            "value": "Count of single-nucleotide insertion and deletion events"
+          },
+          "values": [
+            "43733"
+          ]
+        }
+      ],
+      "distributions": [
+        {
+          "access": {
+            "authorizations": [
+              {
+                "value": "public"
+              }
+            ],
+            "landingPage": "https://www.internationalgenome.org/"
+          },
+          "formats": [
+            "VCF"
+          ],
+          "size": 213,
+          "unit": {
+            "value": "MB"
+          }
+        }
+      ],
+      "extraProperties": [
+        {
+          "category": "FTP link to gzipped FASTA file containing reference DNA sequence",
+          "values": [
+            {
+              "value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
+            }
+          ]
+        },
+        {
+          "category": "CONP_status",
+          "values": [
+            {
+              "value": "external"
+            }
+          ]
+        },
+        {
+          "category": "files",
+          "values": [
+            {
+              "value": "25"
+            }
+          ]
+        },
+        {
+          "category": "subjects",
+          "values": [
+            {
+              "value": "2504"
+            }
+          ]
+        }
+      ],
+      "keywords": [
+        {
+          "value": "genomics"
+        }
+      ],
+      "licenses": [
+        {
+          "name": "BY-NC-SA"
+        }
+      ],
+      "storedIn": {
+        "description": "Gzipped .vcf file containing sequence variations",
+        "name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr21.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz"
+      },
+      "title": "Chromosome 21",
+      "types": [
+        {
+          "information": {
+            "value": "genomics"
+          }
+        }
+      ],
+      "version": "1.0"
+    },
+    {
+      "creators": [
+        {
+          "name": "1000 Genomes Project"
+        }
+      ],
+      "dates": [
+        {
+          "date": "2015-02-18 00:00:00",
+          "type": {
+            "value": "source .vcf file creation date"
+          }
+        }
+      ],
+      "description": "Chromosome 22",
+      "dimensions": [
+        {
+          "name": {
+            "value": "Count of Single Nucleotide Polymorphism variants"
+          },
+          "values": [
+            "1019265"
+          ]
+        },
+        {
+          "name": {
+            "value": "Count of single-nucleotide insertion and deletion events"
+          },
+          "values": [
+            "40550"
+          ]
+        }
+      ],
+      "distributions": [
+        {
+          "access": {
+            "authorizations": [
+              {
+                "value": "public"
+              }
+            ],
+            "landingPage": "https://www.internationalgenome.org/"
+          },
+          "formats": [
+            "VCF"
+          ],
+          "size": 209,
+          "unit": {
+            "value": "MB"
+          }
+        }
+      ],
+      "extraProperties": [
+        {
+          "category": "FTP link to gzipped FASTA file containing reference DNA sequence",
+          "values": [
+            {
+              "value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
+            }
+          ]
+        },
+        {
+          "category": "CONP_status",
+          "values": [
+            {
+              "value": "external"
+            }
+          ]
+        },
+        {
+          "category": "files",
+          "values": [
+            {
+              "value": "25"
+            }
+          ]
+        },
+        {
+          "category": "subjects",
+          "values": [
+            {
+              "value": "2504"
+            }
+          ]
+        }
+      ],
+      "keywords": [
+        {
+          "value": "genomics"
+        }
+      ],
+      "licenses": [
+        {
+          "name": "BY-NC-SA"
+        }
+      ],
+      "storedIn": {
+        "description": "Gzipped .vcf file containing sequence variations",
+        "name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr22.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz"
+      },
+      "title": "Chromosome 22",
+      "types": [
+        {
+          "information": {
+            "value": "genomics"
+          }
+        }
+      ],
+      "version": "1.0"
+    },
+    {
+      "creators": [
+        {
+          "name": "1000 Genomes Project"
+        }
+      ],
+      "dates": [
+        {
+          "date": "2015-02-18 00:00:00",
+          "type": {
+            "value": "source .vcf file creation date"
+          }
+        }
+      ],
+      "description": "Chromosome 3",
+      "dimensions": [
+        {
+          "name": {
+            "value": "Count of Single Nucleotide Polymorphism variants"
+          },
+          "values": [
+            "5510472"
+          ]
+        },
+        {
+          "name": {
+            "value": "Count of single-nucleotide insertion and deletion events"
+          },
+          "values": [
+            "213759"
+          ]
+        }
+      ],
+      "distributions": [
+        {
+          "access": {
+            "authorizations": [
+              {
+                "value": "public"
+              }
+            ],
+            "landingPage": "https://www.internationalgenome.org/"
+          },
+          "formats": [
+            "VCF"
+          ],
+          "size": 1.08,
+          "unit": {
+            "value": "GB"
+          }
+        }
+      ],
+      "extraProperties": [
+        {
+          "category": "FTP link to gzipped FASTA file containing reference DNA sequence",
+          "values": [
+            {
+              "value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
+            }
+          ]
+        },
+        {
+          "category": "CONP_status",
+          "values": [
+            {
+              "value": "external"
+            }
+          ]
+        },
+        {
+          "category": "files",
+          "values": [
+            {
+              "value": "25"
+            }
+          ]
+        },
+        {
+          "category": "subjects",
+          "values": [
+            {
+              "value": "2504"
+            }
+          ]
+        }
+      ],
+      "keywords": [
+        {
+          "value": "genomics"
+        }
+      ],
+      "licenses": [
+        {
+          "name": "BY-NC-SA"
+        }
+      ],
+      "storedIn": {
+        "description": "Gzipped .vcf file containing sequence variations",
+        "name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr3.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz"
+      },
+      "title": "Chromosome 3",
+      "types": [
+        {
+          "information": {
+            "value": "genomics"
+          }
+        }
+      ],
+      "version": "1.0"
+    },
+    {
+      "creators": [
+        {
+          "name": "1000 Genomes Project"
+        }
+      ],
+      "dates": [
+        {
+          "date": "2015-02-18 00:00:00",
+          "type": {
+            "value": "source .vcf file creation date"
+          }
+        }
+      ],
+      "description": "Chromosome 4",
+      "dimensions": [
+        {
+          "name": {
+            "value": "Count of Single Nucleotide Polymorphism variants"
+          },
+          "values": [
+            "5430270"
+          ]
+        },
+        {
+          "name": {
+            "value": "Count of single-nucleotide insertion and deletion events"
+          },
+          "values": [
+            "217157"
+          ]
+        }
+      ],
+      "distributions": [
+        {
+          "access": {
+            "authorizations": [
+              {
+                "value": "public"
+              }
+            ],
+            "landingPage": "https://www.internationalgenome.org/"
+          },
+          "formats": [
+            "VCF"
+          ],
+          "size": 1.09,
+          "unit": {
+            "value": "GB"
+          }
+        }
+      ],
+      "extraProperties": [
+        {
+          "category": "FTP link to gzipped FASTA file containing reference DNA sequence",
+          "values": [
+            {
+              "value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
+            }
+          ]
+        },
+        {
+          "category": "CONP_status",
+          "values": [
+            {
+              "value": "external"
+            }
+          ]
+        },
+        {
+          "category": "files",
+          "values": [
+            {
+              "value": "25"
+            }
+          ]
+        },
+        {
+          "category": "subjects",
+          "values": [
+            {
+              "value": "2504"
+            }
+          ]
+        }
+      ],
+      "keywords": [
+        {
+          "value": "genomics"
+        }
+      ],
+      "licenses": [
+        {
+          "name": "BY-NC-SA"
+        }
+      ],
+      "storedIn": {
+        "description": "Gzipped .vcf file containing sequence variations",
+        "name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr4.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz"
+      },
+      "title": "Chromosome 4",
+      "types": [
+        {
+          "information": {
+            "value": "genomics"
+          }
+        }
+      ],
+      "version": "1.0"
+    },
+    {
+      "creators": [
+        {
+          "name": "1000 Genomes Project"
+        }
+      ],
+      "dates": [
+        {
+          "date": "2015-02-18 00:00:00",
+          "type": {
+            "value": "source .vcf file creation date"
+          }
+        }
+      ],
+      "description": "Chromosome 5",
+      "dimensions": [
+        {
+          "name": {
+            "value": "Count of Single Nucleotide Polymorphism variants"
+          },
+          "values": [
+            "4978871"
+          ]
+        },
+        {
+          "name": {
+            "value": "Count of single-nucleotide insertion and deletion events"
+          },
+          "values": [
+            "196285"
+          ]
+        }
+      ],
+      "distributions": [
+        {
+          "access": {
+            "authorizations": [
+              {
+                "value": "public"
+              }
+            ],
+            "landingPage": "https://www.internationalgenome.org/"
+          },
+          "formats": [
+            "VCF"
+          ],
+          "size": 966,
+          "unit": {
+            "value": "MB"
+          }
+        }
+      ],
+      "extraProperties": [
+        {
+          "category": "FTP link to gzipped FASTA file containing reference DNA sequence",
+          "values": [
+            {
+              "value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
+            }
+          ]
+        },
+        {
+          "category": "CONP_status",
+          "values": [
+            {
+              "value": "external"
+            }
+          ]
+        },
+        {
+          "category": "files",
+          "values": [
+            {
+              "value": "25"
+            }
+          ]
+        },
+        {
+          "category": "subjects",
+          "values": [
+            {
+              "value": "2504"
+            }
+          ]
+        }
+      ],
+      "keywords": [
+        {
+          "value": "genomics"
+        }
+      ],
+      "licenses": [
+        {
+          "name": "BY-NC-SA"
+        }
+      ],
+      "storedIn": {
+        "description": "Gzipped .vcf file containing sequence variations",
+        "name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr5.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz"
+      },
+      "title": "Chromosome 5",
+      "types": [
+        {
+          "information": {
+            "value": "genomics"
+          }
+        }
+      ],
+      "version": "1.0"
+    },
+    {
+      "creators": [
+        {
+          "name": "1000 Genomes Project"
+        }
+      ],
+      "dates": [
+        {
+          "date": "2015-02-18 00:00:00",
+          "type": {
+            "value": "source .vcf file creation date"
+          }
+        }
+      ],
+      "description": "Chromosome 6",
+      "dimensions": [
+        {
+          "name": {
+            "value": "Count of Single Nucleotide Polymorphism variants"
+          },
+          "values": [
+            "4732160"
+          ]
+        },
+        {
+          "name": {
+            "value": "Count of single-nucleotide insertion and deletion events"
+          },
+          "values": [
+            "193158"
+          ]
+        }
+      ],
+      "distributions": [
+        {
+          "access": {
+            "authorizations": [
+              {
+                "value": "public"
+              }
+            ],
+            "landingPage": "https://www.internationalgenome.org/"
+          },
+          "formats": [
+            "VCF"
+          ],
+          "size": 976,
+          "unit": {
+            "value": "MB"
+          }
+        }
+      ],
+      "extraProperties": [
+        {
+          "category": "FTP link to gzipped FASTA file containing reference DNA sequence",
+          "values": [
+            {
+              "value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
+            }
+          ]
+        },
+        {
+          "category": "CONP_status",
+          "values": [
+            {
+              "value": "external"
+            }
+          ]
+        },
+        {
+          "category": "files",
+          "values": [
+            {
+              "value": "25"
+            }
+          ]
+        },
+        {
+          "category": "subjects",
+          "values": [
+            {
+              "value": "2504"
+            }
+          ]
+        }
+      ],
+      "keywords": [
+        {
+          "value": "genomics"
+        }
+      ],
+      "licenses": [
+        {
+          "name": "BY-NC-SA"
+        }
+      ],
+      "storedIn": {
+        "description": "Gzipped .vcf file containing sequence variations",
+        "name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr6.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz"
+      },
+      "title": "Chromosome 6",
+      "types": [
+        {
+          "information": {
+            "value": "genomics"
+          }
+        }
+      ],
+      "version": "1.0"
+    },
+    {
+      "creators": [
+        {
+          "name": "1000 Genomes Project"
+        }
+      ],
+      "dates": [
+        {
+          "date": "2015-02-18 00:00:00",
+          "type": {
+            "value": "source .vcf file creation date"
+          }
+        }
+      ],
+      "description": "Chromosome 7",
+      "dimensions": [
+        {
+          "name": {
+            "value": "Count of Single Nucleotide Polymorphism variants"
+          },
+          "values": [
+            "4450904"
+          ]
+        },
+        {
+          "name": {
+            "value": "Count of single-nucleotide insertion and deletion events"
+          },
+          "values": [
+            "170788"
+          ]
+        }
+      ],
+      "distributions": [
+        {
+          "access": {
+            "authorizations": [
+              {
+                "value": "public"
+              }
+            ],
+            "landingPage": "https://www.internationalgenome.org/"
+          },
+          "formats": [
+            "VCF"
+          ],
+          "size": 886,
+          "unit": {
+            "value": "MB"
+          }
+        }
+      ],
+      "extraProperties": [
+        {
+          "category": "FTP link to gzipped FASTA file containing reference DNA sequence",
+          "values": [
+            {
+              "value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
+            }
+          ]
+        },
+        {
+          "category": "CONP_status",
+          "values": [
+            {
+              "value": "external"
+            }
+          ]
+        },
+        {
+          "category": "files",
+          "values": [
+            {
+              "value": "25"
+            }
+          ]
+        },
+        {
+          "category": "subjects",
+          "values": [
+            {
+              "value": "2504"
+            }
+          ]
+        }
+      ],
+      "keywords": [
+        {
+          "value": "genomics"
+        }
+      ],
+      "licenses": [
+        {
+          "name": "BY-NC-SA"
+        }
+      ],
+      "storedIn": {
+        "description": "Gzipped .vcf file containing sequence variations",
+        "name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr7.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz"
+      },
+      "title": "Chromosome 7",
+      "types": [
+        {
+          "information": {
+            "value": "genomics"
+          }
+        }
+      ],
+      "version": "1.0"
+    },
+    {
+      "creators": [
+        {
+          "name": "1000 Genomes Project"
+        }
+      ],
+      "dates": [
+        {
+          "date": "2015-02-18 00:00:00",
+          "type": {
+            "value": "source .vcf file creation date"
+          }
+        }
+      ],
+      "description": "Chromosome 8",
+      "dimensions": [
+        {
+          "name": {
+            "value": "Count of Single Nucleotide Polymorphism variants"
+          },
+          "values": [
+            "4368964"
+          ]
+        },
+        {
+          "name": {
+            "value": "Count of single-nucleotide insertion and deletion events"
+          },
+          "values": [
+            "151538"
+          ]
+        }
+      ],
+      "distributions": [
+        {
+          "access": {
+            "authorizations": [
+              {
+                "value": "public"
+              }
+            ],
+            "landingPage": "https://www.internationalgenome.org/"
+          },
+          "formats": [
+            "VCF"
+          ],
+          "size": 841,
+          "unit": {
+            "value": "MB"
+          }
+        }
+      ],
+      "extraProperties": [
+        {
+          "category": "FTP link to gzipped FASTA file containing reference DNA sequence",
+          "values": [
+            {
+              "value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
+            }
+          ]
+        },
+        {
+          "category": "CONP_status",
+          "values": [
+            {
+              "value": "external"
+            }
+          ]
+        },
+        {
+          "category": "files",
+          "values": [
+            {
+              "value": "25"
+            }
+          ]
+        },
+        {
+          "category": "subjects",
+          "values": [
+            {
+              "value": "2504"
+            }
+          ]
+        }
+      ],
+      "keywords": [
+        {
+          "value": "genomics"
+        }
+      ],
+      "licenses": [
+        {
+          "name": "BY-NC-SA"
+        }
+      ],
+      "storedIn": {
+        "description": "Gzipped .vcf file containing sequence variations",
+        "name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr8.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz"
+      },
+      "title": "Chromosome 8",
+      "types": [
+        {
+          "information": {
+            "value": "genomics"
+          }
+        }
+      ],
+      "version": "1.0"
+    },
+    {
+      "creators": [
+        {
+          "name": "1000 Genomes Project"
+        }
+      ],
+      "dates": [
+        {
+          "date": "2015-02-18 00:00:00",
+          "type": {
+            "value": "source .vcf file creation date"
+          }
+        }
+      ],
+      "description": "Chromosome 9",
+      "dimensions": [
+        {
+          "name": {
+            "value": "Count of Single Nucleotide Polymorphism variants"
+          },
+          "values": [
+            "3355633"
+          ]
+        },
+        {
+          "name": {
+            "value": "Count of single-nucleotide insertion and deletion events"
+          },
+          "values": [
+            "124138"
+          ]
+        }
+      ],
+      "distributions": [
+        {
+          "access": {
+            "authorizations": [
+              {
+                "value": "public"
+              }
+            ],
+            "landingPage": "https://www.internationalgenome.org/"
+          },
+          "formats": [
+            "VCF"
+          ],
+          "size": 657,
+          "unit": {
+            "value": "GB"
+          }
+        }
+      ],
+      "extraProperties": [
+        {
+          "category": "FTP link to gzipped FASTA file containing reference DNA sequence",
+          "values": [
+            {
+              "value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
+            }
+          ]
+        },
+        {
+          "category": "CONP_status",
+          "values": [
+            {
+              "value": "external"
+            }
+          ]
+        },
+        {
+          "category": "files",
+          "values": [
+            {
+              "value": "25"
+            }
+          ]
+        },
+        {
+          "category": "subjects",
+          "values": [
+            {
+              "value": "2504"
+            }
+          ]
+        }
+      ],
+      "keywords": [
+        {
+          "value": "genomics"
+        }
+      ],
+      "licenses": [
+        {
+          "name": "BY-NC-SA"
+        }
+      ],
+      "storedIn": {
+        "description": "Gzipped .vcf file containing sequence variations",
+        "name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr9.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz"
+      },
+      "title": "Chromosome 9",
+      "types": [
+        {
+          "information": {
+            "value": "genomics"
+          }
+        }
+      ],
+      "version": "1.0"
+    },
+    {
+      "creators": [
+        {
+          "name": "1000 Genomes Project"
+        }
+      ],
+      "dates": [
+        {
+          "date": "2015-10-02 00:00:00",
+          "type": {
+            "value": "source .vcf file creation date"
+          }
+        }
+      ],
+      "description": "Mitochondrial genome",
+      "dimensions": [
+        {
+          "name": {
+            "value": "Count of Single Nucleotide Polymorphism variants"
+          },
+          "values": [
+            "3587"
+          ]
+        },
+        {
+          "name": {
+            "value": "Count of single-nucleotide insertion and deletion events"
+          },
+          "values": [
+            "20"
+          ]
+        }
+      ],
+      "distributions": [
+        {
+          "access": {
+            "authorizations": [
+              {
+                "value": "public"
+              }
+            ],
+            "landingPage": "https://www.internationalgenome.org/"
+          },
+          "formats": [
+            "VCF"
+          ],
+          "size": 202,
+          "unit": {
+            "value": "KB"
+          }
+        }
+      ],
+      "extraProperties": [
+        {
+          "category": "FTP link to gzipped FASTA file containing reference DNA sequence",
+          "values": [
+            {
+              "value": ""
+            }
+          ]
+        },
+        {
+          "category": "CONP_status",
+          "values": [
+            {
+              "value": "external"
+            }
+          ]
+        },
+        {
+          "category": "files",
+          "values": [
+            {
+              "value": "25"
+            }
+          ]
+        },
+        {
+          "category": "subjects",
+          "values": [
+            {
+              "value": "2504"
+            }
+          ]
+        }
+      ],
+      "keywords": [
+        {
+          "value": "genomics"
+        }
+      ],
+      "licenses": [
+        {
+          "name": "BY-NC-SA"
+        }
+      ],
+      "storedIn": {
+        "description": "Gzipped .vcf file containing sequence variations",
+        "name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chrMT.phase3_callmom-v0_4.20130502.genotypes.vcf.gz"
+      },
+      "title": "Mitochondrial genome",
+      "types": [
+        {
+          "information": {
+            "value": "genomics"
+          }
+        }
+      ],
+      "version": "1.0"
+    },
+    {
+      "creators": [
+        {
+          "name": "1000 Genomes Project"
+        }
+      ],
+      "dates": [
+        {
+          "date": "2015-02-18 00:00:00",
+          "type": {
+            "value": "source .vcf file creation date"
+          }
+        }
+      ],
+      "description": "Chromosome X",
+      "dimensions": [
+        {
+          "name": {
+            "value": "Count of Single Nucleotide Polymorphism variants"
+          },
+          "values": [
+            "3191768"
+          ]
+        },
+        {
+          "name": {
+            "value": "Count of single-nucleotide insertion and deletion events"
+          },
+          "values": [
+            "210679"
+          ]
+        }
+      ],
+      "distributions": [
+        {
+          "access": {
+            "authorizations": [
+              {
+                "value": "public"
+              }
+            ],
+            "landingPage": "https://www.internationalgenome.org/"
+          },
+          "formats": [
+            "VCF"
+          ],
+          "size": 1.87,
+          "unit": {
+            "value": "GB"
+          }
+        }
+      ],
+      "extraProperties": [
+        {
+          "category": "FTP link to gzipped FASTA file containing reference DNA sequence",
+          "values": [
+            {
+              "value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
+            }
+          ]
+        },
+        {
+          "category": "CONP_status",
+          "values": [
+            {
+              "value": "external"
+            }
+          ]
+        },
+        {
+          "category": "files",
+          "values": [
+            {
+              "value": "25"
+            }
+          ]
+        },
+        {
+          "category": "subjects",
+          "values": [
+            {
+              "value": "2504"
+            }
+          ]
+        }
+      ],
+      "keywords": [
+        {
+          "value": "genomics"
+        }
+      ],
+      "licenses": [
+        {
+          "name": "BY-NC-SA"
+        }
+      ],
+      "storedIn": {
+        "description": "Gzipped .vcf file containing sequence variations",
+        "name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chrX.phase3_shapeit2_mvncall_integrated_v1b.20130502.genotypes.vcf.gz"
+      },
+      "title": "Chromosome X",
+      "types": [
+        {
+          "information": {
+            "value": "genomics"
+          }
+        }
+      ],
+      "version": "1.0"
+    },
+    {
+      "creators": [
+        {
+          "name": "1000 Genomes Project"
+        }
+      ],
+      "dates": [
+        {
+          "date": "2015-02-18 00:00:00",
+          "type": {
+            "value": "source .vcf file creation date"
+          }
+        }
+      ],
+      "description": "Chromosome Y",
+      "dimensions": [
+        {
+          "name": {
+            "value": "Count of Single Nucleotide Polymorphism variants"
+          },
+          "values": [
+            "60505"
+          ]
+        },
+        {
+          "name": {
+            "value": "Count of single-nucleotide insertion and deletion events"
+          },
+          "values": [
+            "1314"
+          ]
+        }
+      ],
+      "distributions": [
+        {
+          "access": {
+            "authorizations": [
+              {
+                "value": "public"
+              }
+            ],
+            "landingPage": "https://www.internationalgenome.org/"
+          },
+          "formats": [
+            "VCF"
+          ],
+          "size": 5.73,
+          "unit": {
+            "value": "MB"
+          }
+        }
+      ],
+      "extraProperties": [
+        {
+          "category": "FTP link to gzipped FASTA file containing reference DNA sequence",
+          "values": [
+            {
+              "value": "ftp://ftp.1000genomes.ebi.ac.uk//vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz"
+            }
+          ]
+        },
+        {
+          "category": "CONP_status",
+          "values": [
+            {
+              "value": "external"
+            }
+          ]
+        },
+        {
+          "category": "files",
+          "values": [
+            {
+              "value": "25"
+            }
+          ]
+        },
+        {
+          "category": "subjects",
+          "values": [
+            {
+              "value": "2504"
+            }
+          ]
+        }
+      ],
+      "keywords": [
+        {
+          "value": "genomics"
+        }
+      ],
+      "licenses": [
+        {
+          "name": "BY-NC-SA"
+        }
+      ],
+      "storedIn": {
+        "description": "Gzipped .vcf file containing sequence variations",
+        "name": "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chrY.phase3_integrated_v2a.20130502.genotypes.vcf.gz"
+      },
+      "title": "Chromosome Y",
+      "types": [
+        {
+          "information": {
+            "value": "genomics"
+          }
+        }
+      ],
+      "version": "1.0"
+    }
+  ],
+  "identifier": {
+    "identifier": "dummy",
+    "identifierSource": "DOI"
+  },
+  "isAbout": [
+    {
+      "identifier": {
+        "identifier": "9606",
+        "identifierSource": "https://www.ncbi.nlm.nih.gov/taxonomy/9606"
+      },
+      "name": "Homo sapiens"
+    }
+  ],
+  "keywords": [
+    {
+      "value": "genomics"
+    }
+  ],
+  "licenses": [
+    {
+      "name": "BY-NC-SA"
+    }
+  ],
+  "primaryPublications": [
+    {
+      "authors": [
+        {
+          "name": "1000 Genomes Project"
+        }
+      ],
+      "dates": [
+        {
+          "date": "2015-10-01 00:00:00",
+          "type": {
+            "value": "primary reference publication date"
+          }
+        }
+      ],
+      "identifier": {
+        "identifier": "https://doi.org/10.1038/nature15393"
+      },
+      "title": "A global reference for human genetic variation"
+    }
+  ],
+  "privacy": "public open",
+  "storedIn": {
+    "name": "European Bioinformatics Institute"
+  },
+  "title": "1000 Genomes Project - Valid Test Example For Validator",
+  "types": [
+    {
+      "information": {
+        "value": "genomics"
+      }
+    }
+  ],
+  "version": "1.0"
 }
