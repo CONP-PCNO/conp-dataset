@@ -1,19 +1,18 @@
-from contextlib import contextmanager
-from functools import reduce
 import json
 import os
 import random
 import re
 import signal
 import subprocess
-from typing import List, Set, Union
+from contextlib import contextmanager
+from functools import reduce
 
 import datalad.api as api
 import git
-from git.exc import InvalidGitRepositoryError
 import humanize
 import keyring
 import pytest
+from git.exc import InvalidGitRepositoryError
 
 
 @contextmanager
@@ -117,7 +116,7 @@ def is_authentication_required(dataset):
                         [
                             authorization["value"] != "public"
                             for authorization in authorizations
-                        ]
+                        ],
                     ):
                         return True
 
@@ -137,7 +136,10 @@ def generate_datalad_provider(loris_api):
     re_loris_api = loris_api.replace(".", "\\.")
 
     datalad_provider_path = os.path.join(
-        os.path.expanduser("~"), ".config", "datalad", "providers"
+        os.path.expanduser("~"),
+        ".config",
+        "datalad",
+        "providers",
     )
     os.makedirs(datalad_provider_path, exist_ok=True)
     with open(
@@ -153,7 +155,7 @@ credential = loris
 [credential:loris]
 url = {loris_api}/login
 type = loris-token
-"""
+""",
         )
 
 
@@ -171,9 +173,7 @@ def get_submodules(root: str) -> set:
         All submodules path of a dataset.
     """
     try:
-        submodules: Union[Set[str], None] = {
-            submodule.path for submodule in git.Repo(root).submodules
-        }
+        submodules = {submodule.path for submodule in git.Repo(root).submodules}
     except InvalidGitRepositoryError:
         submodules = None
 
@@ -216,7 +216,7 @@ def authenticate(dataset):
     elif is_authentication_required(dataset):
         if os.getenv("CIRCLE_PR_NUMBER", False):
             pytest.skip(
-                f"WARNING: {dataset} cannot be test on Pull Requests to protect secrets."
+                f"WARNING: {dataset} cannot be test on Pull Requests to protect secrets.",
             )
 
         pytest.fail(
@@ -230,7 +230,7 @@ def authenticate(dataset):
 def get_filenames(dataset, *, minimum):
     contains_archived_files = False
     annex_list: str = iter(git.Repo(dataset).git.annex("list").split("\n"))
-    remotes = list()
+    remotes = []
 
     # Retrieve remotes from the header.
     for line in annex_list:
@@ -239,8 +239,8 @@ def get_filenames(dataset, *, minimum):
         remotes.append(re.sub(r"^\|*", "", line))
 
     if "datalad-archives" in remotes:
-        archived_files = list()
-        independent_files = list()
+        archived_files = []
+        independent_files = []
         archive_index = remotes.index("datalad-archives")
 
         for line in annex_list:
@@ -291,7 +291,8 @@ def download_files(dataset, dataset_size, *, num=4):
                     continue
                 if response.get("status") in ["impossible", "error"]:
                     pytest.fail(
-                        f"{full_path}\n{response.get('message')}", pytrace=False
+                        f"{full_path}\n{response.get('message')}",
+                        pytrace=False,
                     )
 
     if not responses:
@@ -319,7 +320,7 @@ def get_approx_ksmallests(dataset, filenames, k=4, sample_size=200):
     )[:k]
 
 
-def get_proper_submodules(dataset: str) -> List[str]:
+def get_proper_submodules(dataset: str):
     """Install and Return the non-derivative submodules.
 
     Parameters
