@@ -2,16 +2,24 @@ version: 2
 
 aliases:
   - &docker
-    - image: mathdugre/ci-conp-dataset:v1
+    - image: mathdugre/ci-conp-dataset:py39
 
   - &workdir ~/conp-dataset
+
+  - &aggregate_python_requirements
+    run:
+      name: Aggregate Python requirements files
+      command: |
+        touch all_requirements.txt
+        find . -name requirements.txt | grep -v all_requirements.txt | xargs cat >> all_requirements.txt
+        sort -u all_requirements.txt  > requirements.txt
 
   - &restore_python_cache
     restore_cache:
       name: Restore Python Cache
       keys:
-        - v1.4.2-python-{{ .Branch }}
-        - v1.4.2-python-
+        - py39-deps-{{ checksum "requirements.txt" }}
+        - py39-deps-
 
 jobs:
   build:
@@ -21,18 +29,20 @@ jobs:
     steps:
       - checkout:
           path: *workdir
+      - *aggregate_python_requirements
       - *restore_python_cache
       - run:
           name: Install Dependencies
           command: |
             python -m venv ~/venv
             . ~/venv/bin/activate
-            find . -name requirements.txt | xargs -I{} pip install -r {}
+            pip install --upgrade pip
+            pip install -r requirements.txt
       - save_cache:
           name: Save Python Cache
           paths:
             - ~/venv
-          key: v1.4.2-python-{{ .Branch }}
+          key: py39-deps-{{ checksum "requirements.txt" }}
       - run:
           name: Install CONP-DATS Validator
           command: |
@@ -54,15 +64,15 @@ jobs:
           path: *workdir
       - attach_workspace:
           at: *workdir
+      - *aggregate_python_requirements
       - *restore_python_cache
       - run:
           name: Run Tests
           command: |
             . ~/venv/bin/activate
-            pip install gitpython==3.1.7
             export PATH=~/git-annex.linux:$PATH
             python tests/create_tests.py
-            circleci tests glob tests/test_* | circleci tests split > /tmp/tests-to-run 
+            circleci tests glob tests/test_* | circleci tests split > /tmp/tests-to-run
             PYTHONPATH=$PWD:$PWD/scripts pytest --junitxml=tests/junit.xml -v -rfEs $(cat /tmp/tests-to-run)
       - store_test_results:
           path: tests
