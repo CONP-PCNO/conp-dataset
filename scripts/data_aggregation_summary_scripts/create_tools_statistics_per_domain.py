@@ -1,3 +1,4 @@
+"""Docstring."""
 import getopt
 import os
 import sys
@@ -6,7 +7,7 @@ import lib.Utility as Utility
 
 
 def main(argv):
-
+    """Doctring."""
     # create the getopt table + read and validate the options given to the script
     tools_json_dir_path = parse_input(argv)
 
@@ -48,7 +49,7 @@ def main(argv):
 
 def parse_input(argv):
     """
-    Creates the GetOpt table + read and validate the options given when calling the script.
+    Create the GetOpt table + read and validate the options given when calling the script.
 
     :param argv: command-line arguments
      :type argv: list
@@ -57,7 +58,6 @@ def parse_input(argv):
              (typically ~/.cache/boutiques/production)
      :rtype: str
     """
-
     tools_dir_path = None
 
     description = (
@@ -67,9 +67,9 @@ def parse_input(argv):
     )
     usage = (
         "\n"
-        "usage  : python " +
-        __file__ +
-        " -d <path to the Boutiques's JSON cached directory to parse."
+        "usage  : python "
+        + __file__
+        + " -d <path to the Boutiques's JSON cached directory to parse."
         " (typically ~/.cache/boutiques/production>\n\n"
         "options: \n"
         "\t-d: path to the Boutiques's JSON cached directory to parse."
@@ -106,8 +106,7 @@ def parse_input(argv):
 
 def parse_json_information(json_dict):
     """
-    Parse the content of the JSON dictionary and grep the variables of interest for
-    the summary statistics.
+    Parse the content of the JSON dictionary and grep the variables of interest for the summary statistics.
 
     :param json_dict: dictionary with the content of a tool JSON descriptor file
      :type json_dict: dict
@@ -116,7 +115,6 @@ def parse_json_information(json_dict):
              summary statistics
      :rtype: dict
     """
-
     tool_summary_dict = {
         "title": json_dict["name"],
         "container_type": None,
@@ -138,8 +136,7 @@ def parse_json_information(json_dict):
 
 def get_stats_per_domain(tool_summary_dict, domain):
     """
-    Produces a summary statistics per domain (Neuroinformatics, Bioinformatics, MRI, EEG...)
-    of the identified variables of interest.
+    Produce a summary statistics per domain (Neuroinformatics, Bioinformatics, MRI, EEG...) of the identified variables of interest.  # noqa: E501.
 
     :param tool_summary_dict: dictionary with the variables of interest for the summary
      :type tool_summary_dict: dict
@@ -149,7 +146,6 @@ def get_stats_per_domain(tool_summary_dict, domain):
     :return: list with the summary statistics on the variables for the domain of application
      :rtype: list
     """
-
     container = {
         "docker": 0,
         "singularity": 0,
