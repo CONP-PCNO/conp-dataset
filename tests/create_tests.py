@@ -80,7 +80,7 @@ from tests.template import Template
 class TestDataset(Template):
     pass
 
-"""
+""",
 )
 
 for dataset in get_datasets():

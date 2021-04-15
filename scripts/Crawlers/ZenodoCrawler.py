@@ -87,7 +87,7 @@ class ZenodoCrawler(BaseCrawler):
                 original_branch = repo.active_branch.name
                 repo.git.checkout("git-annex")
                 changes = False
-                for dir_name, dirs, files in os.walk(dataset_dir):
+                for dir_name, _, files in os.walk(dataset_dir):
                     for file_name in files:
                         file_path = os.path.join(dir_name, file_name)
                         if ".git" in file_path:

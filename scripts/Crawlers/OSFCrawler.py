@@ -160,7 +160,7 @@ class OSFCrawler(BaseCrawler):
                     annex_info_dict = json.loads(
                         annex("info", "--bytes", "--json", inner_file_path),
                     )
-                    file_size = int(annex_info_dict["size"])
+                    file_size = int(annex_info_dict.get("size", 0))
                 sizes.append(file_size)
 
     def _download_components(
@@ -343,13 +343,13 @@ class OSFCrawler(BaseCrawler):
                     {
                         "date": date_created.strftime("%Y-%m-%d %H:%M:%S"),
                         "type": {
-                            "value": "Date Created",
+                            "value": "date created",
                         },
                     },
                     {
                         "date": date_modified.strftime("%Y-%m-%d %H:%M:%S"),
                         "type": {
-                            "value": "Date Modified",
+                            "value": "date modified",
                         },
                     },
                 ],
@@ -518,14 +518,16 @@ Crawled from [OSF]({})
 ## Description
 
 {}""".format(
-            dataset["title"], dataset["homepage"], dataset["description"]
+            dataset["title"],
+            dataset["homepage"],
+            dataset["description"],
         )
 
         if "identifier" in dataset:
             readme_content += """
 
 DOI: {}""".format(
-                dataset["identifier"]["identifier"]
+                dataset["identifier"]["identifier"],
             )
 
         return readme_content

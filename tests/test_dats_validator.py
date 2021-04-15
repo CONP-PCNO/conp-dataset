@@ -1,17 +1,12 @@
 import copy
 import json
 import os
-import sys
 import unittest
 
-sys.path.append(os.path.join(os.getcwd(), "scripts"))
-from dats_validator.validator import (
-    validate_json,  # noqa: E402
-    validate_non_schema_required,
-    validate_extra_properties,
-    REQUIRED_EXTRA_PROPERTIES,
-)
-
+from scripts.dats_validator.validator import REQUIRED_EXTRA_PROPERTIES
+from scripts.dats_validator.validator import validate_extra_properties
+from scripts.dats_validator.validator import validate_json
+from scripts.dats_validator.validator import validate_non_schema_required
 
 EXAMPLES = os.path.join(os.getcwd(), "scripts", "dats_validator", "examples")
 VALID = os.path.join(EXAMPLES, "valid_dats.json")

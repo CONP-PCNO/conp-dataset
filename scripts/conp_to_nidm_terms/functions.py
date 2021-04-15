@@ -91,7 +91,7 @@ def collect_values(
     dats_files_count = 0
 
     # Access DATS.json in each project's root directory
-    for path, directories, files in os.walk(PROJECTS_DIR):
+    for path, _, files in os.walk(PROJECTS_DIR):
         if "DATS.json" in files:
             dats_files_count += 1
             dats_file = os.path.join(path, "DATS.json")
@@ -181,7 +181,7 @@ def find_duplicates(report):
             if report[key]["count"] == len(normilized_terms.keys()):
                 logger.info(f"All terms are unique in {key}.")
             else:
-                for k, v in normilized_terms.items():
+                for _, v in normilized_terms.items():
                     if len(v) > 1:
                         errors.append(f"{key.title()} duplicate terms: {v}")
     return errors

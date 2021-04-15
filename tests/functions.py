@@ -6,9 +6,6 @@ import signal
 import subprocess
 from contextlib import contextmanager
 from functools import reduce
-from typing import List
-from typing import Set
-from typing import Union
 
 import datalad.api as api
 import git
@@ -158,7 +155,7 @@ credential = loris
 [credential:loris]
 url = {loris_api}/login
 type = loris-token
-"""
+""",
         )
 
 
@@ -176,9 +173,7 @@ def get_submodules(root: str) -> set:
         All submodules path of a dataset.
     """
     try:
-        submodules: Union[Set[str], None] = {
-            submodule.path for submodule in git.Repo(root).submodules
-        }
+        submodules = {submodule.path for submodule in git.Repo(root).submodules}
     except InvalidGitRepositoryError:
         submodules = None
 
@@ -325,7 +320,7 @@ def get_approx_ksmallests(dataset, filenames, k=4, sample_size=200):
     )[:k]
 
 
-def get_proper_submodules(dataset: str) -> List[str]:
+def get_proper_submodules(dataset: str):
     """Install and Return the non-derivative submodules.
 
     Parameters

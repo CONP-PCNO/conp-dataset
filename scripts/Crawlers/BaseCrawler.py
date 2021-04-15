@@ -397,7 +397,7 @@ Functional checks:
 - [ ] `DATS.json` is a valid DATs model
 - [ ] If dataset is derived data, raw data is a sub-dataset
 """.format(
-                        msg + "\n"
+                        msg + "\n",
                     ),
                     "head": self.username + ":conp-bot/" + clean_title,
                     "base": "master",
