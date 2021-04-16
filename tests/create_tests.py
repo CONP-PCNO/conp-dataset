@@ -2,8 +2,9 @@ import os
 import re
 import string
 from typing import List
-from git import Repo
+
 import requests
+from git import Repo
 
 
 def get_datasets():
@@ -12,7 +13,7 @@ def get_datasets():
     pull_number = os.getenv("CIRCLE_PR_NUMBER", False)
     if pull_number:
         response = requests.get(
-            f"https://api.github.com/repos/CONP-PCNO/conp-dataset/pulls/{pull_number}/files"
+            f"https://api.github.com/repos/CONP-PCNO/conp-dataset/pulls/{pull_number}/files",
         )
         pr_files: List[str] = [data["filename"] for data in response.json()]
 
@@ -79,7 +80,7 @@ from tests.template import Template
 class TestDataset(Template):
     pass
 
-"""
+""",
 )
 
 for dataset in get_datasets():

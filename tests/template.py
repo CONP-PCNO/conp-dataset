@@ -5,28 +5,22 @@ import os
 import time
 from threading import Lock
 
-from datalad import api
 import git
+import humanfriendly
 import pytest
+from datalad import api
 
-from scripts.dats_validator.validator import (
-    validate_json,
-    validate_non_schema_required,
-    validate_formats,
-    validate_date_types,
-    validate_privacy,
-    validate_is_about,
-)
-from tests.functions import (
-    authenticate,
-    download_files,
-    eval_config,
-    get_approx_ksmallests,
-    get_filenames,
-    get_proper_submodules,
-    project_name2env,
-    timeout,
-)
+from scripts.dats_validator.validator import validate_date_types
+from scripts.dats_validator.validator import validate_formats
+from scripts.dats_validator.validator import validate_is_about
+from scripts.dats_validator.validator import validate_json
+from scripts.dats_validator.validator import validate_non_schema_required
+from scripts.dats_validator.validator import validate_privacy
+from tests.functions import authenticate
+from tests.functions import download_files
+from tests.functions import eval_config
+from tests.functions import get_proper_submodules
+from tests.functions import timeout
 
 
 def delay_rerun(*args):
@@ -37,7 +31,7 @@ def delay_rerun(*args):
 lock = Lock()
 
 
-class Template(object):
+class Template:
     @pytest.fixture(autouse=True)
     def install_dataset(self, dataset):
 
@@ -95,10 +89,10 @@ class Template(object):
             # For datasets crawled with Zenodo: check the formats extra property only
             # For datasets crawled with OSF: skip validation of extra properties
             is_osf_dataset = os.path.exists(
-                os.path.join(dataset, ".conp-osf-crawler.json")
+                os.path.join(dataset, ".conp-osf-crawler.json"),
             )
             is_zenodo_dataset = os.path.exists(
-                os.path.join(dataset, ".conp-zenodo-crawler.json")
+                os.path.join(dataset, ".conp-zenodo-crawler.json"),
             )
             is_valid, errors = (
                 validate_formats(json_obj)
@@ -118,20 +112,20 @@ class Template(object):
         eval_config(dataset)
         authenticate(dataset)
 
-        k_smallest = get_approx_ksmallests(dataset, get_filenames(dataset))
+        with open(os.path.join(dataset, "DATS.json"), "rb") as fin:
+            dats = json.load(fin)
+            dataset_size: float = 0.0
 
-        # Restricted Zenodo datasets require to download the whole archive before
-        # downloading individual files.
-        project = project_name2env(dataset.split("/")[-1])
-        if os.getenv(project + "_ZENODO_TOKEN", None):
-            with timeout(300):
-                api.get(path=dataset, on_failure="ignore")
-        download_files(dataset, k_smallest)
+            for distribution in dats.get("distributions", list()):
+                dataset_size += humanfriendly.parse_size(
+                    f"{distribution['size']} {distribution['unit']['value']}",
+                )
+
+        download_files(dataset, dataset_size)
 
         # Test the download of proper submodules.
         for submodule in get_proper_submodules(dataset):
-            k_smallest = get_approx_ksmallests(submodule, get_filenames(submodule))
-            download_files(submodule, k_smallest)
+            download_files(submodule, dataset_size)
 
     def test_files_integrity(self, dataset):
         TIME_LIMIT = 300
@@ -160,5 +154,5 @@ class Template(object):
         if not completed:
             pytest.fail(
                 f"The dataset timed out after {TIME_LIMIT} seconds before retrieving a file."
-                "\nCannot determine if the test is valid."
+                "\nCannot determine if the test is valid.",
             )

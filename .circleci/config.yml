@@ -2,7 +2,7 @@ version: 2
 
 aliases:
   - &docker
-    - image: mathdugre/ci-conp-dataset:v1
+    - image: mathdugre/ci-conp-dataset:py39
 
   - &workdir ~/conp-dataset
 
@@ -18,8 +18,8 @@ aliases:
     restore_cache:
       name: Restore Python Cache
       keys:
-        - python-deps-{{ checksum "requirements.txt" }}
-        - python-deps-
+        - py39-deps-{{ checksum "requirements.txt" }}
+        - py39-deps-
 
 jobs:
   build:
@@ -42,7 +42,7 @@ jobs:
           name: Save Python Cache
           paths:
             - ~/venv
-          key: python-deps-{{ checksum "requirements.txt" }}
+          key: py39-deps-{{ checksum "requirements.txt" }}
       - run:
           name: Install CONP-DATS Validator
           command: |
@@ -70,7 +70,6 @@ jobs:
           name: Run Tests
           command: |
             . ~/venv/bin/activate
-            ./lint.sh
             export PATH=~/git-annex.linux:$PATH
             python tests/create_tests.py
             circleci tests glob tests/test_* | circleci tests split > /tmp/tests-to-run

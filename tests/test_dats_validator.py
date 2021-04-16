@@ -1,19 +1,16 @@
-import unittest
+import copy
 import json
 import os
-import sys
-import copy
-sys.path.append(os.path.join(os.getcwd(), 'scripts'))
-from dats_validator.validator import (validate_json,  # noqa: E402
-                                      validate_non_schema_required,
-                                      validate_extra_properties,
-                                      REQUIRED_EXTRA_PROPERTIES
-                                      )
+import unittest
 
+from scripts.dats_validator.validator import REQUIRED_EXTRA_PROPERTIES
+from scripts.dats_validator.validator import validate_extra_properties
+from scripts.dats_validator.validator import validate_json
+from scripts.dats_validator.validator import validate_non_schema_required
 
-EXAMPLES = os.path.join(os.getcwd(), 'scripts', 'dats_validator', 'examples')
-VALID = os.path.join(EXAMPLES, 'valid_dats.json')
-INVALID = os.path.join(EXAMPLES, 'invalid_dats.json')
+EXAMPLES = os.path.join(os.getcwd(), "scripts", "dats_validator", "examples")
+VALID = os.path.join(EXAMPLES, "valid_dats.json")
+INVALID = os.path.join(EXAMPLES, "invalid_dats.json")
 
 
 with open(VALID) as v_file:
@@ -24,7 +21,6 @@ with open(INVALID) as inv_file:
 
 
 class JsonschemaTest(unittest.TestCase):
-
     def test_validate_json(self):
         valid_validation = validate_json(valid_obj)
         invalid_validation = validate_json(invalid_obj)
@@ -33,7 +29,6 @@ class JsonschemaTest(unittest.TestCase):
 
 
 class ExtraPropertiesTest(unittest.TestCase):
-
     def test_non_schema_required(self):
         valid_validation, errors = validate_non_schema_required(valid_obj)
         invalid_validation, errors = validate_non_schema_required(invalid_obj)
@@ -64,11 +59,14 @@ class ExtraPropertiesTest(unittest.TestCase):
                     {"value": "conp"},
                     {"value": "External"},
                     {"value": "random"},
-                    {"value": "canadian"}
+                    {"value": "canadian"},
                 ]
         invalid_validation, errors = validate_extra_properties(modified_copy)
         for error in errors:
-            self.assertIn(f"Allowed values are {REQUIRED_EXTRA_PROPERTIES['CONP_status']}", error)
+            self.assertIn(
+                f"Allowed values are {REQUIRED_EXTRA_PROPERTIES['CONP_status']}",
+                error,
+            )
 
     def test_subject(self):
         modified_copy = copy.deepcopy(valid_obj)
@@ -80,5 +78,5 @@ class ExtraPropertiesTest(unittest.TestCase):
             self.assertIn("required but not found", error)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

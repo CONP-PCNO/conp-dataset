@@ -1,19 +1,18 @@
-from contextlib import contextmanager
-from functools import reduce
 import json
 import os
 import random
 import re
 import signal
 import subprocess
-from typing import List, Set, Union
+from contextlib import contextmanager
+from functools import reduce
 
 import datalad.api as api
 import git
-from git.exc import InvalidGitRepositoryError
 import humanize
 import keyring
 import pytest
+from git.exc import InvalidGitRepositoryError
 
 
 @contextmanager
@@ -117,7 +116,7 @@ def is_authentication_required(dataset):
                         [
                             authorization["value"] != "public"
                             for authorization in authorizations
-                        ]
+                        ],
                     ):
                         return True
 
@@ -137,7 +136,10 @@ def generate_datalad_provider(loris_api):
     re_loris_api = loris_api.replace(".", "\\.")
 
     datalad_provider_path = os.path.join(
-        os.path.expanduser("~"), ".config", "datalad", "providers"
+        os.path.expanduser("~"),
+        ".config",
+        "datalad",
+        "providers",
     )
     os.makedirs(datalad_provider_path, exist_ok=True)
     with open(
@@ -153,7 +155,7 @@ credential = loris
 [credential:loris]
 url = {loris_api}/login
 type = loris-token
-"""
+""",
         )
 
 
@@ -171,9 +173,7 @@ def get_submodules(root: str) -> set:
         All submodules path of a dataset.
     """
     try:
-        submodules: Union[Set[str], None] = {
-            submodule.path for submodule in git.Repo(root).submodules
-        }
+        submodules = {submodule.path for submodule in git.Repo(root).submodules}
     except InvalidGitRepositoryError:
         submodules = None
 
@@ -216,7 +216,7 @@ def authenticate(dataset):
     elif is_authentication_required(dataset):
         if os.getenv("CIRCLE_PR_NUMBER", False):
             pytest.skip(
-                f"WARNING: {dataset} cannot be test on Pull Requests to protect secrets."
+                f"WARNING: {dataset} cannot be test on Pull Requests to protect secrets.",
             )
 
         pytest.fail(
@@ -227,19 +227,62 @@ def authenticate(dataset):
         )
 
 
-def get_filenames(dataset):
-    annex_list: str = git.Repo(dataset).git.annex("list")
-    filenames: List[str] = re.split(r"\n[_X]+\s", annex_list)[1:]
-    return filenames
+def get_filenames(dataset, *, minimum):
+    contains_archived_files = False
+    annex_list: str = iter(git.Repo(dataset).git.annex("list").split("\n"))
+    remotes = []
+
+    # Retrieve remotes from the header.
+    for line in annex_list:
+        if re.match(r"^\|+$", line):
+            break
+        remotes.append(re.sub(r"^\|*", "", line))
+
+    if "datalad-archives" in remotes:
+        archived_files = []
+        independent_files = []
+        archive_index = remotes.index("datalad-archives")
+
+        for line in annex_list:
+            # Split only for first occurence to prevent failure when filename has spaces.
+            in_remote, filename = line.split(" ", maxsplit=1)
+
+            if in_remote[archive_index] == "X":
+                archived_files.append(filename)
+            else:
+                independent_files.append(filename)
+
+        if len(independent_files) > minimum:
+            filenames = independent_files
+        else:
+            contains_archived_files = True
+            filenames = archived_files + independent_files
+
+    else:
+        filenames = [x.split()[1] for x in annex_list]
+
+    return filenames, contains_archived_files
 
 
-def download_files(dataset, filenames, time_limit=120):
-    if len(filenames) == 0:
+def download_files(dataset, dataset_size, *, num=4):
+    filenames, contains_archived_files = get_filenames(dataset, minimum=num)
+    k_smallest = get_approx_ksmallests(dataset, filenames)
+
+    if len(k_smallest) == 0:
         return
+
+    download_size = (
+        dataset_size
+        if contains_archived_files
+        else get_sample_files_size(dataset, k_smallest)
+    )
+    # Set a time limit based on the download size.
+    # Limit between 20 sec and 10 minutes to avoid test to fail/hang.
+    time_limit = int(max(20, min(download_size * 1.2 // 2e6, 600)))
 
     responses = []
     with timeout(time_limit):
-        for filename in filenames:
+        for filename in k_smallest:
             full_path = os.path.join(dataset, filename)
             responses = api.get(path=full_path, on_failure="ignore")
 
@@ -248,7 +291,8 @@ def download_files(dataset, filenames, time_limit=120):
                     continue
                 if response.get("status") in ["impossible", "error"]:
                     pytest.fail(
-                        f"{full_path}\n{response.get('message')}", pytrace=False
+                        f"{full_path}\n{response.get('message')}",
+                        pytrace=False,
                     )
 
     if not responses:
@@ -276,7 +320,7 @@ def get_approx_ksmallests(dataset, filenames, k=4, sample_size=200):
     )[:k]
 
 
-def get_proper_submodules(dataset: str) -> List[str]:
+def get_proper_submodules(dataset: str):
     """Install and Return the non-derivative submodules.
 
     Parameters
@@ -320,3 +364,7 @@ def get_proper_submodules(dataset: str) -> List[str]:
         api.install(path=submodule, recursive=True)
 
     return proper_submodules
+
+
+def get_sample_files_size(dir_root, files):
+    return sum([get_annexed_file_size(dir_root, f) for f in files])
