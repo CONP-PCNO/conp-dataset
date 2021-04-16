@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-* Test build: 
+* Test build:
 <!--- Add a link to the CircleCI test build here -->
 
 * Standard error:

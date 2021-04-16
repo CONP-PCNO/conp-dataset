@@ -1,8 +1,9 @@
-import os
 import json
 import logging
+import os
 from collections import Counter
 from copy import deepcopy
+
 import requests
 
 
@@ -18,12 +19,12 @@ CURRENT_WORKING_DIR = os.path.dirname(os.path.realpath(__file__))
 NIF_API_URL = "https://scicrunch.org/api/1/ilx/search/term/"
 
 # Load JSON-LD template
-with open("template.jsonld", "r", encoding="utf-8") as template_file:
+with open("template.jsonld", encoding="utf-8") as template_file:
     JSONLD_TEMPLATE = json.load(template_file)
 
 
 # Set API key
-with open("api_key.json", "r", encoding="utf-8") as api_key_file:
+with open("api_key.json", encoding="utf-8") as api_key_file:
     API_KEY = json.load(api_key_file)["api_key"]
 
 
@@ -36,19 +37,26 @@ def get_api_response(term):
 
     # API Key must be provided
     if not API_KEY:
-        raise Exception("Add your API Key for the NIF data services to the api_key.json file.")
+        raise Exception(
+            "Add your API Key for the NIF data services to the api_key.json file.",
+        )
 
     try:
         api_key = f"?key={API_KEY}"
-        r = requests.get(NIF_API_URL + term + api_key, headers={'accept': 'application/json'})
+        r = requests.get(
+            NIF_API_URL + term + api_key,
+            headers={"accept": "application/json"},
+        )
         r.raise_for_status()
-        response = json.loads(r.content.decode('utf-8'))
-        match = str()
+        response = json.loads(r.content.decode("utf-8"))
+        match = ""
         # Standard response will have existing_ids key
         if "existing_ids" in response["data"] and response["data"]["existing_ids"]:
             for i in response["data"]["existing_ids"]:
                 # retrieve InterLex ID, its curie has "ILX" prefix
-                match = i["iri"] if "curie" in i and "ILX:".upper() in i["curie"] else match
+                match = (
+                    i["iri"] if "curie" in i and "ILX:".upper() in i["curie"] else match
+                )
         else:
             match = "no match found"
         return match
@@ -57,7 +65,14 @@ def get_api_response(term):
         logger.error(f"Error: {e}")
 
 
-def collect_values(privacy=True, types=True, licenses=True, is_about=True, formats=True, keywords=True):
+def collect_values(
+    privacy=True,
+    types=True,
+    licenses=True,
+    is_about=True,
+    formats=True,
+    keywords=True,
+):
     """
     Iterates over the projects directory content retrieving DATS file for each project.
     Aggregates all values and their count for selected properties in the report object.
@@ -76,11 +91,11 @@ def collect_values(privacy=True, types=True, licenses=True, is_about=True, forma
     dats_files_count = 0
 
     # Access DATS.json in each project's root directory
-    for path, directories, files in os.walk(PROJECTS_DIR):
+    for path, _, files in os.walk(PROJECTS_DIR):
         if "DATS.json" in files:
             dats_files_count += 1
             dats_file = os.path.join(path, "DATS.json")
-            with open(dats_file, "r", encoding="utf-8") as json_file:
+            with open(dats_file, encoding="utf-8") as json_file:
                 dats_data = json.load(json_file)
 
                 # privacy is not required
@@ -91,12 +106,21 @@ def collect_values(privacy=True, types=True, licenses=True, is_about=True, forma
                     # types are required
                     for typ in dats_data["types"]:
                         # types takes four possible datatype schemas
-                        datatype_schemas = ["information", "method", "platform", "instrument"]
-                        types_datatype_values.update(set(typ[t]["value"] for t in datatype_schemas if t in typ))
+                        datatype_schemas = [
+                            "information",
+                            "method",
+                            "platform",
+                            "instrument",
+                        ]
+                        types_datatype_values.update(
+                            {typ[t]["value"] for t in datatype_schemas if t in typ},
+                        )
 
                 if licenses:
                     # licenses is required
-                    licenses_values.update(set(licence["name"] for licence in dats_data["licenses"]))
+                    licenses_values.update(
+                        {licence["name"] for licence in dats_data["licenses"]},
+                    )
 
                 # isAbout is not required
                 if is_about and "isAbout" in dats_data:
@@ -112,19 +136,27 @@ def collect_values(privacy=True, types=True, licenses=True, is_about=True, forma
                 if formats:
                     for dist in dats_data["distributions"]:
                         if "formats" in dist:
-                            distributions_formats.update(set(f for f in dist["formats"]))
+                            distributions_formats.update({f for f in dist["formats"]})
 
                 if keywords:
-                    keywords_values.update(set(k["value"] for k in dats_data["keywords"]))
+                    keywords_values.update({k["value"] for k in dats_data["keywords"]})
 
-    report = dict()
-    for key, value in zip(["privacy", "licenses", "types", "is_about", "formats", "keywords"],
-                          [privacy_values, licenses_values, types_datatype_values, is_about_values,
-                           distributions_formats, keywords_values]):
+    report = {}
+    for key, value in zip(
+        ["privacy", "licenses", "types", "is_about", "formats", "keywords"],
+        [
+            privacy_values,
+            licenses_values,
+            types_datatype_values,
+            is_about_values,
+            distributions_formats,
+            keywords_values,
+        ],
+    ):
         if value:
             report[key] = {
                 "count": len(value),
-                "values": list(value)
+                "values": list(value),
             }
     return report, dats_files_count
 
@@ -135,11 +167,11 @@ def find_duplicates(report):
     :param report: json object returned by collect_values()
     :return: list of errors describing where duplicates occur
     """
-    errors = list()
+    errors = []
     for key in ["privacy", "licenses", "types", "is_about", "formats", "keywords"]:
         if key in report:
             terms = report[key]["values"]
-            normilized_terms = dict()
+            normilized_terms = {}
             for term in terms:
                 if term.lower() in normilized_terms:
                     normilized_terms[term.lower()].append(term)
@@ -149,7 +181,7 @@ def find_duplicates(report):
             if report[key]["count"] == len(normilized_terms.keys()):
                 logger.info(f"All terms are unique in {key}.")
             else:
-                for k, v in normilized_terms.items():
+                for _, v in normilized_terms.items():
                     if len(v) > 1:
                         errors.append(f"{key.title()} duplicate terms: {v}")
     return errors
@@ -176,7 +208,11 @@ def generate_jsonld_files(report, use_api=True):
                 os.makedirs(os.path.join(CURRENT_WORKING_DIR, key))
             filename = "".join(x for x in term.title().replace(" ", "") if x.isalnum())
             # Create and save JSON-LD file in the respective folder
-            with open(f"{os.path.join(CURRENT_WORKING_DIR, key, filename)}.jsonld", "w", encoding="utf-8") as jldfile:
+            with open(
+                f"{os.path.join(CURRENT_WORKING_DIR, key, filename)}.jsonld",
+                "w",
+                encoding="utf-8",
+            ) as jldfile:
                 json.dump(jsonld_description, jldfile, indent=4, ensure_ascii=False)
     print(f"JSON-LD files created: {len(terms_counter.keys())}")
     return

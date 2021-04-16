@@ -1,7 +1,7 @@
-import os
-import json
 import csv
 import datetime
+import json
+import os
 
 
 def read_conp_dataset_dir(conp_dataset_dir_path):
@@ -18,21 +18,24 @@ def read_conp_dataset_dir(conp_dataset_dir_path):
      :rtype: list
     """
 
-    dataset_dirs_list = os.listdir(conp_dataset_dir_path + '/projects')
+    dataset_dirs_list = os.listdir(conp_dataset_dir_path + "/projects")
 
     dataset_descriptor_list = []
 
     for dataset in dataset_dirs_list:
-        if dataset == '.touchfile':
+        if dataset == ".touchfile":
             continue
 
-        dats_path = conp_dataset_dir_path + '/projects/' + dataset + '/DATS.json'
+        dats_path = conp_dataset_dir_path + "/projects/" + dataset + "/DATS.json"
         if not (os.path.exists(dats_path)):
-            subdataset_content_list = read_dats_file_from_subdataset_folders(conp_dataset_dir_path, dataset)
+            subdataset_content_list = read_dats_file_from_subdataset_folders(
+                conp_dataset_dir_path,
+                dataset,
+            )
             dataset_descriptor_list.extend(subdataset_content_list)
             continue
 
-        print('Reading file: ' + dats_path)
+        print("Reading file: " + dats_path)
         with open(dats_path) as dats_file:
             dats_dict = json.loads(dats_file.read())
             dataset_descriptor_list.append(dats_dict)
@@ -54,13 +57,21 @@ def read_dats_file_from_subdataset_folders(conp_dataset_dir_path, dataset_name):
      :rtype: list
     """
 
-    subdataset_dirs_list = os.listdir(conp_dataset_dir_path + '/projects/' + dataset_name)
+    subdataset_dirs_list = os.listdir(
+        conp_dataset_dir_path + "/projects/" + dataset_name,
+    )
 
     subdataset_content = []
 
     for subdataset in subdataset_dirs_list:
-        dats_path = os.path.join(conp_dataset_dir_path, 'projects', dataset_name, subdataset, 'DATS.json')
-        print('Reading file: ' + dats_path)
+        dats_path = os.path.join(
+            conp_dataset_dir_path,
+            "projects",
+            dataset_name,
+            subdataset,
+            "DATS.json",
+        )
+        print("Reading file: " + dats_path)
         with open(dats_path) as dats_file:
             dats_dict = json.loads(dats_file.read())
             subdataset_content.append(dats_dict)
@@ -86,9 +97,9 @@ def read_boutiques_cached_dir(tools_json_dir_path):
 
     for json_file in os.listdir(tools_json_dir_path):
         print(json_file)
-        if 'zenodo' not in json_file or 'swp' in json_file:
+        if "zenodo" not in json_file or "swp" in json_file:
             continue
-        json_path = tools_json_dir_path + '/' + json_file
+        json_path = tools_json_dir_path + "/" + json_file
         with open(json_path) as json_file:
             json_dict = json.loads(json_file.read())
             boutiques_descriptor_list.append(json_dict)
@@ -111,8 +122,15 @@ def write_csv_file(csv_file_basename, csv_content):
      :type csv_content      : list
     """
 
-    csv_file = os.getcwd() + '/' + csv_file_basename + '_' + str(datetime.date.today()) + '.csv'
+    csv_file = (
+        os.getcwd()
+        + "/"
+        + csv_file_basename
+        + "_"
+        + str(datetime.date.today())
+        + ".csv"
+    )
 
-    with open(csv_file, 'w', newline='') as file:
+    with open(csv_file, "w", newline="") as file:
         writer = csv.writer(file)
         writer.writerows(csv_content)
