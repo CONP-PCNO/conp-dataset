@@ -228,8 +228,8 @@ def validate_privacy(dataset):
     if "privacy" in dataset.keys():
         if dataset["privacy"] not in valid_privacy_values:
             error_message = (
-                f"Validation error in {dataset['title']}: privacy " \
-                f"- '{dataset['privacy']}' is not allowed. Allowed " \
+                f"Validation error in {dataset['title']}: privacy "
+                f"- '{dataset['privacy']}' is not allowed. Allowed "
                 f"value should be one of {valid_privacy_values}. "
             )
             errors_list.append(error_message)
@@ -274,10 +274,10 @@ def validate_is_about(dataset):
 
         if not species_present:
             error_message = (
-                f"Validation error in {dataset['title']}: isAbout " \
-                f"- There appears to be no species specified in isAbout. " \
-                f"At least one species is required in the field and should " \
-                f"follow the NCBI taxonomy. Valid example for a species:\n" \
+                f"Validation error in {dataset['title']}: isAbout "
+                f"- There appears to be no species specified in isAbout. "
+                f"At least one species is required in the field and should "
+                f"follow the NCBI taxonomy. Valid example for a species:\n"
                 f"{example_species}"
             )
             errors_list.append(error_message)

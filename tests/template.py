@@ -72,8 +72,8 @@ class Template:
             privacy_valid_bool, privacy_errors = validate_privacy(json_obj)
             if not privacy_valid_bool:
                 summary_error_message = (
-                    f"Dataset {dataset} contains DATS.json that has errors " \
-                    f"in privacy value. Error is:\n" \
+                    f"Dataset {dataset} contains DATS.json that has errors "
+                    f"in privacy value. Error is:\n"
                     f"- {privacy_errors[0]}"
                 )
                 pytest.fail(summary_error_message, pytrace=False)
@@ -82,8 +82,8 @@ class Template:
             is_about_valid_bool, is_about_errors = validate_is_about(json_obj)
             if not is_about_valid_bool:
                 summary_error_message = (
-                    f"Dataset {dataset} contains DATS.json that has errors " \
-                    f"in isAbout. Error is:\n" \
+                    f"Dataset {dataset} contains DATS.json that has errors "
+                    f"in isAbout. Error is:\n"
                     f"- {is_about_errors[0]}"
                 )
                 pytest.fail(summary_error_message, pytrace=False)
