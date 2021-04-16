@@ -223,13 +223,15 @@ def validate_privacy(dataset):
     '"""
 
     errors_list = []
-    valid_privacy_values = ['open', 'registered', 'controlled', 'private']
+    valid_privacy_values = ["open", "registered", "controlled", "private"]
 
-    if 'privacy' in dataset.keys():
-        if dataset['privacy'] not in valid_privacy_values:
-            error_message = f"Validation error in {dataset['title']}: privacy " \
-                            f"- '{dataset['privacy']}' is not allowed. Allowed " \
-                            f"value should be one of {valid_privacy_values}. "
+    if "privacy" in dataset.keys():
+        if dataset["privacy"] not in valid_privacy_values:
+            error_message = (
+                f"Validation error in {dataset['title']}: privacy " \
+                f"- '{dataset['privacy']}' is not allowed. Allowed " \
+                f"value should be one of {valid_privacy_values}. "
+            )
             errors_list.append(error_message)
 
     if errors_list:
@@ -260,22 +262,24 @@ def validate_is_about(dataset):
     """
 
     errors_list = []
-    identifier_source_base_url = 'https://www.ncbi.nlm.nih.gov/taxonomy'
+    identifier_source_base_url = "https://www.ncbi.nlm.nih.gov/taxonomy"
 
-    if 'isAbout' in dataset.keys():
+    if "isAbout" in dataset.keys():
         species_present = False
-        for entry in dataset['isAbout']:
-            if 'identifier' in entry.keys():
-                identifier_source = entry['identifier']['identifierSource'].lower()
+        for entry in dataset["isAbout"]:
+            if "identifier" in entry.keys():
+                identifier_source = entry["identifier"]["identifierSource"].lower()
                 if identifier_source.startswith(identifier_source_base_url):
                     species_present = True
 
         if not species_present:
-            error_message = f"Validation error in {dataset['title']}: isAbout " \
-                            f"- There appears to be no species specified in isAbout. " \
-                            f"At least one species is required in the field and should " \
-                            f"follow the NCBI taxonomy. Valid example for a species:\n" \
-                            f"{example_species}"
+            error_message = (
+                f"Validation error in {dataset['title']}: isAbout " \
+                f"- There appears to be no species specified in isAbout. " \
+                f"At least one species is required in the field and should " \
+                f"follow the NCBI taxonomy. Valid example for a species:\n" \
+                f"{example_species}"
+            )
             errors_list.append(error_message)
 
     if errors_list:
