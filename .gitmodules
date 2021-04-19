@@ -10,9 +10,6 @@
 [submodule "projects/celltypes"]
   path = projects/celltypes
   url = https://github.com/conpdatasets/celltypes.git
-[submodule "openpain-thermal"]
-	path = projects/openpain/thermal
-	url = https://github.com/conpdatasets/openpain-thermal.git
 [submodule "openpain-placebo_1"]
 	path = projects/openpain/placebo_1
 	url = https://github.com/conpdatasets/openpain-placebo_1.git
@@ -145,3 +142,7 @@
 [submodule "projects/openpain/subacute_longitudinal_study"]
 	path = projects/openpain/subacute_longitudinal_study
 	url = https://github.com/conpdatasets/openpain-subacute_longitudinal_study.git
+[submodule "projects/openpain/thermal"]
+	path = projects/openpain/thermal
+	url = https://github.com/conpdatasets/openpain-thermal.git
+
