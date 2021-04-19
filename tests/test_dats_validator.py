@@ -40,7 +40,7 @@ class ExtraPropertiesTest(unittest.TestCase):
         # two possible key errors are extraProperties and title (the latter since it's used in error message)
         # introduce key error
         del modified_copy["extraProperties"]
-        with self.assertRaises(Exception):
+        with self.assertRaises(KeyError):
             validate_non_schema_required(modified_copy)
 
         modified_copy_2 = copy.deepcopy(valid_obj)
@@ -48,7 +48,7 @@ class ExtraPropertiesTest(unittest.TestCase):
             # KeyError on 'title' will only be raised if there is an error in extraProperties
             del child["title"]
             del child["extraProperties"][1]
-        with self.assertRaises(Exception):
+        with self.assertRaises(KeyError):
             validate_non_schema_required(modified_copy_2)
 
     def test_conp_status_values(self):
