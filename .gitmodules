@@ -140,3 +140,6 @@
 	path = projects/openpain/subacute_longitudinal_study
 	url = https://github.com/conpdatasets/openpain-subacute_longitudinal_study.git
 
+[submodule "projects/openpain/thermal"]
+	path = projects/openpain/thermal
+	url = https://github.com/conpdatasets/openpain-thermal
