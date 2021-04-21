@@ -142,4 +142,3 @@
 [submodule "projects/openpain/thermal"]
 	path = projects/openpain/thermal
 	url = https://github.com/conpdatasets/openpain-thermal.git
-

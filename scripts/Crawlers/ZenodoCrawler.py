@@ -29,8 +29,8 @@ def _create_zenodo_tracker(path, dataset, private_files, restricted):
 
 
 class ZenodoCrawler(BaseCrawler):
-    def __init__(self, github_token, config_path, verbose, force):
-        super().__init__(github_token, config_path, verbose, force)
+    def __init__(self, github_token, config_path, verbose, force, no_pr):
+        super().__init__(github_token, config_path, verbose, force, no_pr)
         self.zenodo_tokens = self._get_tokens()
         self.unlock_script = _get_unlock_script()
 
