@@ -12,8 +12,10 @@ from datalad import api
 
 from scripts.dats_validator.validator import validate_date_types
 from scripts.dats_validator.validator import validate_formats
+from scripts.dats_validator.validator import validate_is_about
 from scripts.dats_validator.validator import validate_json
 from scripts.dats_validator.validator import validate_non_schema_required
+from scripts.dats_validator.validator import validate_privacy
 from tests.functions import authenticate
 from tests.functions import download_files
 from tests.functions import eval_config
@@ -64,10 +66,27 @@ class Template:
                 )
                 for i, error_message in enumerate(date_type_errors, 1):
                     summary_error_message += f"- {i}. {error_message}\n"
-                    pytest.fail(
-                        summary_error_message,
-                        pytrace=False,
-                    )
+                    pytest.fail(summary_error_message, pytrace=False)
+
+            # Validate the privacy values
+            privacy_valid_bool, privacy_errors = validate_privacy(json_obj)
+            if not privacy_valid_bool:
+                summary_error_message = (
+                    f"Dataset {dataset} contains DATS.json that has errors "
+                    f"in privacy value. Error is:\n"
+                    f"- {privacy_errors[0]}"
+                )
+                pytest.fail(summary_error_message, pytrace=False)
+
+            # Validate that isAbout contains at least one species entry if present
+            is_about_valid_bool, is_about_errors = validate_is_about(json_obj)
+            if not is_about_valid_bool:
+                summary_error_message = (
+                    f"Dataset {dataset} contains DATS.json that has errors "
+                    f"in isAbout. Error is:\n"
+                    f"- {is_about_errors[0]}"
+                )
+                pytest.fail(summary_error_message, pytrace=False)
 
             # For crawled dataset, some tests should not be run as there is no way to
             # automatically populate some of the fields
@@ -91,10 +110,7 @@ class Template:
                 )
                 for i, error_message in enumerate(errors, 1):
                     summary_error_message += f"- {i}. {error_message}\n"
-                pytest.fail(
-                    summary_error_message,
-                    pytrace=False,
-                )
+                pytest.fail(summary_error_message, pytrace=False)
 
     def test_download(self, dataset):
         eval_config(dataset)
