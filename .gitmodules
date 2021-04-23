@@ -158,6 +158,9 @@
 [submodule "projects/mcgill-emc-rna-seq-experiment"]
 	path = projects/mcgill-emc-rna-seq-experiment
 	url = https://github.com/conpdatasets/mcgill-emc-rna-seq-experiment.git
+[submodule "projects/Synthetic_Animated_Mouse__SAM___University_of_British_Columbia__Datasets_and_3D_models"]
+	path = projects/Synthetic_Animated_Mouse__SAM___University_of_British_Columbia__Datasets_and_3D_models
+	url = https://github.com/conp-bot/conp-dataset-Synthetic-Animated-Mouse-SAM-University-of-British-Columbia-Datasets-and-3D-models.git
 [submodule "projects/preventad-open"]
 	path = projects/preventad-open
 	url = https://github.com/conpdatasets/preventad-open.git
