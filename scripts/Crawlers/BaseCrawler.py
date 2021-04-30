@@ -473,6 +473,18 @@ Functional checks:
         # Add all dats properties from dataset description
         data = {key: value for key, value in dataset.items() if key in dats_fields}
 
+        # Check for LICENSE file in dataset if a license was not specified from the platform
+        if "licenses" not in data or (
+            len(data["licenses"]) == 1 and data["licenses"][0]["name"].lower() == "none"
+        ):
+            for file_name in os.listdir(dataset_dir):
+                if "license" in file_name.lower():
+                    file_path = os.path.join(dataset_dir, file_name)
+                    with open(file_path) as f:
+                        # Assume that the first line of the license file contains the title
+                        license_title = f.readline()
+                    data["licenses"] = [{"name": license_title}]
+
         # Add file count
         num = 0
         for file in os.listdir(dataset_dir):
