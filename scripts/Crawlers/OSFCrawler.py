@@ -495,6 +495,7 @@ class OSFCrawler(BaseCrawler):
                     d,
                     annex,
                     dataset_size,
+                    is_private,
                 )
             dataset_size, dataset_unit = humanize.naturalsize(sum(dataset_size)).split(
                 " ",
