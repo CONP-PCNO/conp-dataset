@@ -7,6 +7,12 @@ import git
 import requests
 from datalad import api
 
+from scripts.Crawlers.constants import DATS_FIELDS
+from scripts.Crawlers.constants import LICENSE_CODES
+from scripts.Crawlers.constants import MODALITIES
+from scripts.Crawlers.constants import NO_ANNEX_FILE_PATTERNS
+from scripts.Crawlers.constants import REQUIRED_DATS_FIELDS
+
 
 class BaseCrawler:
     """
@@ -259,8 +265,8 @@ class BaseCrawler:
                     github_passwd=self.github_token,
                 )
                 self._add_github_repo_description(repo_title, dataset_description)
-                d.no_annex("DATS.json")
-                d.no_annex("README.md")
+                for pattern in NO_ANNEX_FILE_PATTERNS:
+                    d.no_annex(pattern)
                 self.add_new_dataset(dataset_description, dataset_dir)
                 # Create DATS.json if it doesn't exist
                 if not os.path.isfile(os.path.join(dataset_dir, "DATS.json")):
@@ -420,49 +426,8 @@ Functional checks:
         return re.sub(r"\W|^(?=\d)", "_", title)
 
     def _create_new_dats(self, dataset_dir, dats_path, dataset):
-        # Fields/properties that are acceptable in DATS schema according to
-        # https://github.com/CONP-PCNO/schema/blob/master/dataset_schema.json
-        dats_fields = [
-            "title",
-            "identifier",
-            "creators",
-            "description",
-            "version",
-            "licenses",
-            "keywords",
-            "distributions",
-            "extraProperties",
-            "alternateIdentifiers",
-            "relatedIdentifiers",
-            "dates",
-            "storedIn",
-            "spatialCoverage",
-            "types",
-            "availability",
-            "refinement",
-            "aggregation",
-            "privacy",
-            "dimensions",
-            "primaryPublications",
-            "citations",
-            "citationCount",
-            "producedBy",
-            "isAbout",
-            "hasPart",
-            "acknowledges",
-        ]
-
         # Check required properties
-        required_fields = [
-            "title",
-            "types",
-            "creators",
-            "licenses",
-            "description",
-            "keywords",
-            "version",
-        ]
-        for field in required_fields:
+        for field in REQUIRED_DATS_FIELDS:
             if field not in dataset.keys():
                 print(
                     "Warning: required property {} not found in dataset description".format(
@@ -471,19 +436,37 @@ Functional checks:
                 )
 
         # Add all dats properties from dataset description
-        data = {key: value for key, value in dataset.items() if key in dats_fields}
+        data = {key: value for key, value in dataset.items() if key in DATS_FIELDS}
 
-        # Check for LICENSE file in dataset if a license was not specified from the platform
+        # Check for license code in dataset if a license was not specified from the platform
         if "licenses" not in data or (
             len(data["licenses"]) == 1 and data["licenses"][0]["name"].lower() == "none"
         ):
-            for file_name in os.listdir(dataset_dir):
-                if "license" in file_name.lower():
-                    file_path = os.path.join(dataset_dir, file_name)
-                    with open(file_path) as f:
-                        # Assume that the first line of the license file contains the title
-                        license_title = f.readline()
-                    data["licenses"] = [{"name": license_title}]
+            # Collect all license file paths
+            license_f_paths = []
+            for name in os.listdir(dataset_dir):
+                f_path = os.path.join(dataset_dir, name)
+                # Check for license file 1 folder level deep
+                if os.path.isdir(f_path):
+                    for name_ in os.listdir(f_path):
+                        if "license" in name_.lower():
+                            license_f_paths.append(os.path.join(f_path, name_))
+                            break
+
+                elif "license" in f_path.lower():
+                    license_f_paths.append(os.path.join(dataset_dir, name))
+
+            # If found some license files, for each, check for first valid license code and add to DATS
+            if license_f_paths:
+                licenses = []
+                for f_path in license_f_paths:
+                    with open(f_path) as f:
+                        text = f.read().lower()
+                    for code in LICENSE_CODES:
+                        if code.lower() in text:
+                            licenses.append({"name": code})
+                            break
+                data["licenses"] = licenses
 
         # Add file count
         num = 0
@@ -532,18 +515,8 @@ Functional checks:
 
     def _guess_modality(self, file_name):
         # Associate file types to substrings found in the file name
-        modalities = {
-            "fMRI": ["bold", "func", "cbv"],
-            "MRI": ["T1", "T2", "FLAIR", "FLASH", "PD", "angio", "anat", "mask"],
-            "diffusion": ["dwi", "dti", "sbref"],
-            "meg": ["meg"],
-            "intracranial eeg": ["ieeg"],
-            "eeg": ["eeg"],
-            "field map": ["fmap", "phasediff", "magnitude"],
-            "imaging": ["nii", "nii.gz", "mnc"],
-        }
-        for m in modalities:
-            for s in modalities[m]:
+        for m in MODALITIES:
+            for s in MODALITIES[m]:
                 if s in file_name:
                     return m
         return "unknown"
