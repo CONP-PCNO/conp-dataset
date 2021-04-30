@@ -442,29 +442,31 @@ Functional checks:
         if "licenses" not in data or (
             len(data["licenses"]) == 1 and data["licenses"][0]["name"].lower() == "none"
         ):
-            license_f_path = None
+            # Collect all license file paths
+            license_f_paths = []
             for name in os.listdir(dataset_dir):
-                if license_f_path:  # If found file, break
-                    break
                 f_path = os.path.join(dataset_dir, name)
                 # Check for license file 1 folder level deep
                 if os.path.isdir(f_path):
                     for name_ in os.listdir(f_path):
                         if "license" in name_.lower():
-                            license_f_path = os.path.join(f_path, name_)
+                            license_f_paths.append(os.path.join(f_path, name_))
                             break
 
                 elif "license" in f_path.lower():
-                    license_f_path = os.path.join(dataset_dir, name)
+                    license_f_paths.append(os.path.join(dataset_dir, name))
 
-            # If found a license file, check for first valid license code and add to DATS
-            if license_f_path:
-                with open(license_f_path) as f:
-                    text = f.read().lower()
-                for code in LICENSE_CODES:
-                    if code.lower() in text:
-                        data["licenses"] = [{"name": code}]
-                        break
+            # If found some license files, for each, check for first valid license code and add to DATS
+            if license_f_paths:
+                licenses = []
+                for f_path in license_f_paths:
+                    with open(f_path) as f:
+                        text = f.read().lower()
+                    for code in LICENSE_CODES:
+                        if code.lower() in text:
+                            licenses.append({"name": code})
+                            break
+                data["licenses"] = licenses
 
         # Add file count
         num = 0
