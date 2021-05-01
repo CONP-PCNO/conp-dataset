@@ -274,6 +274,7 @@ class BaseCrawler:
                         dataset_dir,
                         os.path.join(dataset_dir, "DATS.json"),
                         dataset_description,
+                        d,
                     )
                 # Create README.md if it doesn't exist
                 if not os.path.isfile(os.path.join(dataset_dir, "README.md")):
@@ -307,6 +308,7 @@ class BaseCrawler:
                             dataset_dir,
                             os.path.join(dataset_dir, "DATS.json"),
                             dataset_description,
+                            d,
                         )
                     # Create README.md if it doesn't exist
                     if not os.path.isfile(os.path.join(dataset_dir, "README.md")):
@@ -425,7 +427,20 @@ Functional checks:
     def _clean_dataset_title(self, title):
         return re.sub(r"\W|^(?=\d)", "_", title)
 
-    def _create_new_dats(self, dataset_dir, dats_path, dataset):
+    def _create_new_dats(self, dataset_dir, dats_path, dataset, d):
+        # Helper recursive function
+        def retrieve_license_path_in_dir(dir, paths):
+            for f_name in os.listdir(dir):
+                f_path = os.path.join(dir, f_name)
+                if os.path.isdir(f_path):
+                    retrieve_license_path_in_dir(f_path, paths)
+                    continue
+                elif "license" not in f_name.lower():
+                    continue
+                elif os.path.islink(f_path):
+                    d.get(f_path)
+                paths.append(f_path)
+
         # Check required properties
         for field in REQUIRED_DATS_FIELDS:
             if field not in dataset.keys():
@@ -444,17 +459,7 @@ Functional checks:
         ):
             # Collect all license file paths
             license_f_paths = []
-            for name in os.listdir(dataset_dir):
-                f_path = os.path.join(dataset_dir, name)
-                # Check for license file 1 folder level deep
-                if os.path.isdir(f_path):
-                    for name_ in os.listdir(f_path):
-                        if "license" in name_.lower():
-                            license_f_paths.append(os.path.join(f_path, name_))
-                            break
-
-                elif "license" in f_path.lower():
-                    license_f_paths.append(os.path.join(dataset_dir, name))
+            retrieve_license_path_in_dir(dataset_dir, license_f_paths)
 
             # If found some license files, for each, check for first valid license code and add to DATS
             if license_f_paths:
