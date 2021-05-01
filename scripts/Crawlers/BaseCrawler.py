@@ -434,6 +434,7 @@ Functional checks:
                 f_path = os.path.join(dir, f_name)
                 if os.path.isdir(f_path):
                     retrieve_license_path_in_dir(f_path, paths)
+                    continue
                 elif "license" not in f_name.lower():
                     continue
                 elif os.path.islink(f_path):
