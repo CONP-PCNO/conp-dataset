@@ -67,10 +67,10 @@ Examples are available at [metadata/example](https://github.com/CONP-PCNO/conp-d
 
 ### Uploading the dataset manually
 
-1. Create your sub-dataset in your cloned fork, under `investigators` or `projects`. For instance:
+1. Create your sub-dataset in your cloned fork, under `projects`. For instance:
 
 ```console
-datalad create -d . investigators/<username>
+datalad create -d . projects/<dataset_name>
 ```
 
 2. Publish your sub-dataset:
@@ -80,7 +80,7 @@ datalad create -d . investigators/<username>
     a. Add a sibling for your dataset on GitHub:
 
     ```console
-    datalad create-sibling-github -d investigators/<username> conp-dataset-<username>
+    datalad create-sibling-github -d projects/<dataset_name> conp-dataset-<dataset_name>
     ```
 
     DataLad will ask your GitHub user name and password to create the sibling.
@@ -88,16 +88,16 @@ datalad create -d . investigators/<username>
     b. Update the `.gitmodules` file to add your sibling. It should contain a section that looks like this:
 
     ```
-    [submodule "investigators/<username>"]
-        path = investigators/<username>
-        url = http://github.com:<username>/conp-dataset-<username>.git
+    [submodule "projects/<dataset_name>"]
+        path = projects/<dataset_name>
+        url = http://github.com:<username>/conp-dataset-<dataset_name>.git
     ```
 
     Note the Git endpoint in the url.
 
 3. Add files to your sub-dataset:
 
-    From your sub-dataset (`investigators/<username>`):
+    From your sub-dataset (`projects/<dataset_name>`):
 
     a. Create and add a README.md file, directly in the Git repository:
     ```console
@@ -168,7 +168,7 @@ e. The DOI badge links to the DOI associated with the latest DOI of your dataset
 
 Any existing dataset can be added to CONP-PCNO repository as a git submodule. By doing that, the original dataset repository will be added as a subdirectory of CONP-PCNO which will manage it independently.
 Therefore, by definition of submodules, CONP-PCNO will only hold a reference to the actual dataset which will continue to live in its original space. Additional information on how submodules work can be found [here](https://git-scm.com/book/it/v2/Git-Tools-Submodules).
-The current list of submodules in CONP-PCNO can be found under the [CONP-datasets/project](https://github.com/CONP-PCNO/conp-dataset/tree/master/projects) folder.
+The current list of submodules in CONP-PCNO can be found under the [CONP-datasets/projects](https://github.com/CONP-PCNO/conp-dataset/tree/master/projects) folder.
 
 
 #### Updating a dataset on origin
