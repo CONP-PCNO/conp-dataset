@@ -15,12 +15,9 @@ We welcome your feedback! :smiley:
 
 ## Dataset structure
 
-The dataset is structured as follows:
+`projects` contains sub-datasets for projects.
 
-- `investigators` contains sub-datasets for investigators.
-- `projects` contains sub-datasets for projects.
-
-Investigators and projects are responsible for the management and curation
+Projects are responsible for the management and curation
 of their own sub-datasets.
 
 ## Installing required software
