@@ -1,6 +1,6 @@
 # Tools to produce aggregation summary of datasets and tools
 
-A few tools have been developed to produce aggregated summary CSV files of 
+A few tools have been developed to produce aggregated summary CSV files of
 CONP datasets and tools to be used for reporting purposes.
 
 ## Dependencies

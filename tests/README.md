@@ -305,6 +305,7 @@ To create the secrets in CircleCI you will need to generate a standardized \${PR
 
 ```python
 from tests.functions import project_name2env
+
 project_name2env("projects/dataset_name".split("/")[-1])
 # DATASET_NAME
 ```
