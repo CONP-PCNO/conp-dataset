@@ -154,14 +154,6 @@
 [submodule "projects/multicenter-phantom"]
 	path = projects/multicenter-phantom
 	url = https://github.com/conpdatasets/multicenter-phantom.git
-[submodule "projects/BigBrain_3DROIS"]
-	path = projects/BigBrain_3DROIS
-	url = ./projects/BigBrain_3DROIS
-	datalad-id = ac2c4ca3-ffd6-4b06-adac-4644c155c1e8
-[submodule "projects/Bigbrain-3DROIS"]
-	path = projects/Bigbrain-3DROIS
+[submodule "projects/Bigbrain_3DROIS"]
+	path = projects/Bigbrain_3DROIS
 	url = https://github.com/mathdugre/conp-dataset-Bigbrain-3DROIS.git
-[submodule "projects/BigBrain_3DROIs"]
-	path = projects/BigBrain_3DROIs
-	url = ./projects/BigBrain_3DROIs
-	datalad-id = ce20919a-3ae9-4bb6-b5a8-3614e3259d47
