@@ -7,6 +7,12 @@ import git
 import requests
 from datalad import api
 
+from scripts.Crawlers.constants import DATS_FIELDS
+from scripts.Crawlers.constants import LICENSE_CODES
+from scripts.Crawlers.constants import MODALITIES
+from scripts.Crawlers.constants import NO_ANNEX_FILE_PATTERNS
+from scripts.Crawlers.constants import REQUIRED_DATS_FIELDS
+
 
 class BaseCrawler:
     """
@@ -259,8 +265,8 @@ class BaseCrawler:
                     github_passwd=self.github_token,
                 )
                 self._add_github_repo_description(repo_title, dataset_description)
-                d.no_annex("DATS.json")
-                d.no_annex("README.md")
+                for pattern in NO_ANNEX_FILE_PATTERNS:
+                    d.no_annex(pattern)
                 self.add_new_dataset(dataset_description, dataset_dir)
                 # Create DATS.json if it doesn't exist
                 if not os.path.isfile(os.path.join(dataset_dir, "DATS.json")):
@@ -268,6 +274,7 @@ class BaseCrawler:
                         dataset_dir,
                         os.path.join(dataset_dir, "DATS.json"),
                         dataset_description,
+                        d,
                     )
                 # Create README.md if it doesn't exist
                 if not os.path.isfile(os.path.join(dataset_dir, "README.md")):
@@ -301,6 +308,7 @@ class BaseCrawler:
                             dataset_dir,
                             os.path.join(dataset_dir, "DATS.json"),
                             dataset_description,
+                            d,
                         )
                     # Create README.md if it doesn't exist
                     if not os.path.isfile(os.path.join(dataset_dir, "README.md")):
@@ -419,50 +427,22 @@ Functional checks:
     def _clean_dataset_title(self, title):
         return re.sub(r"\W|^(?=\d)", "_", title)
 
-    def _create_new_dats(self, dataset_dir, dats_path, dataset):
-        # Fields/properties that are acceptable in DATS schema according to
-        # https://github.com/CONP-PCNO/schema/blob/master/dataset_schema.json
-        dats_fields = [
-            "title",
-            "identifier",
-            "creators",
-            "description",
-            "version",
-            "licenses",
-            "keywords",
-            "distributions",
-            "extraProperties",
-            "alternateIdentifiers",
-            "relatedIdentifiers",
-            "dates",
-            "storedIn",
-            "spatialCoverage",
-            "types",
-            "availability",
-            "refinement",
-            "aggregation",
-            "privacy",
-            "dimensions",
-            "primaryPublications",
-            "citations",
-            "citationCount",
-            "producedBy",
-            "isAbout",
-            "hasPart",
-            "acknowledges",
-        ]
+    def _create_new_dats(self, dataset_dir, dats_path, dataset, d):
+        # Helper recursive function
+        def retrieve_license_path_in_dir(dir, paths):
+            for f_name in os.listdir(dir):
+                f_path = os.path.join(dir, f_name)
+                if os.path.isdir(f_path):
+                    retrieve_license_path_in_dir(f_path, paths)
+                    continue
+                elif "license" not in f_name.lower():
+                    continue
+                elif os.path.islink(f_path):
+                    d.get(f_path)
+                paths.append(f_path)
 
         # Check required properties
-        required_fields = [
-            "title",
-            "types",
-            "creators",
-            "licenses",
-            "description",
-            "keywords",
-            "version",
-        ]
-        for field in required_fields:
+        for field in REQUIRED_DATS_FIELDS:
             if field not in dataset.keys():
                 print(
                     "Warning: required property {} not found in dataset description".format(
@@ -471,7 +451,27 @@ Functional checks:
                 )
 
         # Add all dats properties from dataset description
-        data = {key: value for key, value in dataset.items() if key in dats_fields}
+        data = {key: value for key, value in dataset.items() if key in DATS_FIELDS}
+
+        # Check for license code in dataset if a license was not specified from the platform
+        if "licenses" not in data or (
+            len(data["licenses"]) == 1 and data["licenses"][0]["name"].lower() == "none"
+        ):
+            # Collect all license file paths
+            license_f_paths = []
+            retrieve_license_path_in_dir(dataset_dir, license_f_paths)
+
+            # If found some license files, for each, check for first valid license code and add to DATS
+            if license_f_paths:
+                licenses = set()
+                for f_path in license_f_paths:
+                    with open(f_path) as f:
+                        text = f.read().lower()
+                    for code in LICENSE_CODES:
+                        if code.lower() in text:
+                            licenses.add(code)
+                            break
+                data["licenses"] = [{"name": code} for code in licenses]
 
         # Add file count
         num = 0
@@ -520,18 +520,8 @@ Functional checks:
 
     def _guess_modality(self, file_name):
         # Associate file types to substrings found in the file name
-        modalities = {
-            "fMRI": ["bold", "func", "cbv"],
-            "MRI": ["T1", "T2", "FLAIR", "FLASH", "PD", "angio", "anat", "mask"],
-            "diffusion": ["dwi", "dti", "sbref"],
-            "meg": ["meg"],
-            "intracranial eeg": ["ieeg"],
-            "eeg": ["eeg"],
-            "field map": ["fmap", "phasediff", "magnitude"],
-            "imaging": ["nii", "nii.gz", "mnc"],
-        }
-        for m in modalities:
-            for s in modalities[m]:
+        for m in MODALITIES:
+            for s in MODALITIES[m]:
                 if s in file_name:
                     return m
         return "unknown"
