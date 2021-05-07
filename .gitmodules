@@ -124,6 +124,9 @@
 [submodule "projects/multicenter-phantom"]
 	path = projects/multicenter-phantom
 	url = https://github.com/conpdatasets/multicenter-phantom.git
+[submodule "projects/BigBrain_3DROIs"]
+	path = projects/BigBrain_3DROIs
+	url = https://github.com/conpdatasets/BigBrain_3DROIs.git
 [submodule "projects/BigBrain_3DClassifiedVolumes"]
 	path = projects/BigBrain_3DClassifiedVolumes
 	url = https://github.com/conpdatasets/BigBrain_3DClassifiedVolumes.git
