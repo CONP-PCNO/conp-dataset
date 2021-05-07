@@ -52,9 +52,9 @@ MODALITIES = {
     "fMRI": ["bold", "func", "cbv"],
     "MRI": ["T1", "T2", "FLAIR", "FLASH", "PD", "angio", "anat", "mask"],
     "diffusion": ["dwi", "dti", "sbref"],
-    "meg": ["meg"],
-    "intracranial eeg": ["ieeg"],
-    "eeg": ["eeg"],
+    "MEG": ["meg"],
+    "intracranial EEG": ["ieeg"],
+    "EEG": ["eeg"],
     "field map": ["fmap", "phasediff", "magnitude"],
     "imaging": ["nii", "nii.gz", "mnc"],
 }
