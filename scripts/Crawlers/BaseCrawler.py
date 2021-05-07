@@ -463,15 +463,15 @@ Functional checks:
 
             # If found some license files, for each, check for first valid license code and add to DATS
             if license_f_paths:
-                licenses = []
+                licenses = set()
                 for f_path in license_f_paths:
                     with open(f_path) as f:
                         text = f.read().lower()
                     for code in LICENSE_CODES:
                         if code.lower() in text:
-                            licenses.append({"name": code})
+                            licenses.add(code)
                             break
-                data["licenses"] = licenses
+                data["licenses"] = [{"name": code} for code in licenses]
 
         # Add file count
         num = 0
