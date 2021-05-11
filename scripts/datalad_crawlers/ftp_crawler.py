@@ -23,10 +23,21 @@ def crawl(host, root, subdir):
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="Crawl FTP dataset.")
+    example_text = """Example:
+    python /path/to/ftp_crawler.py $FTP_HOST $FTP_DIR
 
-    parser.add_argument("host", type=str, help="Url of the FTP host.")
-    parser.add_argument("directory", type=str, help="Diractory path to the dataset.")
+    This will recursively annex the URL of all files from the $FTP_DIR on the $FTP_HOST
+    in the git-annex of the current directory.
+    """
+
+    parser = argparse.ArgumentParser(
+        description="Datalad crawler to crawl FTP server.",
+        epilog=example_text,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+
+    parser.add_argument("host", type=str, help="URL of the FTP host.")
+    parser.add_argument("directory", type=str, help="Directory path to the dataset.")
 
     return parser.parse_args()
 
