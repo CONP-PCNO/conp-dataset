@@ -3,7 +3,7 @@ import logging
 
 def get_logger(
     name, *, filename=None, console_level=logging.INFO, file_level=logging.WARNING
-):
+) -> logging.Logger:
     logger = logging.getLogger(name)
     logger.setLevel(logging.DEBUG)
 
