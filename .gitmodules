@@ -160,3 +160,7 @@
 	path = projects/BigBrain_3D_MRI
 	url = ./projects/BigBrain_3D_MRI
 	datalad-id = fdc2179f-c787-4ecc-b093-8c636bea3593
+[submodule "projects/BigBrain_BigBrainWarp_Support"]
+	path = projects/BigBrain_BigBrainWarp_Support
+	url = ./projects/BigBrain_BigBrainWarp_Support
+	datalad-id = c9cb6be2-16f5-45fd-be83-e4359f5c5b61
