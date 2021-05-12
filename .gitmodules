@@ -168,3 +168,7 @@
 	path = projects/BigBrain_Hippocampus_Segmentation
 	url = ./projects/BigBrain_Hippocampus_Segmentation
 	datalad-id = ef05ceb6-4b65-4317-8e6f-ce237bfc7c4e
+[submodule "projects/BigBrain_3D_Blocks"]
+	path = projects/BigBrain_3D_Blocks
+	url = ./projects/BigBrain_3D_Blocks
+	datalad-id = 05864fff-2328-40c9-8fb2-dddcf8c28a27
