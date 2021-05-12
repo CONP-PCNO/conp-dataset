@@ -148,3 +148,7 @@
 [submodule "projects/openpain/thermal"]
 	path = projects/openpain/thermal
 	url = https://github.com/conpdatasets/openpain-thermal.git
+[submodule "projects/BigBrain_A3D"]
+	path = projects/BigBrain_A3D
+	url = ./projects/BigBrain_A3D
+	datalad-id = a6513975-5041-4503-bb3c-cfc1505c5d91
