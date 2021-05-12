@@ -152,3 +152,7 @@
 	path = projects/BigBrain_A3D
 	url = ./projects/BigBrain_A3D
 	datalad-id = a6513975-5041-4503-bb3c-cfc1505c5d91
+[submodule "projects/BigBrain_MRISIM"]
+	path = projects/BigBrain_MRISIM
+	url = ./projects/BigBrain_MRISIM
+	datalad-id = 14e624c0-144c-419c-9737-57b95972b455
