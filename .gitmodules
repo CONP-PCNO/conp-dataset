@@ -176,3 +176,7 @@
 	path = projects/BigBrain_Surface_Parcellations
 	url = ./projects/BigBrain_Surface_Parcellations
 	datalad-id = d75353c5-94fb-459e-8f67-96551699b79a
+[submodule "projects/BigBrain_Layer_Segmentation"]
+	path = projects/BigBrain_Layer_Segmentation
+	url = ./projects/BigBrain_Layer_Segmentation
+	datalad-id = 977fbff0-1c39-4aaa-ac66-707948ad8403
