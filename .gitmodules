@@ -180,3 +180,7 @@
 	path = projects/BigBrain_Layer_Segmentation
 	url = ./projects/BigBrain_Layer_Segmentation
 	datalad-id = 977fbff0-1c39-4aaa-ac66-707948ad8403
+[submodule "projects/BigBrain_2D_Final_Sections"]
+	path = projects/BigBrain_2D_Final_Sections
+	url = ./projects/BigBrain_2D_Final_Sections
+	datalad-id = 5ba222d1-70e2-41d4-ab7f-257608a97b5b
