@@ -172,3 +172,7 @@
 	path = projects/BigBrain_3D_Blocks
 	url = ./projects/BigBrain_3D_Blocks
 	datalad-id = 05864fff-2328-40c9-8fb2-dddcf8c28a27
+[submodule "projects/BigBrain_Surface_Parcellations"]
+	path = projects/BigBrain_Surface_Parcellations
+	url = ./projects/BigBrain_Surface_Parcellations
+	datalad-id = d75353c5-94fb-459e-8f67-96551699b79a
