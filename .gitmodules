@@ -164,3 +164,7 @@
 	path = projects/BigBrain_BigBrainWarp_Support
 	url = ./projects/BigBrain_BigBrainWarp_Support
 	datalad-id = c9cb6be2-16f5-45fd-be83-e4359f5c5b61
+[submodule "projects/BigBrain_Hippocampus_Segmentation"]
+	path = projects/BigBrain_Hippocampus_Segmentation
+	url = ./projects/BigBrain_Hippocampus_Segmentation
+	datalad-id = ef05ceb6-4b65-4317-8e6f-ce237bfc7c4e
