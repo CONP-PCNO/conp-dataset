@@ -156,3 +156,7 @@
 	path = projects/BigBrain_MRISIM
 	url = ./projects/BigBrain_MRISIM
 	datalad-id = 14e624c0-144c-419c-9737-57b95972b455
+[submodule "projects/BigBrain_3D_MRI"]
+	path = projects/BigBrain_3D_MRI
+	url = ./projects/BigBrain_3D_MRI
+	datalad-id = fdc2179f-c787-4ecc-b093-8c636bea3593
