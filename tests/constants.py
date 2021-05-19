@@ -6,6 +6,9 @@ file but in the meantime, the list below will skip the non_schema_required
 checks for the data already existing in the portal.
 That list will be updated as the owners of the datasets update their DATS
 files once we contact them.
+
+TODO: when there is no more dataset in this list, remove the if statement
+TODO: from template.py that checks if the dataset is part of the list
 """
 RETROSPECTIVE_CRAWLED_DATASET_LIST = [
     'CFMM_7T__MP2RAGE_T1_mapping',
@@ -18,5 +21,5 @@ RETROSPECTIVE_CRAWLED_DATASET_LIST = [
     'Numerically_Perturbed_Structural_Connectomes_from_100_individuals_in_the_NKI_Rockland_Dataset',
     'Quantifying_Neural_Cognitive_Relationships_Across_the_Brain',
     'Synthetic_Animated_Mouse__SAM___University_of_British_Columbia__Datasets_and_3D_models',
-    'VFA_T1_mapping___RTHawk__open__vs_Siemens__commercial_'
+    'VFA_T1_mapping___RTHawk__open__vs_Siemens__commercial_',
 ]
