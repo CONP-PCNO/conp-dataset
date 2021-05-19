@@ -11,7 +11,6 @@ import pytest
 from datalad import api
 
 from scripts.dats_validator.validator import validate_date_types
-from scripts.dats_validator.validator import validate_formats
 from scripts.dats_validator.validator import validate_is_about
 from scripts.dats_validator.validator import validate_json
 from scripts.dats_validator.validator import validate_non_schema_required
