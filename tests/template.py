@@ -16,12 +16,12 @@ from scripts.dats_validator.validator import validate_is_about
 from scripts.dats_validator.validator import validate_json
 from scripts.dats_validator.validator import validate_non_schema_required
 from scripts.dats_validator.validator import validate_privacy
+from tests.constants import RETROSPECTIVE_CRAWLED_DATASET_LIST
 from tests.functions import authenticate
 from tests.functions import download_files
 from tests.functions import eval_config
 from tests.functions import get_proper_submodules
 from tests.functions import timeout
-from tests.constants import RETROSPECTIVE_CRAWLED_DATASET_LIST
 
 
 def delay_rerun(*args):
