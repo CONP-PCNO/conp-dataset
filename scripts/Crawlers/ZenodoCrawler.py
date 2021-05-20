@@ -325,9 +325,10 @@ class ZenodoCrawler(BaseCrawler):
 
             # For download authentication purposes
             if is_private:
-                os.environ["DATALAD_ZENODO_token"] = dataset_description.get(
-                    "dataset_token", ""
-                )
+                dataset_token: str = dataset_description.get("dataset_token", "")
+                if self.verbose:
+                    print(f"Setting DATALAD_ZENODO_token={dataset_token}")
+                os.environ["DATALAD_ZENODO_token"] = dataset_token
 
             for bucket in dataset_description["files"]:
                 self._download_file(bucket, d, is_private)
