@@ -252,9 +252,11 @@ class ZenodoCrawler(BaseCrawler):
             print("Retrieved Zenodo DOIs: ")
             for zenodo_doi in zenodo_dois:
                 print(
-                    "- Title: {}, Concept DOI: {}, Latest version DOI: {}".format(
+                    "- Title: {}, Concept DOI: {}, Latest version DOI: {}, Private: {}, Token: {}".format(
                         zenodo_doi["title"],
                         zenodo_doi["concept_doi"],
+                        zenodo_doi["latest_version"],
+                        zenodo_doi["is_private"],
                         zenodo_doi["latest_version"],
                     ),
                 )
