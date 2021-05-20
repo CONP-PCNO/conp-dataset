@@ -257,7 +257,7 @@ class ZenodoCrawler(BaseCrawler):
                         zenodo_doi["concept_doi"],
                         zenodo_doi["latest_version"],
                         zenodo_doi["is_private"],
-                        zenodo_doi["latest_version"],
+                        zenodo_doi["dataset_token"],
                     ),
                 )
 
