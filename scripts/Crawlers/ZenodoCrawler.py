@@ -7,6 +7,7 @@ import html2markdown
 import humanize
 import requests
 from datalad.distribution.dataset import Dataset
+from git import Repo
 
 from scripts.Crawlers.BaseCrawler import BaseCrawler
 
@@ -268,7 +269,7 @@ class ZenodoCrawler(BaseCrawler):
         d.no_annex(".conp-zenodo-crawler.json")
         d.no_annex("config")
         d.save()
-        annex: Callable = d.git.annex
+        annex: Callable = Repo(dataset_dir).git.annex
         is_private: bool = dataset.get("is_private", False)
         dataset_token: str = dataset.get("dataset_token", "")
 
