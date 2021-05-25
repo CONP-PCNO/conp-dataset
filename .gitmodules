@@ -148,3 +148,6 @@
 [submodule "projects/openpain/thermal"]
 	path = projects/openpain/thermal
 	url = https://github.com/conpdatasets/openpain-thermal.git
+[submodule "projects/BigBrain_MRISIM"]
+	path = projects/BigBrain_MRISIM
+	url = https://github.com/conpdatasets/BigBrain_MRISIM.git
