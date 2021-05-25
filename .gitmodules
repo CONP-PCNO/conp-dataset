@@ -148,3 +148,6 @@
 [submodule "projects/openpain/thermal"]
 	path = projects/openpain/thermal
 	url = https://github.com/conpdatasets/openpain-thermal.git
+[submodule "projects/BigBrain_Hippocampus_Segmentation"]
+	path = projects/BigBrain_Hippocampus_Segmentation
+	url = https://github.com/conpdatasets/BigBrain_Hippocampus_Segmentation.git
