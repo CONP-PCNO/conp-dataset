@@ -148,3 +148,6 @@
 [submodule "projects/openpain/thermal"]
 	path = projects/openpain/thermal
 	url = https://github.com/conpdatasets/openpain-thermal.git
+[submodule "projects/BigBrain_BigBrainWarp_Support"]
+	path = projects/BigBrain_BigBrainWarp_Support
+	url = https://github.com/conpdatasets/BigBrain_BigBrainWarp_Support.git
