@@ -24,6 +24,10 @@ def _create_zenodo_tracker(path, dataset):
         json.dump(data, f, indent=4)
 
 
+def _get_annex(dataset_dir) -> Callable:
+    return Repo(dataset_dir).git.annex
+
+
 class ZenodoCrawler(BaseCrawler):
     def __init__(self, github_token, config_path, verbose, force, no_pr):
         super().__init__(github_token, config_path, verbose, force, no_pr)
@@ -269,7 +273,7 @@ class ZenodoCrawler(BaseCrawler):
         d.no_annex(".conp-zenodo-crawler.json")
         d.no_annex("config")
         d.save()
-        annex: Callable = Repo(dataset_dir).git.annex
+        annex: Callable = _get_annex(dataset_dir)
         is_private: bool = dataset.get("is_private", False)
         dataset_token: str = dataset.get("dataset_token", "")
 
