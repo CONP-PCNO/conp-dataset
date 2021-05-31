@@ -241,19 +241,6 @@ class BaseCrawler:
             branch_name = "conp-bot/" + clean_title
             dataset_dir = os.path.join("projects", clean_title)
             d = self.datalad.Dataset(dataset_dir)
-            # Add github token to individual dataset remote urls
-            try:
-                origin = git.Repo(dataset_dir).remote("origin")
-                origin_url = next(origin.urls)
-                if "@" not in origin_url:
-                    origin.set_url(
-                        origin_url.replace(
-                            "https://",
-                            "https://" + self.github_token + "@",
-                        ),
-                    )
-            except git.exc.NoSuchPathError:
-                pass
             if branch_name not in self.repo.remotes.origin.refs:  # New dataset
                 self.repo.git.checkout("-b", branch_name)
                 repo_title = ("conp-dataset-" + dataset_description["title"])[0:100]
@@ -264,6 +251,20 @@ class BaseCrawler:
                     github_login=self.github_token,
                     github_passwd=self.github_token,
                 )
+                # Add github token to dataset origin remote url
+                try:
+                    origin = git.Repo(dataset_dir).remote("origin")
+                    origin_url = next(origin.urls)
+                    if "@" not in origin_url:
+                        origin.set_url(
+                            origin_url.replace(
+                                "https://",
+                                "https://" + self.github_token + "@",
+                            ),
+                        )
+                except git.exc.NoSuchPathError:
+                    pass
+
                 self._add_github_repo_description(repo_title, dataset_description)
                 for pattern in NO_ANNEX_FILE_PATTERNS:
                     d.no_annex(pattern)
