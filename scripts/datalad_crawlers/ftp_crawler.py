@@ -52,7 +52,7 @@ def parse_args():
     parser.add_argument("host", type=str, help="URL of the FTP host.")
     parser.add_argument("directory", type=str, help="Directory path to the dataset.")
     parser.add_argument(
-        "sub_directory", type=str, default="", help="Subdirectory to crawl."
+        "sub_directory", nargs="?", type=str, default="", help="Subdirectory to crawl."
     )
 
     return parser.parse_args()
