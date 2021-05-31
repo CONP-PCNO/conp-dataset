@@ -51,6 +51,9 @@ def parse_args():
 
     parser.add_argument("host", type=str, help="URL of the FTP host.")
     parser.add_argument("directory", type=str, help="Directory path to the dataset.")
+    parser.add_argument(
+        "sub_directory", type=str, default="", help="Subdirectory to crawl."
+    )
 
     return parser.parse_args()
 
@@ -60,4 +63,4 @@ if __name__ == "__main__":
 
     with FTP(args.host) as ftp:
         ftp.login()
-        crawl(args.host, args.directory, "", ftp=ftp)
+        crawl(args.host, args.directory, args.sub_directory, ftp=ftp)
