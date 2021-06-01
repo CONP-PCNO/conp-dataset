@@ -148,3 +148,9 @@
 [submodule "projects/PERFORM_Dataset__one_control_subject"]
 	path = projects/PERFORM_Dataset__one_control_subject
 	url = https://github.com/conp-bot/conp-dataset-PERFORM-Dataset-one-control-subject.git
+[submodule "scripts/dats_jsonld_annotator/schema"]
+	path = scripts/dats_jsonld_annotator/schema
+	url = git@github.com:CONP-PCNO/schema.git
+[submodule "scripts/dats_jsonld_annotator/context"]
+	path = scripts/dats_jsonld_annotator/context
+	url = git@github.com:CONP-PCNO/context.git
