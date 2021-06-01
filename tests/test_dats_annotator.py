@@ -1,13 +1,13 @@
-import pytest
 import json
-from scripts.dats_jsonld_annotator.annotator import (
-    CONTEXT_DIR,
-    SCHEMA_DIR,
-    find_schema,
-    find_context,
-    annotate_dats_object,
-    gen_jsonld_outpath,
-)
+
+import pytest
+
+from scripts.dats_jsonld_annotator.annotator import annotate_dats_object
+from scripts.dats_jsonld_annotator.annotator import CONTEXT_DIR
+from scripts.dats_jsonld_annotator.annotator import find_context
+from scripts.dats_jsonld_annotator.annotator import find_schema
+from scripts.dats_jsonld_annotator.annotator import gen_jsonld_outpath
+from scripts.dats_jsonld_annotator.annotator import SCHEMA_DIR
 
 
 @pytest.fixture()

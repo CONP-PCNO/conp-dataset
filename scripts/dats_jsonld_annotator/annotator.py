@@ -1,9 +1,10 @@
-import json
-import sys
-import time
 import argparse
+import json
 import logging
 import pathlib as pal
+import sys
+import time
+
 import jsonschema as jss
 
 
@@ -103,7 +104,9 @@ def find_context(schema_id, context_dir):
     return context
 
 
-def annotate_dats_object(json_object, schema, specific_context, context_dir=CONTEXT_DIR):
+def annotate_dats_object(
+    json_object, schema, specific_context, context_dir=CONTEXT_DIR
+):
     """
     This function recursively traverses a DATS instance and generates two things:
 
@@ -255,7 +258,7 @@ def main(cli_args):
         type=pal.Path,
         help="""
                 If this is a path to a DATS file, then only this DATS file is annotated.
-                If this is a path to a directory, then each subdirectory of this directory is expected 
+                If this is a path to a directory, then each subdirectory of this directory is expected
                 to contain a DATS file called DATS.json. Each of these files will then be annotated iteratively
                 """,
     )
