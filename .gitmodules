@@ -145,6 +145,9 @@
 [submodule "projects/openpain/thermal"]
 	path = projects/openpain/thermal
 	url = https://github.com/conpdatasets/openpain-thermal.git
+[submodule "projects/BigBrain_Surface_Parcellations"]
+	path = projects/BigBrain_Surface_Parcellations
+	url = https://github.com/conpdatasets/BigBrain_Surface_Parcellations.git
 [submodule "projects/PERFORM_Dataset__one_control_subject"]
 	path = projects/PERFORM_Dataset__one_control_subject
 	url = https://github.com/conp-bot/conp-dataset-PERFORM-Dataset-one-control-subject.git
