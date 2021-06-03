@@ -1,9 +1,14 @@
 import datetime
 import json
 import os
+from typing import Any
+from typing import Callable
+from typing import Dict
+from typing import List
 
 import humanize
 import requests
+from datalad.distribution.dataset import Dataset
 from git import Repo
 
 from scripts.Crawlers.BaseCrawler import BaseCrawler
@@ -19,8 +24,8 @@ def _create_osf_tracker(path, dataset):
 
 
 class OSFCrawler(BaseCrawler):
-    def __init__(self, github_token, config_path, verbose, force):
-        super().__init__(github_token, config_path, verbose, force)
+    def __init__(self, github_token, config_path, verbose, force, no_pr):
+        super().__init__(github_token, config_path, verbose, force, no_pr)
         self.osf_token = self._get_token()
 
     def _get_token(self):
@@ -55,7 +60,16 @@ class OSFCrawler(BaseCrawler):
             print("OSF query: {}".format(query))
         return results
 
-    def _download_files(self, link, current_dir, inner_path, d, annex, sizes):
+    def _download_files(
+        self,
+        link,
+        current_dir,
+        inner_path,
+        d,
+        annex,
+        sizes,
+        is_private=False,
+    ):
         r_json = self._get_request_with_bearer_token(link).json()
         files = r_json["data"]
 
@@ -82,16 +96,14 @@ class OSFCrawler(BaseCrawler):
                     d,
                     annex,
                     sizes,
+                    is_private,
                 )
 
             # Handle single files
             elif file["attributes"]["kind"] == "file":
 
-                # Check if file is private
-                r = requests.get(file["links"]["download"], allow_redirects=False)
-                if (
-                    "https://accounts.osf.io/login" in r.headers["location"]
-                ):  # Redirects to login, private file
+                # Private dataset/files
+                if is_private:
                     correct_download_link = self._get_request_with_bearer_token(
                         file["links"]["download"],
                         redirect=False,
@@ -122,20 +134,11 @@ class OSFCrawler(BaseCrawler):
                             path=os.path.join(inner_path, ""),
                             archive=True,
                         )
-                    elif file["attributes"]["name"] in ["DATS.json", "README.md"]:
+                    else:
                         d.download_url(
                             file["links"]["download"],
                             path=os.path.join(inner_path, ""),
                         )
-                    else:
-                        annex(
-                            "addurl",
-                            file["links"]["download"],
-                            "--fast",
-                            "--file",
-                            os.path.join(inner_path, file["attributes"]["name"]),
-                        )
-                        d.save()
 
                 # append the size of the downloaded file to the sizes array
                 file_size = file["attributes"]["size"]
@@ -148,7 +151,7 @@ class OSFCrawler(BaseCrawler):
                     annex_info_dict = json.loads(
                         annex("info", "--bytes", "--json", inner_file_path),
                     )
-                    file_size = int(annex_info_dict["size"])
+                    file_size = int(annex_info_dict.get("size", 0))
                 sizes.append(file_size)
 
     def _download_components(
@@ -159,6 +162,7 @@ class OSFCrawler(BaseCrawler):
         d,
         annex,
         dataset_size,
+        is_private,
     ):
         # Loop through each available components and download their files
         for component in components_list:
@@ -178,6 +182,7 @@ class OSFCrawler(BaseCrawler):
                 d,
                 annex,
                 dataset_size,
+                is_private,
             )
 
             # check if the component contains (sub)components, in which case, download the (sub)components data
@@ -192,6 +197,7 @@ class OSFCrawler(BaseCrawler):
                     d,
                     annex,
                     dataset_size,
+                    is_private,
                 )
 
         # Once we have downloaded all the components files, check to see if there are any empty
@@ -379,13 +385,29 @@ class OSFCrawler(BaseCrawler):
 
         return osf_dois
 
-    def add_new_dataset(self, dataset, dataset_dir):
-        d = self.datalad.Dataset(dataset_dir)
+    def add_new_dataset(self, dataset: Dict[str, Any], dataset_dir: str):
+        d: Dataset = self.datalad.Dataset(dataset_dir)
         d.no_annex(".conp-osf-crawler.json")
         d.save()
-        annex = Repo(dataset_dir).git.annex
-        dataset_size = []
-        self._download_files(dataset["files"], dataset_dir, "", d, annex, dataset_size)
+        annex: Callable = Repo(dataset_dir).git.annex
+        dataset_size: List[int] = []
+
+        # Setup private OSF dataset if the dataset is private
+        is_private: bool = self._setup_private_dataset(
+            dataset["files"],
+            dataset_dir,
+            annex,
+            d,
+        )
+        self._download_files(
+            dataset["files"],
+            dataset_dir,
+            "",
+            d,
+            annex,
+            dataset_size,
+            is_private,
+        )
         if dataset["components_list"]:
             self._download_components(
                 dataset["components_list"],
@@ -394,9 +416,12 @@ class OSFCrawler(BaseCrawler):
                 d,
                 annex,
                 dataset_size,
+                is_private,
             )
-        dataset_size, dataset_unit = humanize.naturalsize(sum(dataset_size)).split(" ")
-        dataset["distributions"][0]["size"] = float(dataset_size)
+        dataset_size_num, dataset_unit = humanize.naturalsize(sum(dataset_size)).split(
+            " ",
+        )
+        dataset["distributions"][0]["size"] = float(dataset_size_num)
         dataset["distributions"][0]["unit"]["value"] = dataset_unit
 
         # Add .conp-osf-crawler.json tracker file
@@ -443,6 +468,7 @@ class OSFCrawler(BaseCrawler):
             annex = Repo(dataset_dir).git.annex
 
             dataset_size = []
+            is_private: bool = self._is_private_dataset(dataset_description["files"])
             self._download_files(
                 dataset_description["files"],
                 dataset_dir,
@@ -450,6 +476,7 @@ class OSFCrawler(BaseCrawler):
                 d,
                 annex,
                 dataset_size,
+                is_private,
             )
             if dataset_description["components_list"]:
                 self._download_components(
@@ -459,6 +486,7 @@ class OSFCrawler(BaseCrawler):
                     d,
                     annex,
                     dataset_size,
+                    is_private,
                 )
             dataset_size, dataset_unit = humanize.naturalsize(sum(dataset_size)).split(
                 " ",
@@ -495,3 +523,62 @@ DOI: {}""".format(
             )
 
         return readme_content
+
+    def _setup_private_dataset(
+        self,
+        files_url: str,
+        dataset_dir: str,
+        annex: Callable,
+        dataset: Dataset,
+    ) -> bool:
+        # Check if the dataset is indeed private
+        if self._is_private_dataset(files_url):
+            if self.verbose:
+                print(
+                    "Dataset is private, creating OSF provider and make git annex autoenable datalad remote",
+                )
+
+            # Create OSF provider file and needed directories and don't annex the file
+            datalad_dir: str = os.path.join(dataset_dir, ".datalad")
+            if not os.path.exists(datalad_dir):
+                os.mkdir(datalad_dir)
+            providers_dir: str = os.path.join(datalad_dir, "providers")
+            if not os.path.exists(providers_dir):
+                os.mkdir(providers_dir)
+            osf_config_path: str = os.path.join(providers_dir, "OSF.cfg")
+            with open(osf_config_path, "w") as f:
+                f.write(
+                    """[provider:OSF]
+url_re = .*osf\\.io.*
+authentication_type = bearer_token
+credential = OSF
+
+[credential:OSF]
+# If known, specify URL or email to how/where to request credentials
+# url = ???
+type = token"""
+                )
+            dataset.no_annex(os.path.join("**", "OSF.cfg"))
+
+            # Make git annex autoenable datalad remote
+            annex(
+                "initremote",
+                "datalad",
+                "externaltype=datalad",
+                "type=external",
+                "encryption=none",
+                "autoenable=true",
+            )
+
+            # Set OSF token as a environment variable for authentication
+            os.environ["DATALAD_OSF_token"] = self.osf_token
+
+            # Save changes
+            dataset.save()
+
+            return True
+
+        return False
+
+    def _is_private_dataset(self, files_url) -> bool:
+        return True if requests.get(files_url).status_code == 401 else False

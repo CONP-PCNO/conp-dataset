@@ -7,6 +7,12 @@ import git
 import requests
 from datalad import api
 
+from scripts.Crawlers.constants import DATS_FIELDS
+from scripts.Crawlers.constants import LICENSE_CODES
+from scripts.Crawlers.constants import MODALITIES
+from scripts.Crawlers.constants import NO_ANNEX_FILE_PATTERNS
+from scripts.Crawlers.constants import REQUIRED_DATS_FIELDS
+
 
 class BaseCrawler:
     """
@@ -66,7 +72,7 @@ class BaseCrawler:
             instantiate this new Crawler and call run() on it
     """
 
-    def __init__(self, github_token, config_path, verbose, force):
+    def __init__(self, github_token, config_path, verbose, force, no_pr):
         self.repo = git.Repo()
         self.username = self._check_requirements()
         self.github_token = github_token
@@ -75,6 +81,7 @@ class BaseCrawler:
         self.force = force
         self.git = git
         self.datalad = api
+        self.no_pr = no_pr
 
     @abc.abstractmethod
     def get_all_dataset_description(self):
@@ -234,19 +241,6 @@ class BaseCrawler:
             branch_name = "conp-bot/" + clean_title
             dataset_dir = os.path.join("projects", clean_title)
             d = self.datalad.Dataset(dataset_dir)
-            # Add github token to individual dataset remote urls
-            try:
-                origin = git.Repo(dataset_dir).remote("origin")
-                origin_url = next(origin.urls)
-                if "@" not in origin_url:
-                    origin.set_url(
-                        origin_url.replace(
-                            "https://",
-                            "https://" + self.github_token + "@",
-                        ),
-                    )
-            except git.exc.NoSuchPathError:
-                pass
             if branch_name not in self.repo.remotes.origin.refs:  # New dataset
                 self.repo.git.checkout("-b", branch_name)
                 repo_title = ("conp-dataset-" + dataset_description["title"])[0:100]
@@ -257,9 +251,23 @@ class BaseCrawler:
                     github_login=self.github_token,
                     github_passwd=self.github_token,
                 )
+                # Add github token to dataset origin remote url
+                try:
+                    origin = git.Repo(dataset_dir).remote("origin")
+                    origin_url = next(origin.urls)
+                    if "@" not in origin_url:
+                        origin.set_url(
+                            origin_url.replace(
+                                "https://",
+                                "https://" + self.github_token + "@",
+                            ),
+                        )
+                except git.exc.NoSuchPathError:
+                    pass
+
                 self._add_github_repo_description(repo_title, dataset_description)
-                d.no_annex("DATS.json")
-                d.no_annex("README.md")
+                for pattern in NO_ANNEX_FILE_PATTERNS:
+                    d.no_annex(pattern)
                 self.add_new_dataset(dataset_description, dataset_dir)
                 # Create DATS.json if it doesn't exist
                 if not os.path.isfile(os.path.join(dataset_dir, "DATS.json")):
@@ -267,6 +275,7 @@ class BaseCrawler:
                         dataset_dir,
                         os.path.join(dataset_dir, "DATS.json"),
                         dataset_description,
+                        d,
                     )
                 # Create README.md if it doesn't exist
                 if not os.path.isfile(os.path.join(dataset_dir, "README.md")):
@@ -283,6 +292,15 @@ class BaseCrawler:
                 commit_msg = "Created " + dataset_description["title"]
             else:  # Dataset already existing locally
                 self.repo.git.checkout("-f", branch_name)
+                try:
+                    self.repo.git.merge("-n", "--no-verify", "master")
+                except Exception as e:
+                    print(f"Error while merging master into {branch_name}: {e}")
+                    print("Skipping this dataset")
+                    self.repo.git.merge("--abort")
+                    self.repo.git.checkout("-f", "master")
+                    continue
+
                 modified = self.update_if_necessary(dataset_description, dataset_dir)
                 if modified:
                     # Create DATS.json if it doesn't exist
@@ -291,6 +309,7 @@ class BaseCrawler:
                             dataset_dir,
                             os.path.join(dataset_dir, "DATS.json"),
                             dataset_description,
+                            d,
                         )
                     # Create README.md if it doesn't exist
                     if not os.path.isfile(os.path.join(dataset_dir, "README.md")):
@@ -371,11 +390,12 @@ class BaseCrawler:
 
         # Create PR
         print("Creating PR for " + title)
-        r = requests.post(
-            "https://api.github.com/repos/CONP-PCNO/conp-dataset/pulls",
-            json={
-                "title": "Crawler result ({})".format(title),
-                "body": """## Description
+        if not self.no_pr:
+            r = requests.post(
+                "https://api.github.com/repos/CONP-PCNO/conp-dataset/pulls",
+                json={
+                    "title": "Crawler result ({})".format(title),
+                    "body": """## Description
 {}
 
 ## Checklist
@@ -395,63 +415,35 @@ Functional checks:
 - [ ] `DATS.json` is a valid DATs model
 - [ ] If dataset is derived data, raw data is a sub-dataset
 """.format(
-                    msg + "\n",
-                ),
-                "head": self.username + ":conp-bot/" + clean_title,
-                "base": "master",
-            },
-            headers={"Authorization": "token {}".format(self.github_token)},
-        )
-        if r.status_code != 201:
-            raise Exception("Error while creating pull request: " + r.text)
+                        msg + "\n",
+                    ),
+                    "head": self.username + ":conp-bot/" + clean_title,
+                    "base": "master",
+                },
+                headers={"Authorization": "token {}".format(self.github_token)},
+            )
+            if r.status_code != 201:
+                raise Exception("Error while creating pull request: " + r.text)
 
     def _clean_dataset_title(self, title):
         return re.sub(r"\W|^(?=\d)", "_", title)
 
-    def _create_new_dats(self, dataset_dir, dats_path, dataset):
-        # Fields/properties that are acceptable in DATS schema according to
-        # https://github.com/CONP-PCNO/schema/blob/master/dataset_schema.json
-        dats_fields = [
-            "title",
-            "identifier",
-            "creators",
-            "description",
-            "version",
-            "licenses",
-            "keywords",
-            "distributions",
-            "extraProperties",
-            "alternateIdentifiers",
-            "relatedIdentifiers",
-            "dates",
-            "storedIn",
-            "spatialCoverage",
-            "types",
-            "availability",
-            "refinement",
-            "aggregation",
-            "privacy",
-            "dimensions",
-            "primaryPublications",
-            "citations",
-            "citationCount",
-            "producedBy",
-            "isAbout",
-            "hasPart",
-            "acknowledges",
-        ]
+    def _create_new_dats(self, dataset_dir, dats_path, dataset, d):
+        # Helper recursive function
+        def retrieve_license_path_in_dir(dir, paths):
+            for f_name in os.listdir(dir):
+                f_path = os.path.join(dir, f_name)
+                if os.path.isdir(f_path):
+                    retrieve_license_path_in_dir(f_path, paths)
+                    continue
+                elif "license" not in f_name.lower():
+                    continue
+                elif os.path.islink(f_path):
+                    d.get(f_path)
+                paths.append(f_path)
 
         # Check required properties
-        required_fields = [
-            "title",
-            "types",
-            "creators",
-            "licenses",
-            "description",
-            "keywords",
-            "version",
-        ]
-        for field in required_fields:
+        for field in REQUIRED_DATS_FIELDS:
             if field not in dataset.keys():
                 print(
                     "Warning: required property {} not found in dataset description".format(
@@ -460,7 +452,27 @@ Functional checks:
                 )
 
         # Add all dats properties from dataset description
-        data = {key: value for key, value in dataset.items() if key in dats_fields}
+        data = {key: value for key, value in dataset.items() if key in DATS_FIELDS}
+
+        # Check for license code in dataset if a license was not specified from the platform
+        if "licenses" not in data or (
+            len(data["licenses"]) == 1 and data["licenses"][0]["name"].lower() == "none"
+        ):
+            # Collect all license file paths
+            license_f_paths = []
+            retrieve_license_path_in_dir(dataset_dir, license_f_paths)
+
+            # If found some license files, for each, check for first valid license code and add to DATS
+            if license_f_paths:
+                licenses = set()
+                for f_path in license_f_paths:
+                    with open(f_path) as f:
+                        text = f.read().lower()
+                    for code in LICENSE_CODES:
+                        if code.lower() in text:
+                            licenses.add(code)
+                            break
+                data["licenses"] = [{"name": code} for code in licenses]
 
         # Add file count
         num = 0
@@ -509,18 +521,8 @@ Functional checks:
 
     def _guess_modality(self, file_name):
         # Associate file types to substrings found in the file name
-        modalities = {
-            "fMRI": ["bold", "func", "cbv"],
-            "MRI": ["T1", "T2", "FLAIR", "FLASH", "PD", "angio", "anat", "mask"],
-            "diffusion": ["dwi", "dti", "sbref"],
-            "meg": ["meg"],
-            "intracranial eeg": ["ieeg"],
-            "eeg": ["eeg"],
-            "field map": ["fmap", "phasediff", "magnitude"],
-            "imaging": ["nii", "nii.gz", "mnc"],
-        }
-        for m in modalities:
-            for s in modalities[m]:
+        for m in MODALITIES:
+            for s in MODALITIES[m]:
                 if s in file_name:
                     return m
         return "unknown"

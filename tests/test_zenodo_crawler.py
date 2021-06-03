@@ -77,10 +77,12 @@ class TestZenodoCrawler(TestCase):
         return_value="username",
     )
     @mock.patch("git.Repo")
+    @mock.patch("scripts.Crawlers.ZenodoCrawler._get_annex")
     @mock.patch("datalad.api.Dataset")
     def test_create_new_dataset(
         self,
         mock_dataset,
+        mock_get_annex,
         mock_repo,
         mock_check_requirements,
         mock_get_all_dataset_description,
@@ -91,6 +93,6 @@ class TestZenodoCrawler(TestCase):
         mock_create_pr,
     ):
         try:
-            ZenodoCrawler("github token", "path/to/config", True, False).run()
+            ZenodoCrawler("github token", "path/to/config", True, False, True).run()
         except Exception as e:
             self.fail("Unexpected Exception raised: " + str(e))

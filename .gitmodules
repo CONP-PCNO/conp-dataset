@@ -25,9 +25,6 @@
 [submodule "projects/bigbrain-datalad"]
 	path = projects/BigBrain
 	url = https://github.com/conpdatasets/bigbrain-datalad.git
-[submodule "projects/PERFORM_Dataset__one_control_subject"]
-  path = projects/PERFORM_Dataset__one_control_subject
-  url = https://github.com/conp-bot/conp-dataset-PERFORM_Dataset__one_control_subject.git
 [submodule "scripts/dats_validator/conp-dats"]
 	path = scripts/dats_validator/conp-dats
 	url = https://github.com/CONP-PCNO/schema.git
@@ -124,6 +121,9 @@
 [submodule "projects/multicenter-phantom"]
 	path = projects/multicenter-phantom
 	url = https://github.com/conpdatasets/multicenter-phantom.git
+[submodule "projects/BigBrain_3DROIs"]
+	path = projects/BigBrain_3DROIs
+	url = https://github.com/conpdatasets/BigBrain_3DROIs.git
 [submodule "projects/BigBrain_3DClassifiedVolumes"]
 	path = projects/BigBrain_3DClassifiedVolumes
 	url = https://github.com/conpdatasets/BigBrain_3DClassifiedVolumes.git
@@ -133,6 +133,9 @@
 [submodule "projects/mcgill-emc-rna-seq-experiment"]
 	path = projects/mcgill-emc-rna-seq-experiment
 	url = https://github.com/conpdatasets/mcgill-emc-rna-seq-experiment.git
+[submodule "projects/Synthetic_Animated_Mouse__SAM___University_of_British_Columbia__Datasets_and_3D_models"]
+	path = projects/Synthetic_Animated_Mouse__SAM___University_of_British_Columbia__Datasets_and_3D_models
+	url = https://github.com/conp-bot/conp-dataset-Synthetic-Animated-Mouse-SAM-University-of-British-Columbia-Datasets-and-3D-models.git
 [submodule "projects/preventad-open"]
 	path = projects/preventad-open
 	url = https://github.com/conpdatasets/preventad-open.git
@@ -142,4 +145,18 @@
 [submodule "projects/openpain/thermal"]
 	path = projects/openpain/thermal
 	url = https://github.com/conpdatasets/openpain-thermal.git
-
+[submodule "projects/BigBrain_A3D"]
+	path = projects/BigBrain_A3D
+    url = https://github.com/conpdatasets/BigBrain_A3D.git
+[submodule "projects/BigBrain_Hippocampus_Segmentation"]
+	path = projects/BigBrain_Hippocampus_Segmentation
+	url = https://github.com/conpdatasets/BigBrain_Hippocampus_Segmentation.git
+[submodule "projects/BigBrain_BigBrainWarp_Support"]
+	path = projects/BigBrain_BigBrainWarp_Support
+	url = https://github.com/conpdatasets/BigBrain_BigBrainWarp_Support.git
+[submodule "projects/BigBrain_Surface_Parcellations"]
+	path = projects/BigBrain_Surface_Parcellations
+	url = https://github.com/conpdatasets/BigBrain_Surface_Parcellations.git
+[submodule "projects/PERFORM_Dataset__one_control_subject"]
+	path = projects/PERFORM_Dataset__one_control_subject
+	url = https://github.com/conp-bot/conp-dataset-PERFORM-Dataset-one-control-subject.git
