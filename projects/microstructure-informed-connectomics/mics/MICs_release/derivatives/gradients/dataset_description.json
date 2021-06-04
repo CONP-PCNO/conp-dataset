@@ -1,0 +1,25 @@
+{
+    "Name": "Microstructure-Informed Connectomics (MICs) dataset derivatives: gradients",
+    "BIDSVersion": "1.0.0",
+    "PipelineDescription": {
+        "Name": "BrainSpace",
+        "Version": "0.1.0",
+        "CodeURL": "https://github.com/MICA-MNI/BrainSpace",
+	"ThresholdMPC": "90",
+	"ThresholdFC": "90",
+	"ThresholdGD": "90",
+	"ThresholdSC": "0",
+	"RemoveNegativeEdges": "Yes",
+	"NumberOfComponents": "10",
+	"Approach": "Diffusion Map Embedding",	
+	"Kernel": "Normalized Angle",
+	"Alignment": "Procrustes",
+    },
+    "DescriptionAbbreviations": {
+        "MPC": "microstructure profile covariance",
+        "GD": "geodesic distance",
+        "FC": "functional connectivity",
+        "SC": "structural connectivity"
+    },
+    "HowToAcknowledge": "Please cite our data descriptor paper (DOI) and the brainspace toolbox (10.1038/s42003-020-0794-7) if you are using group or subject-level gradient data."
+}

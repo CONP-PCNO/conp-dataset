@@ -1,0 +1,38 @@
+{
+    "Name": "Microstructure-Informed Connectomics",
+    "BIDSVersion": "1.0.0",
+    "License": "CC0",
+    "Authors": [
+      "Jessica Royer",
+      "Raul Rodriguez-Cruces",
+      "Shahin Tavakol",
+      "Sara Lariviere",
+      "Peer Herholz",
+      "Qiongling Li",
+      "Reinder Vos de Wael",
+      "Casey Paquola",
+      "Oualid Benkarim",
+      "Bo-yong Park",
+      "Alexander J. Lowe",
+      "Daniel Margulies",
+      "Jonathan Smallwood",
+      "Andrea Bernasconi",
+      "Neda Bernasconi",
+      "Birgit Frauscher",
+      "Boris C. Bernhardt"
+    ],
+    "Acknowledgements": "The authors thank all participants who took part in this study. We also thank David Costa, Ronald Lopez, and Louise Marcotte for their assistance in data collection, as well as Ilana Leppert and Michael Ferreira for their guidance in designing the scanning protocol.",
+    "HowToAcknowledge": "",
+    "Funding": [
+      "JR received support from the Canadian Open Neuroscience Platform (CONP) and Canadian Institute of Health Research (CIHR)",
+      "RRC received support from the Fonds de la Recherche du Québec – Santé (FRQ-S 291486).",
+      "SL acknowledges funding from CIHR.", 
+      "CP received support from the Fonds de la Recherche du Québec – Santé (FRQ-S).",
+      "RV receives support from a Savoy Foundation studentship.",
+      "OB received support from the Healthy Brains for Healthy Lives (HBHL) program.",
+      "BP was supported by the National Research Foundation of Korea (NRF-2020R1A6A3A03037088).", 
+      "BF receives salary support from FRQ-S (Chercheur-Boursier clinician Junior 2) and start-up funding from the Montreal Neurological Institute.",
+      "BCB acknowledges support from CIHR (FDN-154298), SickKids Foundation (NI17-039), Natural Sciences and Engineering Research Council (NSERC; Discovery-1304413), Azrieli Center for Autism Research of the Montreal Neurological Institute (ACAR), BrainCanada, FRQ-S, and the Canada Research Chairs Program."
+    ],
+    "DatasetDOI": ""
+}

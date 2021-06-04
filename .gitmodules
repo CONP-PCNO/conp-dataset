@@ -162,6 +162,5 @@
 	url = https://github.com/conp-bot/conp-dataset-PERFORM-Dataset-one-control-subject.git
 [submodule "projects/microstructure_informed_connectomics"]
 	path = projects/microstructure_informed_connectomics
-	url = ./projects/microstructure_informed_connectomics
-	branch = master
-	datalad-id = 71608780-c474-11eb-808f-525400da244d
+	url = https://github.com/emmetaobrien/microstructure_informed_connectomics.git
+

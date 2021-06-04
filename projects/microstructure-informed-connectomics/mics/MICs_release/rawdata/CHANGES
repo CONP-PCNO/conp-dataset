@@ -1,0 +1,30 @@
+# CHANGES
+HC055  run-1_T1w has a voxel resolution of 1x1x1
+PX033 run-1_T1w has a voxel resolution of 0.899x0.899x0.899
+PX033 run-3_T1w has a voxel resolution of 0.899x0.899x0.899
+PX028 has two runs of T1map, inv1, inv2 and uni volumes
+
+RENAMED rsfMRI files
+renamed 'mv -v sub-HC062_ses-pre_task-rest_acq-AP_run-1_bold.json sub-HC062_ses-pre_task-rest_acq-AP_bold.json'
+renamed 'mv -v sub-HC062_ses-pre_task-rest_acq-AP_run-1_bold.nii.gz sub-HC062_ses-pre_task-rest_acq-AP_bold.nii.gz'
+
+renamed 'sub-HC004_ses-pre_task-rest_acq-AP_run-1_bold.json' -> 'sub-HC004_ses-pre_task-rest_acq-AP_bold.json'
+renamed 'sub-HC004_ses-pre_task-rest_acq-AP_run-1_bold.nii.gz' -> 'sub-HC004_ses-pre_task-rest_acq-AP_bold.nii.gz'
+renamed 'sub-HC004_ses-pre_task-rest_acq-APse_run-1_bold.json' -> 'sub-HC004_ses-pre_task-rest_acq-APse_bold.json'
+renamed 'sub-HC004_ses-pre_task-rest_acq-APse_run-1_bold.nii.gz' -> 'sub-HC004_ses-pre_task-rest_acq-APse_bold.nii.gz'
+renamed 'sub-HC004_ses-pre_task-rest_acq-PAse_run-1_bold.json' -> 'sub-HC004_ses-pre_task-rest_acq-PAse_bold.json'
+
+renamed 'sub-HC004_ses-pre_task-rest_acq-PAse_run-1_bold.nii.gz' -> 'sub-HC004_ses-pre_task-rest_acq-PAse_bold.nii.gz'
+renamed 'sub-HC006_ses-pre_task-rest_acq-AP_run-1_bold.json' -> 'sub-HC006_ses-pre_task-rest_acq-AP_bold.json'
+renamed 'sub-HC006_ses-pre_task-rest_acq-AP_run-1_bold.nii.gz' -> 'sub-HC006_ses-pre_task-rest_acq-AP_bold.nii.gz'
+
+renamed 'sub-HC003_ses-pre_task-rest_acq-PAse_run-1_bold.json' -> 'sub-HC003_ses-pre_task-rest_acq-PAse_bold.json'
+renamed 'sub-HC003_ses-pre_task-rest_acq-PAse_run-1_bold.nii.gz' -> 'sub-HC003_ses-pre_task-rest_acq-PAse_bold.nii.gz'
+renamed 'mv sub-HC003_ses-pre_task-rest_acq-APse_run-1_bold.json sub-HC003_ses-pre_task-rest_acq-APse_bold.json'
+renamed 'mv sub-HC003_ses-pre_task-rest_acq-APse_run-1_bold.nii.gz sub-HC003_ses-pre_task-rest_acq-APse_bold.nii.gz'
+
+sub-PX026_ses-01 dwi were obtained from:
+origDWI=("S1_10_dwi_b700_40" "S1_19_dwi_b300_10" "S1_18_dwi_b0_5PA" "S1_09_dwi_b2000_90")
+ 
+PX052, no dicoms_sorted
+HC0012, no dicoms_sorted

@@ -1,0 +1,17 @@
+{
+    "Name": "Microstructure-Informed Connectomics (MICs) dataset derivatives",
+    "BIDSVersion": "1.0.0",
+    "PipelineDescription": {
+        "Name": "micapipe",
+        "Version": "0.0.1",
+        "CodeURL": "https://github.com/MICA-LAB/micapipe"
+    },
+    "DescriptionAbbreviations": {
+        "MPC": "microstructure profile covariance",
+        "GD": "geodesic distance",
+        "FC": "functional connectivity",
+        "SC": "structural connectivity"
+    },
+    "CodeURL": "https://github.com/MICA-LAB/micapipe",
+    "HowToAcknowledge": "Please cite our data descriptor paper (DOI) and micapipe (DOI) if you are using processed data."
+}
