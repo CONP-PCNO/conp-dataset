@@ -164,3 +164,6 @@
 	path = projects/microstructure_informed_connectomics
 	url = https://github.com/emmetaobrien/microstructure_informed_connectomics.git
 
+[submodule "projects/spins_travelling_phantoms"]
+	path = projects/spins_travelling_phantoms
+	url = https://github.com/conpdatasets/spins_travelling_phantoms
