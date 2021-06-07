@@ -160,3 +160,6 @@
 [submodule "projects/PERFORM_Dataset__one_control_subject"]
 	path = projects/PERFORM_Dataset__one_control_subject
 	url = https://github.com/conp-bot/conp-dataset-PERFORM-Dataset-one-control-subject.git
+[submodule "projects/spins_travelling_phantoms"]
+	path = projects/spins_travelling_phantoms
+	url = https://github.com/conpdatasets/spins_travelling_phantoms.git
