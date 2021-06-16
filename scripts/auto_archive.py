@@ -104,7 +104,7 @@ def get_modified_datasets(
         # authentication. However the program will most likely fail.
         logger.critical(e)
 
-    logger.info(f"Retrieving modfied datasets since {since}")
+    logger.info(f"Retrieving modified datasets since {since}")
     repo = Github(gh_access_token).get_repo("CONP-PCNO/conp-dataset")
     commits = repo.get_commits(since=since, until=until)
 
