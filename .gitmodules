@@ -25,9 +25,6 @@
 [submodule "projects/bigbrain-datalad"]
 	path = projects/BigBrain
 	url = https://github.com/conpdatasets/bigbrain-datalad.git
-[submodule "projects/PERFORM_Dataset__one_control_subject"]
-  path = projects/PERFORM_Dataset__one_control_subject
-  url = https://github.com/conp-bot/conp-dataset-PERFORM_Dataset__one_control_subject.git
 [submodule "scripts/dats_validator/conp-dats"]
 	path = scripts/dats_validator/conp-dats
 	url = https://github.com/CONP-PCNO/schema.git
@@ -148,3 +145,24 @@
 [submodule "projects/openpain/thermal"]
 	path = projects/openpain/thermal
 	url = https://github.com/conpdatasets/openpain-thermal.git
+[submodule "projects/BigBrain_MRISIM"]
+	path = projects/BigBrain_MRISIM
+	url = https://github.com/conpdatasets/BigBrain_MRISIM.git
+[submodule "projects/BigBrain_A3D"]
+	path = projects/BigBrain_A3D
+    url = https://github.com/conpdatasets/BigBrain_A3D.git
+[submodule "projects/BigBrain_Hippocampus_Segmentation"]
+	path = projects/BigBrain_Hippocampus_Segmentation
+	url = https://github.com/conpdatasets/BigBrain_Hippocampus_Segmentation.git
+[submodule "projects/BigBrain_BigBrainWarp_Support"]
+	path = projects/BigBrain_BigBrainWarp_Support
+	url = https://github.com/conpdatasets/BigBrain_BigBrainWarp_Support.git
+[submodule "projects/BigBrain_Surface_Parcellations"]
+	path = projects/BigBrain_Surface_Parcellations
+	url = https://github.com/conpdatasets/BigBrain_Surface_Parcellations.git
+[submodule "projects/PERFORM_Dataset__one_control_subject"]
+	path = projects/PERFORM_Dataset__one_control_subject
+	url = https://github.com/conp-bot/conp-dataset-PERFORM-Dataset-one-control-subject.git
+[submodule "projects/spins_travelling_phantoms"]
+	path = projects/spins_travelling_phantoms
+	url = https://github.com/conpdatasets/spins_travelling_phantoms.git
