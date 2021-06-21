@@ -18,7 +18,7 @@ python annotator.py /path/to/project/folder --out /path/to/output/directory
 ```
 
 The `--out` parameter is optional, if it is not specified, the files will be generated in the
-same directory as the original DATS.jsonld.
+same directory as the original DATS.json.
 
 **Option 2**:
 Annotate a single DATS file

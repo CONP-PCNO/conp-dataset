@@ -15,12 +15,12 @@ logger = logging.getLogger("DATS annotator")
 
 def find_schema(parent_schema, term, json_object):
     """
-    This function finds the appropriate JSON schema for a term in a DATS Json object. To do
+    This function finds the appropriate JSON schema for a term in a DATS JSON object. To do
     so, it relies on the JSON schema of the supplied JSON object.
 
     :param parent_schema: The DATS JSON schema that corresponds to the json_object parameter
     :param term: the string term for which the schema shall be found
-    :param json_object:  the JSON object that contains the term and to which the parent_schema corresponds
+    :param json_object: the JSON object that contains the term and to which the parent_schema corresponds to
     :return: the DATS JSON schema for the term
     """
     ps = parent_schema["properties"]
@@ -44,7 +44,7 @@ def find_schema(parent_schema, term, json_object):
     if "$ref" in search_dict.keys():
         schema_name = search_dict["$ref"]
     elif len(set(search_dict.keys()).intersection(["anyOf", "oneOf", "allOf"])) > 0:
-        # Get the correct jsonld relationship
+        # Get the correct JSONLD relationship
         schema_rel = list(
             set(search_dict.keys()).intersection(["anyOf", "oneOf", "allOf"])
         )[0]
@@ -171,7 +171,7 @@ def annotate_dats_object(
 
 def gen_jsonld_outpath(dats_json_f, out_path):
     """
-    This function generates a output file path for the annotated DATS jsonld file.
+    This function generates an output file path for the annotated DATS JSONLD file.
 
     :param dats_json_f: the path to the original DATS instance file
     :param out_path: the folder or new file path where the annotated DATS.jsonld file should be stored
@@ -217,7 +217,7 @@ def dats_to_jsonld(dats_f, schema_f, context_dir, out_path=None, clobber=False):
         if clobber:
             logger.warning(
                 f"{dats_jsonld_f.resolve()} already exists and {clobber = }. "
-                f"I will overwrite the file now!"
+                f"The file {dats_jsonld_f.resolve()} will be overwritten now!"
             )
         else:
             logger.warning(
@@ -257,7 +257,7 @@ def main(cli_args):
         "dats_path",
         type=pal.Path,
         help="""
-                If this is a path to a DATS file, then only this DATS file is annotated.
+                If this is a path to a DATS file, then only this DATS file will be annotated.
                 If this is a path to a directory, then each subdirectory of this directory is expected
                 to contain a DATS file called DATS.json. Each of these files will then be annotated iteratively
                 """,
@@ -273,7 +273,7 @@ def main(cli_args):
         "--out",
         type=pal.Path,
         default=None,
-        help="Where to put the output (default = in the same folder).",
+        help="Where to create the JSONLD file(s) (default = in the same folder).",
     )
     parser.add_argument("--clobber", action="store_true")
     args = parser.parse_args(cli_args)
@@ -289,7 +289,7 @@ def main(cli_args):
     elif args.dats_path.is_dir():
         files_to_convert = list(args.dats_path.glob("*/DATS.json"))
         if not args.out.is_dir():
-            logger.warning(f"I will create the output folder at {args.out.resolve()}")
+            logger.warning(f"The {args.out.resolve()} folder will be created and JSONLD files will be saved in it.")
             args.out.mkdir()
         if files_to_convert is None:
             logger.error(
@@ -297,7 +297,7 @@ def main(cli_args):
             )
         else:
             logger.info(
-                f"We have found {len(files_to_convert)} files to convert at {args.dats_path.resolve()}"
+                f"Found {len(files_to_convert)} files to convert at {args.dats_path.resolve()}"
             )
             start = time.time()
             for file_idx, dats_f in enumerate(files_to_convert, start=1):
