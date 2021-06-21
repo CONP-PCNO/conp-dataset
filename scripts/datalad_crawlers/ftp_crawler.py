@@ -2,24 +2,37 @@ import argparse
 import os
 from ftplib import FTP
 
+import git
+from tqdm import tqdm
 
-def crawl(host, root, subdir):
+
+def crawl(host, root, subdir, *, ftp):
     """
     Recursively prints the URLs of the files under dir and adds them to git-annex
     """
-    old_dir = ftp.pwd()
-    ftp.cwd(os.path.join("/", root, subdir))
-    for entry in ftp.mlsd():
-        file_name, metadata = entry
-        if metadata["type"] == "dir":
-            print(f"mkdir -p {file_name}")
-            crawl(host, root, os.path.join(subdir, file_name))
-        elif metadata["type"] == "file":
-            url = f"ftp://{host}/" + os.path.join(root, subdir, file_name)
-            local_file_name = os.path.join(subdir, file_name)
-            print(f"git-annex addurl {url} --file {local_file_name}")
-            os.system(f"git-annex addurl {url} --file {local_file_name}")
-    ftp.cwd(old_dir)
+    cwd = os.path.join("/", root, subdir)
+    print(f"\nCrawling {cwd}")
+
+    for filename, metadata in tqdm(ftp.mlsd(cwd)):
+        filepath = os.path.join(subdir, filename)
+
+        while True:
+            try:
+                if metadata.get("type") == "dir":
+                    crawl(host, root, filepath, ftp=ftp)
+
+                elif metadata.get("type") == "file":
+                    git.Repo().git.annex(
+                        "addurl",
+                        f"ftp://{host}/" + os.path.join(cwd, filename),
+                        file=filepath,
+                    )
+                break
+
+            except Exception as e:
+                print(f"WARNING: Connection restarted on file: {filepath}: {e}")
+                ftp.connect()
+                ftp.login()
 
 
 def parse_args():
@@ -38,6 +51,9 @@ def parse_args():
 
     parser.add_argument("host", type=str, help="URL of the FTP host.")
     parser.add_argument("directory", type=str, help="Directory path to the dataset.")
+    parser.add_argument(
+        "sub_directory", nargs="?", type=str, default="", help="Subdirectory to crawl."
+    )
 
     return parser.parse_args()
 
@@ -47,4 +63,4 @@ if __name__ == "__main__":
 
     with FTP(args.host) as ftp:
         ftp.login()
-        crawl(args.host, args.directory, "")
+        crawl(args.host, args.directory, args.sub_directory, ftp=ftp)
