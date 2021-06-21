@@ -289,7 +289,9 @@ def main(cli_args):
     elif args.dats_path.is_dir():
         files_to_convert = list(args.dats_path.glob("*/DATS.json"))
         if not args.out.is_dir():
-            logger.warning(f"The {args.out.resolve()} folder will be created and JSONLD files will be saved in it.")
+            logger.warning(
+                f"The {args.out.resolve()} folder will be created and JSONLD files will be saved in it."
+            )
             args.out.mkdir()
         if files_to_convert is None:
             logger.error(
