@@ -41,14 +41,20 @@ def find_schema(parent_schema, term, json_object):
     if "items" in search_dict.keys():
         search_dict = ps[term]["items"]
 
+    # This section is looking for the name of the DATS schema that should be applied to the term
+    # If there are multiple possibilities (e.g. "anyOf", "oneOf", "allOf") we want to pick a schema
+    # for which the current term value validates
     if "$ref" in search_dict.keys():
+        # There is only one possible schema
         schema_name = search_dict["$ref"]
     elif len(set(search_dict.keys()).intersection(["anyOf", "oneOf", "allOf"])) > 0:
-        # Get the correct JSONLD relationship
+        # There is (most likely) more than one option for the schema as indicated by one of the
+        # keys from ["anyOf", "oneOf", "allOf"]
         schema_rel = list(
             set(search_dict.keys()).intersection(["anyOf", "oneOf", "allOf"])
         )[0]
-        possible_keys = []
+        possible_schemata = []
+        # We will now iterate over the possible schemata for the term
         for ref in search_dict[schema_rel]:
             # Get the schema
             ref_name = ref["$ref"]
@@ -56,11 +62,13 @@ def find_schema(parent_schema, term, json_object):
             if _schema_uri == resolver.base_uri:
                 _schema = parent_schema
             if jss.Draft4Validator(_schema).is_valid(json_object):
-                possible_keys.append(ref_name)
-        if len(possible_keys) > 1:
+                # If the schema validates the term value (json_object) then we can keep
+                # it around as a potential schema
+                possible_schemata.append(ref_name)
+        if len(possible_schemata) > 1:
             # TODO: decide if we let the user pick which option to go with
-            logger.debug(f"I got more than one option for {term}: {possible_keys}")
-        elif len(possible_keys) == 0:
+            logger.debug(f"I got more than one option for {term}: {possible_schemata}")
+        elif len(possible_schemata) == 0:
             # TODO: we might also want to raise here as this shouldn't happen
             logger.warning(
                 f"I have no fitting schema for {json_object} {term} among {search_dict[schema_rel]}"
@@ -69,7 +77,7 @@ def find_schema(parent_schema, term, json_object):
         # If anything fits, just pick the first one
         # TODO: we may want to leave this up to the user here, particularly if the instances
         #       map to different / meaningful things in SDO
-        schema_name = possible_keys[0]
+        schema_name = possible_schemata[0]
     else:
         # There is nothing to be done here in terms of annotation
         logger.info(f"{term = } does not need to be annotated")
@@ -201,7 +209,8 @@ def gen_jsonld_outpath(dats_json_f, out_path):
     else:
         raise Exception(
             f"{out_path = } for {dats_json_f.resolve} is not a path to a file or directory. "
-            f"I don't know how to store the output"
+            f"I don't know where to store the output. "
+            f"Please provide a valid path with the --out flag."
         )
     return dats_jsonld_f
 
@@ -267,6 +276,7 @@ def main(cli_args):
         "--dats_schema",
         type=pal.Path,
         default=SCHEMA_DIR / "dataset_schema.json",
+        help="""Specify the full path to a DATS dataset schema file if you don't want to use the default one""",
     )
     parser.add_argument("-dc", "--dats_context_dir", type=pal.Path, default=CONTEXT_DIR)
     parser.add_argument(
