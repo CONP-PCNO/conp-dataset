@@ -202,10 +202,6 @@ def gen_jsonld_outpath(dats_json_f, out_path):
         out_name = f"{dats_json_f.parent.name}_{out_name}"
     if out_path.is_dir():
         dats_jsonld_f = out_path / out_name
-    elif out_path.parent.is_dir():
-        # TODO: check if there is a way to explicitly look for a file that doesn't exist
-        logger.info(f"I will write to {out_path.resolve() = }")
-        dats_jsonld_f = out_path.parent / out_name
     else:
         raise Exception(
             f"{out_path = } for {dats_json_f.resolve} is not a path to a file or directory. "
@@ -307,26 +303,27 @@ def main(cli_args):
             logger.error(
                 f"could not find any DATS.json files in subdirectories of {args.dats_path.resolve()}"
             )
-        else:
+            exit(code=1)
+
+        logger.info(
+            f"Found {len(files_to_convert)} files to convert at {args.dats_path.resolve()}"
+        )
+        start = time.time()
+        for file_idx, dats_f in enumerate(files_to_convert, start=1):
             logger.info(
-                f"Found {len(files_to_convert)} files to convert at {args.dats_path.resolve()}"
+                f"Now processing file {file_idx}/{len(files_to_convert)}: {dats_f.parent.name}"
             )
-            start = time.time()
-            for file_idx, dats_f in enumerate(files_to_convert, start=1):
-                logger.info(
-                    f"Now processing file {file_idx}/{len(files_to_convert)}: {dats_f.parent.name}"
-                )
-                dats_to_jsonld(
-                    dats_f=dats_f,
-                    schema_f=args.dats_schema,
-                    context_dir=args.dats_context_dir,
-                    out_path=args.out,
-                    clobber=args.clobber,
-                )
-            logger.info(
-                f"Completed annotating {len(files_to_convert)} DATS files. "
-                f"This took {time.time()-start :.2f} seconds."
+            dats_to_jsonld(
+                dats_f=dats_f,
+                schema_f=args.dats_schema,
+                context_dir=args.dats_context_dir,
+                out_path=args.out,
+                clobber=args.clobber,
             )
+        logger.info(
+            f"Completed annotating {len(files_to_convert)} DATS files. "
+            f"This took {time.time()-start :.2f} seconds."
+        )
     else:
         logger.error(f"I cannot find {args.dats_path}. Will stop now.")
 
