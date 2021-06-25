@@ -24,8 +24,8 @@ def _create_osf_tracker(path, dataset):
 
 
 class OSFCrawler(BaseCrawler):
-    def __init__(self, github_token, config_path, verbose, force, no_pr):
-        super().__init__(github_token, config_path, verbose, force, no_pr)
+    def __init__(self, github_token, config_path, verbose, force, no_pr, basedir):
+        super().__init__(github_token, config_path, verbose, force, no_pr, basedir)
         self.osf_token = self._get_token()
 
     def _get_token(self):
@@ -226,6 +226,12 @@ class OSFCrawler(BaseCrawler):
         r = self._get_request_with_bearer_token(link)
         return r.json()["data"]
 
+    def _get_wiki(self, link):
+        r = self._get_request_with_bearer_token(link)
+        data = r.json()["data"]
+        if len(data) > 0:
+            return self._get_request_with_bearer_token(data[0]['links']['download']).content
+
     def _get_institutions(self, link):
         r = self._get_request_with_bearer_token(link)
         if r.json()["data"]:
@@ -284,6 +290,11 @@ class OSFCrawler(BaseCrawler):
                 dataset["relationships"]["children"]["links"]["related"]["href"],
             )
 
+            # Get wiki to put in README
+            wiki = self._get_wiki(
+                dataset["relationships"]["wikis"]["links"]["related"]["href"],
+            )
+
             # Gather extra properties
             extra_properties = [
                 {
@@ -324,6 +335,7 @@ class OSFCrawler(BaseCrawler):
                     map(lambda x: {"name": x}, contributors),
                 ),
                 "description": attributes["description"],
+                'wiki': wiki,
                 "version": attributes["date_modified"],
                 "licenses": [
                     {
@@ -503,24 +515,16 @@ class OSFCrawler(BaseCrawler):
             return True
 
     def get_readme_content(self, dataset):
-        readme_content = """# {}
+        readme_content = f'# {dataset["title"]}\n\nCrawled from [OSF]({dataset["homepage"]})'
 
-Crawled from [OSF]({})
+        if 'description' in dataset and dataset['description']:
+            readme_content += f'\n\n## Description\n\n{dataset["description"]}'
 
-## Description
+        if 'identifier' in dataset and dataset['identifier']:
+            readme_content += f'\n\n## DOI: {dataset["identifier"]["identifier"]}'
 
-{}""".format(
-            dataset["title"],
-            dataset["homepage"],
-            dataset["description"],
-        )
-
-        if "identifier" in dataset:
-            readme_content += """
-
-DOI: {}""".format(
-                dataset["identifier"]["identifier"],
-            )
+        if 'wiki' in dataset and dataset['wiki']:
+            readme_content += f'\n\n## WIKI\n\n{dataset["wiki"]}'
 
         return readme_content
 
