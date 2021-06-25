@@ -42,15 +42,23 @@ def parse_args():
         "out_dir", type=str, help="Path to store the archived datasets."
     )
     parser.add_argument(
-        "--all",
-        action="store_true",
-        help="Archive all the datasets rather than those modified since the last time.",
-    )
-    parser.add_argument(
         "--max-size",
         type=float,
         default=20.0,
         help="Maximum size of dataset to archive in GB.",
+    )
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument(
+        "--all",
+        action="store_true",
+        help="Archive all the datasets rather than those modified since the last time.",
+    )
+    group.add_argument(
+        "--dataset",
+        "-d",
+        type=str,
+        nargs="+",
+        help="Restrict the archive to the datasets specified.",
     )
 
     return parser.parse_args()
@@ -150,7 +158,13 @@ def archive_dataset(dataset_path: str, out_dir: str, version: str) -> None:
 
 if __name__ == "__main__":
     args = parse_args()
-    datasets = get_all_datasets() if args.all else get_modified_datasets()
+
+    if args.dataset:
+        dataset = get_all_datasets() & set(args.dataset)
+    elif args.all:
+        datasets = get_all_datasets()
+    else:
+        datasets = get_modified_datasets()
 
     for dataset in datasets:
         dataset_name = dataset.removeprefix("projects/")
