@@ -83,6 +83,8 @@ class BaseCrawler:
         self.git = git
         self.datalad = api
         self.no_pr = no_pr
+        if self.verbose:
+            print(f'Using base directory {self.basedir}')
 
     @abc.abstractmethod
     def get_all_dataset_description(self):
@@ -271,16 +273,16 @@ class BaseCrawler:
                     d.no_annex(pattern)
                 self.add_new_dataset(dataset_description, dataset_dir)
                 # Create DATS.json if it exists in directory and 1 level deep subdir
+                dats_path: str = os.path.join(dataset_dir, 'DATS.json')
                 if existing_dats_path := self._check_dats_present(dataset_dir):
                     if self.verbose:
                         print(f'Found existing DATS.json at {existing_dats_path}')
-                    dats_path: str = os.path.join(dataset_dir, 'DATS.json')
                     if existing_dats_path != dats_path:
                         os.rename(existing_dats_path, dats_path)
                 else:
                     self._create_new_dats(
                         dataset_dir,
-                        os.path.join(dataset_dir, "DATS.json"),
+                        dats_path,
                         dataset_description,
                         d,
                     )
@@ -310,11 +312,17 @@ class BaseCrawler:
 
                 modified = self.update_if_necessary(dataset_description, dataset_dir)
                 if modified:
-                    # Create DATS.json if it doesn't exist
-                    if not os.path.isfile(os.path.join(dataset_dir, "DATS.json")):
+                    # Create DATS.json if it exists in directory and 1 level deep subdir
+                    dats_path: str = os.path.join(dataset_dir, 'DATS.json')
+                    if existing_dats_path := self._check_dats_present(dataset_dir):
+                        if self.verbose:
+                            print(f'Found existing DATS.json at {existing_dats_path}')
+                        if existing_dats_path != dats_path:
+                            os.rename(existing_dats_path, dats_path)
+                    else:
                         self._create_new_dats(
                             dataset_dir,
-                            os.path.join(dataset_dir, "DATS.json"),
+                            dats_path,
                             dataset_description,
                             d,
                         )
