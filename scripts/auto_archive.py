@@ -159,12 +159,20 @@ def archive_dataset(dataset_path: str, out_dir: str, version: str) -> None:
 if __name__ == "__main__":
     args = parse_args()
 
+    # Only archive the datasets available locally.
+    datasets = get_all_datasets()
     if args.dataset:
-        dataset = get_all_datasets() & set(args.dataset)
-    elif args.all:
-        datasets = get_all_datasets()
-    else:
-        datasets = get_modified_datasets()
+        logger.warning(
+            f"The following dataset were not found locally: {set(args.dataset) - datasets}"
+        )
+        datasets &= set(args.dataset)
+
+    elif not args.all:
+        modified_datasets = get_modified_datasets()
+        logger.warning(
+            f"The following dataset were not found locally: {modified_datasets - datasets}"
+        )
+        datasets &= modified_datasets
 
     for dataset in datasets:
         dataset_name = dataset.removeprefix("projects/")
