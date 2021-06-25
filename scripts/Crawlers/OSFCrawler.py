@@ -1,7 +1,7 @@
 import datetime
 import json
 import os
-from typing import Any
+from typing import Any, Optional
 from typing import Callable
 from typing import Dict
 from typing import List
@@ -226,7 +226,7 @@ class OSFCrawler(BaseCrawler):
         r = self._get_request_with_bearer_token(link)
         return r.json()["data"]
 
-    def _get_wiki(self, link):
+    def _get_wiki(self, link) -> Optional[bytes]:
         r = self._get_request_with_bearer_token(link)
         data = r.json()["data"]
         if len(data) > 0:
@@ -291,9 +291,11 @@ class OSFCrawler(BaseCrawler):
             )
 
             # Get wiki to put in README
-            wiki = self._get_wiki(
-                dataset["relationships"]["wikis"]["links"]["related"]["href"],
-            )
+            wiki: Optional[bytes] = None
+            try:
+                wiki = self._get_wiki(dataset["relationships"]["wikis"]["links"]["related"]["href"])
+            except Exception as e:
+                print(f'Error getting wiki for {attributes["title"]} because of {e}')
 
             # Gather extra properties
             extra_properties = [
