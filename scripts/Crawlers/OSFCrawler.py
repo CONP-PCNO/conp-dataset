@@ -226,11 +226,11 @@ class OSFCrawler(BaseCrawler):
         r = self._get_request_with_bearer_token(link)
         return r.json()["data"]
 
-    def _get_wiki(self, link) -> Optional[bytes]:
+    def _get_wiki(self, link) -> Optional[str]:
         r = self._get_request_with_bearer_token(link)
         data = r.json()["data"]
         if len(data) > 0:
-            return self._get_request_with_bearer_token(data[0]['links']['download']).content
+            return self._get_request_with_bearer_token(data[0]['links']['download']).content.decode()
 
     def _get_institutions(self, link):
         r = self._get_request_with_bearer_token(link)
@@ -291,7 +291,7 @@ class OSFCrawler(BaseCrawler):
             )
 
             # Get wiki to put in README
-            wiki: Optional[bytes] = None
+            wiki: Optional[str] = None
             try:
                 wiki = self._get_wiki(dataset["relationships"]["wikis"]["links"]["related"]["href"])
             except Exception as e:
