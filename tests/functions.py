@@ -219,7 +219,7 @@ def authenticate(dataset):
         keyring.set_password("datalad-loris", "password", password)
         generate_datalad_provider(loris_api)
     elif zenodo_token:
-        pass
+        os.environ["DATALAD_ZENODO_token"] = zenodo_token
     elif is_authentication_required(dataset):
         if os.getenv("CIRCLE_PR_NUMBER", False):
             pytest.skip(
