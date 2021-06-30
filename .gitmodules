@@ -165,10 +165,10 @@
 	url = https://github.com/conp-bot/conp-dataset-PERFORM-Dataset-one-control-subject.git
 [submodule "scripts/dats_jsonld_annotator/schema"]
 	path = scripts/dats_jsonld_annotator/schema
-	url = git@github.com:CONP-PCNO/schema.git
+	url = https://github.com/CONP-PCNO/schema.git
 [submodule "scripts/dats_jsonld_annotator/context"]
 	path = scripts/dats_jsonld_annotator/context
-	url = git@github.com:CONP-PCNO/context.git
+	url = https://github.com/CONP-PCNO/context.git
 [submodule "projects/spins_travelling_phantoms"]
 	path = projects/spins_travelling_phantoms
 	url = https://github.com/conpdatasets/spins_travelling_phantoms.git
