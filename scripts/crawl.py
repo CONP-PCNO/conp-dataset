@@ -7,8 +7,8 @@ import traceback
 from git import Repo
 
 sys.path.append(os.getcwd())
-from scripts.Crawlers.ZenodoCrawler import ZenodoCrawler
-from scripts.Crawlers.OSFCrawler import OSFCrawler
+from scripts.Crawlers.ZenodoCrawler import ZenodoCrawler  # noqa: E402
+from scripts.Crawlers.OSFCrawler import OSFCrawler    # noqa: E402
 
 
 def parse_args():
