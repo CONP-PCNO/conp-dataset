@@ -84,7 +84,7 @@ class BaseCrawler:
         self.datalad = api
         self.no_pr = no_pr
         if self.verbose:
-            print(f'Using base directory {self.basedir}')
+            print(f"Using base directory {self.basedir}")
 
     @abc.abstractmethod
     def get_all_dataset_description(self):
@@ -273,10 +273,10 @@ class BaseCrawler:
                     d.no_annex(pattern)
                 self.add_new_dataset(dataset_description, dataset_dir)
                 # Create DATS.json if it exists in directory and 1 level deep subdir
-                dats_path: str = os.path.join(dataset_dir, 'DATS.json')
+                dats_path: str = os.path.join(dataset_dir, "DATS.json")
                 if existing_dats_path := self._check_dats_present(dataset_dir):
                     if self.verbose:
-                        print(f'Found existing DATS.json at {existing_dats_path}')
+                        print(f"Found existing DATS.json at {existing_dats_path}")
                     if existing_dats_path != dats_path:
                         os.rename(existing_dats_path, dats_path)
                 else:
@@ -313,10 +313,10 @@ class BaseCrawler:
                 modified = self.update_if_necessary(dataset_description, dataset_dir)
                 if modified:
                     # Create DATS.json if it exists in directory and 1 level deep subdir
-                    dats_path: str = os.path.join(dataset_dir, 'DATS.json')
+                    dats_path: str = os.path.join(dataset_dir, "DATS.json")
                     if existing_dats_path := self._check_dats_present(dataset_dir):
                         if self.verbose:
-                            print(f'Found existing DATS.json at {existing_dats_path}')
+                            print(f"Found existing DATS.json at {existing_dats_path}")
                         if existing_dats_path != dats_path:
                             os.rename(existing_dats_path, dats_path)
                     else:
@@ -548,7 +548,7 @@ Functional checks:
             file_path: str = os.path.join(directory, file_name)
             if os.path.isdir(file_path):
                 for subfile_name in os.listdir(file_path):
-                    if subfile_name.lower() == 'dats.json':
+                    if subfile_name.lower() == "dats.json":
                         return os.path.join(file_path, subfile_name)
-            elif file_name.lower() == 'dats.json':
+            elif file_name.lower() == "dats.json":
                 return file_path

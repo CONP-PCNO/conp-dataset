@@ -1,10 +1,11 @@
 import datetime
 import json
 import os
-from typing import Any, Optional
+from typing import Any
 from typing import Callable
 from typing import Dict
 from typing import List
+from typing import Optional
 
 import humanize
 import requests
@@ -230,14 +231,16 @@ class OSFCrawler(BaseCrawler):
         r = self._get_request_with_bearer_token(link)
         data = r.json()["data"]
         if len(data) > 0:
-            return self._get_request_with_bearer_token(data[0]['links']['download']).content.decode()
+            return self._get_request_with_bearer_token(
+                data[0]["links"]["download"]
+            ).content.decode()
 
     def _get_institutions(self, link):
         r = self._get_request_with_bearer_token(link)
         if r.json()["data"]:
             institutions = [
                 institution["attributes"]["name"] for institution in r.json()["data"]
-            ]
+            ]doCrawler("github token", "path/
             return institutions
 
     def _get_identifier(self, link):
@@ -293,7 +296,9 @@ class OSFCrawler(BaseCrawler):
             # Get wiki to put in README
             wiki: Optional[str] = None
             try:
-                wiki = self._get_wiki(dataset["relationships"]["wikis"]["links"]["related"]["href"])
+                wiki = self._get_wiki(
+                    dataset["relationships"]["wikis"]["links"]["related"]["href"]
+                )
             except Exception as e:
                 print(f'Error getting wiki for {attributes["title"]} because of {e}')
 
@@ -337,7 +342,7 @@ class OSFCrawler(BaseCrawler):
                     map(lambda x: {"name": x}, contributors),
                 ),
                 "description": attributes["description"],
-                'wiki': wiki,
+                "wiki": wiki,
                 "version": attributes["date_modified"],
                 "licenses": [
                     {
@@ -517,15 +522,17 @@ class OSFCrawler(BaseCrawler):
             return True
 
     def get_readme_content(self, dataset):
-        readme_content = f'# {dataset["title"]}\n\nCrawled from [OSF]({dataset["homepage"]})'
+        readme_content = (
+            f'# {dataset["title"]}\n\nCrawled from [OSF]({dataset["homepage"]})'
+        )
 
-        if 'description' in dataset and dataset['description']:
+        if "description" in dataset and dataset["description"]:
             readme_content += f'\n\n## Description\n\n{dataset["description"]}'
 
-        if 'identifier' in dataset and dataset['identifier']:
+        if "identifier" in dataset and dataset["identifier"]:
             readme_content += f'\n\n## DOI: {dataset["identifier"]["identifier"]}'
 
-        if 'wiki' in dataset and dataset['wiki']:
+        if "wiki" in dataset and dataset["wiki"]:
             readme_content += f'\n\n## WIKI\n\n{dataset["wiki"]}'
 
         return readme_content

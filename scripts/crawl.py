@@ -87,8 +87,10 @@ def parse_args():
     else:  # Retrieve github token from config file
         github_token = config["github_token"]
 
-    if 'BASEDIR' not in os.environ:
-        raise Exception('BASEDIR environment variable must be set and pointing to conp-dataset repo')
+    if "BASEDIR" not in os.environ:
+        raise Exception(
+            "BASEDIR environment variable must be set and pointing to conp-dataset repo"
+        )
 
     return (
         github_token,
@@ -97,7 +99,7 @@ def parse_args():
         args.force,
         config["conp-dataset_path"],
         args.no_pr,
-        os.environ['BASEDIR'],
+        os.environ["BASEDIR"],
     )
 
 
@@ -134,7 +136,9 @@ if __name__ == "__main__":
                 + "==================== OSF Crawler Running ===================="
                 + os.linesep,
             )
-        OSFCrawlerObj = OSFCrawler(github_token, config_path, verbose, force, no_pr, basedir)
+        OSFCrawlerObj = OSFCrawler(
+            github_token, config_path, verbose, force, no_pr, basedir
+        )
         OSFCrawlerObj.run()
 
         # INSTANTIATE NEW CRAWLERS AND RUN HERE
