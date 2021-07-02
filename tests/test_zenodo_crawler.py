@@ -94,7 +94,7 @@ class TestZenodoCrawler(TestCase):
     ):
         try:
             ZenodoCrawler(
-                "github token", "path/to/config", True, False, True, '.'
+                "github token", "path/to/config", True, False, True, "."
             ).run()
         except Exception as e:
             self.fail("Unexpected Exception raised: " + str(e))

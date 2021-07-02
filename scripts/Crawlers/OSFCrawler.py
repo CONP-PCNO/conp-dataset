@@ -240,7 +240,7 @@ class OSFCrawler(BaseCrawler):
         if r.json()["data"]:
             institutions = [
                 institution["attributes"]["name"] for institution in r.json()["data"]
-            ]doCrawler("github token", "path/
+            ]
             return institutions
 
     def _get_identifier(self, link):
