@@ -29,8 +29,8 @@ def _get_annex(dataset_dir) -> Callable:
 
 
 class ZenodoCrawler(BaseCrawler):
-    def __init__(self, github_token, config_path, verbose, force, no_pr):
-        super().__init__(github_token, config_path, verbose, force, no_pr)
+    def __init__(self, github_token, config_path, verbose, force, no_pr, basedir):
+        super().__init__(github_token, config_path, verbose, force, no_pr, basedir)
         self.zenodo_tokens = self._get_tokens()
 
     def _get_tokens(self):
