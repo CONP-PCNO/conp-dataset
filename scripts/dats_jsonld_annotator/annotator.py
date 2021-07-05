@@ -25,10 +25,9 @@ def find_schema(parent_schema, term, json_object):
     """
     ps = parent_schema["properties"]
     if term not in ps.keys():
-        # TODO: Decide whether to raise an Exception here
         # The only way this could happen on a valid dataset is if someone has specified additional properties
         # We'd like to discourage this
-        logger.debug(
+        logger.warning(
             f'I cannot find {term = } in the parent schema: {parent_schema["id"]}.\n{json_object = }'
         )
         return None
@@ -69,7 +68,6 @@ def find_schema(parent_schema, term, json_object):
             # TODO: decide if we let the user pick which option to go with
             logger.debug(f"I got more than one option for {term}: {possible_schemata}")
         elif len(possible_schemata) == 0:
-            # TODO: we might also want to raise here as this shouldn't happen
             logger.warning(
                 f"I have no fitting schema for {json_object} {term} among {search_dict[schema_rel]}"
             )
@@ -234,7 +232,17 @@ def dats_to_jsonld(dats_f, schema_f, context_dir, out_path=None, clobber=False):
     dats_json = json.load(open(dats_f))
     schema = json.load(open(schema_f))
 
-    # TODO validate the DATS.json before annotation
+    # Do a very basic validation of the JSON object before we try to annotate it
+    if not jss.Draft4Validator(schema).is_valid(dats_json):
+        logger.error(
+            f"{dats_f.resolve()} is not a valid DATS file. "
+            f"If you think this should be a valid DATS file, "
+            f"please use the CONP validator to get a list of specific errors."
+            f"\n\nSkipping this file."
+        )
+        return
+
+    # Now do the annotation
     try:
         dats_jsonld, context = annotate_dats_object(dats_json, schema, {}, context_dir)
     except Exception as e:
