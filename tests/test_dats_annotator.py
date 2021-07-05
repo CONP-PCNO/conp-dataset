@@ -170,9 +170,12 @@ class TestGenerateJsonldPath:
         assert result_path == out_path / "dats_root_DATS.jsonld"
 
     def test_output_dir_doesnt_exist(self, tmp_path, dats_path):
+        # If the output dir does not exist when we call gen_jsonld_outpath
+        # Then we want this to error out here
+        # We only create output directories at the start
         out_path = tmp_path / "nonexistent"
-        result_path = gen_jsonld_outpath(dats_path, out_path)
-        assert result_path == tmp_path / "dats_root_DATS.jsonld"
+        with pytest.raises(Exception):
+            gen_jsonld_outpath(dats_path, out_path)
 
     def test_output_path_is_none(self, tmp_path, dats_path):
         dats_path.parent.mkdir()

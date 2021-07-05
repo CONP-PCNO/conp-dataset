@@ -202,7 +202,7 @@ def gen_jsonld_outpath(dats_json_f, out_path):
         dats_jsonld_f = out_path / out_name
     else:
         raise Exception(
-            f"{out_path = } for {dats_json_f.resolve} is not a path to a file or directory. "
+            f"{out_path = } for {dats_json_f.resolve()} is not a path to a file or directory. "
             f"I don't know where to store the output. "
             f"Please provide a valid path with the --out flag."
         )
