@@ -1,4 +1,4 @@
-FROM ubuntu:focal
+FROM ubuntu:focal-20210609
 LABEL maintainer="mathieu.dugre@concordia.ca"
 LABEL Name=conp-dataset Version=0.0.1
 
