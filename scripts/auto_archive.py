@@ -39,7 +39,7 @@ def parse_args():
     )
 
     parser.add_argument(
-        "out_dir", type=str, help="Path to store the archived datasets."
+        "--out_dir", "-o", type=str, help="Path to store the archived datasets."
     )
     parser.add_argument(
         "--max-size",
@@ -58,14 +58,14 @@ def parse_args():
         "-d",
         type=str,
         nargs="+",
-        help="Restrict the archive to the datasets specified.",
+        help="Restrict the archive to the specified dataset paths.",
     )
 
     return parser.parse_args()
 
 
 def get_all_datasets():
-    return {submodule.path for submodule in git.Repo().submodules}
+    return {os.path.basename(submodule.path) for submodule in git.Repo().submodules}
 
 
 def get_modified_datasets(
@@ -120,7 +120,7 @@ def get_modified_datasets(
         fout.write(now.isoformat())
 
     modified_datasets: set[str] = {
-        file_.filename
+        os.path.basename(file_.filename)
         for commit in commits
         for file_ in commit.files
         if file_.filename.startswith("projects/")
@@ -162,10 +162,11 @@ if __name__ == "__main__":
     # Only archive the datasets available locally.
     datasets = get_all_datasets()
     if args.dataset:
+        target_datasets = {os.path.basename(os.path.normpath(d)) for d in args.dataset}
         logger.warning(
-            f"The following dataset were not found locally: {set(args.dataset) - datasets}"
+            f"The following dataset were not found locally: {target_datasets - datasets}"
         )
-        datasets &= set(args.dataset)
+        datasets &= target_datasets
 
     elif not args.all:
         modified_datasets = get_modified_datasets()
@@ -174,8 +175,8 @@ if __name__ == "__main__":
         )
         datasets &= modified_datasets
 
-    for dataset in datasets:
-        dataset_name = dataset.removeprefix("projects/")
+    for dataset_name in datasets:
+        dataset = "projects/" + dataset_name
 
         try:
             logger.info(f"Installing dataset: {dataset}")
