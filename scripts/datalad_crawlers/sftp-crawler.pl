@@ -65,9 +65,7 @@ while ($inline = <IN_LARGE>) {
     $remote_file =~ s/data\/proftpd\///;
     $local_file  =~ s/$remote_directory/$local_directory/;
     $local_file  =~ s/\/data\/proftpd\/users\/$username//;
-
-    $remote_file = "https://" . $remote_host . $remote_file;
-    
+    $remote_file = "https://".$remote_host .$remote_file;
     unless (-e $local_file) {  # do not regenerate files that already exist (for case of interrupted crawl)
         system "git annex addurl $remote_file --file $local_file";
     }
