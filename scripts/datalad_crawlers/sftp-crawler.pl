@@ -68,7 +68,6 @@ while ($inline = <IN_LARGE>) {
 
     $remote_file = "https://".$remote_host.$remote_file;
     
-#   print "linking $remote_file as $local_file\n";
     unless (-e $local_file) {  # do not regenerate files that already exist (for case of interrupted crawl)
         system "git annex addurl $remote_file --file $local_file";
     }
