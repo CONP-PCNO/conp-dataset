@@ -189,7 +189,13 @@ if __name__ == "__main__":
             with open(os.path.join(dataset, "DATS.json")) as fin:
                 metadata = json.load(fin)
 
-                is_public = metadata.get("privacy") == "open"
+                is_public = (
+                    metadata.get("distributions", {})
+                    .get("access", {})
+                    .get("authorizations", {})
+                    .get("value")
+                    == "public"
+                )
                 version = metadata.get("version")
 
                 for distribution in metadata.get("distributions", list()):
