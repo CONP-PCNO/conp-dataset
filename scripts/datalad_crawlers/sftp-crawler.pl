@@ -21,9 +21,9 @@ my $local_projectname = $ARGV[0];
 my $username          = $ARGV[1];
 my $password          = $ARGV[2];
 
-my $local_directory  = $ARGV[3];
-my $remote_directory = $ARGV[4];
-my $remote_host      = "sftp.conp.ca";
+my $local_directory   = $ARGV[3];
+my $remote_directory  = $ARGV[4];
+my $remote_host       = "sftp.conp.ca";
 
 my $sftp_connection = Net::SFTP::Foreign->new($remote_host,user=>$username,password=>$password, port=>"7500");
 
@@ -64,7 +64,7 @@ while ($inline = <IN_LARGE>) {
     $local_file  = $remote_file;
     $remote_file =~ s/data\/proftpd\///;
     $local_file  =~ s/$remote_directory/$local_directory/;
-    $local_file =~ s/\/data\/proftpd\/users\/$username//;
+    $local_file  =~ s/\/data\/proftpd\/users\/$username//;
 
     $remote_file = "https://".$remote_host.$remote_file;
     
