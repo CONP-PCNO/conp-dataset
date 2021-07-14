@@ -64,8 +64,11 @@ def parse_args():
     return parser.parse_args()
 
 
-def get_all_datasets():
-    return {os.path.basename(submodule.path) for submodule in git.Repo().submodules}
+def get_datasets_path():
+    return {
+        os.path.basename(submodule.path): submodule.path
+        for submodule in git.Repo().submodules
+    }
 
 
 def get_modified_datasets(
@@ -129,9 +132,11 @@ def get_modified_datasets(
     return modified_datasets
 
 
-def archive_dataset(dataset_path: str, out_dir: str, version: str) -> None:
+def archive_dataset(
+    dataset_path: str, out_dir: str, archive_name: str, version: str
+) -> None:
     os.makedirs(os.path.dirname(out_dir), mode=0o755, exist_ok=True)
-    out_filename = f"{out_dir}_version-{version}.tar.gz"
+    out_filename = f"{archive_name}_version-{version}.tar.gz"
     logger.info(f"Archiving dataset: {dataset_path} to {out_filename}")
 
     cwd = os.getcwd()
@@ -160,7 +165,8 @@ if __name__ == "__main__":
     args = parse_args()
 
     # Only archive the datasets available locally.
-    datasets = get_all_datasets()
+    datasets_path = get_datasets_path()
+    datasets = datasets_path.keys()
     if args.dataset:
         target_datasets = {os.path.basename(os.path.normpath(d)) for d in args.dataset}
         logger.warning(
@@ -176,7 +182,7 @@ if __name__ == "__main__":
         datasets &= modified_datasets
 
     for dataset_name in datasets:
-        dataset = "projects/" + dataset_name
+        dataset = datasets_path[dataset_name]
 
         try:
             logger.info(f"Installing dataset: {dataset}")
@@ -190,9 +196,9 @@ if __name__ == "__main__":
                 metadata = json.load(fin)
 
                 is_public = (
-                    metadata.get("distributions", {})
+                    metadata.get("distributions", [{}])[0]
                     .get("access", {})
-                    .get("authorizations", {})
+                    .get("authorizations", [{}])[0]
                     .get("value")
                     == "public"
                 )
@@ -211,9 +217,13 @@ if __name__ == "__main__":
                 for submodule in get_proper_submodules(dataset):
                     get_dataset(submodule)
 
+                archive_name = "__".join(
+                    os.path.relpath(dataset, "projects").split("/")
+                )
                 archive_dataset(
                     dataset,
                     out_dir=os.path.join(args.out_dir, dataset_name),
+                    archive_name=archive_name,
                     version=version,
                 )
                 logger.info(f"SUCCESS: archive created for {dataset}")
