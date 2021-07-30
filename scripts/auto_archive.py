@@ -68,6 +68,7 @@ def get_datasets_path():
     return {
         os.path.basename(submodule.path): submodule.path
         for submodule in git.Repo().submodules
+        if submodule.path.startswith("projects")
     }
 
 
