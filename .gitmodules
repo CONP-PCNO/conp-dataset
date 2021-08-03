@@ -172,3 +172,6 @@
 [submodule "projects/spins_travelling_phantoms"]
 	path = projects/spins_travelling_phantoms
 	url = https://github.com/conpdatasets/spins_travelling_phantoms.git
+[submodule "projects/BigBrain_Raw_Data"]
+	path = projects/BigBrain_Raw_Data
+	url = https://github.com/conpdatasets/BigBrain_Raw_Data.git
