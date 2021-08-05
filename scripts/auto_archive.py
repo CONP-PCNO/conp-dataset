@@ -68,6 +68,7 @@ def get_datasets_path():
     return {
         os.path.basename(submodule.path): submodule.path
         for submodule in git.Repo().submodules
+        if submodule.path.startswith("projects")
     }
 
 
@@ -135,8 +136,8 @@ def get_modified_datasets(
 def archive_dataset(
     dataset_path: str, out_dir: str, archive_name: str, version: str
 ) -> None:
-    os.makedirs(os.path.dirname(out_dir), mode=0o755, exist_ok=True)
-    out_filename = f"{archive_name}_version-{version}.tar.gz"
+    os.makedirs(out_dir, mode=0o755, exist_ok=True)
+    out_filename = os.path.join(out_dir, f"{archive_name}_version-{version}.tar.gz")
     logger.info(f"Archiving dataset: {dataset_path} to {out_filename}")
 
     cwd = os.getcwd()
@@ -222,7 +223,7 @@ if __name__ == "__main__":
                 )
                 archive_dataset(
                     dataset,
-                    out_dir=os.path.join(args.out_dir, dataset_name),
+                    out_dir=args.out_dir,
                     archive_name=archive_name,
                     version=version,
                 )
