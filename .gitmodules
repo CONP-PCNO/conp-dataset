@@ -181,6 +181,4 @@
 [submodule "projects/BigBrain_Raw_Data"]
 	path = projects/BigBrain_Raw_Data
 	url = https://github.com/conpdatasets/BigBrain_Raw_Data.git
-[submodule "projects/mousebytes/Weston-Project"]
-	path = projects/mousebytes/Weston-Project
-	url = https://github.com/conpdatasets/mousebytes-Weston-Project
+
