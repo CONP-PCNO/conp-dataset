@@ -100,9 +100,6 @@
 [submodule "projects/Numerically_Perturbed_Structural_Connectomes_from_100_individuals_in_the_NKI_Rockland_Dataset"]
 	path = projects/Numerically_Perturbed_Structural_Connectomes_from_100_individuals_in_the_NKI_Rockland_Dataset
 	url = https://github.com/conp-bot/conp-dataset-Numerically-Perturbed-Structural-Connectomes-from-100-individuals-in-the-NKI-Rockland-D.git
-[submodule "projects/mousebytesdataset"]
-	path = projects/mousebytesdataset
-	url = https://github.com/conpdatasets/mousebytesdataset.git
 [submodule "projects/Calgary_Preschool_MRI_Dataset"]
 	path = projects/Calgary_Preschool_MRI_Dataset
 	url = https://github.com/conp-bot/conp-dataset-Calgary-Preschool-MRI-Dataset.git
