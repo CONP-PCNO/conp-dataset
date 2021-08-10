@@ -175,6 +175,9 @@
 [submodule "projects/spins_travelling_phantoms"]
 	path = projects/spins_travelling_phantoms
 	url = https://github.com/conpdatasets/spins_travelling_phantoms.git
+[submodule "projects/mica-mics"]
+	path = projects/mica-mics
+	url = https://github.com/conpdatasets/mica-mics
 [submodule "projects/BigBrain_Layer_Segmentation"]
 	path = projects/BigBrain_Layer_Segmentation
 	url = https://github.com/conpdatasets/BigBrain_Layer_Segmentation.git
