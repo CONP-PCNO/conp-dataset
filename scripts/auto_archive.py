@@ -231,7 +231,9 @@ if __name__ == "__main__":
                 else:
                     logger.info(f"SKIPPED: {dataset} larger than {args.max_size} GB")
             else:
-                logger.info(f"SKIPPED: archive not needed for {dataset}. Non-public dataset.")
+                logger.info(
+                    f"SKIPPED: archive not needed for {dataset}. Non-public dataset."
+                )
 
         except Exception as e:
             # TODO implement notification system.
