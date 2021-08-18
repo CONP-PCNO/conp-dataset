@@ -44,7 +44,6 @@ def parse_args():
     parser.add_argument(
         "--max-size",
         type=float,
-        default=None,
         help="Maximum size of dataset to archive in GB.",
     )
     group = parser.add_mutually_exclusive_group()
@@ -213,7 +212,7 @@ if __name__ == "__main__":
 
             # Only archive public dataset less than a specific size if one is provided to the script
             if is_public:
-                if args.max_size and dataset_size <= args.max_size:
+                if args.max_size is None or dataset_size <= args.max_size:
                     logger.info(f"Downloading dataset: {dataset}")
                     get_dataset(dataset)
                     for submodule in get_proper_submodules(dataset):
