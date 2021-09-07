@@ -44,7 +44,6 @@ def parse_args():
     parser.add_argument(
         "--max-size",
         type=float,
-        default=20.0,
         help="Maximum size of dataset to archive in GB.",
     )
     group = parser.add_mutually_exclusive_group()
@@ -68,6 +67,7 @@ def get_datasets_path():
     return {
         os.path.basename(submodule.path): submodule.path
         for submodule in git.Repo().submodules
+        if submodule.path.startswith("projects")
     }
 
 
@@ -135,8 +135,8 @@ def get_modified_datasets(
 def archive_dataset(
     dataset_path: str, out_dir: str, archive_name: str, version: str
 ) -> None:
-    os.makedirs(os.path.dirname(out_dir), mode=0o755, exist_ok=True)
-    out_filename = f"{archive_name}_version-{version}.tar.gz"
+    os.makedirs(out_dir, mode=0o755, exist_ok=True)
+    out_filename = os.path.join(out_dir, f"{archive_name}_version-{version}.tar.gz")
     logger.info(f"Archiving dataset: {dataset_path} to {out_filename}")
 
     cwd = os.getcwd()
@@ -210,26 +210,30 @@ if __name__ == "__main__":
                     )
                     dataset_size //= 1024 ** 3  # Convert to GB
 
-            # Only archive public dataset less than 20GB
-            if dataset_size <= args.max_size and is_public:
-                logger.info(f"Downloading dataset: {dataset}")
-                get_dataset(dataset)
-                for submodule in get_proper_submodules(dataset):
-                    get_dataset(submodule)
+            # Only archive public dataset less than a specific size if one is provided to the script
+            if is_public:
+                if args.max_size is None or dataset_size <= args.max_size:
+                    logger.info(f"Downloading dataset: {dataset}")
+                    get_dataset(dataset)
+                    for submodule in get_proper_submodules(dataset):
+                        get_dataset(submodule)
 
-                archive_name = "__".join(
-                    os.path.relpath(dataset, "projects").split("/")
-                )
-                archive_dataset(
-                    dataset,
-                    out_dir=os.path.join(args.out_dir, dataset_name),
-                    archive_name=archive_name,
-                    version=version,
-                )
-                logger.info(f"SUCCESS: archive created for {dataset}")
-
+                    archive_name = "__".join(
+                        os.path.relpath(dataset, "projects").split("/")
+                    )
+                    archive_dataset(
+                        dataset,
+                        out_dir=args.out_dir,
+                        archive_name=archive_name,
+                        version=version,
+                    )
+                    logger.info(f"SUCCESS: archive created for {dataset}")
+                else:
+                    logger.info(f"SKIPPED: {dataset} larger than {args.max_size} GB")
             else:
-                logger.info(f"SKIPPED: archive not needed for {dataset}")
+                logger.info(
+                    f"SKIPPED: archive not needed for {dataset}. Non-public dataset."
+                )
 
         except Exception as e:
             # TODO implement notification system.
