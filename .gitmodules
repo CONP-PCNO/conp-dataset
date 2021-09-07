@@ -100,9 +100,6 @@
 [submodule "projects/Numerically_Perturbed_Structural_Connectomes_from_100_individuals_in_the_NKI_Rockland_Dataset"]
 	path = projects/Numerically_Perturbed_Structural_Connectomes_from_100_individuals_in_the_NKI_Rockland_Dataset
 	url = https://github.com/conp-bot/conp-dataset-Numerically-Perturbed-Structural-Connectomes-from-100-individuals-in-the-NKI-Rockland-D.git
-[submodule "projects/mousebytesdataset"]
-	path = projects/mousebytesdataset
-	url = https://github.com/conpdatasets/mousebytesdataset.git
 [submodule "projects/Calgary_Preschool_MRI_Dataset"]
 	path = projects/Calgary_Preschool_MRI_Dataset
 	url = https://github.com/conp-bot/conp-dataset-Calgary-Preschool-MRI-Dataset.git
@@ -145,6 +142,9 @@
 [submodule "projects/openpain/thermal"]
 	path = projects/openpain/thermal
 	url = https://github.com/conpdatasets/openpain-thermal.git
+[submodule "projects/Longitudinal_structural_MRI_and_behavioural_data_for_mice_prenatally_exposed_to_maternal_immune_activation_either_early_or_late_in_gestation"]
+	path = projects/Longitudinal_structural_MRI_and_behavioural_data_for_mice_prenatally_exposed_to_maternal_immune_activation_either_early_or_late_in_gestation
+	url = https://github.com/conp-bot/conp-dataset-Longitudinal-structural-MRI-and-behavioural-data-for-mice-prenatally-exposed-to-materna.git
 [submodule "projects/BigBrain_MRISIM"]
 	path = projects/BigBrain_MRISIM
 	url = https://github.com/conpdatasets/BigBrain_MRISIM.git
@@ -163,9 +163,33 @@
 [submodule "projects/PERFORM_Dataset__one_control_subject"]
 	path = projects/PERFORM_Dataset__one_control_subject
 	url = https://github.com/conp-bot/conp-dataset-PERFORM-Dataset-one-control-subject.git
+[submodule "scripts/dats_jsonld_annotator/schema"]
+	path = scripts/dats_jsonld_annotator/schema
+	url = https://github.com/CONP-PCNO/schema.git
+[submodule "scripts/dats_jsonld_annotator/context"]
+	path = scripts/dats_jsonld_annotator/context
+	url = https://github.com/CONP-PCNO/context.git
 [submodule "projects/spins_travelling_phantoms"]
 	path = projects/spins_travelling_phantoms
 	url = https://github.com/conpdatasets/spins_travelling_phantoms.git
 [submodule "projects/Open_Access__The_Effect_of_Neurorehabilitation_on_Multiple_Sclerosis___Unlocking_the_Resting_State_fMRI_Data"]
 	path = projects/Open_Access__The_Effect_of_Neurorehabilitation_on_Multiple_Sclerosis___Unlocking_the_Resting_State_fMRI_Data
 	url = https://github.com/conp-bot/conp-dataset-Open-Access-The-Effect-of-Neurorehabilitation-on-Multiple-Sclerosis-Unlocking-the-Re.git
+[submodule "projects/mica-mics"]
+	path = projects/mica-mics
+	url = https://github.com/conpdatasets/mica-mics
+[submodule "projects/BigBrain_Layer_Segmentation"]
+	path = projects/BigBrain_Layer_Segmentation
+	url = https://github.com/conpdatasets/BigBrain_Layer_Segmentation.git
+[submodule "projects/BigBrain_Raw_Data"]
+	path = projects/BigBrain_Raw_Data
+	url = https://github.com/conpdatasets/BigBrain_Raw_Data.git
+[submodule "projects/mousebytesdataset"]
+	path = projects/mousebytesdataset
+	url = https://github.com/conpdatasets/mousebytesdataset.git
+[submodule "projects/mousebytes/MB-Cholinergic-deficient-mouse-model"]
+	path = projects/mousebytes/MB-Cholinergic-deficient-mouse-model
+	url = https://github.com/Rodent-Cognition-Core/MB-Cholinergic-deficient-mouse-model.git
+[submodule "projects/mousebytes/MB-Co-transmission-of-cholinergic-interneurons"]
+	path = projects/mousebytes/MB-Co-transmission-of-cholinergic-interneurons
+	url = https://github.com/Rodent-Cognition-Core/MB-Co-transmission-of-cholinergic-interneurons.git

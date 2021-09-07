@@ -72,8 +72,9 @@ class BaseCrawler:
             instantiate this new Crawler and call run() on it
     """
 
-    def __init__(self, github_token, config_path, verbose, force, no_pr):
-        self.repo = git.Repo()
+    def __init__(self, github_token, config_path, verbose, force, no_pr, basedir):
+        self.basedir = basedir
+        self.repo = git.Repo(self.basedir)
         self.username = self._check_requirements()
         self.github_token = github_token
         self.config_path = config_path
@@ -82,6 +83,8 @@ class BaseCrawler:
         self.git = git
         self.datalad = api
         self.no_pr = no_pr
+        if self.verbose:
+            print(f"Using base directory {self.basedir}")
 
     @abc.abstractmethod
     def get_all_dataset_description(self):
@@ -239,7 +242,7 @@ class BaseCrawler:
         for dataset_description in dataset_description_list:
             clean_title = self._clean_dataset_title(dataset_description["title"])
             branch_name = "conp-bot/" + clean_title
-            dataset_dir = os.path.join("projects", clean_title)
+            dataset_dir = os.path.join(self.basedir, "projects", clean_title)
             d = self.datalad.Dataset(dataset_dir)
             if branch_name not in self.repo.remotes.origin.refs:  # New dataset
                 self.repo.git.checkout("-b", branch_name)
@@ -253,7 +256,7 @@ class BaseCrawler:
                 )
                 # Add github token to dataset origin remote url
                 try:
-                    origin = git.Repo(dataset_dir).remote("origin")
+                    origin = self.repo.remote("origin")
                     origin_url = next(origin.urls)
                     if "@" not in origin_url:
                         origin.set_url(
@@ -269,11 +272,17 @@ class BaseCrawler:
                 for pattern in NO_ANNEX_FILE_PATTERNS:
                     d.no_annex(pattern)
                 self.add_new_dataset(dataset_description, dataset_dir)
-                # Create DATS.json if it doesn't exist
-                if not os.path.isfile(os.path.join(dataset_dir, "DATS.json")):
+                # Create DATS.json if it exists in directory and 1 level deep subdir
+                dats_path: str = os.path.join(dataset_dir, "DATS.json")
+                if existing_dats_path := self._check_dats_present(dataset_dir):
+                    if self.verbose:
+                        print(f"Found existing DATS.json at {existing_dats_path}")
+                    if existing_dats_path != dats_path:
+                        os.rename(existing_dats_path, dats_path)
+                else:
                     self._create_new_dats(
                         dataset_dir,
-                        os.path.join(dataset_dir, "DATS.json"),
+                        dats_path,
                         dataset_description,
                         d,
                     )
@@ -303,11 +312,17 @@ class BaseCrawler:
 
                 modified = self.update_if_necessary(dataset_description, dataset_dir)
                 if modified:
-                    # Create DATS.json if it doesn't exist
-                    if not os.path.isfile(os.path.join(dataset_dir, "DATS.json")):
+                    # Create DATS.json if it exists in directory and 1 level deep subdir
+                    dats_path: str = os.path.join(dataset_dir, "DATS.json")
+                    if existing_dats_path := self._check_dats_present(dataset_dir):
+                        if self.verbose:
+                            print(f"Found existing DATS.json at {existing_dats_path}")
+                        if existing_dats_path != dats_path:
+                            os.rename(existing_dats_path, dats_path)
+                    else:
                         self._create_new_dats(
                             dataset_dir,
-                            os.path.join(dataset_dir, "DATS.json"),
+                            dats_path,
                             dataset_description,
                             d,
                         )
@@ -355,12 +370,9 @@ class BaseCrawler:
 
     def _check_requirements(self):
         # GitHub user must have a fork of https://github.com/CONP-PCNO/conp-dataset
-        # Script must be run in the base directory of a local clone of this fork
+        # Script must be run in the  directory of a local clone of this fork
         # Git remote 'origin' of local Git clone must point to that fork
         # Local Git clone must be set to branch 'master'
-        git_root = self.repo.git.rev_parse("--show-toplevel")
-        if git_root != os.getcwd():
-            raise Exception("Script not ran at the base directory of local clone")
         if "origin" not in self.repo.remotes:
             raise Exception("Remote 'origin' does not exist in current reposition")
         origin_url = next(self.repo.remote("origin").urls)
@@ -530,3 +542,13 @@ Functional checks:
     def _create_readme(self, content, path):
         with open(path, "w") as f:
             f.write(content)
+
+    def _check_dats_present(self, directory):
+        for file_name in os.listdir(directory):
+            file_path: str = os.path.join(directory, file_name)
+            if os.path.isdir(file_path):
+                for subfile_name in os.listdir(file_path):
+                    if subfile_name.lower() == "dats.json":
+                        return os.path.join(file_path, subfile_name)
+            elif file_name.lower() == "dats.json":
+                return file_path
