@@ -48,7 +48,7 @@ class Template:
             )
 
     def test_has_valid_dats(self, dataset):
-        
+
         # skip DATS tests for retrospectively crawled datasets
         if dataset in RETROSPECTIVE_CRAWLED_DATASET_LIST:
             return
