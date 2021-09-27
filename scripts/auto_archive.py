@@ -12,9 +12,9 @@ import humanfriendly
 from datalad.plugin import export_archive
 from github import Github
 
-from scripts.datalad_utils import uninstall_dataset
 from scripts.datalad_utils import get_dataset
 from scripts.datalad_utils import install_dataset
+from scripts.datalad_utils import uninstall_dataset
 from scripts.log import get_logger
 from tests.functions import get_proper_submodules
 
