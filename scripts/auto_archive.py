@@ -12,6 +12,7 @@ import humanfriendly
 from datalad.plugin import export_archive
 from github import Github
 
+from scripts.datalad_utils import drop_dataset
 from scripts.datalad_utils import get_dataset
 from scripts.datalad_utils import install_dataset
 from scripts.log import get_logger
@@ -227,7 +228,7 @@ if __name__ == "__main__":
                         archive_name=archive_name,
                         version=version,
                     )
-                    os.system(f"git annex drop --all {dataset}")
+                    drop_dataset(dataset)
                     logger.info(f"SUCCESS: archive created for {dataset}")
                 else:
                     logger.info(f"SKIPPED: {dataset} larger than {args.max_size} GB")
