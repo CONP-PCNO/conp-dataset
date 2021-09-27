@@ -18,6 +18,10 @@ class DropFailed(Exception):
     pass
 
 
+class UninstallFailed(Exception):
+    pass
+
+
 def retry(max_attempt):
     def decorator(func):
         @functools.wraps(func)
@@ -65,6 +69,19 @@ def get_dataset(dataset_path: str, *, recursive: bool = False) -> None:
         _get_dataset(dataset_path, recursive=recursive)
     except Exception as e:
         raise DownloadFailed(f"Download failed for dataset: {dataset_path}\n{e}")
+
+
+@retry(max_attempt=3)
+def _uninstall_dataset(dataset_path: str, *, recursive: bool = False):
+    full_path = os.path.join(os.getcwd(), dataset_path)
+    datalad.api.uninstall(path=full_path, recursive=recursive, on_failure="stop")
+
+
+def uninstall_dataset(dataset_path: str, *, recursive: bool = False) -> None:
+    try:
+        _uninstall_dataset(dataset_path, recursive=recursive)
+    except Exception as e:
+        raise UninstallFailed(f"Installation failed for dataset: {dataset_path}\n{e}")
 
 
 @retry(max_attempt=3)
