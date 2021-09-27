@@ -228,6 +228,9 @@ if __name__ == "__main__":
                         archive_name=archive_name,
                         version=version,
                     )
+                    # to save space on the VM that archives the dataset, need to uninstall
+                    # the datalad dataset. `datalad drop` does not free up enough space
+                    # unfortunately. See https://github.com/datalad/datalad/issues/6009
                     uninstall_dataset(dataset)
                     logger.info(f"SUCCESS: archive created for {dataset}")
                 else:

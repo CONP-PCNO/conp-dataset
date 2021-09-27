@@ -14,10 +14,6 @@ class DownloadFailed(Exception):
     pass
 
 
-class DropFailed(Exception):
-    pass
-
-
 class UninstallFailed(Exception):
     pass
 
@@ -82,24 +78,3 @@ def uninstall_dataset(dataset_path: str, *, recursive: bool = False) -> None:
         _uninstall_dataset(dataset_path, recursive=recursive)
     except Exception as e:
         raise UninstallFailed(f"Installation failed for dataset: {dataset_path}\n{e}")
-
-
-@retry(max_attempt=3)
-def _drop_dataset(dataset_path: str, *, recursive: bool = False) -> None:
-    full_path = os.path.join(os.getcwd(), dataset_path)
-    datalad.api.drop(path=full_path, recursive=recursive, on_failure="stop")
-
-
-def drop_dataset(dataset_path: str, *, recursive: bool = False) -> None:
-    # Git annex drop command needed to remove all leftover file data under
-    # .git/annex/objects even after running datalad drop...
-    # See https://github.com/datalad/datalad/issues/6009
-    cwd = os.getcwd
-    try:
-        _drop_dataset(dataset_path, recursive=recursive)
-        os.chdir(os.path.join(cwd, dataset_path))
-        os.system(f"git annex drop --all")
-    except Exception as e:
-        raise DropFailed(f"File drop failed for dataset: {dataset_path}\n{e}")
-    finally:
-        os.chdir(cwd)
