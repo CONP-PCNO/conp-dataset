@@ -559,7 +559,9 @@ Functional checks:
             elif file_name.lower() == "dats.json":
                 return file_path
 
-    def _add_source_data_submodule_if_derivedfrom_conp_dataset(self, dats_json, dataset_dir):
+    def _add_source_data_submodule_if_derivedfrom_conp_dataset(
+            self, dats_json, dataset_dir
+    ):
         f = open(dats_json)
         metadata = json.loads(f.read())
         f.close()
