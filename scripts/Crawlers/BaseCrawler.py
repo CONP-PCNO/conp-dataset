@@ -280,7 +280,7 @@ class BaseCrawler:
                     if existing_dats_path != dats_path:
                         os.rename(existing_dats_path, dats_path)
                     self._add_source_data_submodule_if_derivedfrom_conp_dataset(
-                        dats_path
+                        dats_path, dataset_dir
                     )
                 else:
                     self._create_new_dats(
@@ -323,7 +323,7 @@ class BaseCrawler:
                         if existing_dats_path != dats_path:
                             os.rename(existing_dats_path, dats_path)
                         self._add_source_data_submodule_if_derivedfrom_conp_dataset(
-                            dats_path
+                            dats_path, dataset_dir
                         )
                     else:
                         self._create_new_dats(
@@ -559,7 +559,7 @@ Functional checks:
             elif file_name.lower() == "dats.json":
                 return file_path
 
-    def _add_source_data_submodule_if_derivedfrom_conp_dataset(self, dats_json):
+    def _add_source_data_submodule_if_derivedfrom_conp_dataset(self, dats_json, dataset_dir):
         f = open(dats_json)
         metadata = json.loads(f.read())
         f.close()
