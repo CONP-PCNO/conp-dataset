@@ -560,7 +560,7 @@ Functional checks:
                 return file_path
 
     def _add_source_data_submodule_if_derivedfrom_conp_dataset(
-            self, dats_json, dataset_dir
+        self, dats_json, dataset_dir
     ):
         f = open(dats_json)
         metadata = json.loads(f.read())
