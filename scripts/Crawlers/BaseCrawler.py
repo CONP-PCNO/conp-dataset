@@ -279,7 +279,9 @@ class BaseCrawler:
                         print(f"Found existing DATS.json at {existing_dats_path}")
                     if existing_dats_path != dats_path:
                         os.rename(existing_dats_path, dats_path)
-                    self._add_source_data_submodule_if_derivedfrom_conp_dataset(dats_path)
+                    self._add_source_data_submodule_if_derivedfrom_conp_dataset(
+                        dats_path
+                    )
                 else:
                     self._create_new_dats(
                         dataset_dir,
@@ -320,6 +322,9 @@ class BaseCrawler:
                             print(f"Found existing DATS.json at {existing_dats_path}")
                         if existing_dats_path != dats_path:
                             os.rename(existing_dats_path, dats_path)
+                        self._add_source_data_submodule_if_derivedfrom_conp_dataset(
+                            dats_path
+                        )
                     else:
                         self._create_new_dats(
                             dataset_dir,
@@ -555,18 +560,18 @@ Functional checks:
                 return file_path
 
     def _add_source_data_submodule_if_derivedfrom_conp_dataset(self, dats_json):
-        f = open(dats_json, 'r')
+        f = open(dats_json)
         metadata = json.loads(f.read())
         f.close()
 
         source_dataset_link = None
         source_dataset_id = None
-        for property in metadata['extraProperties']:
-            if property['category'] == 'derivedFrom':
-                source_dataset_link = property['values'][0]['value']
-            if property['category'] == 'parent_dataset_id':
-                source_dataset_id = property['values'][0]['value']
+        for property in metadata["extraProperties"]:
+            if property["category"] == "derivedFrom":
+                source_dataset_link = property["values"][0]["value"]
+            if property["category"] == "parent_dataset_id":
+                source_dataset_id = property['values'][0]["value"]
 
-        if 'github.com' in source_dataset_link:
+        if "github.com" in source_dataset_link:
             d = self.datalad.Dataset(os.path.join(dataset_dir, source_dataset_id))
             d.create()
