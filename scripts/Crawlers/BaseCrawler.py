@@ -570,7 +570,7 @@ Functional checks:
             if property["category"] == "derivedFrom":
                 source_dataset_link = property["values"][0]["value"]
             if property["category"] == "parent_dataset_id":
-                source_dataset_id = property['values'][0]["value"]
+                source_dataset_id = property["values"][0]["value"]
 
         if "github.com" in source_dataset_link:
             d = self.datalad.Dataset(os.path.join(dataset_dir, source_dataset_id))
