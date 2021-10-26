@@ -268,8 +268,8 @@ def validate_is_about(dataset):
         species_present = False
         for entry in dataset["isAbout"]:
             if (
-                    "identifier" in entry.keys()
-                    and "identifierSource" in entry["identifier"].keys()
+                "identifier" in entry.keys()
+                and "identifierSource" in entry["identifier"].keys()
             ):
                 identifier_source = entry["identifier"]["identifierSource"].lower()
                 if identifier_source.startswith(identifier_source_base_url):
