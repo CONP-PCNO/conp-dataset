@@ -141,12 +141,12 @@ class ZenodoCrawler(BaseCrawler):
 
             # Retrieve subject and clean subject to insert in isAbout of DATS file
             is_about = []
-            if 'subjects' in metadata.keys():
+            if "subjects" in metadata.keys():
                 for subject in metadata["subjects"]:
                     is_about.append(
                         {
                             "identifier": {"identifier": subject["identifier"]},
-                            "name": subject["term"]
+                            "name": subject["term"],
                         }
                     )
 
