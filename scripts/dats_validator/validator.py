@@ -308,7 +308,7 @@ def validate_types(dataset):
                 "information",
                 "method",
                 "platform",
-                "instrument"
+                "instrument",
             ]
             for key in obj.keys():
                 if key not in allowed_keys:
