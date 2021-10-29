@@ -288,6 +288,21 @@ def validate_is_about(dataset):
         return True, errors_list
 
 
+def validate_types(dataset):
+    errors_list = []
+    if "types" in dataset.keys():
+        # 1 check for empty object inside of types list
+        empty_obj = [obj for obj in dataset["types"] if not obj]
+        if len(empty_obj) == len(dataset["types"]):
+            error_message = f"Validation in {dataset['title']}: types - list has no value."
+            errors_list.append(error_message)
+    # no need to check for types otherwise because this error will be caught by jsonschema validation
+    if errors_list:
+        return False, errors_list
+    else:
+        return True, errors_list
+
+
 def validate_recursively(obj, errors):
     """ Checks all datasets recursively for non-schema checks. """
 
@@ -300,6 +315,8 @@ def validate_recursively(obj, errors):
     val, errors_list = validate_privacy(obj)
     errors.extend(errors_list)
     val, errors_list = validate_is_about(obj)
+    errors.extend(errors_list)
+    val, errors_list = validate_types(obj)
     errors.extend(errors_list)
 
     if "hasPart" in obj:
