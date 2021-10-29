@@ -296,6 +296,15 @@ def validate_types(dataset):
         if len(empty_obj) == len(dataset["types"]):
             error_message = f"Validation in {dataset['title']}: types - list has no value."
             errors_list.append(error_message)
+
+        # 2 check that only data_type_schema properties are present
+        for obj in dataset["types"]:
+            allowed_keys = ["@context", "@id", "@type", "information", "method", "platform", "instrument"]
+            for key in obj.keys():
+                if key not in allowed_keys:
+                    error_message = f"Validation in {dataset['title']}: " \
+                                    f"types - the key {key} is not supported by the schema."
+                    errors_list.append(error_message)
     # no need to check for types otherwise because this error will be caught by jsonschema validation
     if errors_list:
         return False, errors_list
