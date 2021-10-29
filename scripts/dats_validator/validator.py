@@ -303,7 +303,8 @@ def validate_types(dataset):
         for obj in dataset["types"]:
             allowed_keys = [
                 "@context",
-                "@id", "@type",
+                "@id",
+                "@type",
                 "information",
                 "method",
                 "platform",
