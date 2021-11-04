@@ -14,6 +14,7 @@ from github import Github
 
 from scripts.datalad_utils import get_dataset
 from scripts.datalad_utils import install_dataset
+from scripts.datalad_utils import uninstall_dataset
 from scripts.log import get_logger
 from tests.functions import get_proper_submodules
 
@@ -227,6 +228,10 @@ if __name__ == "__main__":
                         archive_name=archive_name,
                         version=version,
                     )
+                    # to save space on the VM that archives the dataset, need to uninstall
+                    # the datalad dataset. `datalad drop` does not free up enough space
+                    # unfortunately. See https://github.com/datalad/datalad/issues/6009
+                    uninstall_dataset(dataset)
                     logger.info(f"SUCCESS: archive created for {dataset}")
                 else:
                     logger.info(f"SKIPPED: {dataset} larger than {args.max_size} GB")
