@@ -139,7 +139,7 @@ class ZenodoCrawler(BaseCrawler):
             if "keywords" in metadata.keys():
                 keywords = list(map(lambda x: {"value": x}, metadata["keywords"]))
 
-            # Retrieve subject and clean subject to insert in isAbout of DATS file
+            # Retrieve subject annotations from Zenodo and clean the annotated subjects to insert in isAbout of DATS file
             is_about = []
             species_identifier_source_base_url = "www.ncbi.nlm.nih.gov/taxonomy"
             if "subjects" in metadata.keys():
