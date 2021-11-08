@@ -144,11 +144,13 @@ class ZenodoCrawler(BaseCrawler):
             species_identifier_source_base_url = "www.ncbi.nlm.nih.gov/taxonomy"
             if "subjects" in metadata.keys():
                 for subject in metadata["subjects"]:
-                    if re.match(species_identifier_source_base_url, subject["identifier"]):
+                    if re.match(
+                            species_identifier_source_base_url, subject["identifier"]
+                    ):
                         is_about.append(
                             {
                                 "identifier": {"identifier": subject["identifier"]},
-                                "name": subject["term"],
+                                "name": subject["term"]
                             }
                         )
                     else:
