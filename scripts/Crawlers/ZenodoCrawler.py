@@ -145,19 +145,19 @@ class ZenodoCrawler(BaseCrawler):
             if "subjects" in metadata.keys():
                 for subject in metadata["subjects"]:
                     if re.match(
-                            species_identifier_source_base_url, subject["identifier"]
+                        species_identifier_source_base_url, subject["identifier"]
                     ):
                         is_about.append(
                             {
                                 "identifier": {"identifier": subject["identifier"]},
-                                "name": subject["term"]
+                                "name": subject["term"],
                             }
                         )
                     else:
                         is_about.append(
                             {
                                 "valueIRI": subject["identifier"],
-                                "value": subject["term"]
+                                "value": subject["term"],
                             }
                         )
 
