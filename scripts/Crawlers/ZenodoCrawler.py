@@ -145,9 +145,7 @@ class ZenodoCrawler(BaseCrawler):
             is_about = []
             if "subjects" in metadata.keys():
                 for subject in metadata["subjects"]:
-                    if re.match(
-                        "www.ncbi.nlm.nih.gov/taxonomy", subject["identifier"]
-                    ):
+                    if re.match("www.ncbi.nlm.nih.gov/taxonomy", subject["identifier"]):
                         is_about.append(
                             {
                                 "identifier": {"identifier": subject["identifier"]},
