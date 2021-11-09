@@ -143,11 +143,10 @@ class ZenodoCrawler(BaseCrawler):
             # Retrieve subject annotations from Zenodo and clean the annotated
             # subjects to insert in isAbout of DATS file
             is_about = []
-            species_identifier_source_base_url = "www.ncbi.nlm.nih.gov/taxonomy"
             if "subjects" in metadata.keys():
                 for subject in metadata["subjects"]:
                     if re.match(
-                        species_identifier_source_base_url, subject["identifier"]
+                        "www.ncbi.nlm.nih.gov/taxonomy", subject["identifier"]
                     ):
                         is_about.append(
                             {
