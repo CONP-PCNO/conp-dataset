@@ -562,7 +562,7 @@ Functional checks:
     def _add_source_data_submodule_if_derived_from_conp_dataset(
         self, dats_json, dataset_dir
     ):
-        with open(dats_json, "r") as f:
+        with open(dats_json) as f:
             metadata = json.loads(f.read())
 
         source_dataset_link = None
