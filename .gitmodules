@@ -190,6 +190,6 @@
 [submodule "projects/mousebytes/MB-Co-transmission-of-cholinergic-interneurons"]
 	path = projects/mousebytes/MB-Co-transmission-of-cholinergic-interneurons
 	url = https://github.com/Rodent-Cognition-Core/MB-Co-transmission-of-cholinergic-interneurons.git
-[submodule "/data/crawler/conp-dataset/projects/MICA_MICs__a_dataset_for_Microstructure_Informed_Connectomics"]
-	path = /data/crawler/conp-dataset/projects/MICA_MICs__a_dataset_for_Microstructure_Informed_Connectomics
+[submodule "projects/MICA_MICs__a_dataset_for_Microstructure_Informed_Connectomics"]
+	path = projects/MICA_MICs__a_dataset_for_Microstructure_Informed_Connectomics
 	url = https://github.com/conp-bot/conp-dataset-MICA-MICs-a-dataset-for-Microstructure-Informed-Connectomics.git
