@@ -570,17 +570,17 @@ Functional checks:
         if "extraProperties" not in metadata.keys():
             return
         for property in metadata["extraProperties"]:
-            if "values" not in property.keys():
-                continue
-            if type(property["values"]) != list:
-                continue
-            if "value" not in property["values"][0].keys():
-                continue
             if property["category"] == "derivedFrom":
-                source_dataset_link = property["values"][0]["value"]
+                try:
+                    source_dataset_link = property["values"][0]["value"]
+                except (KeyError, IndexError):
+                    continue
             if property["category"] == "parent_dataset_id":
-                source_dataset_id = property["values"][0]["value"]
+                try:
+                    source_dataset_id = property["values"][0]["value"]
+                except (KeyError, IndexError):
+                    continue
 
-        if source_dataset_link and "github.com" in source_dataset_link:
+        if source_dataset_link is not None and "github.com" in source_dataset_link:
             d = self.datalad.Dataset(os.path.join(dataset_dir, source_dataset_id))
             d.create()
