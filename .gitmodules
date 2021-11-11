@@ -172,9 +172,6 @@
 [submodule "projects/spins_travelling_phantoms"]
 	path = projects/spins_travelling_phantoms
 	url = https://github.com/conpdatasets/spins_travelling_phantoms.git
-[submodule "projects/Open_Access__The_Effect_of_Neurorehabilitation_on_Multiple_Sclerosis___Unlocking_the_Resting_State_fMRI_Data"]
-	path = projects/Open_Access__The_Effect_of_Neurorehabilitation_on_Multiple_Sclerosis___Unlocking_the_Resting_State_fMRI_Data
-	url = https://github.com/conp-bot/conp-dataset-Open-Access-The-Effect-of-Neurorehabilitation-on-Multiple-Sclerosis-Unlocking-the-Re.git
 [submodule "projects/mica-mics"]
 	path = projects/mica-mics
 	url = https://github.com/conpdatasets/mica-mics
