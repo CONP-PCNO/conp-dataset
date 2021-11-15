@@ -185,3 +185,9 @@
 	path = projects/mousebytesdataset
 	url = https://github.com/conpdatasets/mousebytesdataset.git
 
+[submodule "projects/mousebytes/MB-Cholinergic-deficient-mouse-model"]
+	path = projects/mousebytes/MB-Cholinergic-deficient-mouse-model
+	url = https://github.com/conpdatasets/MB-Cholinergic-deficient-mouse-model
+[submodule "projects/mousebytes/MB-Co-transmission-of-cholinergic-interneurons"]
+	path = projects/mousebytes/MB-Co-transmission-of-cholinergic-interneurons
+	url = https://github.com/conpdatasets/MB-Co-transmission-of-cholinergic-interneurons
