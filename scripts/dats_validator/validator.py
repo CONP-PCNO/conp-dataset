@@ -253,8 +253,7 @@ def validate_is_about(dataset):
     "isAbout": [
         {
             "identifier": {
-                "identifier"      : "9606",
-                "identifierSource": "https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=9606"
+                "identifier"      : "https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=9606",
             },
             "name"      : "Homo sapiens"
         }
@@ -268,7 +267,7 @@ def validate_is_about(dataset):
         species_present = False
         for entry in dataset["isAbout"]:
             if "identifier" in entry.keys():
-                identifier_source = entry["identifier"]["identifierSource"].lower()
+                identifier_source = entry["identifier"]["identifier"].lower()
                 if identifier_source.startswith(identifier_source_base_url):
                     species_present = True
 
