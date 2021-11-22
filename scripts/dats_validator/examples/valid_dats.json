@@ -2871,7 +2871,7 @@
       "title": "A global reference for human genetic variation"
     }
   ],
-  "privacy": "open",
+  "privacy": "public open",
   "storedIn": {
     "name": "European Bioinformatics Institute"
   },
