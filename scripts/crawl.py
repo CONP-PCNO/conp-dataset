@@ -6,10 +6,6 @@ import traceback
 
 from git import Repo
 
-sys.path.append(os.getcwd())
-from scripts.Crawlers.ZenodoCrawler import ZenodoCrawler  # noqa: E402
-from scripts.Crawlers.OSFCrawler import OSFCrawler  # noqa: E402
-
 
 def parse_args():
     parser = argparse.ArgumentParser(
@@ -87,11 +83,6 @@ def parse_args():
     else:  # Retrieve github token from config file
         github_token = config["github_token"]
 
-    if "BASEDIR" not in os.environ:
-        raise Exception(
-            "BASEDIR environment variable must be set and pointing to conp-dataset repo"
-        )
-
     return (
         github_token,
         config_path,
@@ -99,7 +90,6 @@ def parse_args():
         args.force,
         config["conp-dataset_path"],
         args.no_pr,
-        os.environ["BASEDIR"],
     )
 
 
@@ -111,8 +101,12 @@ if __name__ == "__main__":
         force,
         conp_dataset_dir_path,
         no_pr,
-        basedir,
     ) = parse_args()
+
+    # import the crawler packages
+    sys.path.append(conp_dataset_dir_path)
+    from scripts.Crawlers.ZenodoCrawler import ZenodoCrawler
+    from scripts.Crawlers.OSFCrawler import OSFCrawler
 
     try:
         if verbose:
@@ -126,7 +120,6 @@ if __name__ == "__main__":
             verbose,
             force,
             no_pr,
-            basedir,
         )
         ZenodoCrawlerObj.run()
 
@@ -136,9 +129,7 @@ if __name__ == "__main__":
                 + "==================== OSF Crawler Running ===================="
                 + os.linesep,
             )
-        OSFCrawlerObj = OSFCrawler(
-            github_token, config_path, verbose, force, no_pr, basedir
-        )
+        OSFCrawlerObj = OSFCrawler(github_token, config_path, verbose, force, no_pr)
         OSFCrawlerObj.run()
 
         # INSTANTIATE NEW CRAWLERS AND RUN HERE
@@ -147,7 +138,7 @@ if __name__ == "__main__":
         traceback.print_exc()
     finally:
         # Always switch branch back to master
-        repository = Repo(basedir)
+        repository = Repo()
         if repository.active_branch.name != "master":
             repository.git.checkout("master")
 
