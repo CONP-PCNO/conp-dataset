@@ -187,9 +187,10 @@
 [submodule "projects/mousebytesdataset"]
 	path = projects/mousebytesdataset
 	url = https://github.com/conpdatasets/mousebytesdataset.git
+
 [submodule "projects/mousebytes/MB-Cholinergic-deficient-mouse-model"]
 	path = projects/mousebytes/MB-Cholinergic-deficient-mouse-model
-	url = https://github.com/Rodent-Cognition-Core/MB-Cholinergic-deficient-mouse-model.git
+	url = https://github.com/conpdatasets/MB-Cholinergic-deficient-mouse-model.git
 [submodule "projects/mousebytes/MB-Co-transmission-of-cholinergic-interneurons"]
 	path = projects/mousebytes/MB-Co-transmission-of-cholinergic-interneurons
-	url = https://github.com/Rodent-Cognition-Core/MB-Co-transmission-of-cholinergic-interneurons.git
+	url = https://github.com/conpdatasets/MB-Co-transmission-of-cholinergic-interneurons.git
