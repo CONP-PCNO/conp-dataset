@@ -122,7 +122,7 @@ def validate_extra_properties(dataset):
     # extraProperties is only required property which is not required on dataset_schema level,
     # if it's not present an Exception is raised
     except KeyError as e:
-        raise KeyError(
+        raise Exception(
             f"{e} is required."
             f"The following extra properties categories are required: "
             f"{[k for k in REQUIRED_EXTRA_PROPERTIES.keys()]}",

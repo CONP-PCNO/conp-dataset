@@ -289,8 +289,7 @@ class BaseCrawler:
                 except Exception as e:
                     print(f"Error while merging master into {branch_name}: {e}")
                     print("Skipping this dataset")
-                    self.repo.git.merge("--abort")
-                    self.repo.git.checkout("-f", "master")
+                    self.repo.git.checkout("master")
                     continue
 
                 modified = self.update_if_necessary(dataset_description, dataset_dir)
