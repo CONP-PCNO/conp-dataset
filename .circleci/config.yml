@@ -48,11 +48,11 @@ jobs:
           command: |
             . ~/venv/bin/activate
             export PATH=~/git-annex.linux:$PATH
-            datalad install -r scripts
+            datalad install scripts/dats_validator/conp-dats
       - persist_to_workspace:
           root: *workdir
           paths:
-            - scripts
+            - scripts/dats_validator/conp-dats
 
   test:
     working_directory: *workdir
