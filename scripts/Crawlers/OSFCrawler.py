@@ -134,11 +134,20 @@ class OSFCrawler(BaseCrawler):
                             path=os.path.join(inner_path, ""),
                             archive=True,
                         )
-                    else:
+                    elif file["attributes"]["name"] in ["DATS.json", "README.md"]:
                         d.download_url(
                             file["links"]["download"],
                             path=os.path.join(inner_path, ""),
                         )
+                    else:
+                        annex(
+                            "addurl",
+                            file["links"]["download"],
+                            "--fast",
+                            "--file",
+                            os.path.join(inner_path, file["attributes"]["name"]),
+                        )
+                        d.save()
 
                 # append the size of the downloaded file to the sizes array
                 file_size = file["attributes"]["size"]
