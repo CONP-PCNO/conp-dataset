@@ -1,37 +1,38 @@
 import datetime
 import json
 import os
-from typing import Callable
 
 import html2markdown
 import humanize
 import requests
-from datalad.distribution.dataset import Dataset
-from git import Repo
 
 from scripts.Crawlers.BaseCrawler import BaseCrawler
 
 
-def _create_zenodo_tracker(path, dataset):
+def _get_unlock_script():
+    with open(os.path.join("scripts", "unlock.py")) as f:
+        return f.read()
+
+
+def _create_zenodo_tracker(path, dataset, private_files, restricted):
     with open(path, "w") as f:
         data = {
             "zenodo": {
                 "concept_doi": dataset["concept_doi"],
                 "version": dataset["latest_version"],
             },
+            "private_files": private_files,
+            "restricted": restricted,
             "title": dataset["title"],
         }
         json.dump(data, f, indent=4)
-
-
-def _get_annex(dataset_dir) -> Callable:
-    return Repo(dataset_dir).git.annex
 
 
 class ZenodoCrawler(BaseCrawler):
     def __init__(self, github_token, config_path, verbose, force, no_pr):
         super().__init__(github_token, config_path, verbose, force, no_pr)
         self.zenodo_tokens = self._get_tokens()
+        self.unlock_script = _get_unlock_script()
 
     def _get_tokens(self):
         if os.path.isfile(self.config_path):
@@ -66,17 +67,61 @@ class ZenodoCrawler(BaseCrawler):
             print("Zenodo query: {}".format(query))
         return results
 
-    def _download_file(self, bucket, d, is_private):
-        link: str = (
-            bucket["links"]["self"]
-            if not is_private
-            else bucket["links"]["self"].split("?")[0]
-        )
-        file_name: str = bucket.get("key", "no name")
-        file_size: int = bucket.get("size", 0)
-        if self.verbose:
-            print(f"Downloading {link} as {file_name} of size {file_size}")
-        d.download_url(link, archive=True if bucket["type"] == "zip" else False)
+    def _download_file(self, bucket, d, dataset_dir, private_files):
+        link = bucket["links"]["self"]
+        repo = self.git.Repo(dataset_dir)
+        annex = repo.git.annex
+        if bucket["key"] in ["DATS.json", "README.md"]:
+            d.download_url(link)
+            return
+        if "access_token" not in link:
+            if bucket["type"] == "zip":
+                d.download_url(link, archive=True)
+            else:
+                annex("addurl", link, "--fast", "--file", link.split("/")[-1])
+        else:  # Have to remove token from annex URL
+            tokenless_link = link.split("?")[0]
+            if bucket["type"] == "zip":
+                d.download_url(link, archive=True)
+                # Switch to git-annex branch to remove token from URL then switch back
+                original_branch = repo.active_branch.name
+                repo.git.checkout("git-annex")
+                changes = False
+                for dir_name, _, files in os.walk(dataset_dir):
+                    for file_name in files:
+                        file_path = os.path.join(dir_name, file_name)
+                        if ".git" in file_path:
+                            continue
+                        with open(file_path) as f:
+                            s = f.read()
+                        if link in s:
+                            s = s.replace(link, tokenless_link)
+                            with open(file_path, "w") as f:
+                                f.write(s)
+                            changes = True
+                            private_files["archive_links"].append(tokenless_link)
+                        elif "?access_token=" in s:
+                            s = s.split("?access_token=")[0]
+                            with open(file_path, "w") as f:
+                                f.write(s)
+                            changes = True
+                if changes:
+                    repo.git.add(".")
+                    repo.git.commit("-m", "update")
+                repo.git.checkout(original_branch)
+            else:
+                file_name = json.load(annex("addurl", link, "--fast", "--json"))["file"]
+                annex("rmurl", file_name, link)
+                annex("addurl", tokenless_link, "--file", file_name, "--relaxed")
+                private_files["files"].append(
+                    {"name": file_name, "link": tokenless_link},
+                )
+        d.save()
+
+    def _put_unlock_script(self, dataset_dir):
+        with open(os.path.join(dataset_dir, "config"), "w") as f:
+            f.write(self.unlock_script)
+        os.chmod(os.path.join(dataset_dir, "config"), 0o755)
 
     def get_all_dataset_description(self):
         zenodo_dois = []
@@ -87,8 +132,6 @@ class ZenodoCrawler(BaseCrawler):
 
             # Retrieve file urls
             files = []
-            is_private = False
-            dataset_token = ""
             if "files" not in dataset.keys():
                 # This means the Zenodo dataset files are restricted
                 # Try to see if the dataset token is already known in stored tokens
@@ -110,8 +153,6 @@ class ZenodoCrawler(BaseCrawler):
                                 "?access_token=" + self.zenodo_tokens[clean_title]
                             )
                             files.append(bucket)
-                        is_private = True
-                        dataset_token = self.zenodo_tokens[clean_title]
                 else:
                     print(
                         "No available tokens to access files of {}".format(
@@ -201,8 +242,6 @@ class ZenodoCrawler(BaseCrawler):
                             else "None",
                         },
                     ],
-                    "is_private": is_private,
-                    "dataset_token": dataset_token,
                     "keywords": keywords,
                     "distributions": [
                         {
@@ -257,41 +296,44 @@ class ZenodoCrawler(BaseCrawler):
             print("Retrieved Zenodo DOIs: ")
             for zenodo_doi in zenodo_dois:
                 print(
-                    "- Title: {}, Concept DOI: {}, Latest version DOI: {}, Private: {}, Token: {}".format(
+                    "- Title: {}, Concept DOI: {}, Latest version DOI: {}".format(
                         zenodo_doi["title"],
                         zenodo_doi["concept_doi"],
                         zenodo_doi["latest_version"],
-                        zenodo_doi["is_private"],
-                        zenodo_doi["dataset_token"],
                     ),
                 )
 
         return zenodo_dois
 
     def add_new_dataset(self, dataset, dataset_dir):
-        d: Dataset = self.datalad.Dataset(dataset_dir)
+        d = self.datalad.Dataset(dataset_dir)
         d.no_annex(".conp-zenodo-crawler.json")
         d.no_annex("config")
         d.save()
-        annex: Callable = _get_annex(dataset_dir)
-        is_private: bool = dataset.get("is_private", False)
-        dataset_token: str = dataset.get("dataset_token", "")
 
-        if is_private:
-            self._setup_private_dataset(dataset_dir, annex, d, dataset_token)
-
-        if self.verbose:
-            print(
-                f'Adding new dataset {dataset["title"]}, is_private: {is_private}, token: {dataset_token}'
-            )
-
+        private_files = {"archive_links": [], "files": []}
         for bucket in dataset["files"]:
-            self._download_file(bucket, d, is_private)
+            self._download_file(bucket, d, dataset_dir, private_files)
+        restricted_dataset = (
+            True
+            if len(private_files["archive_links"]) > 0
+            or len(
+                private_files["files"],
+            )
+            > 0
+            else False
+        )
+
+        # If dataset is a restricted dataset, create a script which allows to unlock downloading files in dataset
+        if restricted_dataset:
+            self._put_unlock_script(dataset_dir)
 
         # Add .conp-zenodo-crawler.json tracker file
         _create_zenodo_tracker(
             os.path.join(dataset_dir, ".conp-zenodo-crawler.json"),
             dataset,
+            private_files,
+            restricted_dataset,
         )
 
     def update_if_necessary(self, dataset_description, dataset_dir):
@@ -325,23 +367,31 @@ class ZenodoCrawler(BaseCrawler):
                     continue
                 self.datalad.remove(os.path.join(dataset_dir, file_name), check=False)
 
-            d: Dataset = self.datalad.Dataset(dataset_dir)
-            is_private: bool = dataset_description.get("is_private", False)
+            d = self.datalad.Dataset(dataset_dir)
 
-            # For download authentication purposes
-            if is_private:
-                dataset_token: str = dataset_description.get("dataset_token", "")
-                if self.verbose:
-                    print(f"Setting DATALAD_ZENODO_token={dataset_token}")
-                os.environ["DATALAD_ZENODO_token"] = dataset_token
-
+            private_files = {"archive_links": [], "files": []}
             for bucket in dataset_description["files"]:
-                self._download_file(bucket, d, is_private)
+                self._download_file(bucket, d, dataset_dir, private_files)
+            restricted_dataset = (
+                True
+                if len(private_files["archive_links"]) > 0
+                or len(
+                    private_files["files"],
+                )
+                > 0
+                else False
+            )
+
+            # If dataset is a restricted dataset, create a script which allows to unlock downloading files in dataset
+            if restricted_dataset:
+                self._put_unlock_script(dataset_dir)
 
             # Add/update .conp-zenodo-crawler.json tracker file
             _create_zenodo_tracker(
                 tracker_path,
                 dataset_description,
+                private_files,
+                restricted_dataset,
             )
 
             return True
@@ -362,53 +412,3 @@ Crawled from Zenodo
                 dataset["description"],
             ).replace("\n", "<br />"),
         )
-
-    def _setup_private_dataset(
-        self,
-        dataset_dir: str,
-        annex: Callable,
-        dataset: Dataset,
-        dataset_token: str,
-    ):
-        if self.verbose:
-            print(
-                "Dataset is private, creating Zenodo provider and make git annex autoenable datalad remote",
-            )
-
-        # Create Zenodo provider file and needed directories and don't annex the file
-        datalad_dir: str = os.path.join(dataset_dir, ".datalad")
-        if not os.path.exists(datalad_dir):
-            os.mkdir(datalad_dir)
-        providers_dir: str = os.path.join(datalad_dir, "providers")
-        if not os.path.exists(providers_dir):
-            os.mkdir(providers_dir)
-        zenodo_config_path: str = os.path.join(providers_dir, "ZENODO.cfg")
-        with open(zenodo_config_path, "w") as f:
-            f.write(
-                """[provider:ZENODO]
-url_re = .*zenodo\\.org.*
-authentication_type = bearer_token
-credential = ZENODO
-
-[credential:ZENODO]
-# If known, specify URL or email to how/where to request credentials
-# url = ???
-type = token"""
-            )
-        dataset.no_annex(os.path.join("**", "ZENODO.cfg"))
-
-        # Make git annex autoenable datalad remote
-        annex(
-            "initremote",
-            "datalad",
-            "externaltype=datalad",
-            "type=external",
-            "encryption=none",
-            "autoenable=true",
-        )
-
-        # Set ZENODO token as a environment variable for authentication
-        os.environ["DATALAD_ZENODO_token"] = dataset_token
-
-        # Save changes
-        dataset.save()

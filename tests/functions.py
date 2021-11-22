@@ -2,7 +2,6 @@ import json
 import os
 import random
 import re
-import shutil
 import signal
 import subprocess
 from contextlib import contextmanager
@@ -145,7 +144,7 @@ def generate_datalad_provider(loris_api):
     os.makedirs(datalad_provider_path, exist_ok=True)
     with open(
         os.path.join(datalad_provider_path, "loris.cfg"),
-        "w",
+        "w+",
     ) as fout:
         fout.write(
             f"""[provider:loris]
@@ -209,12 +208,6 @@ def authenticate(dataset):
     zenodo_token = os.getenv(project + "_ZENODO_TOKEN", None)
 
     if username and password and loris_api:
-        # Delete the current credentials before adding new ones.
-        # This prevent datalad to keep the previous token when downloading files.
-        shutil.rmtree(
-            os.path.join(os.path.expanduser("~"), ".local", "share", "python_keyring"),
-            ignore_errors=True,
-        )
         keyring.set_password("datalad-loris", "user", username)
         keyring.set_password("datalad-loris", "password", password)
         generate_datalad_provider(loris_api)

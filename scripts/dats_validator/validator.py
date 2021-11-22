@@ -213,83 +213,8 @@ def validate_date_types(dataset):
         return True, errors_list
 
 
-def validate_privacy(dataset):
-    """
-    Checks if the values in the privacy field of the JSON object is one of:
-    - open
-    - registered
-    - controlled
-    - private
-    '"""
-
-    errors_list = []
-    valid_privacy_values = ["open", "registered", "controlled", "private"]
-
-    if "privacy" in dataset.keys():
-        if dataset["privacy"] not in valid_privacy_values:
-            error_message = (
-                f"Validation error in {dataset['title']}: privacy "
-                f"- '{dataset['privacy']}' is not allowed. Allowed "
-                f"value should be one of {valid_privacy_values}. "
-            )
-            errors_list.append(error_message)
-
-    if errors_list:
-        return False, errors_list
-    else:
-        return True, errors_list
-
-
-def validate_is_about(dataset):
-    """
-    Checks whether there is at least one entry in the 'isAbout' field with an
-    'identifier' and an 'identifierSource' containing a value that starts
-    with the string 'https://www.ncbi.nlm.nih.gov/Taxonomy'.
-
-    Note: isAbout is not a required field.
-    """
-
-    example_species = """
-    "isAbout": [
-        {
-            "identifier": {
-                "identifier"      : "9606",
-                "identifierSource": "https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=9606"
-            },
-            "name"      : "Homo sapiens"
-        }
-    ],
-    """
-
-    errors_list = []
-    identifier_source_base_url = "https://www.ncbi.nlm.nih.gov/taxonomy"
-
-    if "isAbout" in dataset.keys():
-        species_present = False
-        for entry in dataset["isAbout"]:
-            if "identifier" in entry.keys():
-                identifier_source = entry["identifier"]["identifierSource"].lower()
-                if identifier_source.startswith(identifier_source_base_url):
-                    species_present = True
-
-        if not species_present:
-            error_message = (
-                f"Validation error in {dataset['title']}: isAbout "
-                f"- There appears to be no species specified in isAbout. "
-                f"At least one species is required in the field and should "
-                f"follow the NCBI taxonomy. Valid example for a species:\n"
-                f"{example_species}"
-            )
-            errors_list.append(error_message)
-
-    if errors_list:
-        return False, errors_list
-    else:
-        return True, errors_list
-
-
 def validate_recursively(obj, errors):
-    """ Checks all datasets recursively for non-schema checks. """
+    """ Checks all datasets recursively for required extraProperties. """
 
     val, errors_list = validate_extra_properties(obj)
     errors.extend(errors_list)
@@ -297,11 +222,6 @@ def validate_recursively(obj, errors):
     errors.extend(errors_list)
     val, errors_list = validate_date_types(obj)
     errors.extend(errors_list)
-    val, errors_list = validate_privacy(obj)
-    errors.extend(errors_list)
-    val, errors_list = validate_is_about(obj)
-    errors.extend(errors_list)
-
     if "hasPart" in obj:
         for each in obj["hasPart"]:
             validate_recursively(each, errors)

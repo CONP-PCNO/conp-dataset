@@ -11,11 +11,9 @@ import pytest
 from datalad import api
 
 from scripts.dats_validator.validator import validate_date_types
-from scripts.dats_validator.validator import validate_is_about
+from scripts.dats_validator.validator import validate_formats
 from scripts.dats_validator.validator import validate_json
 from scripts.dats_validator.validator import validate_non_schema_required
-from scripts.dats_validator.validator import validate_privacy
-from tests.constants import RETROSPECTIVE_CRAWLED_DATASET_LIST
 from tests.functions import authenticate
 from tests.functions import download_files
 from tests.functions import eval_config
@@ -66,40 +64,37 @@ class Template:
                 )
                 for i, error_message in enumerate(date_type_errors, 1):
                     summary_error_message += f"- {i}. {error_message}\n"
-                    pytest.fail(summary_error_message, pytrace=False)
-
-            # Validate the privacy values
-            privacy_valid_bool, privacy_errors = validate_privacy(json_obj)
-            if not privacy_valid_bool:
-                summary_error_message = (
-                    f"Dataset {dataset} contains DATS.json that has errors "
-                    f"in privacy value. Error is:\n"
-                    f"- {privacy_errors[0]}"
-                )
-                pytest.fail(summary_error_message, pytrace=False)
-
-            # Validate that isAbout contains at least one species entry if present
-            is_about_valid_bool, is_about_errors = validate_is_about(json_obj)
-            if not is_about_valid_bool:
-                summary_error_message = (
-                    f"Dataset {dataset} contains DATS.json that has errors "
-                    f"in isAbout. Error is:\n"
-                    f"- {is_about_errors[0]}"
-                )
-                pytest.fail(summary_error_message, pytrace=False)
-
-            # If the dataset is not one of the retrospective crawled dataset,
-            # perform the extra validation checks
-            if dataset not in RETROSPECTIVE_CRAWLED_DATASET_LIST:
-                is_valid, errors = validate_non_schema_required(json_obj)
-                if not is_valid:
-                    summary_error_message = (
-                        f"Dataset {dataset} contains DATS.json that has errors "
-                        f"in required extra properties or formats. List of errors:\n"
+                    pytest.fail(
+                        summary_error_message,
+                        pytrace=False,
                     )
-                    for i, error_message in enumerate(errors, 1):
-                        summary_error_message += f"- {i}. {error_message}\n"
-                    pytest.fail(summary_error_message, pytrace=False)
+
+            # For crawled dataset, some tests should not be run as there is no way to
+            # automatically populate some of the fields
+            # For datasets crawled with Zenodo: check the formats extra property only
+            # For datasets crawled with OSF: skip validation of extra properties
+            is_osf_dataset = os.path.exists(
+                os.path.join(dataset, ".conp-osf-crawler.json"),
+            )
+            is_zenodo_dataset = os.path.exists(
+                os.path.join(dataset, ".conp-zenodo-crawler.json"),
+            )
+            is_valid, errors = (
+                validate_formats(json_obj)
+                if is_zenodo_dataset
+                else validate_non_schema_required(json_obj)
+            )
+            if not is_valid and not is_osf_dataset:
+                summary_error_message = (
+                    f"Dataset {dataset} contains DATS.json that has errors "
+                    f"in required extra properties or formats. List of errors:\n"
+                )
+                for i, error_message in enumerate(errors, 1):
+                    summary_error_message += f"- {i}. {error_message}\n"
+                pytest.fail(
+                    summary_error_message,
+                    pytrace=False,
+                )
 
     def test_download(self, dataset):
         eval_config(dataset)
