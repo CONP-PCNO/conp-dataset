@@ -192,4 +192,6 @@
 [submodule "projects/mousebytes/MB-Co-transmission-of-cholinergic-interneurons"]
 	path = projects/mousebytes/MB-Co-transmission-of-cholinergic-interneurons
 	url = https://github.com/conpdatasets/MB-Co-transmission-of-cholinergic-interneurons.git
-
+[submodule "projects/Particpant_level_contrast_maps"]
+	path = projects/Particpant_level_contrast_maps
+	url = https://github.com/conp-bot/conp-dataset-Particpant_level_contrast_maps.git
