@@ -193,6 +193,3 @@
 	path = projects/mousebytes/MB-Co-transmission-of-cholinergic-interneurons
 	url = https://github.com/conpdatasets/MB-Co-transmission-of-cholinergic-interneurons.git
 
-[submodule "projects/Test"]
-	path = projects/Test
-	url = https://github.com/conp-bot/conp-dataset-Test.git
