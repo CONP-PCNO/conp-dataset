@@ -70,7 +70,7 @@ Examples are available at [metadata/example](https://github.com/CONP-PCNO/conp-d
 1. Create your sub-dataset in your cloned fork, under `projects`. For instance:
 
 ```console
-datalad create -d . projects/<username>
+datalad create -d . projects/<dataset_name>
 ```
 
 2. Publish your sub-dataset:
