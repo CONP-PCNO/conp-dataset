@@ -118,6 +118,9 @@
 [submodule "projects/multicenter-phantom"]
 	path = projects/multicenter-phantom
 	url = https://github.com/conpdatasets/multicenter-phantom.git
+[submodule "projects/BigBrain_3DROIs"]
+	path = projects/BigBrain_3DROIs
+	url = https://github.com/conpdatasets/BigBrain_3DROIs.git
 [submodule "projects/BigBrain_3DClassifiedVolumes"]
 	path = projects/BigBrain_3DClassifiedVolumes
 	url = https://github.com/conpdatasets/BigBrain_3DClassifiedVolumes.git
@@ -142,6 +145,21 @@
 [submodule "projects/Longitudinal_structural_MRI_and_behavioural_data_for_mice_prenatally_exposed_to_maternal_immune_activation_either_early_or_late_in_gestation"]
 	path = projects/Longitudinal_structural_MRI_and_behavioural_data_for_mice_prenatally_exposed_to_maternal_immune_activation_either_early_or_late_in_gestation
 	url = https://github.com/conp-bot/conp-dataset-Longitudinal-structural-MRI-and-behavioural-data-for-mice-prenatally-exposed-to-materna.git
+[submodule "projects/BigBrain_MRISIM"]
+	path = projects/BigBrain_MRISIM
+	url = https://github.com/conpdatasets/BigBrain_MRISIM.git
+[submodule "projects/BigBrain_A3D"]
+	path = projects/BigBrain_A3D
+    url = https://github.com/conpdatasets/BigBrain_A3D.git
+[submodule "projects/BigBrain_Hippocampus_Segmentation"]
+	path = projects/BigBrain_Hippocampus_Segmentation
+	url = https://github.com/conpdatasets/BigBrain_Hippocampus_Segmentation.git
+[submodule "projects/BigBrain_BigBrainWarp_Support"]
+	path = projects/BigBrain_BigBrainWarp_Support
+	url = https://github.com/conpdatasets/BigBrain_BigBrainWarp_Support.git
+[submodule "projects/BigBrain_Surface_Parcellations"]
+	path = projects/BigBrain_Surface_Parcellations
+	url = https://github.com/conpdatasets/BigBrain_Surface_Parcellations.git
 [submodule "projects/PERFORM_Dataset__one_control_subject"]
 	path = projects/PERFORM_Dataset__one_control_subject
 	url = https://github.com/conp-bot/conp-dataset-PERFORM-Dataset-one-control-subject.git
@@ -151,38 +169,23 @@
 [submodule "scripts/dats_jsonld_annotator/context"]
 	path = scripts/dats_jsonld_annotator/context
 	url = https://github.com/CONP-PCNO/context.git
+[submodule "projects/spins_travelling_phantoms"]
+	path = projects/spins_travelling_phantoms
+	url = https://github.com/conpdatasets/spins_travelling_phantoms.git
+[submodule "projects/mica-mics"]
+	path = projects/mica-mics
+	url = https://github.com/conpdatasets/mica-mics
+[submodule "projects/BigBrain_Layer_Segmentation"]
+	path = projects/BigBrain_Layer_Segmentation
+	url = https://github.com/conpdatasets/BigBrain_Layer_Segmentation.git
+[submodule "projects/BigBrain_Raw_Data"]
+	path = projects/BigBrain_Raw_Data
+	url = https://github.com/conpdatasets/BigBrain_Raw_Data.git
 
 [submodule "projects/mousebytesdataset"]
 	path = projects/mousebytesdataset
 	url = https://github.com/conpdatasets/mousebytesdataset.git
 
-[submodule "projects/BigBrain_A3D"]
-	path = projects/BigBrain_A3D
-	url = https://github.com/conpdatasets/BigBrain_A3D.git
-[submodule "projects/BigBrain_BigBrainWarp_Support"]
-	path = projects/BigBrain_BigBrainWarp_Support
-	url = https://github.com/conpdatasets/BigBrain_BigBrainWarp_Support.git
-[submodule "projects/BigBrain_Hippocampus_Segmentation"]
-	path = projects/BigBrain_Hippocampus_Segmentation
-	url = https://github.com/conpdatasets/BigBrain_Hippocampus_Segmentation.git
-[submodule "projects/BigBrain_Layer_Segmentation"]
-	path = projects/BigBrain_Layer_Segmentation
-	url = https://github.com/conpdatasets/BigBrain_Layer_Segmentation.git
-[submodule "projects/BigBrain_MRISIM"]
-	path = projects/BigBrain_MRISIM
-	url = https://github.com/conpdatasets/BigBrain_MRISIM.git
-[submodule "projects/BigBrain_Raw_Data"]
-	path = projects/BigBrain_Raw_Data
-	url = https://github.com/conpdatasets/BigBrain_Raw_Data.git
-[submodule "projects/BigBrain_Surface_Parcellations"]
-	path = projects/BigBrain_Surface_Parcellations
-	url = https://github.com/conpdatasets/BigBrain_Surface_Parcellations.git
-[submodule "projects/mica-mics"]
-	path = projects/mica-mics
-	url = https://github.com/conpdatasets/mica-mics.git
-[submodule "projects/spins_travelling_phantoms"]
-	path = projects/spins_travelling_phantoms
-	url = https://github.com/conpdatasets/spins_travelling_phantoms.git
 [submodule "projects/mousebytes/MB-Cholinergic-deficient-mouse-model"]
 	path = projects/mousebytes/MB-Cholinergic-deficient-mouse-model
 	url = https://github.com/conpdatasets/MB-Cholinergic-deficient-mouse-model.git
