@@ -5,6 +5,7 @@ from typing import Any
 from typing import Callable
 from typing import Dict
 from typing import List
+from typing import Optional
 
 import humanize
 import requests
@@ -24,8 +25,8 @@ def _create_osf_tracker(path, dataset):
 
 
 class OSFCrawler(BaseCrawler):
-    def __init__(self, github_token, config_path, verbose, force, no_pr):
-        super().__init__(github_token, config_path, verbose, force, no_pr)
+    def __init__(self, github_token, config_path, verbose, force, no_pr, basedir):
+        super().__init__(github_token, config_path, verbose, force, no_pr, basedir)
         self.osf_token = self._get_token()
 
     def _get_token(self):
@@ -134,20 +135,11 @@ class OSFCrawler(BaseCrawler):
                             path=os.path.join(inner_path, ""),
                             archive=True,
                         )
-                    elif file["attributes"]["name"] in ["DATS.json", "README.md"]:
+                    else:
                         d.download_url(
                             file["links"]["download"],
                             path=os.path.join(inner_path, ""),
                         )
-                    else:
-                        annex(
-                            "addurl",
-                            file["links"]["download"],
-                            "--fast",
-                            "--file",
-                            os.path.join(inner_path, file["attributes"]["name"]),
-                        )
-                        d.save()
 
                 # append the size of the downloaded file to the sizes array
                 file_size = file["attributes"]["size"]
@@ -235,6 +227,14 @@ class OSFCrawler(BaseCrawler):
         r = self._get_request_with_bearer_token(link)
         return r.json()["data"]
 
+    def _get_wiki(self, link) -> Optional[str]:
+        r = self._get_request_with_bearer_token(link)
+        data = r.json()["data"]
+        if len(data) > 0:
+            return self._get_request_with_bearer_token(
+                data[0]["links"]["download"]
+            ).content.decode()
+
     def _get_institutions(self, link):
         r = self._get_request_with_bearer_token(link)
         if r.json()["data"]:
@@ -293,6 +293,15 @@ class OSFCrawler(BaseCrawler):
                 dataset["relationships"]["children"]["links"]["related"]["href"],
             )
 
+            # Get wiki to put in README
+            wiki: Optional[str] = None
+            try:
+                wiki = self._get_wiki(
+                    dataset["relationships"]["wikis"]["links"]["related"]["href"]
+                )
+            except Exception as e:
+                print(f'Error getting wiki for {attributes["title"]} because of {e}')
+
             # Gather extra properties
             extra_properties = [
                 {
@@ -333,6 +342,7 @@ class OSFCrawler(BaseCrawler):
                     map(lambda x: {"name": x}, contributors),
                 ),
                 "description": attributes["description"],
+                "wiki": wiki,
                 "version": attributes["date_modified"],
                 "licenses": [
                     {
@@ -512,24 +522,18 @@ class OSFCrawler(BaseCrawler):
             return True
 
     def get_readme_content(self, dataset):
-        readme_content = """# {}
-
-Crawled from [OSF]({})
-
-## Description
-
-{}""".format(
-            dataset["title"],
-            dataset["homepage"],
-            dataset["description"],
+        readme_content = (
+            f'# {dataset["title"]}\n\nCrawled from [OSF]({dataset["homepage"]})'
         )
 
-        if "identifier" in dataset:
-            readme_content += """
+        if "description" in dataset and dataset["description"]:
+            readme_content += f'\n\n## Description\n\n{dataset["description"]}'
 
-DOI: {}""".format(
-                dataset["identifier"]["identifier"],
-            )
+        if "identifier" in dataset and dataset["identifier"]:
+            readme_content += f'\n\n## DOI: {dataset["identifier"]["identifier"]}'
+
+        if "wiki" in dataset and dataset["wiki"]:
+            readme_content += f'\n\n## WIKI\n\n{dataset["wiki"]}'
 
         return readme_content
 
