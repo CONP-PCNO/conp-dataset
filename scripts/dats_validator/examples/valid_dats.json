@@ -2834,8 +2834,8 @@
   "isAbout": [
     {
       "identifier": {
-        "identifier": "9606",
-        "identifierSource": "https://www.ncbi.nlm.nih.gov/taxonomy/9606"
+        "identifier": "https://www.ncbi.nlm.nih.gov/taxonomy/9606",
+        "identifierSource": "NCBI Taxonomy Database"
       },
       "name": "Homo sapiens"
     }
@@ -2871,7 +2871,7 @@
       "title": "A global reference for human genetic variation"
     }
   ],
-  "privacy": "public open",
+  "privacy": "open",
   "storedIn": {
     "name": "European Bioinformatics Institute"
   },

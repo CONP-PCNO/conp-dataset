@@ -33,6 +33,6 @@ class TestOSFCrawler(TestCase):
         mock_create_pr,
     ):
         try:
-            OSFCrawler("github token", "path/to/config", True, False, True).run()
+            OSFCrawler("github token", "path/to/config", True, False, True, ".").run()
         except Exception as e:
             self.fail("Unexpected Exception raised: " + str(e))

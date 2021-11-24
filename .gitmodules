@@ -1,6 +1,3 @@
-[submodule "projects/preventad-open"]
-  path = projects/preventad-open
-  url = https://github.com/conpdatasets/preventad-open.git
 [submodule "projects/SIMON-dataset"]
   path = projects/SIMON-dataset
   url = https://github.com/conpdatasets/SIMON-dataset.git
@@ -13,15 +10,9 @@
 [submodule "projects/celltypes"]
   path = projects/celltypes
   url = https://github.com/conpdatasets/celltypes.git
-[submodule "openpain-thermal"]
-	path = projects/openpain/thermal
-	url = https://github.com/conpdatasets/openpain-thermal.git
 [submodule "openpain-placebo_1"]
 	path = projects/openpain/placebo_1
 	url = https://github.com/conpdatasets/openpain-placebo_1.git
-[submodule "openpain-subacute_longitudinal_study"]
-	path = projects/openpain/subacute_longitudinal_study
-	url = https://github.com/conpdatasets/openpain-subacute_longitudinal_study.git
 [submodule "openpain-placebo_predict_tetreault"]
 	path = projects/openpain/placebo_predict_tetreault
 	url = https://github.com/conpdatasets/openpain-placebo_predict_tetreault.git
@@ -34,9 +25,6 @@
 [submodule "projects/bigbrain-datalad"]
 	path = projects/BigBrain
 	url = https://github.com/conpdatasets/bigbrain-datalad.git
-[submodule "projects/PERFORM_Dataset__one_control_subject"]
-  path = projects/PERFORM_Dataset__one_control_subject
-  url = https://github.com/conp-bot/conp-dataset-PERFORM_Dataset__one_control_subject.git
 [submodule "scripts/dats_validator/conp-dats"]
 	path = scripts/dats_validator/conp-dats
 	url = https://github.com/CONP-PCNO/schema.git
@@ -58,18 +46,12 @@
 [submodule "projects/refseq/refseq_Callithrix_jacchus"]
 	path = projects/refseq/refseq_Callithrix_jacchus
 	url = https://github.com/conpdatasets/refseq_Callithrix_jacchus.git
-	branch = master
-	datalad-id = 1b374678-5d64-11ea-bba9-0800277806bd
 [submodule "projects/refseq/refseq_Homo_sapiens"]
 	path = projects/refseq/refseq_Homo_sapiens
 	url = https://github.com/conpdatasets/refseq_Homo_sapiens.git
-	branch = master
-	datalad-id = 201d6d0c-5d64-11ea-bba9-0800277806bd
 [submodule "projects/refseq/refseq_Mus_musculus"]
 	path = projects/refseq/refseq_Mus_musculus
 	url = https://github.com/conpdatasets/refseq_Mus_musculus.git
-	branch = master
-	datalad-id = 27e7f426-5d64-11ea-bba9-0800277806bd
 [submodule "projects/Reusing-Neuro-Data"]
 	path = projects/Reusing-Neuro-Data
 	url = https://github.com/conpdatasets/Reusing-Neuro-Data.git
@@ -84,9 +66,7 @@
 	url = https://github.com/conp-bot/conp-dataset-Intracellular-Recordings-of-Murine-Neocortical-Neurons.git
 [submodule "projects/Khanlab/BigBrainMRICoreg"]
 	path = projects/Khanlab/BigBrainMRICoreg
-	url = https://github.com/conpdatasets/BigBrainMRICoreg
-	branch = master
-	datalad-id = 65391990-d8d5-11e9-b349-000c299164f1
+	url = https://github.com/conpdatasets/BigBrainMRICoreg.git
 [submodule "projects/preventad-open-bids"]
 	path = projects/preventad-open-bids
 	url = https://github.com/conpdatasets/preventad-open-bids.git
@@ -105,15 +85,12 @@
 [submodule "projects/braincode_NDD_Priority_Setting_Partnership"]
 	path = projects/braincode_NDD_Priority_Setting_Partnership
 	url = https://github.com/conpdatasets/braincode_NDD_Priority_Setting_Partnership.git
-[submodule "projects/Particpant_level_contrast_maps"]
-	path = projects/Particpant_level_contrast_maps
-	url = https://github.com/conp-bot/conp-dataset-Particpant-level-contrast-maps.git
 [submodule "projects/Quantifying_Neural_Cognitive_Relationships_Across_the_Brain"]
 	path = projects/Quantifying_Neural_Cognitive_Relationships_Across_the_Brain
 	url = https://github.com/conp-bot/conp-dataset-Quantifying-Neural-Cognitive-Relationships-Across-the-Brain.git
 [submodule "projects/1000GenomesProject"]
 	path = projects/1000GenomesProject
-	url = https://github.com/conpdatasets/1000GenomesProject
+	url = https://github.com/conpdatasets/1000GenomesProject.git
 [submodule "projects/Systematic_phenomics_analysis_of_autism-associated_genes"]
 	path = projects/Systematic_phenomics_analysis_of_autism-associated_genes
 	url = https://github.com/conpdatasets/Systematic_phenomics_analysis_of_autism-associated_genes.git
@@ -126,9 +103,6 @@
 [submodule "projects/Numerically_Perturbed_Structural_Connectomes_from_100_individuals_in_the_NKI_Rockland_Dataset"]
 	path = projects/Numerically_Perturbed_Structural_Connectomes_from_100_individuals_in_the_NKI_Rockland_Dataset
 	url = https://github.com/conp-bot/conp-dataset-Numerically-Perturbed-Structural-Connectomes-from-100-individuals-in-the-NKI-Rockland-D.git
-[submodule "projects/mousebytesdataset"]
-	path = projects/mousebytesdataset
-	url = https://github.com/conpdatasets/mousebytesdataset.git
 [submodule "projects/Calgary_Preschool_MRI_Dataset"]
 	path = projects/Calgary_Preschool_MRI_Dataset
 	url = https://github.com/conp-bot/conp-dataset-Calgary-Preschool-MRI-Dataset.git
@@ -140,15 +114,16 @@
     url = https://github.com/conpdatasets/preventad-registered.git
 [submodule "projects/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations"]
 	path = projects/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations
-	url = https://github.com/conpdatasets/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations
+	url = https://github.com/conpdatasets/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations.git
 [submodule "projects/calgary-campinas"]
 	path = projects/calgary-campinas
 	url = https://github.com/conpdatasets/calgary-campinas.git
-	branch = main
-	datalad-id = 95f9d92a-3414-11eb-8a50-525400da244d
 [submodule "projects/multicenter-phantom"]
 	path = projects/multicenter-phantom
 	url = https://github.com/conpdatasets/multicenter-phantom.git
+[submodule "projects/BigBrain_3DROIs"]
+	path = projects/BigBrain_3DROIs
+	url = https://github.com/conpdatasets/BigBrain_3DROIs.git
 [submodule "projects/BigBrain_3DClassifiedVolumes"]
 	path = projects/BigBrain_3DClassifiedVolumes
 	url = https://github.com/conpdatasets/BigBrain_3DClassifiedVolumes.git
@@ -158,3 +133,65 @@
 [submodule "projects/mcgill-emc-rna-seq-experiment"]
 	path = projects/mcgill-emc-rna-seq-experiment
 	url = https://github.com/conpdatasets/mcgill-emc-rna-seq-experiment.git
+[submodule "projects/Synthetic_Animated_Mouse__SAM___University_of_British_Columbia__Datasets_and_3D_models"]
+	path = projects/Synthetic_Animated_Mouse__SAM___University_of_British_Columbia__Datasets_and_3D_models
+	url = https://github.com/conp-bot/conp-dataset-Synthetic-Animated-Mouse-SAM-University-of-British-Columbia-Datasets-and-3D-models.git
+[submodule "projects/preventad-open"]
+	path = projects/preventad-open
+	url = https://github.com/conpdatasets/preventad-open.git
+[submodule "projects/openpain/subacute_longitudinal_study"]
+	path = projects/openpain/subacute_longitudinal_study
+	url = https://github.com/conpdatasets/openpain-subacute_longitudinal_study.git
+[submodule "projects/openpain/thermal"]
+	path = projects/openpain/thermal
+	url = https://github.com/conpdatasets/openpain-thermal.git
+[submodule "projects/Longitudinal_structural_MRI_and_behavioural_data_for_mice_prenatally_exposed_to_maternal_immune_activation_either_early_or_late_in_gestation"]
+	path = projects/Longitudinal_structural_MRI_and_behavioural_data_for_mice_prenatally_exposed_to_maternal_immune_activation_either_early_or_late_in_gestation
+	url = https://github.com/conp-bot/conp-dataset-Longitudinal-structural-MRI-and-behavioural-data-for-mice-prenatally-exposed-to-materna.git
+[submodule "projects/BigBrain_MRISIM"]
+	path = projects/BigBrain_MRISIM
+	url = https://github.com/conpdatasets/BigBrain_MRISIM.git
+[submodule "projects/BigBrain_A3D"]
+	path = projects/BigBrain_A3D
+    url = https://github.com/conpdatasets/BigBrain_A3D.git
+[submodule "projects/BigBrain_Hippocampus_Segmentation"]
+	path = projects/BigBrain_Hippocampus_Segmentation
+	url = https://github.com/conpdatasets/BigBrain_Hippocampus_Segmentation.git
+[submodule "projects/BigBrain_BigBrainWarp_Support"]
+	path = projects/BigBrain_BigBrainWarp_Support
+	url = https://github.com/conpdatasets/BigBrain_BigBrainWarp_Support.git
+[submodule "projects/BigBrain_Surface_Parcellations"]
+	path = projects/BigBrain_Surface_Parcellations
+	url = https://github.com/conpdatasets/BigBrain_Surface_Parcellations.git
+[submodule "projects/PERFORM_Dataset__one_control_subject"]
+	path = projects/PERFORM_Dataset__one_control_subject
+	url = https://github.com/conp-bot/conp-dataset-PERFORM-Dataset-one-control-subject.git
+[submodule "scripts/dats_jsonld_annotator/schema"]
+	path = scripts/dats_jsonld_annotator/schema
+	url = https://github.com/CONP-PCNO/schema.git
+[submodule "scripts/dats_jsonld_annotator/context"]
+	path = scripts/dats_jsonld_annotator/context
+	url = https://github.com/CONP-PCNO/context.git
+[submodule "projects/spins_travelling_phantoms"]
+	path = projects/spins_travelling_phantoms
+	url = https://github.com/conpdatasets/spins_travelling_phantoms.git
+[submodule "projects/mica-mics"]
+	path = projects/mica-mics
+	url = https://github.com/conpdatasets/mica-mics
+[submodule "projects/BigBrain_Layer_Segmentation"]
+	path = projects/BigBrain_Layer_Segmentation
+	url = https://github.com/conpdatasets/BigBrain_Layer_Segmentation.git
+[submodule "projects/BigBrain_Raw_Data"]
+	path = projects/BigBrain_Raw_Data
+	url = https://github.com/conpdatasets/BigBrain_Raw_Data.git
+
+[submodule "projects/mousebytesdataset"]
+	path = projects/mousebytesdataset
+	url = https://github.com/conpdatasets/mousebytesdataset.git
+
+[submodule "projects/mousebytes/MB-Cholinergic-deficient-mouse-model"]
+	path = projects/mousebytes/MB-Cholinergic-deficient-mouse-model
+	url = https://github.com/conpdatasets/MB-Cholinergic-deficient-mouse-model.git
+[submodule "projects/mousebytes/MB-Co-transmission-of-cholinergic-interneurons"]
+	path = projects/mousebytes/MB-Co-transmission-of-cholinergic-interneurons
+	url = https://github.com/conpdatasets/MB-Co-transmission-of-cholinergic-interneurons.git
