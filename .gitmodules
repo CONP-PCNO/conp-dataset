@@ -102,9 +102,6 @@
 [submodule "projects/braincode_NDD_Priority_Setting_Partnership"]
 	path = projects/braincode_NDD_Priority_Setting_Partnership
 	url = https://github.com/conpdatasets/braincode_NDD_Priority_Setting_Partnership.git
-[submodule "projects/Particpant_level_contrast_maps"]
-	path = projects/Particpant_level_contrast_maps
-	url = https://github.com/conp-bot/conp-dataset-Particpant-level-contrast-maps.git
 [submodule "projects/Quantifying_Neural_Cognitive_Relationships_Across_the_Brain"]
 	path = projects/Quantifying_Neural_Cognitive_Relationships_Across_the_Brain
 	url = https://github.com/conp-bot/conp-dataset-Quantifying-Neural-Cognitive-Relationships-Across-the-Brain.git
@@ -155,9 +152,3 @@
 [submodule "projects/mcgill-emc-rna-seq-experiment"]
 	path = projects/mcgill-emc-rna-seq-experiment
 	url = https://github.com/conpdatasets/mcgill-emc-rna-seq-experiment.git
-[submodule "projects/Particpant_level_contrast_maps"]
-	path = projects/Particpant_level_contrast_maps
-	url = https://github.com/conp-bot/conp-dataset-Particpant_level_contrast_maps
-[submodule "projects/Open_Access__The_Effect_of_Neurorehabilitation_on_Multiple_Sclerosis___Unlocking_the_Resting_State_fMRI_Data"]
-	path = projects/Open_Access__The_Effect_of_Neurorehabilitation_on_Multiple_Sclerosis___Unlocking_the_Resting_State_fMRI_Data
-	url = https://github.com/conp-bot/conp-dataset-Open_Access__The_Effect_of_Neurorehabilitation_on_Multiple_Sclerosis___Unlocking_the_Resting_State_fMRI_Data
