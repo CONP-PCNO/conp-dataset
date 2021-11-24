@@ -155,3 +155,9 @@
 [submodule "projects/mcgill-emc-rna-seq-experiment"]
 	path = projects/mcgill-emc-rna-seq-experiment
 	url = https://github.com/conpdatasets/mcgill-emc-rna-seq-experiment.git
+[submodule "projects/Particpant_level_contrast_maps"]
+	path = projects/Particpant_level_contrast_maps
+	url = https://github.com/conp-bot/conp-dataset-Particpant_level_contrast_maps
+[submodule "projects/Open_Access__The_Effect_of_Neurorehabilitation_on_Multiple_Sclerosis___Unlocking_the_Resting_State_fMRI_Data"]
+	path = projects/Open_Access__The_Effect_of_Neurorehabilitation_on_Multiple_Sclerosis___Unlocking_the_Resting_State_fMRI_Data
+	url = https://github.com/conp-bot/conp-dataset-Open_Access__The_Effect_of_Neurorehabilitation_on_Multiple_Sclerosis___Unlocking_the_Resting_State_fMRI_Data
