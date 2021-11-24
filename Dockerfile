@@ -1,4 +1,4 @@
-FROM ubuntu:focal
+FROM ubuntu:focal-20210609
 LABEL maintainer="mathieu.dugre@concordia.ca"
 LABEL Name=conp-dataset Version=0.0.1
 
@@ -13,7 +13,6 @@ RUN : \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && ln -s /usr/bin/python3 /usr/bin/python \
-    && ln -s /usr/bin/pip3 /usr/bin/pip \
     && :
 
 # Retrieve the binaries for the latest version of git-annex.
@@ -43,13 +42,13 @@ WORKDIR /conp-dataset
 
 # Install dependencies.
 RUN : \
-    && find . -name requirements.txt | xargs -I{} pip3 install --quiet -r {} \
+    && find . -name requirements.txt | xargs -I{} pip install --quiet -r {} \
     && :
 
 # Prepare the image for running tests, if needed.
 RUN : \
     && datalad install -r scripts/dats_validator \
-    && python3 tests/create_tests.py \
+    && python tests/create_tests.py \
     && :
 ENV PYTHONPATH=/conp-dataset
 
