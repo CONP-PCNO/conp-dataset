@@ -7,6 +7,12 @@ import git
 import requests
 from datalad import api
 
+from scripts.Crawlers.constants import DATS_FIELDS
+from scripts.Crawlers.constants import LICENSE_CODES
+from scripts.Crawlers.constants import MODALITIES
+from scripts.Crawlers.constants import NO_ANNEX_FILE_PATTERNS
+from scripts.Crawlers.constants import REQUIRED_DATS_FIELDS
+
 
 class BaseCrawler:
     """
@@ -66,8 +72,9 @@ class BaseCrawler:
             instantiate this new Crawler and call run() on it
     """
 
-    def __init__(self, github_token, config_path, verbose, force, no_pr):
-        self.repo = git.Repo()
+    def __init__(self, github_token, config_path, verbose, force, no_pr, basedir):
+        self.basedir = basedir
+        self.repo = git.Repo(self.basedir)
         self.username = self._check_requirements()
         self.github_token = github_token
         self.config_path = config_path
@@ -76,6 +83,8 @@ class BaseCrawler:
         self.git = git
         self.datalad = api
         self.no_pr = no_pr
+        if self.verbose:
+            print(f"Using base directory {self.basedir}")
 
     @abc.abstractmethod
     def get_all_dataset_description(self):
@@ -233,21 +242,8 @@ class BaseCrawler:
         for dataset_description in dataset_description_list:
             clean_title = self._clean_dataset_title(dataset_description["title"])
             branch_name = "conp-bot/" + clean_title
-            dataset_dir = os.path.join("projects", clean_title)
+            dataset_dir = os.path.join(self.basedir, "projects", clean_title)
             d = self.datalad.Dataset(dataset_dir)
-            # Add github token to individual dataset remote urls
-            try:
-                origin = git.Repo(dataset_dir).remote("origin")
-                origin_url = next(origin.urls)
-                if "@" not in origin_url:
-                    origin.set_url(
-                        origin_url.replace(
-                            "https://",
-                            "https://" + self.github_token + "@",
-                        ),
-                    )
-            except git.exc.NoSuchPathError:
-                pass
             if branch_name not in self.repo.remotes.origin.refs:  # New dataset
                 self.repo.git.checkout("-b", branch_name)
                 repo_title = ("conp-dataset-" + dataset_description["title"])[0:100]
@@ -258,16 +254,40 @@ class BaseCrawler:
                     github_login=self.github_token,
                     github_passwd=self.github_token,
                 )
+                # Add github token to dataset origin remote url
+                try:
+                    origin = self.repo.remote("origin")
+                    origin_url = next(origin.urls)
+                    if "@" not in origin_url:
+                        origin.set_url(
+                            origin_url.replace(
+                                "https://",
+                                "https://" + self.github_token + "@",
+                            ),
+                        )
+                except git.exc.NoSuchPathError:
+                    pass
+
                 self._add_github_repo_description(repo_title, dataset_description)
-                d.no_annex("DATS.json")
-                d.no_annex("README.md")
+                for pattern in NO_ANNEX_FILE_PATTERNS:
+                    d.no_annex(pattern)
                 self.add_new_dataset(dataset_description, dataset_dir)
-                # Create DATS.json if it doesn't exist
-                if not os.path.isfile(os.path.join(dataset_dir, "DATS.json")):
+                # Create DATS.json if it exists in directory and 1 level deep subdir
+                dats_path: str = os.path.join(dataset_dir, "DATS.json")
+                if existing_dats_path := self._check_dats_present(dataset_dir):
+                    if self.verbose:
+                        print(f"Found existing DATS.json at {existing_dats_path}")
+                    if existing_dats_path != dats_path:
+                        os.rename(existing_dats_path, dats_path)
+                    self._add_source_data_submodule_if_derived_from_conp_dataset(
+                        dats_path, dataset_dir
+                    )
+                else:
                     self._create_new_dats(
                         dataset_dir,
-                        os.path.join(dataset_dir, "DATS.json"),
+                        dats_path,
                         dataset_description,
+                        d,
                     )
                 # Create README.md if it doesn't exist
                 if not os.path.isfile(os.path.join(dataset_dir, "README.md")):
@@ -289,17 +309,28 @@ class BaseCrawler:
                 except Exception as e:
                     print(f"Error while merging master into {branch_name}: {e}")
                     print("Skipping this dataset")
-                    self.repo.git.checkout("master")
+                    self.repo.git.merge("--abort")
+                    self.repo.git.checkout("-f", "master")
                     continue
 
                 modified = self.update_if_necessary(dataset_description, dataset_dir)
                 if modified:
-                    # Create DATS.json if it doesn't exist
-                    if not os.path.isfile(os.path.join(dataset_dir, "DATS.json")):
+                    # Create DATS.json if it exists in directory and 1 level deep subdir
+                    dats_path: str = os.path.join(dataset_dir, "DATS.json")
+                    if existing_dats_path := self._check_dats_present(dataset_dir):
+                        if self.verbose:
+                            print(f"Found existing DATS.json at {existing_dats_path}")
+                        if existing_dats_path != dats_path:
+                            os.rename(existing_dats_path, dats_path)
+                        self._add_source_data_submodule_if_derived_from_conp_dataset(
+                            dats_path, dataset_dir
+                        )
+                    else:
                         self._create_new_dats(
                             dataset_dir,
-                            os.path.join(dataset_dir, "DATS.json"),
+                            dats_path,
                             dataset_description,
+                            d,
                         )
                     # Create README.md if it doesn't exist
                     if not os.path.isfile(os.path.join(dataset_dir, "README.md")):
@@ -345,12 +376,9 @@ class BaseCrawler:
 
     def _check_requirements(self):
         # GitHub user must have a fork of https://github.com/CONP-PCNO/conp-dataset
-        # Script must be run in the base directory of a local clone of this fork
+        # Script must be run in the  directory of a local clone of this fork
         # Git remote 'origin' of local Git clone must point to that fork
         # Local Git clone must be set to branch 'master'
-        git_root = self.repo.git.rev_parse("--show-toplevel")
-        if git_root != os.getcwd():
-            raise Exception("Script not ran at the base directory of local clone")
         if "origin" not in self.repo.remotes:
             raise Exception("Remote 'origin' does not exist in current reposition")
         origin_url = next(self.repo.remote("origin").urls)
@@ -418,50 +446,22 @@ Functional checks:
     def _clean_dataset_title(self, title):
         return re.sub(r"\W|^(?=\d)", "_", title)
 
-    def _create_new_dats(self, dataset_dir, dats_path, dataset):
-        # Fields/properties that are acceptable in DATS schema according to
-        # https://github.com/CONP-PCNO/schema/blob/master/dataset_schema.json
-        dats_fields = [
-            "title",
-            "identifier",
-            "creators",
-            "description",
-            "version",
-            "licenses",
-            "keywords",
-            "distributions",
-            "extraProperties",
-            "alternateIdentifiers",
-            "relatedIdentifiers",
-            "dates",
-            "storedIn",
-            "spatialCoverage",
-            "types",
-            "availability",
-            "refinement",
-            "aggregation",
-            "privacy",
-            "dimensions",
-            "primaryPublications",
-            "citations",
-            "citationCount",
-            "producedBy",
-            "isAbout",
-            "hasPart",
-            "acknowledges",
-        ]
+    def _create_new_dats(self, dataset_dir, dats_path, dataset, d):
+        # Helper recursive function
+        def retrieve_license_path_in_dir(dir, paths):
+            for f_name in os.listdir(dir):
+                f_path = os.path.join(dir, f_name)
+                if os.path.isdir(f_path):
+                    retrieve_license_path_in_dir(f_path, paths)
+                    continue
+                elif "license" not in f_name.lower():
+                    continue
+                elif os.path.islink(f_path):
+                    d.get(f_path)
+                paths.append(f_path)
 
         # Check required properties
-        required_fields = [
-            "title",
-            "types",
-            "creators",
-            "licenses",
-            "description",
-            "keywords",
-            "version",
-        ]
-        for field in required_fields:
+        for field in REQUIRED_DATS_FIELDS:
             if field not in dataset.keys():
                 print(
                     "Warning: required property {} not found in dataset description".format(
@@ -470,7 +470,27 @@ Functional checks:
                 )
 
         # Add all dats properties from dataset description
-        data = {key: value for key, value in dataset.items() if key in dats_fields}
+        data = {key: value for key, value in dataset.items() if key in DATS_FIELDS}
+
+        # Check for license code in dataset if a license was not specified from the platform
+        if "licenses" not in data or (
+            len(data["licenses"]) == 1 and data["licenses"][0]["name"].lower() == "none"
+        ):
+            # Collect all license file paths
+            license_f_paths = []
+            retrieve_license_path_in_dir(dataset_dir, license_f_paths)
+
+            # If found some license files, for each, check for first valid license code and add to DATS
+            if license_f_paths:
+                licenses = set()
+                for f_path in license_f_paths:
+                    with open(f_path) as f:
+                        text = f.read().lower()
+                    for code in LICENSE_CODES:
+                        if code.lower() in text:
+                            licenses.add(code)
+                            break
+                data["licenses"] = [{"name": code} for code in licenses]
 
         # Add file count
         num = 0
@@ -519,18 +539,8 @@ Functional checks:
 
     def _guess_modality(self, file_name):
         # Associate file types to substrings found in the file name
-        modalities = {
-            "fMRI": ["bold", "func", "cbv"],
-            "MRI": ["T1", "T2", "FLAIR", "FLASH", "PD", "angio", "anat", "mask"],
-            "diffusion": ["dwi", "dti", "sbref"],
-            "meg": ["meg"],
-            "intracranial eeg": ["ieeg"],
-            "eeg": ["eeg"],
-            "field map": ["fmap", "phasediff", "magnitude"],
-            "imaging": ["nii", "nii.gz", "mnc"],
-        }
-        for m in modalities:
-            for s in modalities[m]:
+        for m in MODALITIES:
+            for s in MODALITIES[m]:
                 if s in file_name:
                     return m
         return "unknown"
@@ -538,3 +548,39 @@ Functional checks:
     def _create_readme(self, content, path):
         with open(path, "w") as f:
             f.write(content)
+
+    def _check_dats_present(self, directory):
+        for file_name in os.listdir(directory):
+            file_path: str = os.path.join(directory, file_name)
+            if os.path.isdir(file_path):
+                for subfile_name in os.listdir(file_path):
+                    if subfile_name.lower() == "dats.json":
+                        return os.path.join(file_path, subfile_name)
+            elif file_name.lower() == "dats.json":
+                return file_path
+
+    def _add_source_data_submodule_if_derived_from_conp_dataset(
+        self, dats_json, dataset_dir
+    ):
+        with open(dats_json) as f:
+            metadata = json.loads(f.read())
+
+        source_dataset_link = None
+        source_dataset_id = None
+        if "extraProperties" not in metadata.keys():
+            return
+        for property in metadata["extraProperties"]:
+            if property["category"] == "derivedFrom":
+                try:
+                    source_dataset_link = property["values"][0]["value"]
+                except (KeyError, IndexError):
+                    continue
+            if property["category"] == "parent_dataset_id":
+                try:
+                    source_dataset_id = property["values"][0]["value"]
+                except (KeyError, IndexError):
+                    continue
+
+        if source_dataset_link is not None and "github.com" in source_dataset_link:
+            d = self.datalad.Dataset(os.path.join(dataset_dir, source_dataset_id))
+            d.create()
