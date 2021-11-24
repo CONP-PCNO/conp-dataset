@@ -194,4 +194,4 @@
 	url = https://github.com/conpdatasets/MB-Co-transmission-of-cholinergic-interneurons.git
 [submodule "projects/MICA_MICs__a_dataset_for_Microstructure_Informed_Connectomics"]
 	path = projects/MICA_MICs__a_dataset_for_Microstructure_Informed_Connectomics
-	url = https://github.com/conp-bot/conp-dataset-MICA_MICs__a_dataset_for_Microstructure_Informed_Connectomics
+	url = https://github.com/conp-bot/conp-dataset-MICA_MICs__a_dataset_for_Microstructure_Informed_Connectomics.git
