@@ -274,7 +274,7 @@ class BaseCrawler:
                 self.add_new_dataset(dataset_description, dataset_dir)
                 # Create DATS.json if it exists in directory and 1 level deep subdir
                 dats_path: str = os.path.join(dataset_dir, "DATS.json")
-                if existing_dats_path := self._check_dats_present(dataset_dir):
+                if existing_dats_path := self._check_file_present(dataset_dir, "dats.json"):
                     if self.verbose:
                         print(f"Found existing DATS.json at {existing_dats_path}")
                     if existing_dats_path != dats_path:
@@ -289,6 +289,14 @@ class BaseCrawler:
                         dataset_description,
                         d,
                     )
+                # Move the logo into the root directory if found in 1 level deep subdir
+                logo_path = os.path.join(dataset_dir, "logo.png")
+                if existing_logo_path := self._check_file_present(dataset_dir, "logo.png"):
+                    if self.verbose:
+                        print(f"Found logo at {existing_logo_path}")
+                    if existing_logo_path != logo_path:
+                        os.rename(existing_logo_path, logo_path)
+
                 # Create README.md if it doesn't exist
                 if not os.path.isfile(os.path.join(dataset_dir, "README.md")):
                     readme = self.get_readme_content(dataset_description)
@@ -317,7 +325,7 @@ class BaseCrawler:
                 if modified:
                     # Create DATS.json if it exists in directory and 1 level deep subdir
                     dats_path: str = os.path.join(dataset_dir, "DATS.json")
-                    if existing_dats_path := self._check_dats_present(dataset_dir):
+                    if existing_dats_path := self._check_file_present(dataset_dir, "dats.json"):
                         if self.verbose:
                             print(f"Found existing DATS.json at {existing_dats_path}")
                         if existing_dats_path != dats_path:
@@ -332,6 +340,13 @@ class BaseCrawler:
                             dataset_description,
                             d,
                         )
+                    # Move the logo into the root directory if found in 1 level deep subdir
+                    logo_path = os.path.join(dataset_dir, "logo.png")
+                    if existing_logo_path := self._check_file_present(dataset_dir, "logo.png"):
+                        if self.verbose:
+                            print(f"Found logo at {existing_logo_path}")
+                        if existing_logo_path != logo_path:
+                            os.rename(existing_logo_path, logo_path)
                     # Create README.md if it doesn't exist
                     if not os.path.isfile(os.path.join(dataset_dir, "README.md")):
                         readme = self.get_readme_content(dataset_description)
@@ -496,7 +511,7 @@ Functional checks:
         num = 0
         for file in os.listdir(dataset_dir):
             file_path = os.path.join(dataset_dir, file)
-            if file[0] == "." or file == "DATS.json" or file == "README.md":
+            if file[0] == "." or file == "DATS.json" or file == "README.md" or file == "logo.png":
                 continue
             elif os.path.isdir(file_path):
                 num += sum([len(files) for r, d, files in os.walk(file_path)])
@@ -549,14 +564,14 @@ Functional checks:
         with open(path, "w") as f:
             f.write(content)
 
-    def _check_dats_present(self, directory):
+    def _check_file_present(self, directory, filename):
         for file_name in os.listdir(directory):
             file_path: str = os.path.join(directory, file_name)
             if os.path.isdir(file_path):
                 for subfile_name in os.listdir(file_path):
-                    if subfile_name.lower() == "dats.json":
+                    if subfile_name.lower() == filename.lower():
                         return os.path.join(file_path, subfile_name)
-            elif file_name.lower() == "dats.json":
+            elif file_name.lower() == filename.lower():
                 return file_path
 
     def _add_source_data_submodule_if_derived_from_conp_dataset(
