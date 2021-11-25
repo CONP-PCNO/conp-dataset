@@ -274,7 +274,9 @@ class BaseCrawler:
                 self.add_new_dataset(dataset_description, dataset_dir)
                 # Create DATS.json if it exists in directory and 1 level deep subdir
                 dats_path: str = os.path.join(dataset_dir, "DATS.json")
-                if existing_dats_path := self._check_file_present(dataset_dir, "dats.json"):
+                if existing_dats_path := self._check_file_present(
+                        dataset_dir, "dats.json"
+                ):
                     if self.verbose:
                         print(f"Found existing DATS.json at {existing_dats_path}")
                     if existing_dats_path != dats_path:
@@ -291,7 +293,9 @@ class BaseCrawler:
                     )
                 # Move the logo into the root directory if found in 1 level deep subdir
                 logo_path = os.path.join(dataset_dir, "logo.png")
-                if existing_logo_path := self._check_file_present(dataset_dir, "logo.png"):
+                if existing_logo_path := self._check_file_present(
+                        dataset_dir, "logo.png"
+                ):
                     if self.verbose:
                         print(f"Found logo at {existing_logo_path}")
                     if existing_logo_path != logo_path:
@@ -325,7 +329,9 @@ class BaseCrawler:
                 if modified:
                     # Create DATS.json if it exists in directory and 1 level deep subdir
                     dats_path: str = os.path.join(dataset_dir, "DATS.json")
-                    if existing_dats_path := self._check_file_present(dataset_dir, "dats.json"):
+                    if existing_dats_path := self._check_file_present(
+                            dataset_dir, "dats.json"
+                    ):
                         if self.verbose:
                             print(f"Found existing DATS.json at {existing_dats_path}")
                         if existing_dats_path != dats_path:
@@ -342,7 +348,9 @@ class BaseCrawler:
                         )
                     # Move the logo into the root directory if found in 1 level deep subdir
                     logo_path = os.path.join(dataset_dir, "logo.png")
-                    if existing_logo_path := self._check_file_present(dataset_dir, "logo.png"):
+                    if existing_logo_path := self._check_file_present(
+                            dataset_dir, "logo.png"
+                    ):
                         if self.verbose:
                             print(f"Found logo at {existing_logo_path}")
                         if existing_logo_path != logo_path:
@@ -511,7 +519,12 @@ Functional checks:
         num = 0
         for file in os.listdir(dataset_dir):
             file_path = os.path.join(dataset_dir, file)
-            if file[0] == "." or file == "DATS.json" or file == "README.md" or file == "logo.png":
+            if (
+                    file[0] == "."
+                    or file == "DATS.json"
+                    or file == "README.md"
+                    or file == "logo.png"
+            ):
                 continue
             elif os.path.isdir(file_path):
                 num += sum([len(files) for r, d, files in os.walk(file_path)])
