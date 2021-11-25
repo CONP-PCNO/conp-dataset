@@ -64,7 +64,7 @@ def mock_get_test_dataset_dir():
 
 class TestZenodoCrawler(TestCase):
     @mock.patch(
-        "scripts.Crawlers.BaseCrawler.BaseCrawler._check_dats_present",
+        "scripts.Crawlers.BaseCrawler.BaseCrawler._check_file_present",
         return_value=None,
     )
     @mock.patch("scripts.Crawlers.ZenodoCrawler.ZenodoCrawler._push_and_pull_request")
@@ -95,7 +95,7 @@ class TestZenodoCrawler(TestCase):
         mock_get_readme,
         mock_create_readme,
         mock_create_pr,
-        mock_check_dats_present,
+        mock_check_file_present,
     ):
         try:
             ZenodoCrawler(
