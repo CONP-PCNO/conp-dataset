@@ -9,7 +9,7 @@ LICENSE_CODES = [
     "ODbL" "ODC-By",
     "PDDL",
 ]
-NO_ANNEX_FILE_PATTERNS = ["**/DATS.json", "**/README*", "**/LICENSE*"]
+NO_ANNEX_FILE_PATTERNS = ["**/DATS.json", "**/README*", "**/LICENSE*", "**/logo.png"]
 REQUIRED_DATS_FIELDS = [
     "title",
     "types",
