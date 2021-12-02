@@ -184,7 +184,6 @@
 [submodule "projects/BigBrain_Raw_Data"]
 	path = projects/BigBrain_Raw_Data
 	url = https://github.com/conpdatasets/BigBrain_Raw_Data.git
-
 [submodule "projects/mousebytesdataset"]
 	path = projects/mousebytesdataset
 	url = https://github.com/conpdatasets/mousebytesdataset.git
@@ -194,6 +193,3 @@
 [submodule "projects/mousebytes/MB-Co-transmission-of-cholinergic-interneurons"]
 	path = projects/mousebytes/MB-Co-transmission-of-cholinergic-interneurons
 	url = https://github.com/conpdatasets/MB-Co-transmission-of-cholinergic-interneurons.git
-[submodule "projects/mousebytes/MB-Heterogenous-task-representative-data"]
-	path = projects/mousebytes/MB-Heterogenous-task-representative-data
-	url = https://github.com/conpdatasets/MB-Heterogenous-task-representative-data.git
