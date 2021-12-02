@@ -193,3 +193,6 @@
 [submodule "projects/mousebytes/MB-Co-transmission-of-cholinergic-interneurons"]
 	path = projects/mousebytes/MB-Co-transmission-of-cholinergic-interneurons
 	url = https://github.com/conpdatasets/MB-Co-transmission-of-cholinergic-interneurons.git
+[submodule "projects/mousebytes/MB-Heterogenous-task-representative-data"]
+	path = projects/mousebytes/MB-Heterogenous-task-representative-data
+	url = https://github.com/conpdatasets/MB-Heterogenous-task-representative-data
