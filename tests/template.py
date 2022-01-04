@@ -49,6 +49,10 @@ class Template:
 
     def test_has_valid_dats(self, dataset):
 
+        # skip DATS tests for retrospectively crawled datasets
+        if dataset in RETROSPECTIVE_CRAWLED_DATASET_LIST:
+            return
+
         with open(os.path.join(dataset, "DATS.json"), "rb") as f:
             json_obj = json.load(f)
             if not validate_json(json_obj):
@@ -88,18 +92,16 @@ class Template:
                 )
                 pytest.fail(summary_error_message, pytrace=False)
 
-            # If the dataset is not one of the retrospective crawled dataset,
-            # perform the extra validation checks
-            if dataset not in RETROSPECTIVE_CRAWLED_DATASET_LIST:
-                is_valid, errors = validate_non_schema_required(json_obj)
-                if not is_valid:
-                    summary_error_message = (
-                        f"Dataset {dataset} contains DATS.json that has errors "
-                        f"in required extra properties or formats. List of errors:\n"
-                    )
-                    for i, error_message in enumerate(errors, 1):
-                        summary_error_message += f"- {i}. {error_message}\n"
-                    pytest.fail(summary_error_message, pytrace=False)
+            # Perform the extra validation checks
+            is_valid, errors = validate_non_schema_required(json_obj)
+            if not is_valid:
+                summary_error_message = (
+                    f"Dataset {dataset} contains DATS.json that has errors "
+                    f"in required extra properties or formats. List of errors:\n"
+                )
+                for i, error_message in enumerate(errors, 1):
+                    summary_error_message += f"- {i}. {error_message}\n"
+                pytest.fail(summary_error_message, pytrace=False)
 
     def test_download(self, dataset):
         eval_config(dataset)

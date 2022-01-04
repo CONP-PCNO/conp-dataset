@@ -14,6 +14,7 @@ from github import Github
 
 from scripts.datalad_utils import get_dataset
 from scripts.datalad_utils import install_dataset
+from scripts.datalad_utils import uninstall_dataset
 from scripts.log import get_logger
 from tests.functions import get_proper_submodules
 
@@ -44,7 +45,6 @@ def parse_args():
     parser.add_argument(
         "--max-size",
         type=float,
-        default=20.0,
         help="Maximum size of dataset to archive in GB.",
     )
     group = parser.add_mutually_exclusive_group()
@@ -64,8 +64,12 @@ def parse_args():
     return parser.parse_args()
 
 
-def get_all_datasets():
-    return {os.path.basename(submodule.path) for submodule in git.Repo().submodules}
+def get_datasets_path():
+    return {
+        os.path.basename(submodule.path): submodule.path
+        for submodule in git.Repo().submodules
+        if submodule.path.startswith("projects")
+    }
 
 
 def get_modified_datasets(
@@ -129,9 +133,11 @@ def get_modified_datasets(
     return modified_datasets
 
 
-def archive_dataset(dataset_path: str, out_dir: str, version: str) -> None:
-    os.makedirs(os.path.dirname(out_dir), mode=0o755, exist_ok=True)
-    out_filename = f"{out_dir}_version-{version}.tar.gz"
+def archive_dataset(
+    dataset_path: str, out_dir: str, archive_name: str, version: str
+) -> None:
+    os.makedirs(out_dir, mode=0o755, exist_ok=True)
+    out_filename = os.path.join(out_dir, f"{archive_name}_version-{version}.tar.gz")
     logger.info(f"Archiving dataset: {dataset_path} to {out_filename}")
 
     cwd = os.getcwd()
@@ -160,7 +166,8 @@ if __name__ == "__main__":
     args = parse_args()
 
     # Only archive the datasets available locally.
-    datasets = get_all_datasets()
+    datasets_path = get_datasets_path()
+    datasets = datasets_path.keys()
     if args.dataset:
         target_datasets = {os.path.basename(os.path.normpath(d)) for d in args.dataset}
         logger.warning(
@@ -176,7 +183,7 @@ if __name__ == "__main__":
         datasets &= modified_datasets
 
     for dataset_name in datasets:
-        dataset = "projects/" + dataset_name
+        dataset = datasets_path[dataset_name]
 
         try:
             logger.info(f"Installing dataset: {dataset}")
@@ -189,7 +196,13 @@ if __name__ == "__main__":
             with open(os.path.join(dataset, "DATS.json")) as fin:
                 metadata = json.load(fin)
 
-                is_public = metadata.get("privacy") == "open"
+                is_public = (
+                    metadata.get("distributions", [{}])[0]
+                    .get("access", {})
+                    .get("authorizations", [{}])[0]
+                    .get("value")
+                    == "public"
+                )
                 version = metadata.get("version")
 
                 for distribution in metadata.get("distributions", list()):
@@ -198,22 +211,34 @@ if __name__ == "__main__":
                     )
                     dataset_size //= 1024 ** 3  # Convert to GB
 
-            # Only archive public dataset less than 20GB
-            if dataset_size <= args.max_size and is_public:
-                logger.info(f"Downloading dataset: {dataset}")
-                get_dataset(dataset)
-                for submodule in get_proper_submodules(dataset):
-                    get_dataset(submodule)
+            # Only archive public dataset less than a specific size if one is provided to the script
+            if is_public:
+                if args.max_size is None or dataset_size <= args.max_size:
+                    logger.info(f"Downloading dataset: {dataset}")
+                    get_dataset(dataset)
+                    for submodule in get_proper_submodules(dataset):
+                        get_dataset(submodule)
 
-                archive_dataset(
-                    dataset,
-                    out_dir=os.path.join(args.out_dir, dataset_name),
-                    version=version,
-                )
-                logger.info(f"SUCCESS: archive created for {dataset}")
-
+                    archive_name = "__".join(
+                        os.path.relpath(dataset, "projects").split("/")
+                    )
+                    archive_dataset(
+                        dataset,
+                        out_dir=args.out_dir,
+                        archive_name=archive_name,
+                        version=version,
+                    )
+                    # to save space on the VM that archives the dataset, need to uninstall
+                    # the datalad dataset. `datalad drop` does not free up enough space
+                    # unfortunately. See https://github.com/datalad/datalad/issues/6009
+                    uninstall_dataset(dataset)
+                    logger.info(f"SUCCESS: archive created for {dataset}")
+                else:
+                    logger.info(f"SKIPPED: {dataset} larger than {args.max_size} GB")
             else:
-                logger.info(f"SKIPPED: archive not needed for {dataset}")
+                logger.info(
+                    f"SKIPPED: archive not needed for {dataset}. Non-public dataset."
+                )
 
         except Exception as e:
             # TODO implement notification system.

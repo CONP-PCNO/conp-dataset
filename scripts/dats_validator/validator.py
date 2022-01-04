@@ -253,8 +253,7 @@ def validate_is_about(dataset):
     "isAbout": [
         {
             "identifier": {
-                "identifier"      : "9606",
-                "identifierSource": "https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=9606"
+                "identifier"      : "https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=9606",
             },
             "name"      : "Homo sapiens"
         }
@@ -268,7 +267,7 @@ def validate_is_about(dataset):
         species_present = False
         for entry in dataset["isAbout"]:
             if "identifier" in entry.keys():
-                identifier_source = entry["identifier"]["identifierSource"].lower()
+                identifier_source = entry["identifier"]["identifier"].lower()
                 if identifier_source.startswith(identifier_source_base_url):
                     species_present = True
 
@@ -288,6 +287,42 @@ def validate_is_about(dataset):
         return True, errors_list
 
 
+def validate_types(dataset):
+    errors_list = []
+    if "types" in dataset.keys():
+        # 1 check for empty object inside of types list
+        empty_obj = [obj for obj in dataset["types"] if not obj]
+        if len(empty_obj) == len(dataset["types"]):
+            error_message = (
+                f"Validation in {dataset['title']}: types - list has no value."
+            )
+            errors_list.append(error_message)
+
+        # 2 check that only data_type_schema properties are present
+        for obj in dataset["types"]:
+            allowed_keys = [
+                "@context",
+                "@id",
+                "@type",
+                "information",
+                "method",
+                "platform",
+                "instrument",
+            ]
+            for key in obj.keys():
+                if key not in allowed_keys:
+                    error_message = (
+                        f"Validation in {dataset['title']}: "
+                        f"types - the key {key} is not supported by the schema."
+                    )
+                    errors_list.append(error_message)
+    # no need to check for types otherwise because this error will be caught by jsonschema validation
+    if errors_list:
+        return False, errors_list
+    else:
+        return True, errors_list
+
+
 def validate_recursively(obj, errors):
     """ Checks all datasets recursively for non-schema checks. """
 
@@ -300,6 +335,8 @@ def validate_recursively(obj, errors):
     val, errors_list = validate_privacy(obj)
     errors.extend(errors_list)
     val, errors_list = validate_is_about(obj)
+    errors.extend(errors_list)
+    val, errors_list = validate_types(obj)
     errors.extend(errors_list)
 
     if "hasPart" in obj:

@@ -91,6 +91,9 @@ def dats_jsonld_dataset_instance():
             "DatasetDistribution": "sdo:DataDownload",
             "distributions": {"@id": "sdo:distribution", "@type": "sdo:DataDownload"},
             "Dataset": "sdo:Dataset",
+            "keywords": {"@id": "sdo:keywords", "@type": "sdo:Thing"},
+            "version": {"@id": "sdo:version", "@type": "sdo:Thing"},
+            "types": {"@id": "sdo:identifier", "@type": "sdo:Thing"},
         },
     }
 

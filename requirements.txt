@@ -1,1 +1,2 @@
 datalad==0.13.3
+datalad-osf==0.2.3.1
