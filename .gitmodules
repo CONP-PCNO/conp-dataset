@@ -193,3 +193,6 @@
 [submodule "projects/mousebytes/MB-Co-transmission-of-cholinergic-interneurons"]
 	path = projects/mousebytes/MB-Co-transmission-of-cholinergic-interneurons
 	url = https://github.com/conpdatasets/MB-Co-transmission-of-cholinergic-interneurons.git
+[submodule "/data/crawler/conp-dataset/projects/Item_specific_overlap_between_hallucinatory_experiences_and_cognition_in_the_general_population___A_three_step_multivariate_analysis_of_international_multi_site_data"]
+	path = /data/crawler/conp-dataset/projects/Item_specific_overlap_between_hallucinatory_experiences_and_cognition_in_the_general_population___A_three_step_multivariate_analysis_of_international_multi_site_data
+	url = https://github.com/conp-bot/conp-dataset-Item-specific-overlap-between-hallucinatory-experiences-and-cognition-in-the-general-po.git
