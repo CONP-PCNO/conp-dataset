@@ -195,7 +195,7 @@
 	url = https://github.com/conpdatasets/MB-Co-transmission-of-cholinergic-interneurons.git
 [submodule "projects/Taowu"]
 	path = projects/Taowu
-	url = https://github.com/mohanadarafe/Taowu
+	url = https://github.com/conpdatasets/Taowu.git
 [submodule "projects/Neurocon"]
 	path = projects/Neurocon
-	url = https://github.com/mohanadarafe/Neurocon
+	url = https://github.com/conpdatasets/Neurocon.git
