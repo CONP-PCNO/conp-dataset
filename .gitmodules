@@ -194,3 +194,9 @@
 	path = projects/mousebytes/MB-Co-transmission-of-cholinergic-interneurons
 	url = https://github.com/conpdatasets/MB-Co-transmission-of-cholinergic-interneurons.git
 
+[submodule "projects/Taowu"]
+	path = projects/Taowu
+	url = https://github.com/conpdatasets/Taowu
+[submodule "projects/Neurocon"]
+	path = projects/Neurocon
+	url = https://github.com/conpdatasets/Neurocon
