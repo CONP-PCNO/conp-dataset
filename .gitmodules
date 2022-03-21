@@ -195,4 +195,10 @@
 	url = https://github.com/conpdatasets/MB-Co-transmission-of-cholinergic-interneurons.git
 [submodule "projects/mousebytes/MB-Heterogenous-task-representative-data"]
 	path = projects/mousebytes/MB-Heterogenous-task-representative-data
-	url = https://github.com/conpdatasets/MB-Heterogenous-task-representative-data
+	url = https://github.com/conpdatasets/MB-Heterogenous-task-representative-data.git
+[submodule "projects/Taowu"]
+	path = projects/Taowu
+	url = https://github.com/conpdatasets/Taowu.git
+[submodule "projects/Neurocon"]
+	path = projects/Neurocon
+	url = https://github.com/conpdatasets/Neurocon.git
