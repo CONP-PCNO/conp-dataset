@@ -99,7 +99,7 @@ def get_modified_datasets(
     if since is None:
         if os.path.exists(".conp-archive"):
             with open(".conp-archive") as fin:
-                since = datetime.fromisoformat(fin.read())
+                since = datetime.fromisoformat(fin.read().rstrip("\n"))
         else:
             since = now - timedelta(weeks=1)
 
