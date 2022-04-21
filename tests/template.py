@@ -168,7 +168,7 @@ class Template:
             matching_conp_dataset = list(
                 filter(
                     lambda x: x if x.url == input_submodule_url else None,
-                    super_dataset_repo.submodules
+                    super_dataset_repo.submodules,
                 )
             )[0]
 
