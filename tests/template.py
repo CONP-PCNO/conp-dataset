@@ -37,7 +37,7 @@ class Template:
 
         with lock:
             if len(os.listdir(dataset)) == 0:
-                api.install(path=dataset, recursive=False)
+                api.install(path=dataset, recursive=True)
         yield
 
     def test_has_readme(self, dataset):
@@ -151,3 +151,37 @@ class Template:
                 f"The dataset timed out after {TIME_LIMIT} seconds before retrieving a file."
                 "\nCannot determine if the test is valid.",
             )
+
+    def test_has_input_dataset_up_to_date(self, dataset):
+
+        dataset_repo = git.Repo(dataset)
+        super_dataset_path = dataset.replace(
+            f"/projects/{os.path.basename(dataset)}", ""
+        )
+        super_dataset_repo = git.Repo(super_dataset_path)
+
+        for input_submodule in dataset_repo.submodules:
+            input_submodule_repo = input_submodule.module()
+            input_submodule_commit = input_submodule_repo.commit()
+            input_submodule_url = input_submodule.url
+
+            matching_conp_dataset = list(
+                filter(
+                    lambda x: x if x.url == input_submodule_url else None,
+                    super_dataset_repo.submodules,
+                )
+            )[0]
+
+            source_dataset_repo = git.Repo(
+                os.path.join(super_dataset_path, matching_conp_dataset.path)
+            )
+            source_dataset_latest_commit = source_dataset_repo.commit()
+
+            if source_dataset_latest_commit != input_submodule_commit:
+                summary_error_message = (
+                    f"Submodule {input_submodule.path} of dataset {dataset} needs"
+                    f"to be updated. Commit of original dataset is "
+                    f"{source_dataset_latest_commit} while commit of the"
+                    f"submodule is {input_submodule}"
+                )
+                pytest.fail(summary_error_message, pytrace=False)
