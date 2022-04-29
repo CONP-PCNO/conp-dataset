@@ -155,9 +155,6 @@ class Template:
     def test_has_input_dataset_up_to_date(self, dataset):
 
         dataset_repo = git.Repo(dataset)
-        super_dataset_path = dataset.replace(
-            f"/projects/{os.path.basename(dataset)}", ""
-        )
         super_dataset_repo = git.Repo(os.getcwd())
 
         for input_submodule in dataset_repo.submodules:
