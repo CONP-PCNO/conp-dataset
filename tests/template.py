@@ -168,7 +168,11 @@ class Template:
                     super_dataset_repo.submodules,
                 )
             )
-            matching_conp_dataset = matching_list[0] if matching_list else None
+
+            if not len(matching_list) == 1:
+                break
+
+            matching_conp_dataset = matching_list[0]
 
             with lock:
                 if len(os.listdir(matching_conp_dataset.abspath)) == 0:
