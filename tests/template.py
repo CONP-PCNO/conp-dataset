@@ -162,12 +162,13 @@ class Template:
             input_submodule_commit = input_submodule_repo.commit()
             input_submodule_url = input_submodule.url
 
-            matching_conp_dataset = list(
+            matching_list = list(
                 filter(
                     lambda x: x if x.url == input_submodule_url else None,
                     super_dataset_repo.submodules,
                 )
-            )[0]
+            )
+            matching_conp_dataset = matching_list[0] if matching_list else None
 
             with lock:
                 if len(os.listdir(matching_conp_dataset.abspath)) == 0:
