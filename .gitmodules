@@ -203,5 +203,5 @@
 	path = projects/Neurocon
 	url = https://github.com/conpdatasets/Neurocon.git
 [submodule "/data/crawler/conp-dataset/projects/An_interactive_meta_analysis_of_MRI_biomarkers_of_myelin"]
-	path = /data/crawler/conp-dataset/projects/An_interactive_meta_analysis_of_MRI_biomarkers_of_myelin
+	path = projects/An_interactive_meta_analysis_of_MRI_biomarkers_of_myelin
 	url = https://github.com/conp-bot/conp-dataset-An-interactive-meta-analysis-of-MRI-biomarkers-of-myelin.git
