@@ -202,7 +202,6 @@
 [submodule "projects/Neurocon"]
 	path = projects/Neurocon
 	url = https://github.com/conpdatasets/Neurocon.git
-
 [submodule "projects/CCNA_COMPASS-ND"]
 	path = projects/CCNA_COMPASS-ND
 	url = https://github.com/conpdatasets/CCNA_COMPASS-ND
