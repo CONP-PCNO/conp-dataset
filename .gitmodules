@@ -202,3 +202,6 @@
 [submodule "projects/Neurocon"]
 	path = projects/Neurocon
 	url = https://github.com/conpdatasets/Neurocon.git
+[submodule "/data/crawler/conp-dataset/projects/_3_step_CPCA"]
+	path = /data/crawler/conp-dataset/projects/_3_step_CPCA
+	url = https://github.com/conp-bot/conp-dataset-3-step-CPCA.git
