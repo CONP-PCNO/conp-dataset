@@ -206,3 +206,15 @@
 [submodule "projects/CCNA_COMPASS-ND"]
 	path = projects/CCNA_COMPASS-ND
 	url = https://github.com/conpdatasets/CCNA_COMPASS-ND
+[submodule "projects/braincode_CAN-BIND_Biomarkers_for_Depression_Baseline_Data_Release"]
+	path = projects/braincode_CAN-BIND_Biomarkers_for_Depression_Baseline_Data_Release
+	url = https://github.com/conpdatasets/braincode_CAN-BIND_Biomarkers_for_Depression_Baseline_Data_Release
+[submodule "projects/braincode_ONDRI_Foundation_Study_Baseline_Data_Release"]
+	path = projects/braincode_ONDRI_Foundation_Study_Baseline_Data_Release
+	url = https://github.com/conpdatasets/braincode_ONDRI_Foundation_Study_Baseline_Data_Release
+[submodule "projects/braincode_POND_Registry_Clinical_Data_Release"]
+	path = projects/braincode_POND_Registry_Clinical_Data_Release
+	url = https://github.com/conpdatasets/braincode_POND_Registry_Clinical_Data_Release
+[submodule "projects/braincode_SP_Predicting_Persistent_Postconcussive_Problems_in_Pediatric"]
+	path = projects/braincode_SP_Predicting_Persistent_Postconcussive_Problems_in_Pediatric
+	url = https://github.com/conpdatasets/braincode_SP_Predicting_Persistent_Postconcussive_Problems_in_Pediatric
