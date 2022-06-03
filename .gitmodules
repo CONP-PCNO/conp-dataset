@@ -202,3 +202,27 @@
 [submodule "projects/Neurocon"]
 	path = projects/Neurocon
 	url = https://github.com/conpdatasets/Neurocon.git
+
+[submodule "projects/CCNA_COMPASS-ND"]
+	path = projects/CCNA_COMPASS-ND
+	url = https://github.com/conpdatasets/CCNA_COMPASS-ND
+[submodule "projects/C-OPN_LORIS"]
+	path = projects/C-OPN_LORIS
+	url = https://github.com/conpdatasets/C-OPN_LORIS
+	datalad-id = 88b76210-a761-4e1d-a327-fb3fe246dff3
+[submodule "projects/braincode_CAN-BIND_Biomarkers_for_Depression_Baseline_Data_Release"]
+	path = projects/braincode_CAN-BIND_Biomarkers_for_Depression_Baseline_Data_Release
+	url = https://github.com/conpdatasets/braincode_CAN-BIND_Biomarkers_for_Depression_Baseline_Data_Release
+	datalad-id = 59c0976e-4491-47b6-94b1-5321755a8bd5
+[submodule "projects/braincode_ONDRI_Foundation_Study_Baseline_Data_Release"]
+	path = projects/braincode_ONDRI_Foundation_Study_Baseline_Data_Release
+	url = https://github.com/conpdatasets/braincode_ONDRI_Foundation_Study_Baseline_Data_Release
+	datalad-id = 07e92b01-5e8f-499e-9402-f32fbeb9cb08
+[submodule "projects/braincode_POND_Registry_Clinical_Data_Release"]
+	path = projects/braincode_POND_Registry_Clinical_Data_Release
+	url = https://github.com/conpdatasets/braincode_POND_Registry_Clinical_Data_Release
+	datalad-id = dab40634-244d-464a-82a9-5870dc6d90b7
+[submodule "projects/braincode_SP_Predicting_Persistent_Postconcussive_Problems_in_Pediatric"]
+	path = projects/braincode_SP_Predicting_Persistent_Postconcussive_Problems_in_Pediatric
+	url = https://github.com/conpdatasets/braincode_SP_Predicting_Persistent_Postconcussive_Problems_in_Pediatric
+	datalad-id = 1e3c8049-978e-4c97-a980-9ab818d8ad3b
