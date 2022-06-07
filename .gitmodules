@@ -218,3 +218,15 @@
 [submodule "projects/braincode_SP_Predicting_Persistent_Postconcussive_Problems_in_Pediatric"]
 	path = projects/braincode_SP_Predicting_Persistent_Postconcussive_Problems_in_Pediatric
 	url = https://github.com/conpdatasets/braincode_SP_Predicting_Persistent_Postconcussive_Problems_in_Pediatric
+[submodule "projects/C-OPN_LORIS"]
+	path = projects/C-OPN_LORIS
+	url = https://github.com/conpdatasets/C-OPN_LORIS
+	datalad-id = 88b76210-a761-4e1d-a327-fb3fe246dff3
+[submodule "projects/braincode_5P_Predicting_Persistent_Postconcussive_Problems_in_Pediatric"]
+	path = projects/braincode_5P_Predicting_Persistent_Postconcussive_Problems_in_Pediatric
+	url = https://github.com/conpdatasets/braincode_SP_Predicting_Persistent_Postconcussive_Problems_in_Pediatric
+	datalad-id = 1e3c8049-978e-4c97-a980-9ab818d8ad3b
+[submodule "projects/braincode_POND_Registry_Imaging_Data_Release"]
+	path = projects/braincode_POND_Registry_Imaging_Data_Release
+	url = https://github.com/conpdatasets/braincode_POND_Registry_Imaging_Data_Release
+	datalad-id = 7b1ea2b5-84ff-4df0-8c5e-61b85dc93ac3
