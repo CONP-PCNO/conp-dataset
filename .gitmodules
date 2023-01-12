@@ -220,3 +220,7 @@
 [submodule "projects/NiMARE__Neuroimaging_Meta_Analysis_Research_Environment"]
 	path = projects/NiMARE__Neuroimaging_Meta_Analysis_Research_Environment
 	url = https://github.com/conp-bot/conp-dataset-NiMARE-Neuroimaging-Meta-Analysis-Research-Environment.git
+[submodule "projects/braincode_Epilepsy_Priority_Setting_Partnership"]
+	path = projects/braincode_Epilepsy_Priority_Setting_Partnership
+	url = https://github.com/conpdatasets/braincode_Epilepsy_Priority_Setting_Partnership
+  
