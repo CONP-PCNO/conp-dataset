@@ -9,6 +9,7 @@ from contextlib import contextmanager
 from functools import reduce
 
 import datalad.api as api
+from datalad.support.annexrepo import AnnexRepo
 import git
 import humanize
 import keyring
@@ -113,22 +114,26 @@ def is_authentication_required(dataset):
                 for distrubtion in distributions:
                     authorizations = distrubtion["access"]["authorizations"]
 
-                    if any(
+                    if all(
                         [
-                            authorization["value"] != "public"
+                            authorization["value"] == "public"
                             for authorization in authorizations
                         ],
                     ):
-                        return True
-
-                return False
+                        return False
             except KeyError as e:
                 print(f"{str(e)} field not found in DATS.json")
-
     except FileNotFoundError as e:
         pytest.fail(f"DATS.json was not found!\n{str(e)}", pytrace=False)
     except Exception as e:
         pytest.fail(f"Authentication error!\n{str(e)}", pytrace=False)
+
+    # At least one distribution has non-public authorization
+    if len(AnnexRepo(dataset).get_annexed_files()) == 0:
+        # There is not actually any annexed content
+        return False
+
+    return True
 
 
 def generate_datalad_provider(loris_api):
