@@ -177,7 +177,7 @@ class TestGenerateJsonldPath:
         # Then we want this to error out here
         # We only create output directories at the start
         out_path = tmp_path / "nonexistent"
-        with pytest.raises(Exception):
+        with pytest.raises(ValueError):
             gen_jsonld_outpath(dats_path, out_path)
 
     def test_output_path_is_none(self, tmp_path, dats_path):
@@ -199,7 +199,7 @@ class TestGenerateJsonldPath:
 
     def test_output_dir_fails(self, tmp_path, dats_path):
         out_path = tmp_path / "some" / "arbitrary" / "path"
-        with pytest.raises(Exception):
+        with pytest.raises(ValueError):
             gen_jsonld_outpath(dats_path, out_path)
 
 
