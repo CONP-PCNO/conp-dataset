@@ -9,11 +9,11 @@ from contextlib import contextmanager
 from functools import reduce
 
 import datalad.api as api
-from datalad.support.annexrepo import AnnexRepo
 import git
 import humanize
 import keyring
 import pytest
+from datalad.support.annexrepo import AnnexRepo
 from git.exc import InvalidGitRepositoryError
 
 
