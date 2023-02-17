@@ -10,6 +10,7 @@ repos:
       - id: check-yaml
       - id: debug-statements
       - id: end-of-file-fixer
+        exclude: '.*(\.gitmodules|\.datalad/config|\.gitattributes)$'
       - id: check-executables-have-shebangs
   # Disable until a stable version of type annotation is out.
   # - repo: https://github.com/pre-commit/mirrors-mypy
