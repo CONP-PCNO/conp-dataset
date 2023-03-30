@@ -26,7 +26,6 @@ my $outfile      = "DATS.json-summary.csv";
 my $json_string  = "";
 my $infilecount  = 0;
 my $sigchar      = "";
-my $max_col      = 0;
 
 open(IN_LIST, "$inlist") || die "Can't open $inlist to read";
 
@@ -54,7 +53,7 @@ while ($listline = <IN_LIST>) {
     my $col_count     = 0;
 
     open (IN, $listline);
-    local $/; # slurp mode
+    local $/; # "slurp mode" - read entire file as a single string
     $json_string = <IN>;
     $json_string =~ s/\n//g;
 	$json_string =~ s/\t//g;
@@ -162,7 +161,9 @@ while ($listline = <IN_LIST>) {
 					$all_entities[$infilecount][$col_count][0] = $outkey;
 					$all_entities[$infilecount][$col_count][1] = $value;
 					++$col_count;
-#					print "Writing out $col_count $outkey => $value\n\n";
+					if ($infilecount == 1) {
+						print "Writing out $infilecount $col_count $outkey => $value\n\n";
+					}
 				}  
 			}
 		}
@@ -186,7 +187,7 @@ while ($listline = <IN_LIST>) {
     }
     close IN;	
 
-#	print "Reading row $infilecount total columns $col_count\n";
+	print "Reading row $infilecount total columns $col_count\n";
 
 	# reformat the extraProperties entries
 	
@@ -213,51 +214,58 @@ while ($listline = <IN_LIST>) {
 		++$col_count; ++$x2;
 	}
 
-	if ($infilecount == 0) {
-		$max_col = $col_count;
-	}
-	else {
-		if ($col_count > $max_col) {
-			$max_col = $col_count;
-		}
-	}
-
     ++$infilecount;
+#	last if $infilecount > 2; # debug
     $col_count = 0;
     $sigchar = "";
 }
 close IN_LIST;
 
-# extract unique column headers into single array
+# merge by headers to give consistent array
 
-my @merged_keys  = ();
-my @merged_vals  = ();
-my %merge_ref;
+my @merged  = ();
 my %handled;
 my $all_row = 0;
 my $all_col = 0;
+my $merge_col = 0;
+my $col_found = 0;
 my $merge_count = 0;
 my $search_string = ""; 
 while ($all_row < $infilecount) {
+	$all_col = 0;
     if ($all_row == 0) {  # first row
-		$all_col = 0;
-		while ($all_col < $max_col) {
-			$merged_keys[$merge_count]    = $all_entities[$all_row][$all_col][0];
-			$merged_vals[$merge_count]    = $all_entities[$all_row][$all_col][1];
-			$merge_ref{$merged_keys[$merge_count]} = $merge_count;
-			$handled{$merged_keys[$merge_count]}   = 0;
+		while (exists $all_entities[$all_row][$all_col][0]) {
+			$merged[$merge_count][$all_row][0] = $all_entities[$all_row][$all_col][0];
+			$merged[$merge_count][$all_row][1] = $all_entities[$all_row][$all_col][1];
+			$handled{$merge_count}   = 0;
+#			print "First row $merged[$merge_count][$all_row][0] value $merged[$merge_count][$all_row][1] at row $all_row column $merge_count\n";
 			++$merge_count;
 			++$all_col;
 		}
 	}
 	else {
-		while ($all_col < $max_col) {
+		while (exists $all_entities[$all_row][$all_col][0]) {
 			$search_string = $all_entities[$all_row][$all_col][0];
-			unless (grep(/^$search_string$/,@merged_keys)) {   # only store it if it does not already exist
-				$merged_keys[$merge_count]    = $all_entities[$all_row][$all_col][0];
-				$merged_vals[$merge_count]    = $all_entities[$all_row][$all_col][1];
-				$merge_ref{$merged_keys[$merge_count]} = $all_col;
-				$handled{$merged_keys[$merge_count]}   = 0;
+			$merge_col = 0;
+			$col_found = 0;
+			while($merge_col < $merge_count) {
+#				if ($merge_col < 10) {
+#					print "comparing row $all_row column $merge_col ||$merged[$merge_col][0][0]|| with search string ||$search_string||\n";
+#				}
+				if ($merged[$merge_col][0][0] eq $search_string) {   # column already exists
+					$col_found = 1;
+					$merged[$merge_col][$all_row][0] = $all_entities[$all_row][$all_col][0];
+					$merged[$merge_col][$all_row][1] = $all_entities[$all_row][$all_col][1];
+#					print "found match ||$merged[$merge_col][0][0]|| value $merged[$merged_col][$all_row][1] at column $merge_col row $all_row \n";
+					last;	# end inner loop when we find a match
+				}
+				++$merge_col;
+			}
+			if ($col_found == 0) {    # column was not found in merged file
+				$merged[$merge_col][$all_row][0] = $all_entities[$all_row][$all_col][0];
+				$merged[$merge_col][$all_row][1] = $all_entities[$all_row][$all_col][1];
+				$handled{$merge_col} = 0;
+#				print "Adding new column ||$merged[$merge_col][$all_row][0]|| value $merged[$merge_col][$all_row][1] at column $merge_col from column $all_entities[$all_row][$all_col][1] at $all_col in row $all_row \n";
 				++$merge_count;
 			}
 			++$all_col; 
@@ -267,6 +275,18 @@ while ($all_row < $infilecount) {
 	++$all_row;
 }
 
+# debug file
+
+open TEST, ">temp_debug_merged.txt";
+$y = 0;
+while ($y < $merge_count) {
+	$x = 0;
+	while ($x < $all_row) {
+		print TEST "$y $x  ||$merged[$y][$x][0]|| ||$merged[$y][$x][1]||\n";
+		++$x;
+	}
+	++$y;
+}
 
 # read in the externally defined ordering (list of fields from CONP documentation)
 
@@ -280,7 +300,6 @@ while ($maskline = <MASK>) {
 	$templates[$temp_count] = $maskline;  # read this string as a regex pattern
 	++$temp_count;
 }
-
 close MASK;
 
 # search keys for each template in turn
@@ -289,12 +308,12 @@ my @output_header = ();
 my @output_array  = ();
 my $out_column    = 0;
 my $out_row       = 0;
-
-my $tc = $mc = 0;
-my %subhash;
-my $debug_count;
+my $row           = 0;
+my $tc = $mc = $sc = 0;
+my @subset = ();
+my $subcount = 0;
 while($tc < $temp_count) {
-    %subhash = ();
+    @subset = ();
     my $search_string = qr/$templates[$tc]/;
 
 	# extract subset of merged columns matching this template
@@ -302,52 +321,75 @@ while($tc < $temp_count) {
 #	print "Searching search string $tc $search_string\n"; 
 
 	$mc = 0;
-    $debug_count = 0;
 	while ($mc < $merge_count) {
-		if (($merged_keys[$mc] =~ /$search_string/) && ($handled{$merged_keys[$mc]} == 0)) {
-			$subhash{$merged_keys[$mc]} = $merged_vals[$mc];
-#			print "key $merged_keys[$mc] value $merged_vals[$mc]\n";
-			$handled{$merged_keys[$mc]} = 1;
-			++$debug_count;
+		$row = 0;
+#		print "Searching column $mc row $row |-|$merged[$mc][$row][0]|-| with $search_string - handled state = $handled{$mc}\n";		
+		if ($handled{$mc} == 0) {   # not yet been processed
+#			print "Searching column $mc $merged[$mc][$row][0] $search_string\n";
+			if ($merged[$mc][$row][0] =~ /$search_string/) {
+				$row = 0;
+				while ($row < $infilecount) {
+					$subset[$subcount][$row][0] = $merged[$mc][$row][0];
+					$subset[$subcount][$row][1] = $merged[$mc][$row][1];
+#					print "$search_string matches key $subset[$subcount][$row][0] at $mc $row value $subset[$subcount][$row][1]\n";
+					++$row;
+				}
+				++$subcount;
+				$handled{$mc} = 1;
+			}
 		}
 		++$mc;
 	}
 
-#	print "retrieved $debug_count columns matching search string\n";
 
-	# look up each key in every row of @all_entities
+open TEST, ">temp_debug_file" || die "cannot open temp_debug_file";
+$x = 0;
+while ($x < $infilecount) {
+	$y = 0;
+	while ($y < $subcount) {
+		print TEST "$x $y $subset[$y][$x][0] $subset[$y][$x][1]\n";
+		++$y;
+	}
+	++$x;
+}
+close TEST;
 
-	foreach $key (sort keys %subhash) { # should sort them in alphabetical order
-		$output_header[$out_column] = $key;
+	# and write to output array
+
+	$sc = 0;
+	while ($sc < $subcount) {
+		$output_header[$out_column] = $subset[$sc][$row][0];
 		$out_row = 0;
 		while ($out_row < $infilecount) {
-			if (exists $all_entities[$out_row][$merge_ref{$key}][1]) {
-				$output_array[$out_column][$out_row] = $all_entities[$out_row][$merge_ref{$key}][1];
-#				print "at column $key at position $merge_ref{$key} we find $all_entities[$out_row][$merge_ref{$key}][1]\n";
-			}
-			else {
-				$output_array[$out_column][$out_row] = "";
-			}
+			$output_array[$out_column][$out_row] = $subset[$sc][$row][1];
+#			if ($out_row < 7) {
+#				print "at $output_header[$out_column] column $out_column in row $out_row we find $output_array[$out_column][$out_row]\n";
+#			}
+#			else {
+#				$output_array[$out_column][$out_row] = "";
+#			}
 			++$out_row;
 		}
+		++$sc;
 		++$out_column;   # unlike the other counters $out_column is _not_ reset to 0 within this logic
 	}
 
-	++$tc;	
+
+	++$tc;	  # move on to next template
 }
 
 # (trap exceptions here)
 
 
-open TEST, ">temp_debug_file" || die "cannot open temp_debug_file";
-$x = 0;
-while ($x < $merge_count) {
-	if ($handled{$merged_keys[$x]} == 0) {  # has not been handled 
-		print TEST "$x $merged_keys[$x] $merged_vals[$x]\n";
-	}
-	++$x;
-}
-close TEST;
+#open TEST, ">temp_debug_file" || die "cannot open temp_debug_file";
+#$x = 0;
+#while ($x < $merge_count) {
+#	if ($handled{$merged_keys[$x]} == 0) {  # has not been handled 
+#		print TEST "$x $merged_keys[$x] $merged_vals[$x]\n";
+#	}
+#	++$x;
+#}
+#close TEST;
 
 
 # output
@@ -392,5 +434,4 @@ while ($out_row < $infilecount) {
 close OUT;
 
 exit();
-
 
