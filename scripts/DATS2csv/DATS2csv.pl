@@ -162,7 +162,7 @@ while ($listline = <IN_LIST>) {
 					$all_entities[$infilecount][$col_count][1] = $value;
 					++$col_count;
 					if ($infilecount == 1) {
-						print "Writing out $infilecount $col_count $outkey => $value\n\n";
+#						print "Writing out $infilecount $col_count $outkey => $value\n\n";
 					}
 				}  
 			}
@@ -187,7 +187,7 @@ while ($listline = <IN_LIST>) {
     }
     close IN;	
 
-	print "Reading row $infilecount total columns $col_count\n";
+#	print "Reading row $infilecount total columns $col_count\n";
 
 	# reformat the extraProperties entries
 	
@@ -238,7 +238,7 @@ while ($all_row < $infilecount) {
 			$merged[$merge_count][$all_row][0] = $all_entities[$all_row][$all_col][0];
 			$merged[$merge_count][$all_row][1] = $all_entities[$all_row][$all_col][1];
 			$handled{$merge_count}   = 0;
-#			print "First row $merged[$merge_count][$all_row][0] value $merged[$merge_count][$all_row][1] at row $all_row column $merge_count\n";
+			print "First row $merged[$merge_count][$all_row][0] value $merged[$merge_count][$all_row][1] at row $all_row column $merge_count\n";
 			++$merge_count;
 			++$all_col;
 		}
@@ -311,9 +311,12 @@ my $out_row       = 0;
 my $row           = 0;
 my $tc = $mc = $sc = 0;
 my @subset = ();
+my @subs_header = ();
 my $subcount = 0;
 while($tc < $temp_count) {
     @subset = ();
+	@subs_header = ();
+	$subcount = 0;
     my $search_string = qr/$templates[$tc]/;
 
 	# extract subset of merged columns matching this template
@@ -322,16 +325,16 @@ while($tc < $temp_count) {
 
 	$mc = 0;
 	while ($mc < $merge_count) {
-		$row = 0;
 #		print "Searching column $mc row $row |-|$merged[$mc][$row][0]|-| with $search_string - handled state = $handled{$mc}\n";		
 		if ($handled{$mc} == 0) {   # not yet been processed
-#			print "Searching column $mc $merged[$mc][$row][0] $search_string\n";
-			if ($merged[$mc][$row][0] =~ /$search_string/) {
+#			print "Searching column $mc of $merge_count $merged[$mc][0][0] $search_string\n";
+			if ($merged[$mc][0][0] =~ /$search_string/) {
+				$subs_header[$subcount] = $merged[$mc][0][0];
 				$row = 0;
 				while ($row < $infilecount) {
 					$subset[$subcount][$row][0] = $merged[$mc][$row][0];
 					$subset[$subcount][$row][1] = $merged[$mc][$row][1];
-#					print "$search_string matches key $subset[$subcount][$row][0] at $mc $row value $subset[$subcount][$row][1]\n";
+					print "$search_string matches key $merged[$mc][0][0] at $mc $row key $subset[$subcount][$row][0] value $subset[$subcount][$row][1] added at $subcount $row\n";
 					++$row;
 				}
 				++$subcount;
@@ -341,29 +344,33 @@ while($tc < $temp_count) {
 		++$mc;
 	}
 
+	print "after searching $search_string the search subset contains $subcount columns.\n";
 
-open TEST, ">temp_debug_file" || die "cannot open temp_debug_file";
-$x = 0;
-while ($x < $infilecount) {
-	$y = 0;
-	while ($y < $subcount) {
-		print TEST "$x $y $subset[$y][$x][0] $subset[$y][$x][1]\n";
-		++$y;
+	$debug_file = "temp_debug_file".$tc;
+
+	open TEST, ">$debug_file" || die "cannot open temp_debug_file to write";
+	print TEST "updating... infilecount = $infilecount subcount = $subcount\n";
+	$x = 0;
+	while ($x < $infilecount) {
+		$y = 0;
+		while ($y < $subcount) {
+			print TEST "$x $y $subset[$y][$x][0] $subset[$y][$x][1]\n";
+			++$y;
+		}
+		++$x;
 	}
-	++$x;
-}
-close TEST;
+	close TEST;
 
 	# and write to output array
 
 	$sc = 0;
 	while ($sc < $subcount) {
-		$output_header[$out_column] = $subset[$sc][$row][0];
+		$output_header[$out_column] = $subs_header[$sc];
 		$out_row = 0;
 		while ($out_row < $infilecount) {
-			$output_array[$out_column][$out_row] = $subset[$sc][$row][1];
+			$output_array[$out_column][$out_row] = $subset[$sc][$out_row][1];
 #			if ($out_row < 7) {
-#				print "at $output_header[$out_column] column $out_column in row $out_row we find $output_array[$out_column][$out_row]\n";
+				print "at $output_header[$out_column] column $out_column in row $out_row we find $output_array[$out_column][$out_row]\n";
 #			}
 #			else {
 #				$output_array[$out_column][$out_row] = "";
@@ -371,11 +378,10 @@ close TEST;
 			++$out_row;
 		}
 		++$sc;
-		++$out_column;   # unlike the other counters $out_column is _not_ reset to 0 within this logic
+		++$out_column;   # unlike the other counters $out_column is _not_ reset to 0 within this loop
 	}
 
-
-	++$tc;	  # move on to next template
+	++$tc;	  # and move to next template
 }
 
 # (trap exceptions here)
