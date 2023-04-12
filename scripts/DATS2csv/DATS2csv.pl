@@ -7,9 +7,9 @@
 #
 #  Generate the input file list by downloading conp-dataset using DataLad and then extracting
 #  the locations of all the DATS.json files in the directory
-# 
+#
 #  find /data/temp-datasets/emmetaobrien/conp-dataset -type f | grep DATS.json > t
-# 
+#
 # Right now (Mar 2023) the contents of conp_dataset are a little over 10,000 files so this may take some time
 #
 ########################################
@@ -64,7 +64,7 @@ while ($listline = <IN_LIST>) {
         	$sigchar = substr($json_string,0,1);
         }
 		else {
-			$json_string =~ s/^\s+//;            		
+			$json_string =~ s/^\s+//;
 			next;
 		}
 #		$debug_length = length($json_string);
@@ -84,16 +84,16 @@ while ($listline = <IN_LIST>) {
 			$korv_state = "key";
 			$key =~ /(^.*)\./;  # greedy match should pick up everything before the last .
 			$key = $1;
-			--$key_depth;			 				
+			--$key_depth;
 			if ($context_stack[$stack_depth] eq "[") {
 				$key =~ /(^.*)\./;  # greedy match should pick up everything before the last .
 				$key = $1;
 				++$array_pos[$stack_depth];
 				if ($array_pos[$stack_depth] < 10) {
 					$key .= ".0".$array_pos[$stack_depth];   # pad for better sorting/readability
-				}				
-				else {				
-					$key .= ".".$array_pos[$stack_depth];				
+				}
+				else {
+					$key .= ".".$array_pos[$stack_depth];
 				}
 			}
          }
@@ -101,9 +101,9 @@ while ($listline = <IN_LIST>) {
 			$context_stack[$stack_depth] = "[";
 			$array_pos[$stack_depth]     = 1;
 			$key .= ".0".$array_pos[$stack_depth];
-			++$key_depth;			 
+			++$key_depth;
             ++$stack_depth;
-			$json_string =~ s/^\s+//;          
+			$json_string =~ s/^\s+//;
          }
          if ($sigchar eq "]") {
 			$context_stack[$stack_depth] = "";
@@ -121,10 +121,10 @@ while ($listline = <IN_LIST>) {
 				++$array_pos[$stack_depth-1];
 				if ($array_pos[$stack_depth-1] < 10) {
 					$key .= ".0".$array_pos[$stack_depth-1];
-				}				
-				else {				
-					$key .= ".".$array_pos[$stack_depth-1];				
-				}			
+				}
+				else {
+					$key .= ".".$array_pos[$stack_depth-1];
+				}
 			}
 			$korv_state = "key";
 		}
@@ -144,8 +144,8 @@ while ($listline = <IN_LIST>) {
 					$key .= ".";
 				}
 				$key .= $key_component;
-				++$key_depth;				
-			}            
+				++$key_depth;
+			}
 			if ($korv_state eq "value") {
 				$json_string =~ /(^.*?\")(.*)$/;
 				$value = $1; $json_string = $2;
@@ -164,14 +164,14 @@ while ($listline = <IN_LIST>) {
 					if ($infilecount == 1) {
 #						print "Writing out $infilecount $col_count $outkey => $value\n\n";
 					}
-				}  
+				}
 			}
 		}
 		if ($sigchar =~ /\d/) {   # trapping a numerical value
 			if ($korv_state eq "value") {
 				$json_string = $sigchar.$json_string;
-				$json_string =~ /^(\d+(?:\.\d+)?|\.\d+)(.*)$/;  # match any digits or decimal point until next 
-				$value = $1; $json_string = $2; # first digit is the character we are testing 
+				$json_string =~ /^(\d+(?:\.\d+)?|\.\d+)(.*)$/;  # match any digits or decimal point until next
+				$value = $1; $json_string = $2; # first digit is the character we are testing
 				$outkey = substr($key,1);       # cut the initial . representing the root level
 											    # this is for neat output rather than function
 				$all_entities[$infilecount][$col_count][0] = $outkey;
@@ -180,19 +180,19 @@ while ($listline = <IN_LIST>) {
 #				print "Writing out $col_count $outkey => $value\n";
                 $korv_state = "key";
 			}
-        }		
+        }
 		$json_string =~ s/^\s+//;
 #		print "context = $context_stack[$stack_depth-1] array position = $array_pos[$stack_depth-1]\n";
-#		print "key == $key key depth = $key_depth value == $value state == $korv_state\n remaining string starts||". substr($json_string,0,30)."||\n\n";			
+#		print "key == $key key depth = $key_depth value == $value state == $korv_state\n remaining string starts||". substr($json_string,0,30)."||\n\n";
     }
-    close IN;	
+    close IN;
 
 #	print "Reading row $infilecount total columns $col_count\n";
 
 	# reformat the extraProperties entries
-	
+
     my @temp_extra = ();
-	my $c = $x = 0; 
+	my $c = $x = 0;
 	while ($c < $col_count) {
 		if ($all_entities[$infilecount][$c][0] =~ /^extraProperties\.\d\d\.category/) {
 			$temp_extra[$x][0] = "extraProperties.".$all_entities[$infilecount][$c][1];   #extract "category" and "value" values
@@ -230,7 +230,7 @@ my $all_col = 0;
 my $merge_col = 0;
 my $col_found = 0;
 my $merge_count = 0;
-my $search_string = ""; 
+my $search_string = "";
 while ($all_row < $infilecount) {
 	$all_col = 0;
     if ($all_row == 0) {  # first row
@@ -268,7 +268,7 @@ while ($all_row < $infilecount) {
 #				print "Adding new column ||$merged[$merge_col][$all_row][0]|| value $merged[$merge_col][$all_row][1] at column $merge_col from column $all_entities[$all_row][$all_col][1] at $all_col in row $all_row \n";
 				++$merge_count;
 			}
-			++$all_col; 
+			++$all_col;
 		}
 	}
 #	print "Merged column set length $merge_count at row $all_row\n";
@@ -320,12 +320,12 @@ while($tc < $temp_count) {
     my $search_string = qr/$templates[$tc]/;
 
 	# extract subset of merged columns matching this template
-	
-#	print "Searching search string $tc $search_string\n"; 
+
+#	print "Searching search string $tc $search_string\n";
 
 	$mc = 0;
 	while ($mc < $merge_count) {
-#		print "Searching column $mc row $row |-|$merged[$mc][$row][0]|-| with $search_string - handled state = $handled{$mc}\n";		
+#		print "Searching column $mc row $row |-|$merged[$mc][$row][0]|-| with $search_string - handled state = $handled{$mc}\n";
 		if ($handled{$mc} == 0) {   # not yet been processed
 #			print "Searching column $mc of $merge_count $merged[$mc][0][0] $search_string\n";
 			if ($merged[$mc][0][0] =~ /$search_string/) {
@@ -390,7 +390,7 @@ while($tc < $temp_count) {
 #open TEST, ">temp_debug_file" || die "cannot open temp_debug_file";
 #$x = 0;
 #while ($x < $merge_count) {
-#	if ($handled{$merged_keys[$x]} == 0) {  # has not been handled 
+#	if ($handled{$merged_keys[$x]} == 0) {  # has not been handled
 #		print TEST "$x $merged_keys[$x] $merged_vals[$x]\n";
 #	}
 #	++$x;
@@ -414,7 +414,7 @@ while ($out_row < $infilecount) {
 }
 ++$oc;
 
-# now concatenate all the rest 
+# now concatenate all the rest
 
 while ($oc < $out_column) {
 	unless (($output_header[$oc] =~ /hasPart/) || ($output_header[$oc] =~ /^dummy$/)) {            # remove these lines for the moment
@@ -440,4 +440,3 @@ while ($out_row < $infilecount) {
 close OUT;
 
 exit();
-
