@@ -223,6 +223,4 @@
 [submodule "projects/braincode_EpLink"]
 	path = projects/braincode_EpLink
 	url = https://github.com/CONP-PCNO/braincode_EpLink
-[submodule "projects/refseq/refseq_Mus_musculus"]
-	path = projects/refseq/refseq_Mus_musculus
-	url = https://github.com/emmetaobrien/refseq_Mus_musculus.git
+
