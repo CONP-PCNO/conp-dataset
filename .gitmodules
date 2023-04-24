@@ -224,3 +224,6 @@
 [submodule "projects/refseq/refseq_Mus_musculus"]
 	path = projects/refseq/refseq_Mus_musculus
 	url = https://github.com/conpdatasets/refseq_Mus_musculus.git
+[submodule "projects/Taowu_local"]
+	path = projects/Taowu_local
+	url = https://github.com/conpdatasets/Taowu_local
