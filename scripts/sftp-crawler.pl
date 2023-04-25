@@ -52,5 +52,3 @@ while ($inline = <IN_LARGE>) {
 close IN_LARGE;
 
 exit();
-
-
