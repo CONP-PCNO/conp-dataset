@@ -223,3 +223,6 @@
 [submodule "projects/Taowu"]
 	path = projects/Taowu
 	url = https://github.com/conpdatasets/Taowu
+[submodule "projects/cneuromod"]
+	path = projects/cneuromod
+	url = https://github.com/emmetaobrien/cneuromod
