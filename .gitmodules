@@ -64,9 +64,6 @@
 [submodule "projects/preventad-open-bids"]
 	path = projects/preventad-open-bids
 	url = https://github.com/conpdatasets/preventad-open-bids
-[submodule "projects/cneuromod"]
-	path = projects/cneuromod
-	url = https://github.com/conpdatasets/cneuromod
 [submodule "projects/CHBMP"]
 	path = projects/CHBMP
 	url = https://github.com/conpdatasets/CHBMP
