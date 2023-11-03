@@ -28,7 +28,7 @@ my $sftp_connection = Net::SFTP::Foreign->new($remote_host,user=>$username,passw
 my $inline       = "";
 my $remote_file  = "";
 my $local_file   = "";
-
+my $line_count   = 0;
 
 open(IN_LARGE, "$inlist") || die "Can't open $inlist to read";
 
@@ -48,6 +48,8 @@ while ($inline = <IN_LARGE>) {
 	else {
 		print "$local_file already exists\n";
 	}
+	print "processed line $line_count\n";
+	++$line_count;
 }
 close IN_LARGE;
 
