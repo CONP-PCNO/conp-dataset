@@ -1,207 +1,198 @@
 [submodule "projects/SIMON-dataset"]
   path = projects/SIMON-dataset
-  url = https://github.com/conpdatasets/SIMON-dataset.git
+  url = https://github.com/conpdatasets/SIMON-dataset
 [submodule "projects/Brainspan"]
   path = projects/Brainspan
-  url = https://github.com/conpdatasets/Brainspan.git
+  url = https://github.com/conpdatasets/Brainspan
 [submodule "projects/nhpatlas"]
   path = projects/nhpatlas
-  url = https://github.com/conpdatasets/nhpatlas.git
+  url = https://github.com/conpdatasets/nhpatlas
 [submodule "projects/celltypes"]
   path = projects/celltypes
-  url = https://github.com/conpdatasets/celltypes.git
+  url = https://github.com/conpdatasets/celltypes
 [submodule "openpain-placebo_1"]
 	path = projects/openpain/placebo_1
-	url = https://github.com/conpdatasets/openpain-placebo_1.git
+	url = https://github.com/conpdatasets/openpain-placebo_1
 [submodule "openpain-placebo_predict_tetreault"]
 	path = projects/openpain/placebo_predict_tetreault
-	url = https://github.com/conpdatasets/openpain-placebo_predict_tetreault.git
+	url = https://github.com/conpdatasets/openpain-placebo_predict_tetreault
 [submodule "openpain-cbp_resting"]
 	path = projects/openpain/cbp_resting
-	url = https://github.com/conpdatasets/openpain-cbp_resting.git
+	url = https://github.com/conpdatasets/openpain-cbp_resting
 [submodule "openpain-BrainNetworkChange_Mano"]
 	path = projects/openpain/BrainNetworkChange_Mano
-	url = https://github.com/conpdatasets/openpain-BrainNetworkChange_Mano.git
+	url = https://github.com/conpdatasets/openpain-BrainNetworkChange_Mano
 [submodule "projects/bigbrain-datalad"]
 	path = projects/BigBrain
-	url = https://github.com/conpdatasets/bigbrain-datalad.git
+	url = https://github.com/conpdatasets/bigbrain-datalad
 [submodule "scripts/dats_validator/conp-dats"]
 	path = scripts/dats_validator/conp-dats
-	url = https://github.com/CONP-PCNO/schema.git
+	url = https://github.com/CONP-PCNO/schema
 [submodule "projects/Khanlab/BigBrainHippoUnfold"]
 	path = projects/Khanlab/BigBrainHippoUnfold
-	url = https://github.com/conpdatasets/BigBrainHippoUnfold.git
+	url = https://github.com/conpdatasets/BigBrainHippoUnfold
 [submodule "projects/Learning_Naturalistic_Structure__Processed_fMRI_dataset"]
   path = projects/Learning_Naturalistic_Structure__Processed_fMRI_dataset
-  url = https://github.com/conp-bot/conp-dataset-Learning_Naturalistic_Structure__Processed_fMRI_dataset.git
+  url = https://github.com/conp-bot/conp-dataset-Learning_Naturalistic_Structure__Processed_fMRI_dataset
 [submodule "projects/VFA_T1_mapping___RTHawk__open__vs_Siemens__commercial_"]
   path = projects/VFA_T1_mapping___RTHawk__open__vs_Siemens__commercial_
-  url = https://github.com/conp-bot/conp-dataset-VFA_T1_mapping___RTHawk__open__vs_Siemens__commercial_.git
+  url = https://github.com/conp-bot/conp-dataset-VFA_T1_mapping___RTHawk__open__vs_Siemens__commercial_
 [submodule "projects/MRI_and_unbiased_averages_of_wild_muskrats__Ondatra_zibethicus__and_red_squirrels__Tamiasciurus_hudsonicus_"]
   path = projects/MRI_and_unbiased_averages_of_wild_muskrats__Ondatra_zibethicus__and_red_squirrels__Tamiasciurus_hudsonicus_
-  url = https://github.com/conp-bot/conp-dataset-MRI_and_unbiased_averages_of_wild_muskrats__Ondatra_zibethicus__and_red_squirrels__Tami.git
+  url = https://github.com/conp-bot/conp-dataset-MRI_and_unbiased_averages_of_wild_muskrats__Ondatra_zibethicus__and_red_squirrels__Tami
 [submodule "projects/refseq/refseq_Callithrix_jacchus"]
 	path = projects/refseq/refseq_Callithrix_jacchus
-	url = https://github.com/conpdatasets/refseq_Callithrix_jacchus.git
+	url = https://github.com/conpdatasets/refseq_Callithrix_jacchus
 [submodule "projects/refseq/refseq_Homo_sapiens"]
 	path = projects/refseq/refseq_Homo_sapiens
-	url = https://github.com/conpdatasets/refseq_Homo_sapiens.git
-[submodule "projects/refseq/refseq_Mus_musculus"]
-	path = projects/refseq/refseq_Mus_musculus
-	url = https://github.com/conpdatasets/refseq_Mus_musculus.git
+	url = https://github.com/conpdatasets/refseq_Homo_sapiens
 [submodule "projects/Reusing-Neuro-Data"]
 	path = projects/Reusing-Neuro-Data
-	url = https://github.com/conpdatasets/Reusing-Neuro-Data.git
+	url = https://github.com/conpdatasets/Reusing-Neuro-Data
 [submodule "projects/visual-working-memory"]
 	path = projects/visual-working-memory
-	url = https://github.com/conpdatasets/ds001634.git
+	url = https://github.com/conpdatasets/ds001634
 [submodule "projects/Comparing_Perturbation_Modes_for_Evaluating_Instabilities_in_Neuroimaging__Processed_NKI_RS_Subset__08_2019_"]
 	path = projects/Comparing_Perturbation_Modes_for_Evaluating_Instabilities_in_Neuroimaging__Processed_NKI_RS_Subset__08_2019_
-	url = https://github.com/conp-bot/conp-dataset-Comparing-Perturbation-Modes-for-Evaluating-Instabilities-in-Neuroimaging-Processed-NK.git
+	url = https://github.com/conp-bot/conp-dataset-Comparing-Perturbation-Modes-for-Evaluating-Instabilities-in-Neuroimaging-Processed-NK
 [submodule "projects/Intracellular_Recordings_of_Murine_Neocortical_Neurons"]
 	path = projects/Intracellular_Recordings_of_Murine_Neocortical_Neurons
-	url = https://github.com/conp-bot/conp-dataset-Intracellular-Recordings-of-Murine-Neocortical-Neurons.git
+	url = https://github.com/conp-bot/conp-dataset-Intracellular-Recordings-of-Murine-Neocortical-Neurons
 [submodule "projects/Khanlab/BigBrainMRICoreg"]
 	path = projects/Khanlab/BigBrainMRICoreg
-	url = https://github.com/conpdatasets/BigBrainMRICoreg.git
+	url = https://github.com/conpdatasets/BigBrainMRICoreg
 [submodule "projects/preventad-open-bids"]
 	path = projects/preventad-open-bids
-	url = https://github.com/conpdatasets/preventad-open-bids.git
-[submodule "projects/cneuromod"]
-	path = projects/cneuromod
-	url = https://github.com/conpdatasets/cneuromod.git
+	url = https://github.com/conpdatasets/preventad-open-bids
 [submodule "projects/CHBMP"]
 	path = projects/CHBMP
-	url = https://github.com/conpdatasets/CHBMP.git
+	url = https://github.com/conpdatasets/CHBMP
 [submodule "projects/braincode_Mouse_Image"]
 	path = projects/braincode_Mouse_Image
-	url = https://github.com/conpdatasets/braincode_Mouse_Image.git
+	url = https://github.com/conpdatasets/braincode_Mouse_Image
 [submodule "projects/braincode_fBIRN"]
 	path = projects/braincode_fBIRN
-	url = https://github.com/conpdatasets/braincode_fBIRN.git
+	url = https://github.com/conpdatasets/braincode_fBIRN
 [submodule "projects/braincode_NDD_Priority_Setting_Partnership"]
 	path = projects/braincode_NDD_Priority_Setting_Partnership
-	url = https://github.com/conpdatasets/braincode_NDD_Priority_Setting_Partnership.git
+	url = https://github.com/conpdatasets/braincode_NDD_Priority_Setting_Partnership
 [submodule "projects/Quantifying_Neural_Cognitive_Relationships_Across_the_Brain"]
 	path = projects/Quantifying_Neural_Cognitive_Relationships_Across_the_Brain
-	url = https://github.com/conp-bot/conp-dataset-Quantifying-Neural-Cognitive-Relationships-Across-the-Brain.git
+	url = https://github.com/conp-bot/conp-dataset-Quantifying-Neural-Cognitive-Relationships-Across-the-Brain
 [submodule "projects/1000GenomesProject"]
 	path = projects/1000GenomesProject
-	url = https://github.com/conpdatasets/1000GenomesProject.git
+	url = https://github.com/conpdatasets/1000GenomesProject
 [submodule "projects/Systematic_phenomics_analysis_of_autism-associated_genes"]
 	path = projects/Systematic_phenomics_analysis_of_autism-associated_genes
-	url = https://github.com/conpdatasets/Systematic_phenomics_analysis_of_autism-associated_genes.git
+	url = https://github.com/conpdatasets/Systematic_phenomics_analysis_of_autism-associated_genes
 [submodule "projects/Multimodal_data_with_wide_field_GCaMP_imaging"]
 	path = projects/Multimodal_data_with_wide_field_GCaMP_imaging
-	url = https://github.com/conp-bot/conp-dataset-Multimodal-data-with-wide-field-GCaMP-imaging.git
+	url = https://github.com/conp-bot/conp-dataset-Multimodal-data-with-wide-field-GCaMP-imaging
 [submodule "projects/Khanlab/HCPUR100-Template"]
 	path = projects/Khanlab/HCPUR100-Template
-	url = https://github.com/conpdatasets/HCPUR100-Template.git
+	url = https://github.com/conpdatasets/HCPUR100-Template
 [submodule "projects/Numerically_Perturbed_Structural_Connectomes_from_100_individuals_in_the_NKI_Rockland_Dataset"]
 	path = projects/Numerically_Perturbed_Structural_Connectomes_from_100_individuals_in_the_NKI_Rockland_Dataset
-	url = https://github.com/conp-bot/conp-dataset-Numerically-Perturbed-Structural-Connectomes-from-100-individuals-in-the-NKI-Rockland-D.git
+	url = https://github.com/conp-bot/conp-dataset-Numerically-Perturbed-Structural-Connectomes-from-100-individuals-in-the-NKI-Rockland-D
 [submodule "projects/Calgary_Preschool_MRI_Dataset"]
 	path = projects/Calgary_Preschool_MRI_Dataset
-	url = https://github.com/conp-bot/conp-dataset-Calgary-Preschool-MRI-Dataset.git
+	url = https://github.com/conp-bot/conp-dataset-Calgary-Preschool-MRI-Dataset
 [submodule "projects/CFMM_7T__MP2RAGE_T1_mapping"]
 	path = projects/CFMM_7T__MP2RAGE_T1_mapping
-	url = https://github.com/conp-bot/conp-dataset-CFMM-7T-MP2RAGE-T1-mapping.git
+	url = https://github.com/conp-bot/conp-dataset-CFMM-7T-MP2RAGE-T1-mapping
 [submodule "projects/preventad-registered"]
     path = projects/preventad-registered
-    url = https://github.com/conpdatasets/preventad-registered.git
+    url = https://github.com/conpdatasets/preventad-registered
 [submodule "projects/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations"]
 	path = projects/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations
-	url = https://github.com/conpdatasets/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations.git
+	url = https://github.com/conpdatasets/Multi-model_functionalization_of_disease-associated_PTEN_missense_mutations
 [submodule "projects/calgary-campinas"]
 	path = projects/calgary-campinas
-	url = https://github.com/conpdatasets/calgary-campinas.git
+	url = https://github.com/conpdatasets/calgary-campinas
 [submodule "projects/multicenter-phantom"]
 	path = projects/multicenter-phantom
-	url = https://github.com/conpdatasets/multicenter-phantom.git
+	url = https://github.com/conpdatasets/multicenter-phantom
 [submodule "projects/BigBrain_3DROIs"]
 	path = projects/BigBrain_3DROIs
-	url = https://github.com/conpdatasets/BigBrain_3DROIs.git
+	url = https://github.com/conpdatasets/BigBrain_3DROIs
 [submodule "projects/BigBrain_3DClassifiedVolumes"]
 	path = projects/BigBrain_3DClassifiedVolumes
-	url = https://github.com/conpdatasets/BigBrain_3DClassifiedVolumes.git
+	url = https://github.com/conpdatasets/BigBrain_3DClassifiedVolumes
 [submodule "projects/BigBrain_3DSurfaces"]
 	path = projects/BigBrain_3DSurfaces
-	url = https://github.com/conpdatasets/BigBrain_3DSurfaces.git
+	url = https://github.com/conpdatasets/BigBrain_3DSurfaces
 [submodule "projects/mcgill-emc-rna-seq-experiment"]
 	path = projects/mcgill-emc-rna-seq-experiment
-	url = https://github.com/conpdatasets/mcgill-emc-rna-seq-experiment.git
+	url = https://github.com/conpdatasets/mcgill-emc-rna-seq-experiment
 [submodule "projects/Synthetic_Animated_Mouse__SAM___University_of_British_Columbia__Datasets_and_3D_models"]
 	path = projects/Synthetic_Animated_Mouse__SAM___University_of_British_Columbia__Datasets_and_3D_models
-	url = https://github.com/conp-bot/conp-dataset-Synthetic-Animated-Mouse-SAM-University-of-British-Columbia-Datasets-and-3D-models.git
+	url = https://github.com/conp-bot/conp-dataset-Synthetic-Animated-Mouse-SAM-University-of-British-Columbia-Datasets-and-3D-models
 [submodule "projects/preventad-open"]
 	path = projects/preventad-open
-	url = https://github.com/conpdatasets/preventad-open.git
+	url = https://github.com/conpdatasets/preventad-open
 [submodule "projects/openpain/subacute_longitudinal_study"]
 	path = projects/openpain/subacute_longitudinal_study
-	url = https://github.com/conpdatasets/openpain-subacute_longitudinal_study.git
+	url = https://github.com/conpdatasets/openpain-subacute_longitudinal_study
 [submodule "projects/openpain/thermal"]
 	path = projects/openpain/thermal
-	url = https://github.com/conpdatasets/openpain-thermal.git
+	url = https://github.com/conpdatasets/openpain-thermal
 [submodule "projects/Longitudinal_structural_MRI_and_behavioural_data_for_mice_prenatally_exposed_to_maternal_immune_activation_either_early_or_late_in_gestation"]
 	path = projects/Longitudinal_structural_MRI_and_behavioural_data_for_mice_prenatally_exposed_to_maternal_immune_activation_either_early_or_late_in_gestation
-	url = https://github.com/conp-bot/conp-dataset-Longitudinal-structural-MRI-and-behavioural-data-for-mice-prenatally-exposed-to-materna.git
+	url = https://github.com/conp-bot/conp-dataset-Longitudinal-structural-MRI-and-behavioural-data-for-mice-prenatally-exposed-to-materna
 [submodule "projects/BigBrain_MRISIM"]
 	path = projects/BigBrain_MRISIM
-	url = https://github.com/conpdatasets/BigBrain_MRISIM.git
+	url = https://github.com/conpdatasets/BigBrain_MRISIM
 [submodule "projects/BigBrain_A3D"]
 	path = projects/BigBrain_A3D
-    url = https://github.com/conpdatasets/BigBrain_A3D.git
+    url = https://github.com/conpdatasets/BigBrain_A3D
 [submodule "projects/BigBrain_Hippocampus_Segmentation"]
 	path = projects/BigBrain_Hippocampus_Segmentation
-	url = https://github.com/conpdatasets/BigBrain_Hippocampus_Segmentation.git
+	url = https://github.com/conpdatasets/BigBrain_Hippocampus_Segmentation
 [submodule "projects/BigBrain_BigBrainWarp_Support"]
 	path = projects/BigBrain_BigBrainWarp_Support
-	url = https://github.com/conpdatasets/BigBrain_BigBrainWarp_Support.git
+	url = https://github.com/conpdatasets/BigBrain_BigBrainWarp_Support
 [submodule "projects/BigBrain_Surface_Parcellations"]
 	path = projects/BigBrain_Surface_Parcellations
-	url = https://github.com/conpdatasets/BigBrain_Surface_Parcellations.git
+	url = https://github.com/conpdatasets/BigBrain_Surface_Parcellations
 [submodule "projects/PERFORM_Dataset__one_control_subject"]
 	path = projects/PERFORM_Dataset__one_control_subject
-	url = https://github.com/conp-bot/conp-dataset-PERFORM-Dataset-one-control-subject.git
+	url = https://github.com/conp-bot/conp-dataset-PERFORM-Dataset-one-control-subject
 [submodule "scripts/dats_jsonld_annotator/schema"]
 	path = scripts/dats_jsonld_annotator/schema
-	url = https://github.com/CONP-PCNO/schema.git
+	url = https://github.com/CONP-PCNO/schema
 [submodule "scripts/dats_jsonld_annotator/context"]
 	path = scripts/dats_jsonld_annotator/context
-	url = https://github.com/CONP-PCNO/context.git
+	url = https://github.com/CONP-PCNO/context
 [submodule "projects/spins_travelling_phantoms"]
 	path = projects/spins_travelling_phantoms
-	url = https://github.com/conpdatasets/spins_travelling_phantoms.git
+	url = https://github.com/conpdatasets/spins_travelling_phantoms
 [submodule "projects/Open_Access__The_Effect_of_Neurorehabilitation_on_Multiple_Sclerosis___Unlocking_the_Resting_State_fMRI_Data"]
 	path = projects/Open_Access__The_Effect_of_Neurorehabilitation_on_Multiple_Sclerosis___Unlocking_the_Resting_State_fMRI_Data
-	url = https://github.com/conp-bot/conp-dataset-Open-Access-The-Effect-of-Neurorehabilitation-on-Multiple-Sclerosis-Unlocking-the-Re.git
+	url = https://github.com/conp-bot/conp-dataset-Open-Access-The-Effect-of-Neurorehabilitation-on-Multiple-Sclerosis-Unlocking-the-Re
 [submodule "projects/mica-mics"]
 	path = projects/mica-mics
 	url = https://github.com/conpdatasets/mica-mics
 [submodule "projects/BigBrain_Layer_Segmentation"]
 	path = projects/BigBrain_Layer_Segmentation
-	url = https://github.com/conpdatasets/BigBrain_Layer_Segmentation.git
+	url = https://github.com/conpdatasets/BigBrain_Layer_Segmentation
 [submodule "projects/BigBrain_Raw_Data"]
 	path = projects/BigBrain_Raw_Data
-	url = https://github.com/conpdatasets/BigBrain_Raw_Data.git
+	url = https://github.com/conpdatasets/BigBrain_Raw_Data
 [submodule "projects/mousebytesdataset"]
 	path = projects/mousebytesdataset
-	url = https://github.com/conpdatasets/mousebytesdataset.git
+	url = https://github.com/conpdatasets/mousebytesdataset
 [submodule "projects/mousebytes/MB-Cholinergic-deficient-mouse-model"]
 	path = projects/mousebytes/MB-Cholinergic-deficient-mouse-model
-	url = https://github.com/conpdatasets/MB-Cholinergic-deficient-mouse-model.git
+	url = https://github.com/conpdatasets/MB-Cholinergic-deficient-mouse-model
 [submodule "projects/mousebytes/MB-Co-transmission-of-cholinergic-interneurons"]
 	path = projects/mousebytes/MB-Co-transmission-of-cholinergic-interneurons
-	url = https://github.com/conpdatasets/MB-Co-transmission-of-cholinergic-interneurons.git
+	url = https://github.com/conpdatasets/MB-Co-transmission-of-cholinergic-interneurons
 [submodule "projects/mousebytes/MB-Heterogenous-task-representative-data"]
 	path = projects/mousebytes/MB-Heterogenous-task-representative-data
-	url = https://github.com/conpdatasets/MB-Heterogenous-task-representative-data.git
-[submodule "projects/Taowu"]
-	path = projects/Taowu
-	url = https://github.com/conpdatasets/Taowu.git
+	url = https://github.com/conpdatasets/MB-Heterogenous-task-representative-data
 [submodule "projects/Neurocon"]
 	path = projects/Neurocon
-	url = https://github.com/conpdatasets/Neurocon.git
+	url = https://github.com/conpdatasets/Neurocon
 [submodule "projects/braincode_CAN-BIND_Biomarkers_for_Depression_Baseline_Data_Release"]
 	path = projects/braincode_CAN-BIND_Biomarkers_for_Depression_Baseline_Data_Release
 	url = https://github.com/conpdatasets/braincode_CAN-BIND_Biomarkers_for_Depression_Baseline_Data_Release
@@ -217,3 +208,27 @@
 [submodule "projects/braincode_POND_Registry_Imaging_Data_Release"]
 	path = projects/braincode_POND_Registry_Imaging_Data_Release
 	url = https://github.com/conpdatasets/braincode_POND_Registry_Imaging_Data_Release
+[submodule "projects/braincode_Epilepsy_Priority_Setting_Partnership"]
+	path = projects/braincode_Epilepsy_Priority_Setting_Partnership
+	url = https://github.com/conpdatasets/braincode_Epilepsy_Priority_Setting_Partnership
+[submodule "projects/braincode_CP-NET"]
+	path = projects/braincode_CP-NET
+	url = https://github.com/CONP-PCNO/braincode_CP-NET
+[submodule "projects/braincode_EpLink"]
+	path = projects/braincode_EpLink
+	url = https://github.com/CONP-PCNO/braincode_EpLink
+[submodule "projects/refseq/refseq_Mus_musculus"]
+	path = projects/refseq/refseq_Mus_musculus
+	url = https://github.com/conpdatasets/refseq_Mus_musculus
+[submodule "projects/Taowu"]
+	path = projects/Taowu
+	url = https://github.com/conpdatasets/Taowu
+[submodule "projects/cneuromod"]
+	path = projects/cneuromod
+	url = https://github.com/conpdatasets/cneuromod
+[submodule "projects/cneuromod.processed"]
+	path = projects/cneuromod.processed
+	url = https://github.com/conpdatasets/cneuromod.processed
+[submodule "projects/AdolescentBrainDevelopment"]
+	path = projects/AdolescentBrainDevelopment
+	url = https://github.com/conpdatasets/AdolescentBrainDevelopment

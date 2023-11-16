@@ -1,0 +1,44 @@
+^title$
+^creators
+creators - orcid
+^description$
+types
+version
+licenses
+keywords
+distributions - format
+distributions - size
+distributions - unit
+distributions - access\.landingPage
+distributions - access\.authorizations
+extraProperties\.files
+extraProperties\.subjects
+extraProperties\.CONP_status
+privacy
+extraProperties\.origin
+extraProperties\.origin_institution
+extraProperties\.origin_consortium
+extraProperties\.origin_city
+extraProperties\.origin_province
+extraProperties\.origin_country
+extraProperties\.derivedFrom
+extraProperties\.parent_dataset_id
+primaryPublications - title
+primaryPublications - publicationVenue
+primaryPublications - authors
+primaryPublications - authors - affiliations
+primaryPublications - dates
+primaryPublications - identifier\.identifier
+primaryPublications - identifier\. identifierSource
+dimensions
+identifier - identifier
+identifier - identifierSource
+extraProperties\.contact
+logo
+dates
+producedBy
+isAbout
+acknowledges
+spatialCoverage
+REB_statement
+REB_number
