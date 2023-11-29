@@ -460,36 +460,47 @@ class OSFCrawler(BaseCrawler):
             # Same version, no need to update
             if self.verbose:
                 print(
-                    "{}, version {} same as OSF version DOI, no need to update".format(
+                    "{}, version {} same as OSF version DOI ({}), no need to update".format(
                         dataset_description["title"],
                         dataset_description["version"],
+                        tracker["version"],
                     ),
                 )
             return False
-        else:
-            # Update dataset
-            if self.verbose:
-                print(
-                    "{}, version {} different from OSF version DOI {}, updating".format(
-                        dataset_description["title"],
-                        tracker["version"],
-                        dataset_description["version"],
-                    ),
-                )
 
-            # Remove all data and DATS.json files
-            for file_name in os.listdir(dataset_dir):
-                if file_name[0] == ".":
-                    continue
-                self.datalad.remove(os.path.join(dataset_dir, file_name), check=False)
+        # Update dataset
+        if self.verbose:
+            print(
+                "{}, version {} different from OSF version DOI {}, updating".format(
+                    dataset_description["title"],
+                    tracker["version"],
+                    dataset_description["version"],
+                ),
+            )
 
-            d = self.datalad.Dataset(dataset_dir)
-            annex = Repo(dataset_dir).git.annex
+        # Remove all data and DATS.json files
+        for file_name in os.listdir(dataset_dir):
+            if file_name[0] == ".":
+                continue
+            self.datalad.remove(os.path.join(dataset_dir, file_name), check=False)
 
-            dataset_size = []
-            is_private: bool = self._is_private_dataset(dataset_description["files"])
-            self._download_files(
-                dataset_description["files"],
+        d = self.datalad.Dataset(dataset_dir)
+        annex = Repo(dataset_dir).git.annex
+
+        dataset_size = []
+        is_private: bool = self._is_private_dataset(dataset_description["files"])
+        self._download_files(
+            dataset_description["files"],
+            dataset_dir,
+            "",
+            d,
+            annex,
+            dataset_size,
+            is_private,
+        )
+        if dataset_description["components_list"]:
+            self._download_components(
+                dataset_description["components_list"],
                 dataset_dir,
                 "",
                 d,
@@ -497,29 +508,19 @@ class OSFCrawler(BaseCrawler):
                 dataset_size,
                 is_private,
             )
-            if dataset_description["components_list"]:
-                self._download_components(
-                    dataset_description["components_list"],
-                    dataset_dir,
-                    "",
-                    d,
-                    annex,
-                    dataset_size,
-                    is_private,
-                )
-            dataset_size, dataset_unit = humanize.naturalsize(sum(dataset_size)).split(
-                " ",
-            )
-            dataset_description["distributions"][0]["size"] = float(dataset_size)
-            dataset_description["distributions"][0]["unit"]["value"] = dataset_unit
+        dataset_size, dataset_unit = humanize.naturalsize(sum(dataset_size)).split(
+            " ",
+        )
+        dataset_description["distributions"][0]["size"] = float(dataset_size)
+        dataset_description["distributions"][0]["unit"]["value"] = dataset_unit
 
-            # Add .conp-osf-crawler.json tracker file
-            _create_osf_tracker(
-                os.path.join(dataset_dir, ".conp-osf-crawler.json"),
-                dataset_description,
-            )
+        # Add .conp-osf-crawler.json tracker file
+        _create_osf_tracker(
+            os.path.join(dataset_dir, ".conp-osf-crawler.json"),
+            dataset_description,
+        )
 
-            return True
+        return True
 
     def get_readme_content(self, dataset):
         readme_content = (
