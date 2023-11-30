@@ -2,6 +2,7 @@ import abc
 import json
 import os
 import re
+import shutil
 
 import git
 import requests
@@ -247,13 +248,18 @@ class BaseCrawler:
             if branch_name not in self.repo.remotes.origin.refs:  # New dataset
                 self.repo.git.checkout("-b", branch_name)
                 repo_title = ("conp-dataset-" + dataset_description["title"])[0:100]
-                d.create()
-                r = d.create_sibling_github(
-                    repo_title,
-                    name="origin",
-                    github_login=self.github_token,
-                    github_passwd=self.github_token,
-                )
+                try:
+                    d.create()
+                    r = d.create_sibling_github(
+                        repo_title,
+                        name="origin",
+                        github_login=self.github_token,
+                        github_passwd=self.github_token,
+                    )
+                except Exception as error:
+                    # handle the exception
+                    print("An exception occurred:", error)
+
                 # Add github token to dataset origin remote url
                 try:
                     origin = self.repo.remote("origin")
@@ -272,6 +278,7 @@ class BaseCrawler:
                 for pattern in NO_ANNEX_FILE_PATTERNS:
                     d.no_annex(pattern)
                 self.add_new_dataset(dataset_description, dataset_dir)
+
                 # Create DATS.json if it exists in directory and 1 level deep subdir
                 dats_path: str = os.path.join(dataset_dir, "DATS.json")
                 if existing_dats_path := self._check_file_present(
@@ -280,7 +287,7 @@ class BaseCrawler:
                     if self.verbose:
                         print(f"Found existing DATS.json at {existing_dats_path}")
                     if existing_dats_path != dats_path:
-                        os.rename(existing_dats_path, dats_path)
+                        shutil.copy(existing_dats_path, dats_path)
                     self._add_source_data_submodule_if_derived_from_conp_dataset(
                         dats_path, dataset_dir
                     )
