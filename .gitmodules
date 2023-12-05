@@ -235,3 +235,6 @@
 [submodule "projects/Feasibility_of_high_resolution_perfusion_imaging_using_Arterial_Spin_Labelling_MRI_at_3_Tesla___Dataset"]
 	path = projects/Feasibility_of_high_resolution_perfusion_imaging_using_Arterial_Spin_Labelling_MRI_at_3_Tesla___Dataset
 	url = https://github.com/conp-bot/conp-dataset-Feasibility-of-high-resolution-perfusion-imaging-using-Arterial-Spin-Labelling-MRI-at-3.git
+[submodule "projects/braincode_CONNECT_RECOVER"]
+	path = projects/braincode_CONNECT_RECOVER
+	url = https://github.com/CONP-PCNO/braincode_CONNECT_RECOVER
