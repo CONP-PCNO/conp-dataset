@@ -232,9 +232,4 @@
 [submodule "projects/braincode_CONNECT_RECOVER"]
 	path = projects/braincode_CONNECT_RECOVER
 	url = https://github.com/CONP-PCNO/braincode_CONNECT_RECOVER
-[submodule "projects/cneuromod"]
-	path = projects/cneuromod
-	url = https://github.com/conpdatasets/cneuromod
-[submodule "projects/cneuromod.processed"]
-	path = projects/cneuromod.processed
-	url = https://github.com/conpdatasets/cneuromod.processed
+
