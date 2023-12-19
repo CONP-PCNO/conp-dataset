@@ -233,3 +233,6 @@
 	path = projects/braincode_CONNECT_RECOVER
 	url = https://github.com/CONP-PCNO/braincode_CONNECT_RECOVER
 
+[submodule "projects/cneuromod"]
+	path = projects/cneuromod
+	url = https://github.com/conpdatasets/cneuromod
