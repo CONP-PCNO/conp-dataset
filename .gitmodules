@@ -232,3 +232,6 @@
 [submodule "projects/braincode_CONNECT_RECOVER"]
 	path = projects/braincode_CONNECT_RECOVER
 	url = https://github.com/CONP-PCNO/braincode_CONNECT_RECOVER
+[submodule "projects/cbig-parkinsons"]
+	path = projects/cbig-parkinsons
+	url = https://github.com/emmetaobrien/cbig-parkinsons
