@@ -242,3 +242,6 @@
 	path = projects/cneuromod.processed
 	url = https://github.com/emmetaobrien/cneuromod.processed
 
+[submodule "projects/cbig-als"]
+	path = projects/cbig-als
+	url = https://github.com/conpdatasets/cbig-als
