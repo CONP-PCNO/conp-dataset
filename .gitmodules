@@ -235,13 +235,12 @@
 [submodule "projects/cbig-parkinsons"]
 	path = projects/cbig-parkinsons
 	url = https://github.com/emmetaobrien/cbig-parkinsons
-[submodule "projects/cneuromod"]
-	path = projects/cneuromod
-	url = https://github.com/emmetaobrien/cneuromod
-[submodule "projects/cneuromod.processed"]
-	path = projects/cneuromod.processed
-	url = https://github.com/emmetaobrien/cneuromod.processed
-
 [submodule "projects/cbig-als"]
 	path = projects/cbig-als
 	url = https://github.com/conpdatasets/cbig-als
+[submodule "projects/cneuromod"]
+	path = projects/cneuromod
+	url = https://github.com/conpdatasets/cneuromod
+[submodule "projects/cneuromod.processed"]
+	path = projects/cneuromod.processed
+	url = https://github.com/conpdatasets/cneuromod.processed
