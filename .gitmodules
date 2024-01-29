@@ -223,9 +223,6 @@
 [submodule "projects/Taowu"]
 	path = projects/Taowu
 	url = https://github.com/conpdatasets/Taowu
-[submodule "projects/AdolescentBrainDevelopment"]
-	path = projects/AdolescentBrainDevelopment
-	url = https://github.com/conpdatasets/AdolescentBrainDevelopment
 [submodule "projects/Feasibility_of_high_resolution_perfusion_imaging_using_Arterial_Spin_Labelling_MRI_at_3_Tesla___Dataset"]
 	path = projects/Feasibility_of_high_resolution_perfusion_imaging_using_Arterial_Spin_Labelling_MRI_at_3_Tesla___Dataset
 	url = https://github.com/conp-bot/conp-dataset-Feasibility-of-high-resolution-perfusion-imaging-using-Arterial-Spin-Labelling-MRI-at-3.git
@@ -244,3 +241,7 @@
 [submodule "projects/cneuromod.processed"]
 	path = projects/cneuromod.processed
 	url = https://github.com/conpdatasets/cneuromod.processed
+
+[submodule "projects/AdolescentBrainDevelopment"]
+	path = projects/AdolescentBrainDevelopment
+	url = https://github.com/conpdatasets/AdolescentBrainDevelopment
