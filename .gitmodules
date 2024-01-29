@@ -242,3 +242,6 @@
 	path = projects/cneuromod.processed
 	url = https://github.com/conpdatasets/cneuromod.processed
 
+[submodule "projects/AdolescentBrainDevelopment"]
+	path = projects/AdolescentBrainDevelopment
+	url = https://github.com/conpdatasets/AdolescentBrainDevelopment
