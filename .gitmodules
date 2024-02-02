@@ -245,3 +245,6 @@
 [submodule "projects/AdolescentBrainDevelopment"]
 	path = projects/AdolescentBrainDevelopment
 	url = https://github.com/conpdatasets/AdolescentBrainDevelopment
+[submodule "/data/crawler/conp-dataset/projects/Sternberg_Working_Memory_Task"]
+	path = /data/crawler/conp-dataset/projects/Sternberg_Working_Memory_Task
+	url = https://github.com/conp-bot/conp-dataset-Sternberg-Working-Memory-Task.git
