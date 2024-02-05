@@ -229,9 +229,6 @@
 [submodule "projects/braincode_CONNECT_RECOVER"]
 	path = projects/braincode_CONNECT_RECOVER
 	url = https://github.com/CONP-PCNO/braincode_CONNECT_RECOVER
-[submodule "projects/cbig-parkinsons"]
-	path = projects/cbig-parkinsons
-	url = https://github.com/emmetaobrien/cbig-parkinsons
 [submodule "projects/cbig-als"]
 	path = projects/cbig-als
 	url = https://github.com/conpdatasets/cbig-als
@@ -241,7 +238,6 @@
 [submodule "projects/cneuromod.processed"]
 	path = projects/cneuromod.processed
 	url = https://github.com/conpdatasets/cneuromod.processed
-
 [submodule "projects/AdolescentBrainDevelopment"]
 	path = projects/AdolescentBrainDevelopment
 	url = https://github.com/conpdatasets/AdolescentBrainDevelopment
