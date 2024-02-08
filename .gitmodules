@@ -243,7 +243,4 @@
 	path = projects/AdolescentBrainDevelopment
 	url = https://github.com/conpdatasets/AdolescentBrainDevelopment
 	branch = main
-[submodule "AdolescentBrainDevelopment"]
-	path = AdolescentBrainDevelopment
-	url = https://github.com/emmetaobrien/AdolescentBrainDevelopment
-	datalad-id = f50e5c92-4d36-4908-92b6-5b4edd8f1faa
+
