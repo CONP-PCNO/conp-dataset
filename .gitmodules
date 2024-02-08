@@ -232,6 +232,7 @@
 [submodule "projects/cbig-als"]
 	path = projects/cbig-als
 	url = https://github.com/conpdatasets/cbig-als
+    branch = main
 [submodule "projects/cneuromod"]
 	path = projects/cneuromod
 	url = https://github.com/conpdatasets/cneuromod
