@@ -244,3 +244,6 @@
 	url = https://github.com/conpdatasets/AdolescentBrainDevelopment
 	branch = main
 
+[submodule "/data/crawler/conp-dataset/projects/RISE_recognition"]
+	path = /data/crawler/conp-dataset/projects/RISE_recognition
+	url = https://github.com/conp-bot/conp-dataset-RISE-recognition.git
