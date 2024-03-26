@@ -244,3 +244,6 @@
 	url = https://github.com/conpdatasets/AdolescentBrainDevelopment
 	branch = main
 
+[submodule "projects/CIMA-Q"]
+	path = projects/CIMA-Q
+	url = https://github.com/conpdatasets/CIMA-Q
