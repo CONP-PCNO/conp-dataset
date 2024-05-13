@@ -247,3 +247,7 @@
 	path = projects/CIMA-Q
 	url = https://github.com/conpdatasets/CIMA-Q
 	branch = main
+[submodule "projects/eegnet_face13"]
+	path = projects/eegnet_face13
+	url = https://github.com/conpdatasets/eegnet_face13
+	branch = main
