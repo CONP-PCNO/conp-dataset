@@ -251,3 +251,7 @@
 	path = projects/eegnet_face13
 	url = https://github.com/conpdatasets/eegnet_face13
 	branch = main
+[submodule "projects/eegnet_wmt"]
+	path = projects/eegnet_wmt
+	url = https://github.com/conpdatasets/eegnet_wmt
+	brnch = main
