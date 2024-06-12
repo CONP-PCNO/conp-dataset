@@ -254,4 +254,25 @@
 [submodule "projects/eegnet_wmt"]
 	path = projects/eegnet_wmt
 	url = https://github.com/conpdatasets/eegnet_wmt
-	brnch = main
+	branch = main
+[submodule "projects/eegnet_aud"]
+	path = projects/eegnet_aud
+	url = https://github.com/conpdatasets/eegnet_aud
+	branch = main
+[submodule "projects/eegnet_tse"]
+	path = projects/eegnet_tse
+	url = https://github.com/conpdatasets/eegnet_tse
+	branch = main
+[submodule "projects/eegnet_vis"]
+	path = projects/eegnet_vis
+	url = https://github.com/conpdatasets/eegnet_vis
+	branch = main
+[submodule "projects/eegnet_lxn"]
+	path = projects/eegnet_lxn
+	url = https://github.com/conpdatasets/eegnet_lxn
+	branch = main
+[submodule "projects/eegnet_mfa"]
+	path = projects/eegnet_mfa
+	url = https://github.com/conpdatasets/eegnet_mfa
+	branch = main
+
