@@ -275,10 +275,11 @@
 	path = projects/eegnet_mfa
 	url = https://github.com/conpdatasets/eegnet_mfa
 	branch = main
-
 [submodule "projects/cbig_catatonic_schizophrenia_wgs"]
 	path = projects/cbig_catatonic_schizophrenia_wgs
 	url = https://github.com/conpdatasets/cbig_catatonic_schizophrenia_wgs
+	branch = main
 [submodule "projects/cbig_congenital_hypopituitarism_wes"]
 	path = projects/cbig_congenital_hypopituitarism_wes
 	url = https://github.com/conpdatasets/cbig_congenital_hypopituitarism_wes
+	branch = main
