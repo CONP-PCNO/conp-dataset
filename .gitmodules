@@ -283,3 +283,39 @@
 	path = projects/cbig_congenital_hypopituitarism_wes
 	url = https://github.com/conpdatasets/cbig_congenital_hypopituitarism_wes
 	branch = main
+[submodule "projects/cbig_essential_tremor_wgs"]
+	path = projects/cbig_essential_tremor_wgs
+	url = https://github.com/conpdatasets/cbig_essential_tremor_wgs
+	branch = main
+[submodule "projects/cbig_hereditary_spastic_paraplegia_wgs"]
+	path = projects/cbig_hereditary_spastic_paraplegia_wgs
+	url = https://github.com/conpdatasets/cbig_hereditary_spastic_paraplegia_wgs
+	branch = main
+[submodule "projects/cbig_moyamoya_wgs"]
+	path = projects/cbig_moyamoya_wgs
+	url = https://github.com/conpdatasets/cbig_moyamoya_wgs
+	branch = main
+[submodule "projects/cbig_primary_lateral_sclerosis_wgs"]
+	path = projects/cbig_primary_lateral_sclerosis_wgs
+	url = https://github.com/conpdatasets/cbig_primary_lateral_sclerosis_wgs
+	branch = main
+[submodule "projects/cbig_progressive_supranuclear_palsy_wgs"]
+	path = projects/cbig_progressive_supranuclear_palsy_wgs
+	url = https://github.com/conpdatasets/cbig_progressive_supranuclear_palsy_wgs
+	branch = main
+[submodule "projects/cbig_radiation_exposure_wgs"]
+	path = projects/cbig_radiation_exposure_wgs
+	url = https://github.com/conpdatasets/cbig_radiation_exposure_wgs
+	branch = main
+[submodule "projects/cbig_restless_legs_syndrome_wgs"]
+	path = projects/cbig_restless_legs_syndrome_wgs
+	url = https://github.com/conpdatasets/cbig_restless_legs_syndrome_wgs
+	branch = main
+[submodule "projects/cbig_savant_syndrome_wgs"]
+	path = projects/cbig_savant_syndrome_wgs
+	url = https://github.com/conpdatasets/cbig_savant_syndrome_wgs
+	branch = main
+[submodule "projects/cbig_schizophrenia_wgs"]
+	path = projects/cbig_schizophrenia_wgs
+	url = https://github.com/conpdatasets/cbig_schizophrenia_wgs
+	branch = main
