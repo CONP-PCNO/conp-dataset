@@ -319,3 +319,35 @@
 	path = projects/cbig_schizophrenia_wgs
 	url = https://github.com/conpdatasets/cbig_schizophrenia_wgs
 	branch = main
+[submodule "projects/cbig_3_hydroxybutyric_aciduria_wes"]
+	path = projects/cbig_3_hydroxybutyric_aciduria_wes
+	url = https://github.com/conpdatasets/cbig_3_hydroxybutyric_aciduria_wes
+	branch = main
+[submodule "projects/cbig_adolescent_idiopathic_scoliosis_wes"]
+	path = projects/cbig_adolescent_idiopathic_scoliosis_wes
+	url = https://github.com/conpdatasets/cbig_adolescent_idiopathic_scoliosis_wes
+	branch = main
+[submodule "projects/cbig_alzheimers_disease_wes"]
+	path = projects/cbig_alzheimers_disease_wes
+	url = https://github.com/conpdatasets/cbig_alzheimers_disease_wes
+	branch = main
+[submodule "projects/cbig_amusia_wes"]
+	path = projects/cbig_amusia_wes
+	url = https://github.com/conpdatasets/cbig_amusia_wes
+	branch = main
+[submodule "projects/cbig_amyotrophic_lateral_sclerosis_wes"]
+	path = projects/cbig_amyotrophic_lateral_sclerosis_wes
+	url = https://github.com/conpdatasets/cbig_amyotrophic_lateral_sclerosis_wes
+	branch = main
+[submodule "projects/cbig_aneurysm_wes"]
+	path = projects/cbig_aneurysm_wes
+	url = https://github.com/conpdatasets/cbig_aneurysm_wes
+	branch = main
+[submodule "projects/cbig_arteriovenous_malformation_wes"]
+	path = projects/cbig_arteriovenous_malformation_wes
+	url = https://github.com/conpdatasets/cbig_arteriovenous_malformation_wes
+	branch = main
+[submodule "projects/cbig_autism_spectrum_disorder_wes"]
+	path = projects/cbig_autism_spectrum_disorder_wes
+	url = https://github.com/conpdatasets/cbig_autism_spectrum_disorder_wes
+	branch = main
