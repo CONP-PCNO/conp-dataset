@@ -351,3 +351,35 @@
 	path = projects/cbig_autism_spectrum_disorder_wes
 	url = https://github.com/conpdatasets/cbig_autism_spectrum_disorder_wes
 	branch = main
+[submodule "projects/cbig_bipolar_affective_disorder_wes"]
+	path = projects/cbig_bipolar_affective_disorder_wes
+	url = https://github.com/conpdatasets/cbig_bipolar_affective_disorder_wes
+	branch = main
+[submodule "projects/cbig_bipolar_ii_wes"]
+	path = projects/cbig_bipolar_ii_wes
+	url = https://github.com/conpdatasets/cbig_bipolar_ii_wes
+	branch = main
+[submodule "projects/cbig_cerebellar_dysgenesis_wes"]
+	path = projects/cbig_cerebellar_dysgenesis_wes
+	url = https://github.com/conpdatasets/cbig_cerebellar_dysgenesis_wes
+	branch = main
+[submodule "projects/cbig_cerebellar_hypoplasia_wes"]
+	path = projects/cbig_cerebellar_hypoplasia_wes
+	url = https://github.com/conpdatasets/cbig_cerebellar_hypoplasia_wes
+	branch = main
+[submodule "projects/cbig_chiari_type_i_malformation_wes"]
+	path = projects/cbig_chiari_type_i_malformation_wes
+	url = https://github.com/conpdatasets/cbig_chiari_type_i_malformation_wes
+	branch = main
+[submodule "projects/cbig_cluster_headache_syndrome_wes"]
+	path = projects/cbig_cluster_headache_syndrome_wes
+	url = https://github.com/conpdatasets/cbig_cluster_headache_syndrome_wes
+	branch = main
+[submodule "projects/cbig_congenital_anteriolateral_bowing_tibia_wes"]
+	path = projects/cbig_congenital_anteriolateral_bowing_tibia_wes
+	url = https://github.com/conpdatasets/cbig_congenital_anteriolateral_bowing_tibia_wes
+	branch = main
+[submodule "projects/cbig_congenital_insensitivity_to_pain_wes"]
+	path = projects/cbig_congenital_insensitivity_to_pain_wes
+	url = https://github.com/conpdatasets/cbig_congenital_insensitivity_to_pain_wes
+	branch = main
