@@ -383,3 +383,35 @@
 	path = projects/cbig_congenital_insensitivity_to_pain_wes
 	url = https://github.com/conpdatasets/cbig_congenital_insensitivity_to_pain_wes
 	branch = main
+[submodule "projects/cbig_congenital_malformations_nervous_system_wes"]
+	path = projects/cbig_congenital_malformations_nervous_system_wes
+	url = https://github.com/conpdatasets/cbig_congenital_malformations_nervous_system_wes
+	branch = main
+[submodule "projects/cbig_congenital_malformations_wes"]
+	path = projects/cbig_congenital_malformations_wes
+	url = https://github.com/conpdatasets/cbig_congenital_malformations_wes
+	branch = main
+[submodule "projects/cbig_crane_heise_syndrome_wes"]
+	path = projects/cbig_crane_heise_syndrome_wes
+	url = https://github.com/conpdatasets/cbig_crane_heise_syndrome_wes
+	branch = main
+[submodule "projects/cbig_disturbance_activity_attention_wes"]
+	path = projects/cbig_disturbance_activity_attention_wes
+	url = https://github.com/conpdatasets/cbig_disturbance_activity_attention_wes
+	branch = main
+[submodule "projects/cbig_DOOR_syndrome_wes"]
+	path = projects/cbig_DOOR_syndrome_wes
+	url = https://github.com/conpdatasets/cbig_DOOR_syndrome_wes
+	branch = main
+[submodule "projects/cbig_dysosteosclerosis_wes"]
+	path = projects/cbig_dysosteosclerosis_wes
+	url = https://github.com/conpdatasets/cbig_dysosteosclerosis_wes
+	branch = main
+[submodule "projects/cbig_dystonia_wes"]
+	path = projects/cbig_dystonia_wes
+	url = https://github.com/conpdatasets/cbig_dystonia_wes
+	branch = main
+[submodule "projects/cbig_ehlers_danlos_syndrome_wes"]
+	path = projects/cbig_ehlers_danlos_syndrome_wes
+	url = https://github.com/conpdatasets/cbig_ehlers_danlos_syndrome_wes
+	branch = main
