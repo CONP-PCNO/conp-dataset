@@ -415,3 +415,35 @@
 	path = projects/cbig_ehlers_danlos_syndrome_wes
 	url = https://github.com/conpdatasets/cbig_ehlers_danlos_syndrome_wes
 	branch = main
+[submodule "projects/cbig_epilepsy_wes"]
+	path = projects/cbig_epilepsy_wes
+	url = https://github.com/conpdatasets/cbig_epilepsy_wes
+	branch = main
+[submodule "projects/cbig_essential_tremor_wes"]
+	path = projects/cbig_essential_tremor_wes
+	url = https://github.com/conpdatasets/cbig_essential_tremor_wes
+	branch = main
+[submodule "projects/cbig_frontotemporal_dementia_wes"]
+	path = projects/cbig_frontotemporal_dementia_wes
+	url = https://github.com/conpdatasets/cbig_frontotemporal_dementia_wes
+	branch = main
+[submodule "projects/cbig_genitopatellar_syndrome_wes"]
+	path = projects/cbig_genitopatellar_syndrome_wes
+	url = https://github.com/conpdatasets/cbig_genitopatellar_syndrome_wes
+	branch = main
+[submodule "projects/cbig_glioma_wes"]
+	path = projects/cbig_glioma_wes
+	url = https://github.com/conpdatasets/cbig_glioma_wes
+	branch = main
+[submodule "projects/cbig_guam_als_pld_wes"]
+	path = projects/cbig_guam_als_pld_wes
+	url = https://github.com/conpdatasets/cbig_guam_als_pld_wes
+	branch = main
+[submodule "projects/cbig_hereditary_ataxia_wes"]
+	path = projects/cbig_hereditary_ataxia_wes
+	url = https://github.com/conpdatasets/cbig_hereditary_ataxia_wes
+	branch = main
+[submodule "projects/cbig_hereditary_spastic_paraplegia_wes"]
+	path = projects/cbig_hereditary_spastic_paraplegia_wes
+	url = https://github.com/conpdatasets/cbig_hereditary_spastic_paraplegia_wes
+	branch = main
