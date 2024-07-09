@@ -447,3 +447,35 @@
 	path = projects/cbig_hereditary_spastic_paraplegia_wes
 	url = https://github.com/conpdatasets/cbig_hereditary_spastic_paraplegia_wes
 	branch = main
+[submodule "projects/cbig_heterotopia_wes"]
+	path = projects/cbig_heterotopia_wes
+	url = https://github.com/conpdatasets/cbig_heterotopia_wes
+	branch = main
+[submodule "projects/cbig_hypopituitarism_wes"]
+	path = projects/cbig_hypopituitarism_wes
+	url = https://github.com/conpdatasets/cbig_hypopituitarism_wes
+	branch = main
+[submodule "projects/cbig_idiopathic_juvenile_osteoporosis_wes"]
+	path = projects/cbig_idiopathic_juvenile_osteoporosis_wes
+	url = https://github.com/conpdatasets/cbig_idiopathic_juvenile_osteoporosis_wes
+	branch = main
+[submodule "projects/cbig_infantile_myofibromatosis_wes"]
+	path = projects/cbig_infantile_myofibromatosis_wes
+	url = https://github.com/conpdatasets/cbig_infantile_myofibromatosis_wes
+	branch = main
+[submodule "projects/cbig_intellectual_disability_wes"]
+	path = projects/cbig_intellectual_disability_wes
+	url = https://github.com/conpdatasets/cbig_intellectual_disability_wes
+	branch = main
+[submodule "projects/cbig_joubert_syndrome_wes"]
+	path = projects/cbig_joubert_syndrome_wes
+	url = https://github.com/conpdatasets/cbig_joubert_syndrome_wes
+	branch = main
+[submodule "projects/cbig_juvenile_paget_disease_wes"]
+	path = projects/cbig_juvenile_paget_disease_wes
+	url = https://github.com/conpdatasets/cbig_juvenile_paget_disease_wes
+	branch = main
+[submodule "projects/cbig_lipoprotein_metabolism_disorder_wes"]
+	path = projects/cbig_lipoprotein_metabolism_disorder_wes
+	url = https://github.com/conpdatasets/cbig_lipoprotein_metabolism_disorder_wes
+	branch = main
