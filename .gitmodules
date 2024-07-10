@@ -479,3 +479,35 @@
 	path = projects/cbig_lipoprotein_metabolism_disorder_wes
 	url = https://github.com/conpdatasets/cbig_lipoprotein_metabolism_disorder_wes
 	branch = main
+[submodule "projects/cbig_meningioma_wes"]
+	path = projects/cbig_meningioma_wes
+	url = https://github.com/conpdatasets/cbig_meningioma_wes
+	branch = main
+[submodule "projects/cbig_microcephaly_wes"]
+	path = projects/cbig_microcephaly_wes
+	url = https://github.com/conpdatasets/cbig_microcephaly_wes
+	branch = main
+[submodule "projects/cbig_mirror_movements_wes"]
+	path = projects/cbig_mirror_movements_wes
+	url = https://github.com/conpdatasets/cbig_mirror_movements_wes
+	branch = main
+[submodule "projects/cbig_neural_tube_defect_wes"]
+	path = projects/cbig_neural_tube_defect_wes
+	url = https://github.com/conpdatasets/cbig_neural_tube_defect_wes
+	branch = main
+[submodule "projects/cbig_nonsyndromic_intellectual_disability_wes"]
+	path = projects/cbig_nonsyndromic_intellectual_disability_wes
+	url = https://github.com/conpdatasets/cbig_nonsyndromic_intellectual_disability_wes
+	branch = main
+[submodule "projects/cbig_obsessive_compulsive_disorder_wes"]
+	path = projects/cbig_obsessive_compulsive_disorder_wes
+	url = https://github.com/conpdatasets/cbig_obsessive_compulsive_disorder_wes
+	branch = main
+[submodule "projects/cbig_osteoporosis_wes"]
+	path = projects/cbig_osteoporosis_wes
+	url = https://github.com/conpdatasets/cbig_osteoporosis_wes
+	branch = main
+[submodule "projects/cbig_other_congenital_brain_malformations_wes"]
+	path = projects/cbig_other_congenital_brain_malformations_wes
+	url = https://github.com/conpdatasets/cbig_other_congenital_brain_malformations_wes
+	branch = main
