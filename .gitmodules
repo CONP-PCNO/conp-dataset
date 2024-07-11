@@ -511,3 +511,35 @@
 	path = projects/cbig_other_congenital_brain_malformations_wes
 	url = https://github.com/conpdatasets/cbig_other_congenital_brain_malformations_wes
 	branch = main
+[submodule "projects/cbig_pervasive_developmental_disorder_wes"]
+	path = projects/cbig_pervasive_developmental_disorder_wes
+	url = https://github.com/conpdatasets/cbig_pervasive_developmental_disorder_wes
+	branch = main
+[submodule "projects/cbig_pontocerebellar_hypoplasia_wes"]
+	path = projects/cbig_pontocerebellar_hypoplasia_wes
+	url = https://github.com/conpdatasets/cbig_pontocerebellar_hypoplasia_wes
+	branch = main
+[submodule "projects/cbig_population_controls_wes"]
+	path = projects/cbig_population_controls_wes
+	url = https://github.com/conpdatasets/cbig_population_controls_wes
+	branch = main
+[submodule "projects/cbig_primary_lateral_sclerosis_wes"]
+	path = projects/cbig_primary_lateral_sclerosis_wes
+	url = https://github.com/conpdatasets/cbig_primary_lateral_sclerosis_wes
+	branch = main
+[submodule "projects/cbig_recurrent_depressive_disorder_wes"]
+	path = projects/cbig_recurrent_depressive_disorder_wes
+	url = https://github.com/conpdatasets/cbig_recurrent_depressive_disorder_wes
+	branch = main
+[submodule "projects/cbig_restless_legs_syndrome_wes"]
+	path = projects/cbig_restless_legs_syndrome_wes
+	url = https://github.com/conpdatasets/cbig_restless_legs_syndrome_wes
+	branch = main
+[submodule "projects/cbig_rothmund_thompson_syndrome_wes"]
+	path = projects/cbig_rothmund_thompson_syndrome_wes
+	url = https://github.com/conpdatasets/cbig_rothmund_thompson_syndrome_wes
+	branch = main
+[submodule "projects/cbig_savant_syndrome_wes"]
+	path = projects/cbig_savant_syndrome_wes
+	url = https://github.com/conpdatasets/cbig_savant_syndrome_wes
+	branch = main
