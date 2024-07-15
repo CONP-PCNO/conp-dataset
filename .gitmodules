@@ -543,3 +543,35 @@
 	path = projects/cbig_savant_syndrome_wes
 	url = https://github.com/conpdatasets/cbig_savant_syndrome_wes
 	branch = main
+[submodule "projects/cbig_schizencephaly_wes"]
+	path = projects/cbig_schizencephaly_wes
+	url = https://github.com/conpdatasets/cbig_schizencephaly_wes
+	branch = main
+[submodule "projects/cbig_schizoaffective_disorders_wes"]
+	path = projects/cbig_schizoaffective_disorders_wes
+	url = https://github.com/conpdatasets/cbig_schizoaffective_disorders_wes
+	branch = main
+[submodule "projects/cbig_schizophrenia_wes"]
+	path = projects/cbig_schizophrenia_wes
+	url = https://github.com/conpdatasets/cbig_schizophrenia_wes
+	branch = main
+[submodule "projects/cbig_scoliosis_wes"]
+	path = projects/cbig_scoliosis_wes
+	url = https://github.com/conpdatasets/cbig_scoliosis_wes
+	branch = main
+[submodule "projects/cbig_syndromic_intellectual_disability_wes"]
+	path = projects/cbig_syndromic_intellectual_disability_wes
+	url = https://github.com/conpdatasets/cbig_syndromic_intellectual_disability_wes
+	branch = main
+[submodule "projects/cbig_synesthesia_wes"]
+	path = projects/cbig_synesthesia_wes
+	url = https://github.com/conpdatasets/cbig_synesthesia_wes
+	branch = main
+[submodule "projects/cbig_yunis_varon_syndrome_wes"]
+	path = projects/cbig_yunis_varon_syndrome_wes
+	url = https://github.com/conpdatasets/cbig_yunis_varon_syndrome_wes
+	branch = main
+[submodule "projects/cbig_zimmerman_laband_syndrome_wes"]
+	path = projects/cbig_zimmerman_laband_syndrome_wes
+	url = https://github.com/conpdatasets/cbig_zimmerman_laband_syndrome_wes
+	branch = main
