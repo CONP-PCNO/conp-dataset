@@ -10,18 +10,6 @@
 [submodule "projects/celltypes"]
   path = projects/celltypes
   url = https://github.com/conpdatasets/celltypes
-[submodule "openpain-placebo_1"]
-	path = projects/openpain/placebo_1
-	url = https://github.com/conpdatasets/openpain-placebo_1
-[submodule "openpain-placebo_predict_tetreault"]
-	path = projects/openpain/placebo_predict_tetreault
-	url = https://github.com/conpdatasets/openpain-placebo_predict_tetreault
-[submodule "openpain-cbp_resting"]
-	path = projects/openpain/cbp_resting
-	url = https://github.com/conpdatasets/openpain-cbp_resting
-[submodule "openpain-BrainNetworkChange_Mano"]
-	path = projects/openpain/BrainNetworkChange_Mano
-	url = https://github.com/conpdatasets/openpain-BrainNetworkChange_Mano
 [submodule "projects/bigbrain-datalad"]
 	path = projects/BigBrain
 	url = https://github.com/conpdatasets/bigbrain-datalad
@@ -40,12 +28,6 @@
 [submodule "projects/MRI_and_unbiased_averages_of_wild_muskrats__Ondatra_zibethicus__and_red_squirrels__Tamiasciurus_hudsonicus_"]
   path = projects/MRI_and_unbiased_averages_of_wild_muskrats__Ondatra_zibethicus__and_red_squirrels__Tamiasciurus_hudsonicus_
   url = https://github.com/conp-bot/conp-dataset-MRI_and_unbiased_averages_of_wild_muskrats__Ondatra_zibethicus__and_red_squirrels__Tami
-[submodule "projects/refseq/refseq_Callithrix_jacchus"]
-	path = projects/refseq/refseq_Callithrix_jacchus
-	url = https://github.com/conpdatasets/refseq_Callithrix_jacchus
-[submodule "projects/refseq/refseq_Homo_sapiens"]
-	path = projects/refseq/refseq_Homo_sapiens
-	url = https://github.com/conpdatasets/refseq_Homo_sapiens
 [submodule "projects/Reusing-Neuro-Data"]
 	path = projects/Reusing-Neuro-Data
 	url = https://github.com/conpdatasets/Reusing-Neuro-Data
@@ -130,12 +112,6 @@
 [submodule "projects/preventad-open"]
 	path = projects/preventad-open
 	url = https://github.com/conpdatasets/preventad-open
-[submodule "projects/openpain/subacute_longitudinal_study"]
-	path = projects/openpain/subacute_longitudinal_study
-	url = https://github.com/conpdatasets/openpain-subacute_longitudinal_study
-[submodule "projects/openpain/thermal"]
-	path = projects/openpain/thermal
-	url = https://github.com/conpdatasets/openpain-thermal
 [submodule "projects/Longitudinal_structural_MRI_and_behavioural_data_for_mice_prenatally_exposed_to_maternal_immune_activation_either_early_or_late_in_gestation"]
 	path = projects/Longitudinal_structural_MRI_and_behavioural_data_for_mice_prenatally_exposed_to_maternal_immune_activation_either_early_or_late_in_gestation
 	url = https://github.com/conp-bot/conp-dataset-Longitudinal-structural-MRI-and-behavioural-data-for-mice-prenatally-exposed-to-materna
@@ -217,9 +193,6 @@
 [submodule "projects/braincode_EpLink"]
 	path = projects/braincode_EpLink
 	url = https://github.com/CONP-PCNO/braincode_EpLink
-[submodule "projects/refseq/refseq_Mus_musculus"]
-	path = projects/refseq/refseq_Mus_musculus
-	url = https://github.com/conpdatasets/refseq_Mus_musculus
 [submodule "projects/Taowu"]
 	path = projects/Taowu
 	url = https://github.com/conpdatasets/Taowu
