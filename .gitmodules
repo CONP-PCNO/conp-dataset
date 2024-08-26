@@ -244,3 +244,6 @@
 	url = https://github.com/conpdatasets/AdolescentBrainDevelopment
 	branch = main
 
+[submodule "/data/crawler/conp-dataset/projects/MICA_PNI__Precision_NeuroImaging_and_Connectomics"]
+	path = /data/crawler/conp-dataset/projects/MICA_PNI__Precision_NeuroImaging_and_Connectomics
+	url = https://github.com/conp-bot/conp-dataset-MICA-PNI-Precision-NeuroImaging-and-Connectomics.git
