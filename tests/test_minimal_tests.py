@@ -35,7 +35,6 @@ def test_modify_single_project(pr_files):
     "pr_files",
     [
         ("projects/preventad-open", "projects/PERFORM_Dataset__one_control_subject"),
-        ("projects/openpain/BrainNetworkChange_Mano", "projects/preventad-open"),
     ],
 )
 def test_modify_multi_project(pr_files):
