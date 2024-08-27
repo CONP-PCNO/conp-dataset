@@ -545,3 +545,6 @@
 	path = projects/cbig_zimmerman_laband_syndrome_wes
 	url = https://github.com/conpdatasets/cbig_zimmerman_laband_syndrome_wes
 	branch = main
+[submodule "projects/cneuromod_processed"]
+	path = projects/cneuromod_processed
+	url = https://github.com/conpdatasets/cneuromod_processed
