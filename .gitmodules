@@ -209,9 +209,6 @@
 [submodule "projects/cneuromod"]
 	path = projects/cneuromod
 	url = https://github.com/conpdatasets/cneuromod
-[submodule "projects/cneuromod.processed"]
-	path = projects/cneuromod.processed
-	url = https://github.com/conpdatasets/cneuromod.processed
 [submodule "projects/AdolescentBrainDevelopment"]
 	path = projects/AdolescentBrainDevelopment
 	url = https://github.com/conpdatasets/AdolescentBrainDevelopment
@@ -551,3 +548,8 @@
 	path = projects/cbig_zimmerman_laband_syndrome_wes
 	url = https://github.com/conpdatasets/cbig_zimmerman_laband_syndrome_wes
 	branch = main
+[submodule "projects/cneuromod_processed"]
+	path = projects/cneuromod_processed
+	url = https://github.com/conpdatasets/cneuromod_processed
+	branch = main
+
