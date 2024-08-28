@@ -213,6 +213,9 @@
 	path = projects/AdolescentBrainDevelopment
 	url = https://github.com/conpdatasets/AdolescentBrainDevelopment
 	branch = main
+[submodule "/data/crawler/conp-dataset/projects/Semantic_Encoding_Memory_Task"]
+	path = /data/crawler/conp-dataset/projects/Semantic_Encoding_Memory_Task
+	url = https://github.com/conp-bot/conp-dataset-Semantic-Encoding-Memory-Task.git
 [submodule "projects/CIMA-Q"]
 	path = projects/CIMA-Q
 	url = https://github.com/conpdatasets/CIMA-Q
