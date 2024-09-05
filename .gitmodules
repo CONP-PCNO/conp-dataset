@@ -244,3 +244,6 @@
 	url = https://github.com/conpdatasets/AdolescentBrainDevelopment
 	branch = main
 
+[submodule "/data/crawler/conp-dataset/projects/raw_PNC010"]
+	path = /data/crawler/conp-dataset/projects/raw_PNC010
+	url = https://github.com/conp-bot/conp-dataset-raw_PNC010.git
