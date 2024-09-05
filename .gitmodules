@@ -549,7 +549,8 @@
 	path = projects/cneuromod_processed
 	url = https://github.com/conpdatasets/cneuromod_processed
 	branch = main
-
 [submodule "projects/conp-dataset-Semantic-Encoding-Memory-Task"]
 	path = projects/conp-dataset-Semantic-Encoding-Memory-Task
 	url = https://github.com/conp-bot/conp-dataset-Semantic-Encoding-Memory-Task
+	branch = main
+
