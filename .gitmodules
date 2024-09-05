@@ -550,3 +550,6 @@
 	url = https://github.com/conpdatasets/cneuromod_processed
 	branch = main
 
+[submodule "/data/crawler/conp-dataset/projects/raw_PNC004_PNC006"]
+	path = /data/crawler/conp-dataset/projects/raw_PNC004_PNC006
+	url = https://github.com/conp-bot/conp-dataset-raw_PNC004-PNC006.git
