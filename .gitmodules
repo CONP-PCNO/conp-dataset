@@ -244,3 +244,6 @@
 	url = https://github.com/conpdatasets/AdolescentBrainDevelopment
 	branch = main
 
+[submodule "/data/crawler/conp-dataset/projects/SAM_Updates"]
+	path = /data/crawler/conp-dataset/projects/SAM_Updates
+	url = https://github.com/conp-bot/conp-dataset-SAM-Updates.git
