@@ -244,3 +244,6 @@
 	url = https://github.com/conpdatasets/AdolescentBrainDevelopment
 	branch = main
 
+[submodule "/data/crawler/conp-dataset/projects/FISH_Probabilistic_Reasoning_Task"]
+	path = /data/crawler/conp-dataset/projects/FISH_Probabilistic_Reasoning_Task
+	url = https://github.com/conp-bot/conp-dataset-FISH-Probabilistic-Reasoning-Task.git
