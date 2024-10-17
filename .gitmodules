@@ -549,7 +549,6 @@
 	path = projects/cneuromod_processed
 	url = https://github.com/conpdatasets/cneuromod_processed
 	branch = main
-
 [submodule "projects/conp-dataset-MICA-PNI-Precision-NeuroImaging-and-Connectomics"]
 	path = projects/conp-dataset-MICA-PNI-Precision-NeuroImaging-and-Connectomics
 	url = https://github.com/conp-bot/conp-dataset-MICA-PNI-Precision-NeuroImaging-and-Connectomics/
