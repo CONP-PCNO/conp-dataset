@@ -549,3 +549,6 @@
 	path = projects/cneuromod_processed
 	url = https://github.com/conpdatasets/cneuromod_processed
 	branch = main
+[submodule "/data/crawler/conp-dataset/projects/Quantitative_T1_MRI"]
+	path = /data/crawler/conp-dataset/projects/Quantitative_T1_MRI
+	url = https://github.com/conp-bot/conp-dataset-Quantitative-T1-MRI.git
