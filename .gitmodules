@@ -549,3 +549,6 @@
 	path = projects/cneuromod_processed
 	url = https://github.com/conpdatasets/cneuromod_processed
 	branch = main
+[submodule "/data/crawler/conp-dataset/projects/test_dataset_do_not_merge"]
+	path = /data/crawler/conp-dataset/projects/test_dataset_do_not_merge
+	url = https://github.com/conp-bot/conp-dataset-test-dataset-do-not-merge.git
