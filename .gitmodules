@@ -549,3 +549,6 @@
 	path = projects/cneuromod_processed
 	url = https://github.com/conpdatasets/cneuromod_processed
 	branch = main
+[submodule "/data/crawler/conp-dataset/projects/Longitudinal_stability_of_brain_and_spinal_cord_quantitative_MRI_measures"]
+	path = /data/crawler/conp-dataset/projects/Longitudinal_stability_of_brain_and_spinal_cord_quantitative_MRI_measures
+	url = https://github.com/conp-bot/conp-dataset-Longitudinal-stability-of-brain-and-spinal-cord-quantitative-MRI-measures.git
