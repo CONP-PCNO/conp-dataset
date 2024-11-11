@@ -131,8 +131,11 @@ class ZenodoCrawler(BaseCrawler):
 
             # Retrieve and clean file formats/extensions
             file_formats = (
-                list(set(map(lambda x: x.get("type"), files))) if len(files) > 0 else []
+                list(set(map(lambda x: os.path.splitext(x.get("key"))[1][1:], files)))
+                if len(files) > 0
+                else []
             )
+
             if "" in file_formats:
                 file_formats.remove("")
 
@@ -232,7 +235,7 @@ class ZenodoCrawler(BaseCrawler):
                                 file_format.upper()
                                 for file_format in file_formats
                                 # Do not modify specific file formats.
-                                if file_format and file_format not in ["NIfTI", "BigWig"]
+                                if file_format not in ["NIfTI", "BigWig"]
                             ],
                             "size": dataset_size,
                             "unit": {"value": dataset_unit},
