@@ -555,15 +555,3 @@
 [submodule "projects/conp-dataset-Paper-is-not-enough-Crowdsourcing-the-T-sub-1-sub-mapping-common-ground-via-the-ISMR"]
 	path = projects/conp-dataset-Paper-is-not-enough-Crowdsourcing-the-T-sub-1-sub-mapping-common-ground-via-the-ISMR
 	url = https://github.com/conp-bot/conp-dataset-Paper-is-not-enough-Crowdsourcing-the-T-sub-1-sub-mapping-common-ground-via-the-ISMR
-[submodule "projects/eegnet_ssa"]
-	path = projects/eegnet_ssa
-	url = https://github.com/CONP-PCNO/eegnet_ssa
-	branch = main
-[submodule "projects/eegnet_ssm"]
-	path = projects/eegnet_ssm
-	url = https://github.com/CONP-PCNO/eegnet_ssm
-	branch = main
-[submodule "projects/eegnet_mwa"]
-	path = projects/eegnet_mwa
-	url = https://github.com/CONP-PCNO/eegnet_mwa
-	branch = main
