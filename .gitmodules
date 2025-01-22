@@ -221,21 +221,9 @@
 	path = projects/eegnet_face13
 	url = https://github.com/conpdatasets/eegnet_face13
 	branch = main
-[submodule "projects/eegnet_wmt"]
-	path = projects/eegnet_wmt
-	url = https://github.com/conpdatasets/eegnet_wmt
-	branch = main
-[submodule "projects/eegnet_aud"]
-	path = projects/eegnet_aud
-	url = https://github.com/conpdatasets/eegnet_aud
-	branch = main
 [submodule "projects/eegnet_tse"]
 	path = projects/eegnet_tse
 	url = https://github.com/conpdatasets/eegnet_tse
-	branch = main
-[submodule "projects/eegnet_vis"]
-	path = projects/eegnet_vis
-	url = https://github.com/conpdatasets/eegnet_vis
 	branch = main
 [submodule "projects/eegnet_lxn"]
 	path = projects/eegnet_lxn
