@@ -543,3 +543,15 @@
 [submodule "projects/conp-dataset-Paper-is-not-enough-Crowdsourcing-the-T-sub-1-sub-mapping-common-ground-via-the-ISMR"]
 	path = projects/conp-dataset-Paper-is-not-enough-Crowdsourcing-the-T-sub-1-sub-mapping-common-ground-via-the-ISMR
 	url = https://github.com/conp-bot/conp-dataset-Paper-is-not-enough-Crowdsourcing-the-T-sub-1-sub-mapping-common-ground-via-the-ISMR
+[submodule "projects/eegnet_ips"]
+	path = projects/eegnet_ips
+	url = https://github.com/conpdatasets/eegnet_ips
+	branch = main
+[submodule "projects/eegnet_rvs"]
+	path = projects/eegnet_rvs
+	url = https://github.com/conpdatasets/eegnet_rvs
+	branch = main
+[submodule "projects/eegnet_tdw"]
+	path = projects/eegnet_tdw
+	url = https://github.com/conpdatasets/eegnet_tdw
+	branch = main
