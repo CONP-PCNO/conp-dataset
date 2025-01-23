@@ -555,3 +555,11 @@
 	path = projects/eegnet_tdw
 	url = https://github.com/conpdatasets/eegnet_tdw
 	branch = main
+[submodule "projects/eegnet_ssa"]
+	path = projects/eegnet_ssa
+	url = https://github.com/conpdatasets/eegnet_ssa
+	branch = main
+[submodule "projects/eegnet_ssm"]
+	path = projects/eegnet_ssm
+	url = https://github.com/conpdatasets/eegnet_ssm
+	branch = main
