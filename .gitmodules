@@ -563,4 +563,7 @@
 	path = projects/eegnet_ssm
 	url = https://github.com/conpdatasets/eegnet_ssm
 	branch = main
-
+[submodule "projects/eegnet_mwa"]
+	path = projects/eegnet_mwa
+	url = https://github.com/CONP-PCNO/eegnet_mwa
+	branch = main
