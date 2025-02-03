@@ -47,7 +47,7 @@ Replace “janedoe@example.com” with your email address.
 sudo apt-get install git-annex-standalone
 ```
 
-As of May 12 2020, this installs git annex version 8.20200330, which works with CONP datasets. Earlier versions of git-annex may not. The version of git-annex installed can be verified with:
+As of late 2024, this installs git annex version 10.20241202 or above, which works with CONP datasets. Earlier versions are also compatible but the CONP recommends a relatively recent version for maximum ease. The version of git-annex installed can be verified with:
 
 ```git annex version```
 
