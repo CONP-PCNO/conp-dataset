@@ -567,3 +567,6 @@
 	path = projects/eegnet_mwa
 	url = https://github.com/CONP-PCNO/eegnet_mwa
 	branch = main
+[submodule "/data/crawler/conp-dataset/projects/Test_private_dataset"]
+	path = /data/crawler/conp-dataset/projects/Test_private_dataset
+	url = https://github.com/conp-bot/conp-dataset-Test-private-dataset.git
