@@ -244,7 +244,8 @@ class BaseCrawler:
             try:
                 clean_title = self._clean_dataset_title(dataset_description["title"])
                 branch_name = "conp-bot/" + clean_title
-                dataset_dir = os.path.join(self.basedir, "projects", clean_title)
+                dataset_rel_dir = os.path.join("projects", clean_title)
+                dataset_dir = os.path.join(self.basedir, dataset_rel_dir)
                 d = self.datalad.Dataset(dataset_dir)
                 if branch_name not in self.repo.remotes.origin.refs:  # New dataset
                     self.repo.git.checkout("-b", branch_name)
@@ -318,7 +319,7 @@ class BaseCrawler:
                     self.repo.git.submodule(
                         "add",
                         r[0][1].replace(self.github_token + "@", ""),
-                        dataset_dir,
+                        dataset_rel_dir,
                     )
                     modified = True
                     commit_msg = "Created " + dataset_description["title"]
