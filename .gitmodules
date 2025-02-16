@@ -567,3 +567,6 @@
 	path = projects/eegnet_mwa
 	url = https://github.com/CONP-PCNO/eegnet_mwa
 	branch = main
+[submodule "projects/A_database_of_the_healthy_human_spinal_cord_morphometry_in_the_PAM50_template_space"]
+	path = projects/A_database_of_the_healthy_human_spinal_cord_morphometry_in_the_PAM50_template_space
+	url = https://github.com/conp-bot/conp-dataset-A-database-of-the-healthy-human-spinal-cord-morphometry-in-the-PAM50-template-space.git
