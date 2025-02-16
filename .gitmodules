@@ -567,3 +567,6 @@
 	path = projects/eegnet_mwa
 	url = https://github.com/CONP-PCNO/eegnet_mwa
 	branch = main
+[submodule "projects/_Dataset__Little_Science__Big_Science__and_Beyond__How_Amateurs_Shape_the_Scientific_Landscape"]
+	path = projects/_Dataset__Little_Science__Big_Science__and_Beyond__How_Amateurs_Shape_the_Scientific_Landscape
+	url = https://github.com/conp-bot/conp-dataset--Dataset-Little-Science-Big-Science-and-Beyond-How-Amateurs-Shape-the-Scientific-La.git
