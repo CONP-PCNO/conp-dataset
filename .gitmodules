@@ -564,3 +564,6 @@
 	path = projects/eegnet_mwa
 	url = https://github.com/CONP-PCNO/eegnet_mwa
 	branch = main
+[submodule "projects/Paper_is_not_enough__Crowdsourcing_the_T_sub_1__sub__mapping_common_ground_via_the_ISMRM_reproducibility_challenge"]
+	path = projects/Paper_is_not_enough__Crowdsourcing_the_T_sub_1__sub__mapping_common_ground_via_the_ISMRM_reproducibility_challenge
+	url = https://github.com/conp-bot/conp-dataset-Paper-is-not-enough-Crowdsourcing-the-T-sub-1-sub-mapping-common-ground-via-the-ISMR.git
