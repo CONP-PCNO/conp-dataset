@@ -540,9 +540,6 @@
 [submodule "projects/conp-dataset-Quantitative-T1-MRI"]
 	path = projects/conp-dataset-Quantitative-T1-MRI
 	url = https://github.com/CONP-PCNO/conp-dataset-Quantitative-T1-MRI
-[submodule "projects/conp-dataset-Paper-is-not-enough-Crowdsourcing-the-T-sub-1-sub-mapping-common-ground-via-the-ISMR"]
-	path = projects/conp-dataset-Paper-is-not-enough-Crowdsourcing-the-T-sub-1-sub-mapping-common-ground-via-the-ISMR
-	url = https://github.com/conp-bot/conp-dataset-Paper-is-not-enough-Crowdsourcing-the-T-sub-1-sub-mapping-common-ground-via-the-ISMR
 [submodule "projects/eegnet_ips"]
 	path = projects/eegnet_ips
 	url = https://github.com/conpdatasets/eegnet_ips
