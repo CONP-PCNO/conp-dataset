@@ -537,9 +537,6 @@
 	path = projects/cneuromod_processed
 	url = https://github.com/conpdatasets/cneuromod_processed
 	branch = main
-[submodule "projects/conp-dataset-Quantitative-T1-MRI"]
-	path = projects/conp-dataset-Quantitative-T1-MRI
-	url = https://github.com/CONP-PCNO/conp-dataset-Quantitative-T1-MRI
 [submodule "projects/eegnet_ips"]
 	path = projects/eegnet_ips
 	url = https://github.com/conpdatasets/eegnet_ips
