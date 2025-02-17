@@ -187,7 +187,6 @@
 [submodule "projects/MRI_data_for__Stress_inducible_phosphoprotein_1__HOP_STI1_STIP1__regulates_the_spreading__aggregation__and_toxicity_of_alpha_synuclein_in_vivo_"]
 	path = projects/MRI_data_for__Stress_inducible_phosphoprotein_1__HOP_STI1_STIP1__regulates_the_spreading__aggregation__and_toxicity_of_alpha_synuclein_in_vivo_
 	url = https://github.com/conp-bot/conp-dataset-MRI-data-for-Stress-inducible-phosphoprotein-1-HOP-STI1-STIP1-regulates-the-spreadin.git
-=======
 [submodule "projects/braincode_Epilepsy_Priority_Setting_Partnership"]
 	path = projects/braincode_Epilepsy_Priority_Setting_Partnership
 	url = https://github.com/conpdatasets/braincode_Epilepsy_Priority_Setting_Partnership
@@ -571,4 +570,3 @@
 [submodule "projects/Paper_is_not_enough__Crowdsourcing_the_T_sub_1__sub__mapping_common_ground_via_the_ISMRM_reproducibility_challenge"]
 	path = projects/Paper_is_not_enough__Crowdsourcing_the_T_sub_1__sub__mapping_common_ground_via_the_ISMRM_reproducibility_challenge
 	url = https://github.com/conp-bot/conp-dataset-Paper-is-not-enough-Crowdsourcing-the-T-sub-1-sub-mapping-common-ground-via-the-ISMR.git
-
