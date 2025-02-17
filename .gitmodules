@@ -564,6 +564,9 @@
 	path = projects/eegnet_mwa
 	url = https://github.com/CONP-PCNO/eegnet_mwa
 	branch = main
+[submodule "projects/_Dataset__Analysis_code_for_the_paper__RF_shimming_in_the_cervical_spinal_cord_at_7T_"]
+	path = projects/_Dataset__Analysis_code_for_the_paper__RF_shimming_in_the_cervical_spinal_cord_at_7T_
+	url = https://github.com/conp-bot/conp-dataset--Dataset-Analysis-code-for-the-paper-RF-shimming-in-the-cervical-spinal-cord-at-7T-.git
 [submodule "projects/Paper_is_not_enough__Crowdsourcing_the_T_sub_1__sub__mapping_common_ground_via_the_ISMRM_reproducibility_challenge"]
 	path = projects/Paper_is_not_enough__Crowdsourcing_the_T_sub_1__sub__mapping_common_ground_via_the_ISMRM_reproducibility_challenge
 	url = https://github.com/conp-bot/conp-dataset-Paper-is-not-enough-Crowdsourcing-the-T-sub-1-sub-mapping-common-ground-via-the-ISMR.git
