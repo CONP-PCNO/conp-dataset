@@ -17,10 +17,10 @@ def _create_zenodo_tracker(path, dataset):
     with open(path, "w") as f:
         data = {
             "zenodo": {
-                "concept_doi": dataset["concept_doi"],
-                "version": dataset["latest_version"],
+                "concept_doi": dataset.get("concept_doi"),
+                "version": dataset.get("latest_version"),
             },
-            "title": dataset["title"],
+            "title": dataset.get("title"),
         }
         json.dump(data, f, indent=4)
 
@@ -39,7 +39,7 @@ class ZenodoCrawler(BaseCrawler):
             with open(self.config_path) as f:
                 data = json.load(f)
             if "zenodo_tokens" in data.keys():
-                return data["zenodo_tokens"]
+                return data.get("zenodo_tokens")
             else:
                 return {}
 
@@ -50,9 +50,9 @@ class ZenodoCrawler(BaseCrawler):
             'q=keywords:"canadian-open-neuroscience-platform"'
         )
         r_json = requests.get(query).json()
-        results = r_json["hits"]["hits"]
+        results = r_json.get("hits", {}).get("hits")
 
-        if r_json["links"]["next"]:
+        if r_json and r_json.get("links", {}).get("next"):
             next_page = r_json["links"]["next"]
             while next_page is not None:
                 next_page_json = requests.get(next_page).json()
@@ -77,7 +77,7 @@ class ZenodoCrawler(BaseCrawler):
         file_size: int = bucket.get("size", 0)
         if self.verbose:
             print(f"Downloading {link} as {file_name} of size {file_size}")
-        d.download_url(link, archive=True if bucket["type"] == "zip" else False)
+        d.download_url(link, archive=True if bucket.get("type") == "zip" else False)
 
     def get_all_dataset_description(self):
         zenodo_dois = []
@@ -124,21 +124,25 @@ class ZenodoCrawler(BaseCrawler):
                 for bucket in dataset["files"]:
                     files.append(bucket)
 
-            latest_version_doi = metadata["relations"]["version"][0]["last_child"][
-                "pid_value"
-            ]
+            latest_version_doi = None
+            version = metadata.get("relations", {}).get("version", [])
+            if len(version):
+                latest_version_doi = version[0].get("last_child", {}).get("pid_value")
 
             # Retrieve and clean file formats/extensions
             file_formats = (
-                list(set(map(lambda x: x["type"], files))) if len(files) > 0 else None
+                list(set(map(lambda x: os.path.splitext(x.get("key"))[1][1:], files)))
+                if len(files) > 0
+                else []
             )
+
             if "" in file_formats:
                 file_formats.remove("")
 
             # Retrieve and clean file keywords
             keywords = []
             if "keywords" in metadata.keys():
-                keywords = list(map(lambda x: {"value": x}, metadata["keywords"]))
+                keywords = list(map(lambda x: {"value": x}, metadata.get("keywords")))
 
             # Retrieve subject annotations from Zenodo and clean the annotated
             # subjects to insert in isAbout of DATS file
@@ -231,12 +235,12 @@ class ZenodoCrawler(BaseCrawler):
                                 file_format.upper()
                                 for file_format in file_formats
                                 # Do not modify specific file formats.
-                                if file_formats not in ["NIfTI", "BigWig"]
+                                if file_format not in ["NIfTI", "BigWig"]
                             ],
                             "size": dataset_size,
                             "unit": {"value": dataset_unit},
                             "access": {
-                                "landingPage": dataset["links"]["html"],
+                                "landingPage": dataset.get("links", {}).get("html"),
                                 "authorizations": [
                                     {
                                         "value": "public"
