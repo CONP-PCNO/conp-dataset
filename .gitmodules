@@ -527,3 +527,30 @@
 [submodule "projects/Paper_is_not_enough__Crowdsourcing_the_T_sub_1__sub__mapping_common_ground_via_the_ISMRM_reproducibility_challenge"]
 	path = projects/Paper_is_not_enough__Crowdsourcing_the_T_sub_1__sub__mapping_common_ground_via_the_ISMRM_reproducibility_challenge
 	url = https://github.com/conp-bot/conp-dataset-Paper-is-not-enough-Crowdsourcing-the-T-sub-1-sub-mapping-common-ground-via-the-ISMR.git
+[submodule "projects/eegnet_ssm"]
+	path = projects/eegnet_ssm
+	url = https://github.com/conpdatasets/eegnet_ssm
+[submodule "projects/eegnet_tse"]
+	path = projects/eegnet_tse
+	url = https://github.com/conpdatasets/eegnet_tse
+[submodule "projects/eegnet_ssa"]
+	path = projects/eegnet_ssa
+	url = https://github.com/conpdatasets/eegnet_ssa
+[submodule "projects/eegnet_rvs"]
+	path = projects/eegnet_rvs
+	url = https://github.com/conpdatasets/eegnet_rvs
+[submodule "projects/eegnet_mfa"]
+	path = projects/eegnet_mfa
+	url = https://github.com/conpdatasets/eegnet_mfa
+[submodule "projects/eegnet_lxn"]
+	path = projects/eegnet_lxn
+	url = https://github.com/conpdatasets/eegnet_lxn
+[submodule "projects/eegnet_ips"]
+	path = projects/eegnet_ips
+	url = https://github.com/conpdatasets/eegnet_ips
+[submodule "projects/eegnet_tdw"]
+	path = projects/eegnet_tdw
+	url = https://github.com/conpdatasets/eegnet_tdw
+[submodule "projects/eegnet_face13"]
+	path = projects/eegnet_face13
+	url = https://github.com/conpdatasets/eegnet_face13
