@@ -99,7 +99,7 @@ def get_modified_datasets(
     if since is None:
         if os.path.exists(".conp-archive"):
             with open(".conp-archive") as fin:
-                since = datetime.fromisoformat(fin.read())
+                since = datetime.fromisoformat(fin.read().rstrip("\n"))
         else:
             since = now - timedelta(weeks=1)
 
@@ -209,7 +209,7 @@ if __name__ == "__main__":
                     dataset_size += humanfriendly.parse_size(
                         f"{distribution['size']} {distribution['unit']['value']}",
                     )
-                    dataset_size //= 1024 ** 3  # Convert to GB
+                    dataset_size //= 1024**3  # Convert to GB
 
             # Only archive public dataset less than a specific size if one is provided to the script
             if is_public:

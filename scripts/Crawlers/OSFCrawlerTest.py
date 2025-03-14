@@ -1,6 +1,7 @@
 import datetime
 import json
 import os
+import time
 from typing import Any
 from typing import Callable
 from typing import Dict
@@ -10,9 +11,11 @@ from typing import Optional
 import humanize
 import requests
 from datalad.distribution.dataset import Dataset
+from datalad.support.exceptions import IncompleteResultsError
 from git import Repo
+from requests.exceptions import HTTPError
 
-from scripts.Crawlers.BaseCrawler import BaseCrawler
+from scripts.Crawlers.BaseCrawlerTest import BaseCrawler
 
 
 def _create_osf_tracker(path, dataset):
@@ -36,13 +39,34 @@ class OSFCrawler(BaseCrawler):
             if "osf_token" in data.keys():
                 return data["osf_token"]
 
-    def _get_request_with_bearer_token(self, link, redirect=True):
+    def _get_request_with_bearer_token(self, link, redirect=True, retries=5):
         header = {"Authorization": f"Bearer {self.osf_token}"}
-        r = requests.get(link, headers=header, allow_redirects=redirect)
-        if r.ok:
-            return r
-        else:
-            raise Exception(f"Request to {r.url} failed: {r.content}")
+        attempt = 0
+        while attempt < retries:
+            try:
+                r = requests.get(link, headers=header, allow_redirects=redirect)
+                r.raise_for_status()  # Cela va lever une exception pour les réponses 4xx et 5xx
+                return r  # Retourne la réponse si tout va bien
+            except HTTPError as http_err:
+                print(f"HTTP error occurred: {http_err} - Response: {r.text}")
+                if r.status_code == 503:  # Spécifiquement pour gérer les erreurs 503
+                    print(
+                        f"Request to {r.url} failed with 503 Bad Gateway, retrying..."
+                    )
+                    attempt += 1
+                    time.sleep(2**attempt)  # Backoff exponentiel
+                    continue
+                if r.status_code == 502:  # Spécifiquement pour gérer les erreurs 502
+                    print(
+                        f"Request to {r.url} failed with 502 Bad Gateway, skipping download."
+                    )
+                    return None  # Retourne None pour permettre au code de continuer
+                else:
+                    raise Exception(
+                        f"HTTP error occurred: {http_err} - {r.status_code}"
+                    )  # Lève l'exception pour les autres erreurs HTTP
+            except Exception as err:
+                raise Exception(f"An error occurred: {err}")
 
     def _query_osf(self):
         query = "https://api.osf.io/v2/nodes/?filter[tags]=canadian-open-neuroscience-platform"
@@ -71,7 +95,12 @@ class OSFCrawler(BaseCrawler):
         sizes,
         is_private=False,
     ):
-        r_json = self._get_request_with_bearer_token(link).json()
+        response = self._get_request_with_bearer_token(link)
+        if response is None:
+            print(f"Skipping download for {link} due to a failed request.")
+            return
+        print("first download", response)
+        r_json = response.json()
         files = r_json["data"]
 
         # Retrieve the files in the other pages if there are more than 1 page
@@ -79,9 +108,15 @@ class OSFCrawler(BaseCrawler):
             "links" in r_json.keys()
             and r_json["links"]["meta"]["total"] > r_json["links"]["meta"]["per_page"]
         ):
+            print("dans le next page")
             next_page = r_json["links"]["next"]
             while next_page is not None:
-                next_page_json = self._get_request_with_bearer_token(next_page).json()
+                response = self._get_request_with_bearer_token(next_page)
+                if response is None:
+                    print(f"Skipping page {next_page} due to a failed request.")
+                    break
+
+                next_page_json = response.json()
                 files.extend(next_page_json["data"])
                 next_page = next_page_json["links"]["next"]
 
@@ -89,57 +124,76 @@ class OSFCrawler(BaseCrawler):
             # Handle folders
             if file["attributes"]["kind"] == "folder":
                 folder_path = os.path.join(current_dir, file["attributes"]["name"])
-                os.mkdir(folder_path)
-                self._download_files(
-                    file["relationships"]["files"]["links"]["related"]["href"],
-                    folder_path,
-                    os.path.join(inner_path, file["attributes"]["name"]),
-                    d,
-                    annex,
-                    sizes,
-                    is_private,
-                )
+                # Conditions added by Alex
+                if not os.path.exists(folder_path):
+                    os.mkdir(folder_path)
+                    self._download_files(
+                        file["relationships"]["files"]["links"]["related"]["href"],
+                        folder_path,
+                        os.path.join(inner_path, file["attributes"]["name"]),
+                        d,
+                        annex,
+                        sizes,
+                        is_private,
+                    )
+                else:
+                    print(f"the folder {folder_path} already exist.")
 
             # Handle single files
             elif file["attributes"]["kind"] == "file":
-
-                # Private dataset/files
-                if is_private:
-                    correct_download_link = self._get_request_with_bearer_token(
-                        file["links"]["download"],
-                        redirect=False,
-                    ).headers["location"]
-                    if "https://accounts.osf.io/login" not in correct_download_link:
-                        zip_file = (
-                            True
-                            if file["attributes"]["name"].split(".")[-1] == "zip"
-                            else False
-                        )
-                        d.download_url(
-                            correct_download_link,
-                            path=os.path.join(inner_path, ""),
-                            archive=zip_file,
-                        )
-                    else:  # Token did not work for downloading file, return
-                        print(
-                            f'Unable to download file {file["links"]["download"]} with current token, skipping file',
-                        )
-                        return
-
-                # Public file
-                else:
-                    # Handle zip files
-                    if file["attributes"]["name"].split(".")[-1] == "zip":
-                        d.download_url(
+                try:
+                    # Private dataset/files
+                    if is_private:
+                        correct_download_link = self._get_request_with_bearer_token(
                             file["links"]["download"],
-                            path=os.path.join(inner_path, ""),
-                            archive=True,
+                            redirect=False,
                         )
+                        if correct_download_link is not None:
+                            correct_download_link = correct_download_link.headers[
+                                "location"
+                            ]
+                            if (
+                                "https://accounts.osf.io/login"
+                                not in correct_download_link
+                            ):
+                                zip_file = (
+                                    True
+                                    if file["attributes"]["name"].split(".")[-1]
+                                    == "zip"
+                                    else False
+                                )
+                                d.download_url(
+                                    correct_download_link,
+                                    path=os.path.join(inner_path, ""),
+                                    archive=zip_file,
+                                )
+                            else:  # Token did not work for downloading file, return
+                                file = file["links"]["download"]
+                                print(
+                                    f"Unable to download file {file} with current token, skipping file",
+                                )
+                                return
+
+                    # Public file
                     else:
-                        d.download_url(
-                            file["links"]["download"],
-                            path=os.path.join(inner_path, ""),
-                        )
+                        # Handle zip files
+                        if file["attributes"]["name"].split(".")[-1] == "zip":
+                            d.download_url(
+                                file["links"]["download"],
+                                path=os.path.join(inner_path, ""),
+                                archive=True,
+                            )
+                        else:
+                            d.download_url(
+                                file["links"]["download"],
+                                path=os.path.join(inner_path, ""),
+                            )
+
+                except IncompleteResultsError as e:
+                    print(
+                        f"Skipping file {file['links']['download']} due to error: {e}"
+                    )
+                    continue  # Skip ce fichier et passer au suivant
 
                 # append the size of the downloaded file to the sizes array
                 file_size = file["attributes"]["size"]
@@ -253,8 +307,10 @@ class OSFCrawler(BaseCrawler):
         for dataset in datasets:
             # skip datasets that have a parent since the files' components will
             # go into the parent dataset.
+            # print("parent" in dataset["relationships"].keys())
             if "parent" in dataset["relationships"].keys():
-                continue
+                print(dataset["relationships"]["parent"])
+            #    continue
 
             attributes = dataset["attributes"]
 
@@ -448,6 +504,13 @@ class OSFCrawler(BaseCrawler):
             os.path.join(dataset_dir, ".conp-osf-crawler.json"),
             dataset,
         )
+        # Tenter de publier sur le remote 'origin'
+        try:
+            d.publish(to="origin")
+        except IncompleteResultsError as e:
+            print(f"Skipping publication due to error: {e}")
+        except Exception as e:
+            print(f"An unexpected error occurred during publication: {e}")
 
     def update_if_necessary(self, dataset_description, dataset_dir):
         tracker_path = os.path.join(dataset_dir, ".conp-osf-crawler.json")

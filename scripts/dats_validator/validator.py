@@ -75,7 +75,7 @@ def validate_json(json_obj):
 
 
 def validate_extra_properties(dataset):
-    """ Checks if required extraProperties are present in a dataset."""
+    """Checks if required extraProperties are present in a dataset."""
 
     try:
         errors = []
@@ -130,7 +130,7 @@ def validate_extra_properties(dataset):
 
 
 def validate_formats(dataset):
-    """ Checks if the values in the formats field of the JSON object follows the upper case convention without dots. """
+    """Checks if the values in the formats field of the JSON object follows the upper case convention without dots."""
 
     errors_list = []
     format_exceptions = ["bigWig", "NIfTI", "GIfTI", "RNA-Seq"]
@@ -190,7 +190,7 @@ def date_type_validation(dates_list, dataset_title):
 
 
 def validate_date_types(dataset):
-    """ Checks if the values in the dates type field of the JSON object follows the lower case convention. """
+    """Checks if the values in the dates type field of the JSON object follows the lower case convention."""
 
     errors_list = []
 
@@ -287,8 +287,44 @@ def validate_is_about(dataset):
         return True, errors_list
 
 
+def validate_types(dataset):
+    errors_list = []
+    if "types" in dataset.keys():
+        # 1 check for empty object inside of types list
+        empty_obj = [obj for obj in dataset["types"] if not obj]
+        if len(empty_obj) == len(dataset["types"]):
+            error_message = (
+                f"Validation in {dataset['title']}: types - list has no value."
+            )
+            errors_list.append(error_message)
+
+        # 2 check that only data_type_schema properties are present
+        for obj in dataset["types"]:
+            allowed_keys = [
+                "@context",
+                "@id",
+                "@type",
+                "information",
+                "method",
+                "platform",
+                "instrument",
+            ]
+            for key in obj.keys():
+                if key not in allowed_keys:
+                    error_message = (
+                        f"Validation in {dataset['title']}: "
+                        f"types - the key {key} is not supported by the schema."
+                    )
+                    errors_list.append(error_message)
+    # no need to check for types otherwise because this error will be caught by jsonschema validation
+    if errors_list:
+        return False, errors_list
+    else:
+        return True, errors_list
+
+
 def validate_recursively(obj, errors):
-    """ Checks all datasets recursively for non-schema checks. """
+    """Checks all datasets recursively for non-schema checks."""
 
     val, errors_list = validate_extra_properties(obj)
     errors.extend(errors_list)
@@ -300,6 +336,8 @@ def validate_recursively(obj, errors):
     errors.extend(errors_list)
     val, errors_list = validate_is_about(obj)
     errors.extend(errors_list)
+    val, errors_list = validate_types(obj)
+    errors.extend(errors_list)
 
     if "hasPart" in obj:
         for each in obj["hasPart"]:
@@ -307,7 +345,7 @@ def validate_recursively(obj, errors):
 
 
 def validate_non_schema_required(json_obj):
-    """ Checks if json object has all required extra properties beyond json schema. Prints error report. """
+    """Checks if json object has all required extra properties beyond json schema. Prints error report."""
 
     errors = []
     validate_recursively(json_obj, errors)
@@ -326,7 +364,7 @@ cache = {}
 
 
 def dataset_exists(derived_from_url):
-    """ Caches response values in cache dict. """
+    """Caches response values in cache dict."""
 
     if derived_from_url not in cache:
         cache[derived_from_url] = get_response_status(derived_from_url)
@@ -334,7 +372,7 @@ def dataset_exists(derived_from_url):
 
 
 def get_response_status(derived_from_url):
-    """ Get a response status code for derivedFrom value. Returns True if status code is 200."""
+    """Get a response status code for derivedFrom value. Returns True if status code is 200."""
 
     try:
         r = requests.get(derived_from_url)
