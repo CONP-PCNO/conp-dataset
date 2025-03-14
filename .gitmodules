@@ -530,27 +530,36 @@
 [submodule "projects/eegnet_ssm"]
 	path = projects/eegnet_ssm
 	url = https://github.com/conpdatasets/eegnet_ssm
+	branch = main
 [submodule "projects/eegnet_tse"]
 	path = projects/eegnet_tse
 	url = https://github.com/conpdatasets/eegnet_tse
+	branch = main
 [submodule "projects/eegnet_ssa"]
 	path = projects/eegnet_ssa
 	url = https://github.com/conpdatasets/eegnet_ssa
+	branch = main
 [submodule "projects/eegnet_rvs"]
 	path = projects/eegnet_rvs
 	url = https://github.com/conpdatasets/eegnet_rvs
+	branch = main
 [submodule "projects/eegnet_mfa"]
 	path = projects/eegnet_mfa
 	url = https://github.com/conpdatasets/eegnet_mfa
+	branch = main
 [submodule "projects/eegnet_lxn"]
 	path = projects/eegnet_lxn
 	url = https://github.com/conpdatasets/eegnet_lxn
+	branch = main
 [submodule "projects/eegnet_ips"]
 	path = projects/eegnet_ips
 	url = https://github.com/conpdatasets/eegnet_ips
+	branch = main
 [submodule "projects/eegnet_tdw"]
 	path = projects/eegnet_tdw
 	url = https://github.com/conpdatasets/eegnet_tdw
+	branch = main
 [submodule "projects/eegnet_face13"]
 	path = projects/eegnet_face13
 	url = https://github.com/conpdatasets/eegnet_face13
+	branch = main
