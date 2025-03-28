@@ -561,6 +561,9 @@
 	path = projects/eegnet_mwa
 	url = https://github.com/CONP-PCNO/eegnet_mwa
 	branch = main
+[submodule "projects/Results_of_the_ISMRM_2020_joint_Reproducible_Research___Quantitative_MR_study_groups_reproducibility_challenge_on_phantom_and_human_brain_T_sub_1__sub__mapping"]
+	path = projects/Results_of_the_ISMRM_2020_joint_Reproducible_Research___Quantitative_MR_study_groups_reproducibility_challenge_on_phantom_and_human_brain_T_sub_1__sub__mapping
+	url = https://github.com/conp-bot/conp-dataset-Results-of-the-ISMRM-2020-joint-Reproducible-Research-Quantitative-MR-study-groups-re.git
 [submodule "projects/_Dataset__Analysis_code_for_the_paper__RF_shimming_in_the_cervical_spinal_cord_at_7T_"]
 	path = projects/_Dataset__Analysis_code_for_the_paper__RF_shimming_in_the_cervical_spinal_cord_at_7T_
 	url = https://github.com/conp-bot/conp-dataset--Dataset-Analysis-code-for-the-paper-RF-shimming-in-the-cervical-spinal-cord-at-7T-.git
