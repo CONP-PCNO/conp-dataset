@@ -537,9 +537,6 @@
 	path = projects/cneuromod_processed
 	url = https://github.com/conpdatasets/cneuromod_processed
 	branch = main
-[submodule "projects/conp-dataset-Quantitative-T1-MRI"]
-	path = projects/conp-dataset-Quantitative-T1-MRI
-	url = https://github.com/CONP-PCNO/conp-dataset-Quantitative-T1-MRI
 [submodule "projects/eegnet_ips"]
 	path = projects/eegnet_ips
 	url = https://github.com/conpdatasets/eegnet_ips
@@ -567,3 +564,9 @@
 [submodule "projects/Results_of_the_ISMRM_2020_joint_Reproducible_Research___Quantitative_MR_study_groups_reproducibility_challenge_on_phantom_and_human_brain_T_sub_1__sub__mapping"]
 	path = projects/Results_of_the_ISMRM_2020_joint_Reproducible_Research___Quantitative_MR_study_groups_reproducibility_challenge_on_phantom_and_human_brain_T_sub_1__sub__mapping
 	url = https://github.com/conp-bot/conp-dataset-Results-of-the-ISMRM-2020-joint-Reproducible-Research-Quantitative-MR-study-groups-re.git
+[submodule "projects/_Dataset__Analysis_code_for_the_paper__RF_shimming_in_the_cervical_spinal_cord_at_7T_"]
+	path = projects/_Dataset__Analysis_code_for_the_paper__RF_shimming_in_the_cervical_spinal_cord_at_7T_
+	url = https://github.com/conp-bot/conp-dataset--Dataset-Analysis-code-for-the-paper-RF-shimming-in-the-cervical-spinal-cord-at-7T-.git
+[submodule "projects/Paper_is_not_enough__Crowdsourcing_the_T_sub_1__sub__mapping_common_ground_via_the_ISMRM_reproducibility_challenge"]
+	path = projects/Paper_is_not_enough__Crowdsourcing_the_T_sub_1__sub__mapping_common_ground_via_the_ISMRM_reproducibility_challenge
+	url = https://github.com/conp-bot/conp-dataset-Paper-is-not-enough-Crowdsourcing-the-T-sub-1-sub-mapping-common-ground-via-the-ISMR.git
