@@ -46,6 +46,7 @@
 [submodule "projects/preventad-open-bids"]
 	path = projects/preventad-open-bids
 	url = https://github.com/conpdatasets/preventad-open-bids
+	branch = main
 [submodule "projects/CHBMP"]
 	path = projects/CHBMP
 	url = https://github.com/conpdatasets/CHBMP
@@ -94,6 +95,7 @@
 [submodule "projects/multicenter-phantom"]
 	path = projects/multicenter-phantom
 	url = https://github.com/conpdatasets/multicenter-phantom
+	branch = main
 [submodule "projects/BigBrain_3DROIs"]
 	path = projects/BigBrain_3DROIs
 	url = https://github.com/conpdatasets/BigBrain_3DROIs
