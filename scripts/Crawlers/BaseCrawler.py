@@ -573,10 +573,12 @@ Functional checks:
         elif len(modalities) > 1 and "unknown" in modalities:
             modalities.remove("unknown")
         if "types" not in data.keys():
-            data["types"] = [{"value": modality} for modality in modalities]
+            data["types"] = [
+                {"information": {"value": modality}} for modality in modalities
+            ]
         else:
             for modality in modalities:
-                data["types"].append({"value": modality})
+                data["types"].append({"information": {"value": modality}})
 
         # Create file
         with open(dats_path, "w") as f:
