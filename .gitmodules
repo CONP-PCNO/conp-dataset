@@ -567,3 +567,6 @@
 [submodule "projects/Paper_is_not_enough__Crowdsourcing_the_T_sub_1__sub__mapping_common_ground_via_the_ISMRM_reproducibility_challenge"]
 	path = projects/Paper_is_not_enough__Crowdsourcing_the_T_sub_1__sub__mapping_common_ground_via_the_ISMRM_reproducibility_challenge
 	url = https://github.com/conp-bot/conp-dataset-Paper-is-not-enough-Crowdsourcing-the-T-sub-1-sub-mapping-common-ground-via-the-ISMR.git
+[submodule "projects/Parcellating_the_parcellation_issue___a_proof_of_concept_for_reproducible_analyses_using_Neurolibre"]
+	path = projects/Parcellating_the_parcellation_issue___a_proof_of_concept_for_reproducible_analyses_using_Neurolibre
+	url = https://github.com/conp-bot/conp-dataset-Parcellating-the-parcellation-issue---a-proof-of-concept-for-reproducible-analyses-usin.git
