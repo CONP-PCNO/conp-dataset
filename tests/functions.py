@@ -122,7 +122,7 @@ def is_authentication_required(dataset):
                     ):
                         return False
             except KeyError as e:
-                print(f"{str(e)} field not found in DATS.json")
+                print(f"{str(e)} field not found in DATS.json")  # noqa: E713
     except FileNotFoundError as e:
         pytest.fail(f"DATS.json was not found!\n{str(e)}", pytrace=False)
     except Exception as e:

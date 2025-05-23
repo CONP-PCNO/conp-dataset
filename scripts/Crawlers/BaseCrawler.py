@@ -313,7 +313,9 @@ class BaseCrawler:
                     # Create README.md if it doesn't exist
                     if not os.path.isfile(os.path.join(dataset_dir, "README.md")):
                         readme = self.get_readme_content(dataset_description)
-                        self._create_readme(readme, os.path.join(dataset_dir, "README.md"))
+                        self._create_readme(
+                            readme, os.path.join(dataset_dir, "README.md")
+                        )
                     d.save()
                     d.publish(to="origin")
                     self.repo.git.submodule(
@@ -334,7 +336,9 @@ class BaseCrawler:
                         self.repo.git.checkout("-f", "master")
                         continue
 
-                    modified = self.update_if_necessary(dataset_description, dataset_dir)
+                    modified = self.update_if_necessary(
+                        dataset_description, dataset_dir
+                    )
                     if modified:
                         # Create DATS.json if it exists in directory and 1 level deep subdir
                         dats_path: str = os.path.join(dataset_dir, "DATS.json")
@@ -342,7 +346,9 @@ class BaseCrawler:
                             dataset_dir, "dats.json"
                         ):
                             if self.verbose:
-                                print(f"Found existing DATS.json at {existing_dats_path}")
+                                print(
+                                    f"Found existing DATS.json at {existing_dats_path}"
+                                )
                             if existing_dats_path != dats_path:
                                 os.rename(existing_dats_path, dats_path)
                             self._add_source_data_submodule_if_derived_from_conp_dataset(
@@ -567,10 +573,12 @@ Functional checks:
         elif len(modalities) > 1 and "unknown" in modalities:
             modalities.remove("unknown")
         if "types" not in data.keys():
-            data["types"] = [{"value": modality} for modality in modalities]
+            data["types"] = [
+                {"information": {"value": modality}} for modality in modalities
+            ]
         else:
             for modality in modalities:
-                data["types"].append({"value": modality})
+                data["types"].append({"information": {"value": modality}})
 
         # Create file
         with open(dats_path, "w") as f:
