@@ -567,3 +567,6 @@
 [submodule "projects/Paper_is_not_enough__Crowdsourcing_the_T_sub_1__sub__mapping_common_ground_via_the_ISMRM_reproducibility_challenge"]
 	path = projects/Paper_is_not_enough__Crowdsourcing_the_T_sub_1__sub__mapping_common_ground_via_the_ISMRM_reproducibility_challenge
 	url = https://github.com/conp-bot/conp-dataset-Paper-is-not-enough-Crowdsourcing-the-T-sub-1-sub-mapping-common-ground-via-the-ISMR.git
+[submodule "projects/Results_of_the_ISMRM_2020_joint_Reproducible_Research___Quantitative_MR_study_groups_reproducibility_challenge_on_phantom_and_human_brain_T_sub_1__sub__mapping"]
+	path = projects/Results_of_the_ISMRM_2020_joint_Reproducible_Research___Quantitative_MR_study_groups_reproducibility_challenge_on_phantom_and_human_brain_T_sub_1__sub__mapping
+	url = https://github.com/conp-bot/conp-dataset-Results-of-the-ISMRM-2020-joint-Reproducible-Research-Quantitative-MR-study-groups-re.git
