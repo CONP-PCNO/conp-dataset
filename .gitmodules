@@ -545,10 +545,6 @@
 	path = projects/eegnet_rvs
 	url = https://github.com/conpdatasets/eegnet_rvs
 	branch = main
-[submodule "projects/eegnet_mfa"]
-	path = projects/eegnet_mfa
-	url = https://github.com/conpdatasets/eegnet_mfa
-	branch = main
 [submodule "projects/eegnet_lxn"]
 	path = projects/eegnet_lxn
 	url = https://github.com/conpdatasets/eegnet_lxn
