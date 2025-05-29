@@ -184,7 +184,7 @@ def get_stats_per_domain(tool_summary_dict, domain):
     return [
         domain,
         str(number_of_tools),
-        f'Docker ({str(container["docker"])}); Singularity ({str(container["singularity"])})',
+        f'Docker ({str(container["docker"])}); Singularity ({str(container["singularity"])})',  # noqa: E702
         "CBRAIN (" + str(number_of_cbrain_tools) + ")",
     ]
 
