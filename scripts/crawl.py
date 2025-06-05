@@ -115,31 +115,37 @@ if __name__ == "__main__":
     ) = parse_args()
 
     try:
-        if verbose:
-            print(
-                "==================== Zenodo Crawler Running ===================="
-                + os.linesep,
+        try:
+            if verbose:
+                print(
+                    "==================== Zenodo Crawler Running ===================="
+                    + os.linesep,
+                )
+            ZenodoCrawlerObj = ZenodoCrawler(
+                github_token,
+                config_path,
+                verbose,
+                force,
+                no_pr,
+                basedir,
             )
-        ZenodoCrawlerObj = ZenodoCrawler(
-            github_token,
-            config_path,
-            verbose,
-            force,
-            no_pr,
-            basedir,
-        )
-        ZenodoCrawlerObj.run()
+            ZenodoCrawlerObj.run()
+        except Exception:
+            traceback.print_exc()
 
-        if verbose:
-            print(
-                os.linesep
-                + "==================== OSF Crawler Running ===================="
-                + os.linesep,
+        try:
+            if verbose:
+                print(
+                    os.linesep
+                    + "==================== OSF Crawler Running ===================="
+                    + os.linesep,
+                )
+            OSFCrawlerObj = OSFCrawler(
+                github_token, config_path, verbose, force, no_pr, basedir
             )
-        OSFCrawlerObj = OSFCrawler(
-            github_token, config_path, verbose, force, no_pr, basedir
-        )
-        OSFCrawlerObj.run()
+            OSFCrawlerObj.run()
+        except Exception:
+            traceback.print_exc()
 
         # INSTANTIATE NEW CRAWLERS AND RUN HERE
 
