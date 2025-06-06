@@ -573,4 +573,3 @@
 [submodule "projects/Parcellating_the_parcellation_issue___a_proof_of_concept_for_reproducible_analyses_using_Neurolibre"]
 	path = projects/Parcellating_the_parcellation_issue___a_proof_of_concept_for_reproducible_analyses_using_Neurolibre
 	url = https://github.com/conp-bot/conp-dataset-Parcellating-the-parcellation-issue---a-proof-of-concept-for-reproducible-analyses-usin.git
-        branch = master
