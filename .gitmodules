@@ -571,3 +571,6 @@
 [submodule "projects/eegnet_mfa"]
 	path = projects/eegnet_mfa
 	url = https://github.com/conpdatasets/eegnet_mfa
+[submodule "projects/Longitudinal_stability_of_brain_and_spinal_cord_quantitative_MRI_measures"]
+	path = projects/Longitudinal_stability_of_brain_and_spinal_cord_quantitative_MRI_measures
+	url = https://github.com/conp-bot/conp-dataset-Longitudinal-stability-of-brain-and-spinal-cord-quantitative-MRI-measures.git

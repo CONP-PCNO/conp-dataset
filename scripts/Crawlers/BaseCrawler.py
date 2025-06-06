@@ -3,7 +3,6 @@ import json
 import os
 import re
 import shutil
-import traceback
 
 import git
 import requests
@@ -247,7 +246,6 @@ class BaseCrawler:
                 branch_name = "conp-bot/" + clean_title
                 dataset_rel_dir = os.path.join("projects", clean_title)
                 dataset_dir = os.path.join(self.basedir, dataset_rel_dir)
-                print(dataset_dir)
                 d = self.datalad.Dataset(dataset_dir)
                 if branch_name not in self.repo.remotes.origin.refs:  # New dataset
                     self.repo.git.checkout("-b", branch_name)
@@ -261,7 +259,6 @@ class BaseCrawler:
                             github_passwd=self.github_token,
                         )
                     except Exception as error:
-                        print(traceback.format_exc())
                         # handle the exception
                         print("An exception occurred:", error)
 
