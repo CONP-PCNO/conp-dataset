@@ -10,18 +10,6 @@
 [submodule "projects/celltypes"]
   path = projects/celltypes
   url = https://github.com/conpdatasets/celltypes
-[submodule "openpain-placebo_1"]
-	path = projects/openpain/placebo_1
-	url = https://github.com/conpdatasets/openpain-placebo_1
-[submodule "openpain-placebo_predict_tetreault"]
-	path = projects/openpain/placebo_predict_tetreault
-	url = https://github.com/conpdatasets/openpain-placebo_predict_tetreault
-[submodule "openpain-cbp_resting"]
-	path = projects/openpain/cbp_resting
-	url = https://github.com/conpdatasets/openpain-cbp_resting
-[submodule "openpain-BrainNetworkChange_Mano"]
-	path = projects/openpain/BrainNetworkChange_Mano
-	url = https://github.com/conpdatasets/openpain-BrainNetworkChange_Mano
 [submodule "projects/bigbrain-datalad"]
 	path = projects/BigBrain
 	url = https://github.com/conpdatasets/bigbrain-datalad
@@ -40,12 +28,6 @@
 [submodule "projects/MRI_and_unbiased_averages_of_wild_muskrats__Ondatra_zibethicus__and_red_squirrels__Tamiasciurus_hudsonicus_"]
   path = projects/MRI_and_unbiased_averages_of_wild_muskrats__Ondatra_zibethicus__and_red_squirrels__Tamiasciurus_hudsonicus_
   url = https://github.com/conp-bot/conp-dataset-MRI_and_unbiased_averages_of_wild_muskrats__Ondatra_zibethicus__and_red_squirrels__Tami
-[submodule "projects/refseq/refseq_Callithrix_jacchus"]
-	path = projects/refseq/refseq_Callithrix_jacchus
-	url = https://github.com/conpdatasets/refseq_Callithrix_jacchus
-[submodule "projects/refseq/refseq_Homo_sapiens"]
-	path = projects/refseq/refseq_Homo_sapiens
-	url = https://github.com/conpdatasets/refseq_Homo_sapiens
 [submodule "projects/Reusing-Neuro-Data"]
 	path = projects/Reusing-Neuro-Data
 	url = https://github.com/conpdatasets/Reusing-Neuro-Data
@@ -64,6 +46,7 @@
 [submodule "projects/preventad-open-bids"]
 	path = projects/preventad-open-bids
 	url = https://github.com/conpdatasets/preventad-open-bids
+	branch = main
 [submodule "projects/CHBMP"]
 	path = projects/CHBMP
 	url = https://github.com/conpdatasets/CHBMP
@@ -112,6 +95,7 @@
 [submodule "projects/multicenter-phantom"]
 	path = projects/multicenter-phantom
 	url = https://github.com/conpdatasets/multicenter-phantom
+	branch = main
 [submodule "projects/BigBrain_3DROIs"]
 	path = projects/BigBrain_3DROIs
 	url = https://github.com/conpdatasets/BigBrain_3DROIs
@@ -130,12 +114,6 @@
 [submodule "projects/preventad-open"]
 	path = projects/preventad-open
 	url = https://github.com/conpdatasets/preventad-open
-[submodule "projects/openpain/subacute_longitudinal_study"]
-	path = projects/openpain/subacute_longitudinal_study
-	url = https://github.com/conpdatasets/openpain-subacute_longitudinal_study
-[submodule "projects/openpain/thermal"]
-	path = projects/openpain/thermal
-	url = https://github.com/conpdatasets/openpain-thermal
 [submodule "projects/Longitudinal_structural_MRI_and_behavioural_data_for_mice_prenatally_exposed_to_maternal_immune_activation_either_early_or_late_in_gestation"]
 	path = projects/Longitudinal_structural_MRI_and_behavioural_data_for_mice_prenatally_exposed_to_maternal_immune_activation_either_early_or_late_in_gestation
 	url = https://github.com/conp-bot/conp-dataset-Longitudinal-structural-MRI-and-behavioural-data-for-mice-prenatally-exposed-to-materna
@@ -144,7 +122,7 @@
 	url = https://github.com/conpdatasets/BigBrain_MRISIM
 [submodule "projects/BigBrain_A3D"]
 	path = projects/BigBrain_A3D
-    url = https://github.com/conpdatasets/BigBrain_A3D
+        url = https://github.com/conpdatasets/BigBrain_A3D
 [submodule "projects/BigBrain_Hippocampus_Segmentation"]
 	path = projects/BigBrain_Hippocampus_Segmentation
 	url = https://github.com/conpdatasets/BigBrain_Hippocampus_Segmentation
@@ -193,6 +171,9 @@
 [submodule "projects/Neurocon"]
 	path = projects/Neurocon
 	url = https://github.com/conpdatasets/Neurocon
+[submodule "projects/Quantitative_T1_MRI"]
+	path = projects/Quantitative_T1_MRI
+	url = https://github.com/conp-bot/conp-dataset-Quantitative-T1-MRI.git
 [submodule "projects/braincode_CAN-BIND_Biomarkers_for_Depression_Baseline_Data_Release"]
 	path = projects/braincode_CAN-BIND_Biomarkers_for_Depression_Baseline_Data_Release
 	url = https://github.com/conpdatasets/braincode_CAN-BIND_Biomarkers_for_Depression_Baseline_Data_Release
@@ -217,9 +198,6 @@
 [submodule "projects/braincode_EpLink"]
 	path = projects/braincode_EpLink
 	url = https://github.com/CONP-PCNO/braincode_EpLink
-[submodule "projects/refseq/refseq_Mus_musculus"]
-	path = projects/refseq/refseq_Mus_musculus
-	url = https://github.com/conpdatasets/refseq_Mus_musculus
 [submodule "projects/Taowu"]
 	path = projects/Taowu
 	url = https://github.com/conpdatasets/Taowu
@@ -236,14 +214,374 @@
 [submodule "projects/cneuromod"]
 	path = projects/cneuromod
 	url = https://github.com/conpdatasets/cneuromod
-[submodule "projects/cneuromod.processed"]
-	path = projects/cneuromod.processed
-	url = https://github.com/conpdatasets/cneuromod.processed
 [submodule "projects/AdolescentBrainDevelopment"]
 	path = projects/AdolescentBrainDevelopment
 	url = https://github.com/conpdatasets/AdolescentBrainDevelopment
 	branch = main
-
-[submodule "/data/crawler/conp-dataset/projects/FISH_Probabilistic_Reasoning_Task"]
-	path = /data/crawler/conp-dataset/projects/FISH_Probabilistic_Reasoning_Task
+[submodule "projects/FISH_Probabilistic_Reasoning_Task"]
+	path = projects/FISH_Probabilistic_Reasoning_Task
 	url = https://github.com/conp-bot/conp-dataset-FISH-Probabilistic-Reasoning-Task.git
+[submodule "projects/CIMA-Q"]
+	path = projects/CIMA-Q
+	url = https://github.com/conpdatasets/CIMA-Q
+	branch = main
+[submodule "projects/cbig_catatonic_schizophrenia_wgs"]
+	path = projects/cbig_catatonic_schizophrenia_wgs
+	url = https://github.com/conpdatasets/cbig_catatonic_schizophrenia_wgs
+	branch = main
+[submodule "projects/cbig_congenital_hypopituitarism_wes"]
+	path = projects/cbig_congenital_hypopituitarism_wes
+	url = https://github.com/conpdatasets/cbig_congenital_hypopituitarism_wes
+	branch = main
+[submodule "projects/cbig_essential_tremor_wgs"]
+	path = projects/cbig_essential_tremor_wgs
+	url = https://github.com/conpdatasets/cbig_essential_tremor_wgs
+	branch = main
+[submodule "projects/cbig_hereditary_spastic_paraplegia_wgs"]
+	path = projects/cbig_hereditary_spastic_paraplegia_wgs
+	url = https://github.com/conpdatasets/cbig_hereditary_spastic_paraplegia_wgs
+	branch = main
+[submodule "projects/cbig_moyamoya_wgs"]
+	path = projects/cbig_moyamoya_wgs
+	url = https://github.com/conpdatasets/cbig_moyamoya_wgs
+	branch = main
+[submodule "projects/cbig_primary_lateral_sclerosis_wgs"]
+	path = projects/cbig_primary_lateral_sclerosis_wgs
+	url = https://github.com/conpdatasets/cbig_primary_lateral_sclerosis_wgs
+	branch = main
+[submodule "projects/cbig_progressive_supranuclear_palsy_wgs"]
+	path = projects/cbig_progressive_supranuclear_palsy_wgs
+	url = https://github.com/conpdatasets/cbig_progressive_supranuclear_palsy_wgs
+	branch = main
+[submodule "projects/cbig_radiation_exposure_wgs"]
+	path = projects/cbig_radiation_exposure_wgs
+	url = https://github.com/conpdatasets/cbig_radiation_exposure_wgs
+	branch = main
+[submodule "projects/cbig_restless_legs_syndrome_wgs"]
+	path = projects/cbig_restless_legs_syndrome_wgs
+	url = https://github.com/conpdatasets/cbig_restless_legs_syndrome_wgs
+	branch = main
+[submodule "projects/cbig_savant_syndrome_wgs"]
+	path = projects/cbig_savant_syndrome_wgs
+	url = https://github.com/conpdatasets/cbig_savant_syndrome_wgs
+	branch = main
+[submodule "projects/cbig_schizophrenia_wgs"]
+	path = projects/cbig_schizophrenia_wgs
+	url = https://github.com/conpdatasets/cbig_schizophrenia_wgs
+	branch = main
+[submodule "projects/cbig_3_hydroxybutyric_aciduria_wes"]
+	path = projects/cbig_3_hydroxybutyric_aciduria_wes
+	url = https://github.com/conpdatasets/cbig_3_hydroxybutyric_aciduria_wes
+	branch = main
+[submodule "projects/cbig_adolescent_idiopathic_scoliosis_wes"]
+	path = projects/cbig_adolescent_idiopathic_scoliosis_wes
+	url = https://github.com/conpdatasets/cbig_adolescent_idiopathic_scoliosis_wes
+	branch = main
+[submodule "projects/cbig_alzheimers_disease_wes"]
+	path = projects/cbig_alzheimers_disease_wes
+	url = https://github.com/conpdatasets/cbig_alzheimers_disease_wes
+	branch = main
+[submodule "projects/cbig_amusia_wes"]
+	path = projects/cbig_amusia_wes
+	url = https://github.com/conpdatasets/cbig_amusia_wes
+	branch = main
+[submodule "projects/cbig_amyotrophic_lateral_sclerosis_wes"]
+	path = projects/cbig_amyotrophic_lateral_sclerosis_wes
+	url = https://github.com/conpdatasets/cbig_amyotrophic_lateral_sclerosis_wes
+	branch = main
+[submodule "projects/cbig_aneurysm_wes"]
+	path = projects/cbig_aneurysm_wes
+	url = https://github.com/conpdatasets/cbig_aneurysm_wes
+	branch = main
+[submodule "projects/cbig_arteriovenous_malformation_wes"]
+	path = projects/cbig_arteriovenous_malformation_wes
+	url = https://github.com/conpdatasets/cbig_arteriovenous_malformation_wes
+	branch = main
+[submodule "projects/cbig_autism_spectrum_disorder_wes"]
+	path = projects/cbig_autism_spectrum_disorder_wes
+	url = https://github.com/conpdatasets/cbig_autism_spectrum_disorder_wes
+	branch = main
+[submodule "projects/cbig_bipolar_affective_disorder_wes"]
+	path = projects/cbig_bipolar_affective_disorder_wes
+	url = https://github.com/conpdatasets/cbig_bipolar_affective_disorder_wes
+	branch = main
+[submodule "projects/cbig_bipolar_ii_wes"]
+	path = projects/cbig_bipolar_ii_wes
+	url = https://github.com/conpdatasets/cbig_bipolar_ii_wes
+	branch = main
+[submodule "projects/cbig_cerebellar_dysgenesis_wes"]
+	path = projects/cbig_cerebellar_dysgenesis_wes
+	url = https://github.com/conpdatasets/cbig_cerebellar_dysgenesis_wes
+	branch = main
+[submodule "projects/cbig_cerebellar_hypoplasia_wes"]
+	path = projects/cbig_cerebellar_hypoplasia_wes
+	url = https://github.com/conpdatasets/cbig_cerebellar_hypoplasia_wes
+	branch = main
+[submodule "projects/cbig_chiari_type_i_malformation_wes"]
+	path = projects/cbig_chiari_type_i_malformation_wes
+	url = https://github.com/conpdatasets/cbig_chiari_type_i_malformation_wes
+	branch = main
+[submodule "projects/cbig_cluster_headache_syndrome_wes"]
+	path = projects/cbig_cluster_headache_syndrome_wes
+	url = https://github.com/conpdatasets/cbig_cluster_headache_syndrome_wes
+	branch = main
+[submodule "projects/cbig_congenital_anteriolateral_bowing_tibia_wes"]
+	path = projects/cbig_congenital_anteriolateral_bowing_tibia_wes
+	url = https://github.com/conpdatasets/cbig_congenital_anteriolateral_bowing_tibia_wes
+	branch = main
+[submodule "projects/cbig_congenital_insensitivity_to_pain_wes"]
+	path = projects/cbig_congenital_insensitivity_to_pain_wes
+	url = https://github.com/conpdatasets/cbig_congenital_insensitivity_to_pain_wes
+	branch = main
+[submodule "projects/cbig_congenital_malformations_nervous_system_wes"]
+	path = projects/cbig_congenital_malformations_nervous_system_wes
+	url = https://github.com/conpdatasets/cbig_congenital_malformations_nervous_system_wes
+	branch = main
+[submodule "projects/cbig_congenital_malformations_wes"]
+	path = projects/cbig_congenital_malformations_wes
+	url = https://github.com/conpdatasets/cbig_congenital_malformations_wes
+	branch = main
+[submodule "projects/cbig_crane_heise_syndrome_wes"]
+	path = projects/cbig_crane_heise_syndrome_wes
+	url = https://github.com/conpdatasets/cbig_crane_heise_syndrome_wes
+	branch = main
+[submodule "projects/cbig_disturbance_activity_attention_wes"]
+	path = projects/cbig_disturbance_activity_attention_wes
+	url = https://github.com/conpdatasets/cbig_disturbance_activity_attention_wes
+	branch = main
+[submodule "projects/cbig_DOOR_syndrome_wes"]
+	path = projects/cbig_DOOR_syndrome_wes
+	url = https://github.com/conpdatasets/cbig_DOOR_syndrome_wes
+	branch = main
+[submodule "projects/cbig_dysosteosclerosis_wes"]
+	path = projects/cbig_dysosteosclerosis_wes
+	url = https://github.com/conpdatasets/cbig_dysosteosclerosis_wes
+	branch = main
+[submodule "projects/cbig_dystonia_wes"]
+	path = projects/cbig_dystonia_wes
+	url = https://github.com/conpdatasets/cbig_dystonia_wes
+	branch = main
+[submodule "projects/cbig_ehlers_danlos_syndrome_wes"]
+	path = projects/cbig_ehlers_danlos_syndrome_wes
+	url = https://github.com/conpdatasets/cbig_ehlers_danlos_syndrome_wes
+	branch = main
+[submodule "projects/cbig_epilepsy_wes"]
+	path = projects/cbig_epilepsy_wes
+	url = https://github.com/conpdatasets/cbig_epilepsy_wes
+	branch = main
+[submodule "projects/cbig_essential_tremor_wes"]
+	path = projects/cbig_essential_tremor_wes
+	url = https://github.com/conpdatasets/cbig_essential_tremor_wes
+	branch = main
+[submodule "projects/cbig_frontotemporal_dementia_wes"]
+	path = projects/cbig_frontotemporal_dementia_wes
+	url = https://github.com/conpdatasets/cbig_frontotemporal_dementia_wes
+	branch = main
+[submodule "projects/cbig_genitopatellar_syndrome_wes"]
+	path = projects/cbig_genitopatellar_syndrome_wes
+	url = https://github.com/conpdatasets/cbig_genitopatellar_syndrome_wes
+	branch = main
+[submodule "projects/cbig_glioma_wes"]
+	path = projects/cbig_glioma_wes
+	url = https://github.com/conpdatasets/cbig_glioma_wes
+	branch = main
+[submodule "projects/cbig_guam_als_pld_wes"]
+	path = projects/cbig_guam_als_pld_wes
+	url = https://github.com/conpdatasets/cbig_guam_als_pld_wes
+	branch = main
+[submodule "projects/cbig_hereditary_ataxia_wes"]
+	path = projects/cbig_hereditary_ataxia_wes
+	url = https://github.com/conpdatasets/cbig_hereditary_ataxia_wes
+	branch = main
+[submodule "projects/cbig_hereditary_spastic_paraplegia_wes"]
+	path = projects/cbig_hereditary_spastic_paraplegia_wes
+	url = https://github.com/conpdatasets/cbig_hereditary_spastic_paraplegia_wes
+	branch = main
+[submodule "projects/cbig_heterotopia_wes"]
+	path = projects/cbig_heterotopia_wes
+	url = https://github.com/conpdatasets/cbig_heterotopia_wes
+	branch = main
+[submodule "projects/cbig_hypopituitarism_wes"]
+	path = projects/cbig_hypopituitarism_wes
+	url = https://github.com/conpdatasets/cbig_hypopituitarism_wes
+	branch = main
+[submodule "projects/cbig_idiopathic_juvenile_osteoporosis_wes"]
+	path = projects/cbig_idiopathic_juvenile_osteoporosis_wes
+	url = https://github.com/conpdatasets/cbig_idiopathic_juvenile_osteoporosis_wes
+	branch = main
+[submodule "projects/cbig_infantile_myofibromatosis_wes"]
+	path = projects/cbig_infantile_myofibromatosis_wes
+	url = https://github.com/conpdatasets/cbig_infantile_myofibromatosis_wes
+	branch = main
+[submodule "projects/cbig_intellectual_disability_wes"]
+	path = projects/cbig_intellectual_disability_wes
+	url = https://github.com/conpdatasets/cbig_intellectual_disability_wes
+	branch = main
+[submodule "projects/cbig_joubert_syndrome_wes"]
+	path = projects/cbig_joubert_syndrome_wes
+	url = https://github.com/conpdatasets/cbig_joubert_syndrome_wes
+	branch = main
+[submodule "projects/cbig_juvenile_paget_disease_wes"]
+	path = projects/cbig_juvenile_paget_disease_wes
+	url = https://github.com/conpdatasets/cbig_juvenile_paget_disease_wes
+	branch = main
+[submodule "projects/cbig_lipoprotein_metabolism_disorder_wes"]
+	path = projects/cbig_lipoprotein_metabolism_disorder_wes
+	url = https://github.com/conpdatasets/cbig_lipoprotein_metabolism_disorder_wes
+	branch = main
+[submodule "projects/cbig_meningioma_wes"]
+	path = projects/cbig_meningioma_wes
+	url = https://github.com/conpdatasets/cbig_meningioma_wes
+	branch = main
+[submodule "projects/cbig_microcephaly_wes"]
+	path = projects/cbig_microcephaly_wes
+	url = https://github.com/conpdatasets/cbig_microcephaly_wes
+	branch = main
+[submodule "projects/cbig_mirror_movements_wes"]
+	path = projects/cbig_mirror_movements_wes
+	url = https://github.com/conpdatasets/cbig_mirror_movements_wes
+	branch = main
+[submodule "projects/cbig_neural_tube_defect_wes"]
+	path = projects/cbig_neural_tube_defect_wes
+	url = https://github.com/conpdatasets/cbig_neural_tube_defect_wes
+	branch = main
+[submodule "projects/cbig_nonsyndromic_intellectual_disability_wes"]
+	path = projects/cbig_nonsyndromic_intellectual_disability_wes
+	url = https://github.com/conpdatasets/cbig_nonsyndromic_intellectual_disability_wes
+	branch = main
+[submodule "projects/cbig_obsessive_compulsive_disorder_wes"]
+	path = projects/cbig_obsessive_compulsive_disorder_wes
+	url = https://github.com/conpdatasets/cbig_obsessive_compulsive_disorder_wes
+	branch = main
+[submodule "projects/cbig_osteoporosis_wes"]
+	path = projects/cbig_osteoporosis_wes
+	url = https://github.com/conpdatasets/cbig_osteoporosis_wes
+	branch = main
+[submodule "projects/cbig_other_congenital_brain_malformations_wes"]
+	path = projects/cbig_other_congenital_brain_malformations_wes
+	url = https://github.com/conpdatasets/cbig_other_congenital_brain_malformations_wes
+	branch = main
+[submodule "projects/cbig_pervasive_developmental_disorder_wes"]
+	path = projects/cbig_pervasive_developmental_disorder_wes
+	url = https://github.com/conpdatasets/cbig_pervasive_developmental_disorder_wes
+	branch = main
+[submodule "projects/cbig_pontocerebellar_hypoplasia_wes"]
+	path = projects/cbig_pontocerebellar_hypoplasia_wes
+	url = https://github.com/conpdatasets/cbig_pontocerebellar_hypoplasia_wes
+	branch = main
+[submodule "projects/cbig_population_controls_wes"]
+	path = projects/cbig_population_controls_wes
+	url = https://github.com/conpdatasets/cbig_population_controls_wes
+	branch = main
+[submodule "projects/cbig_primary_lateral_sclerosis_wes"]
+	path = projects/cbig_primary_lateral_sclerosis_wes
+	url = https://github.com/conpdatasets/cbig_primary_lateral_sclerosis_wes
+	branch = main
+[submodule "projects/cbig_recurrent_depressive_disorder_wes"]
+	path = projects/cbig_recurrent_depressive_disorder_wes
+	url = https://github.com/conpdatasets/cbig_recurrent_depressive_disorder_wes
+	branch = main
+[submodule "projects/cbig_restless_legs_syndrome_wes"]
+	path = projects/cbig_restless_legs_syndrome_wes
+	url = https://github.com/conpdatasets/cbig_restless_legs_syndrome_wes
+	branch = main
+[submodule "projects/cbig_rothmund_thompson_syndrome_wes"]
+	path = projects/cbig_rothmund_thompson_syndrome_wes
+	url = https://github.com/conpdatasets/cbig_rothmund_thompson_syndrome_wes
+	branch = main
+[submodule "projects/cbig_savant_syndrome_wes"]
+	path = projects/cbig_savant_syndrome_wes
+	url = https://github.com/conpdatasets/cbig_savant_syndrome_wes
+	branch = main
+[submodule "projects/cbig_schizencephaly_wes"]
+	path = projects/cbig_schizencephaly_wes
+	url = https://github.com/conpdatasets/cbig_schizencephaly_wes
+	branch = main
+[submodule "projects/cbig_schizoaffective_disorders_wes"]
+	path = projects/cbig_schizoaffective_disorders_wes
+	url = https://github.com/conpdatasets/cbig_schizoaffective_disorders_wes
+	branch = main
+[submodule "projects/cbig_schizophrenia_wes"]
+	path = projects/cbig_schizophrenia_wes
+	url = https://github.com/conpdatasets/cbig_schizophrenia_wes
+	branch = main
+[submodule "projects/cbig_scoliosis_wes"]
+	path = projects/cbig_scoliosis_wes
+	url = https://github.com/conpdatasets/cbig_scoliosis_wes
+	branch = main
+[submodule "projects/cbig_syndromic_intellectual_disability_wes"]
+	path = projects/cbig_syndromic_intellectual_disability_wes
+	url = https://github.com/conpdatasets/cbig_syndromic_intellectual_disability_wes
+	branch = main
+[submodule "projects/cbig_synesthesia_wes"]
+	path = projects/cbig_synesthesia_wes
+	url = https://github.com/conpdatasets/cbig_synesthesia_wes
+	branch = main
+[submodule "projects/cbig_yunis_varon_syndrome_wes"]
+	path = projects/cbig_yunis_varon_syndrome_wes
+	url = https://github.com/conpdatasets/cbig_yunis_varon_syndrome_wes
+	branch = main
+[submodule "projects/cbig_zimmerman_laband_syndrome_wes"]
+	path = projects/cbig_zimmerman_laband_syndrome_wes
+	url = https://github.com/conpdatasets/cbig_zimmerman_laband_syndrome_wes
+	branch = main
+[submodule "projects/cneuromod_processed"]
+	path = projects/cneuromod_processed
+	url = https://github.com/conpdatasets/cneuromod_processed
+	branch = main
+[submodule "projects/_Dataset__Analysis_code_for_the_paper__RF_shimming_in_the_cervical_spinal_cord_at_7T_"]
+	path = projects/_Dataset__Analysis_code_for_the_paper__RF_shimming_in_the_cervical_spinal_cord_at_7T_
+	url = https://github.com/conp-bot/conp-dataset--Dataset-Analysis-code-for-the-paper-RF-shimming-in-the-cervical-spinal-cord-at-7T-.git
+[submodule "projects/Paper_is_not_enough__Crowdsourcing_the_T_sub_1__sub__mapping_common_ground_via_the_ISMRM_reproducibility_challenge"]
+	path = projects/Paper_is_not_enough__Crowdsourcing_the_T_sub_1__sub__mapping_common_ground_via_the_ISMRM_reproducibility_challenge
+	url = https://github.com/conp-bot/conp-dataset-Paper-is-not-enough-Crowdsourcing-the-T-sub-1-sub-mapping-common-ground-via-the-ISMR.git
+[submodule "projects/eegnet_ssm"]
+	path = projects/eegnet_ssm
+	url = https://github.com/conpdatasets/eegnet_ssm
+	branch = main
+[submodule "projects/eegnet_tse"]
+	path = projects/eegnet_tse
+	url = https://github.com/conpdatasets/eegnet_tse
+	branch = main
+[submodule "projects/eegnet_ssa"]
+	path = projects/eegnet_ssa
+	url = https://github.com/conpdatasets/eegnet_ssa
+	branch = main
+[submodule "projects/eegnet_rvs"]
+	path = projects/eegnet_rvs
+	url = https://github.com/conpdatasets/eegnet_rvs
+	branch = main
+[submodule "projects/eegnet_lxn"]
+	path = projects/eegnet_lxn
+	url = https://github.com/conpdatasets/eegnet_lxn
+	branch = main
+[submodule "projects/eegnet_ips"]
+	path = projects/eegnet_ips
+	url = https://github.com/conpdatasets/eegnet_ips
+	branch = main
+[submodule "projects/eegnet_tdw"]
+	path = projects/eegnet_tdw
+	url = https://github.com/conpdatasets/eegnet_tdw
+	branch = main
+[submodule "projects/eegnet_face13"]
+	path = projects/eegnet_face13
+	url = https://github.com/conpdatasets/eegnet_face13
+	branch = main
+[submodule "projects/A_database_of_the_healthy_human_spinal_cord_morphometry_in_the_PAM50_template_space"]
+	path = projects/A_database_of_the_healthy_human_spinal_cord_morphometry_in_the_PAM50_template_space
+	url = https://github.com/conp-bot/conp-dataset-A-database-of-the-healthy-human-spinal-cord-morphometry-in-the-PAM50-template-space.git
+[submodule "projects/Results_of_the_ISMRM_2020_joint_Reproducible_Research___Quantitative_MR_study_groups_reproducibility_challenge_on_phantom_and_human_brain_T_sub_1__sub__mapping"]
+	path = projects/Results_of_the_ISMRM_2020_joint_Reproducible_Research___Quantitative_MR_study_groups_reproducibility_challenge_on_phantom_and_human_brain_T_sub_1__sub__mapping
+	url = https://github.com/conp-bot/conp-dataset-Results-of-the-ISMRM-2020-joint-Reproducible-Research-Quantitative-MR-study-groups-re.git
+[submodule "projects/eegnet_mfa"]
+	path = projects/eegnet_mfa
+	url = https://github.com/conpdatasets/eegnet_mfa
+[submodule "projects/Parcellating_the_parcellation_issue___a_proof_of_concept_for_reproducible_analyses_using_Neurolibre"]
+	path = projects/Parcellating_the_parcellation_issue___a_proof_of_concept_for_reproducible_analyses_using_Neurolibre
+	url = https://github.com/conp-bot/conp-dataset-Parcellating-the-parcellation-issue---a-proof-of-concept-for-reproducible-analyses-usin.git
+[submodule "projects/Longitudinal_stability_of_brain_and_spinal_cord_quantitative_MRI_measures"]
+	path = projects/Longitudinal_stability_of_brain_and_spinal_cord_quantitative_MRI_measures
+	url = https://github.com/conp-bot/conp-dataset-Longitudinal-stability-of-brain-and-spinal-cord-quantitative-MRI-measures.git
+[submodule "projects/_Dataset__Little_Science__Big_Science__and_Beyond__How_Amateurs_Shape_the_Scientific_Landscape"]
+	path = projects/_Dataset__Little_Science__Big_Science__and_Beyond__How_Amateurs_Shape_the_Scientific_Landscape
+	url = https://github.com/conp-bot/conp-dataset--Dataset-Little-Science-Big-Science-and-Beyond-How-Amateurs-Shape-the-Scientific-La.git
