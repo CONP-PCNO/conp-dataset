@@ -241,99 +241,46 @@ class BaseCrawler:
         """
         dataset_description_list = self.get_all_dataset_description()
         for dataset_description in dataset_description_list:
-            clean_title = self._clean_dataset_title(dataset_description["title"])
-            branch_name = "conp-bot/" + clean_title
-            dataset_dir = os.path.join(self.basedir, "projects", clean_title)
-            d = self.datalad.Dataset(dataset_dir)
-            if branch_name not in self.repo.remotes.origin.refs:  # New dataset
-                self.repo.git.checkout("-b", branch_name)
-                repo_title = ("conp-dataset-" + dataset_description["title"])[0:100]
-                try:
-                    d.create()
-                    r = d.create_sibling_github(
-                        repo_title,
-                        name="origin",
-                        github_login=self.github_token,
-                        github_passwd=self.github_token,
-                    )
-                except Exception as error:
-                    # handle the exception
-                    print("An exception occurred:", error)
-
-                # Add github token to dataset origin remote url
-                try:
-                    origin = self.repo.remote("origin")
-                    origin_url = next(origin.urls)
-                    if "@" not in origin_url:
-                        origin.set_url(
-                            origin_url.replace(
-                                "https://",
-                                "https://" + self.github_token + "@",
-                            ),
+            try:
+                clean_title = self._clean_dataset_title(dataset_description["title"])
+                branch_name = "conp-bot/" + clean_title
+                dataset_rel_dir = os.path.join("projects", clean_title)
+                dataset_dir = os.path.join(self.basedir, dataset_rel_dir)
+                d = self.datalad.Dataset(dataset_dir)
+                if branch_name not in self.repo.remotes.origin.refs:  # New dataset
+                    self.repo.git.checkout("-b", branch_name)
+                    repo_title = ("conp-dataset-" + dataset_description["title"])[0:100]
+                    try:
+                        d.create()
+                        r = d.create_sibling_github(
+                            repo_title,
+                            name="origin",
+                            github_login=self.github_token,
+                            github_passwd=self.github_token,
                         )
-                except git.exc.NoSuchPathError:
-                    pass
+                    except Exception as error:
+                        # handle the exception
+                        print("An exception occurred:", error)
 
-                self._add_github_repo_description(repo_title, dataset_description)
-                for pattern in NO_ANNEX_FILE_PATTERNS:
-                    d.no_annex(pattern)
-                self.add_new_dataset(dataset_description, dataset_dir)
+                    # Add github token to dataset origin remote url
+                    try:
+                        origin = self.repo.remote("origin")
+                        origin_url = next(origin.urls)
+                        if "@" not in origin_url:
+                            origin.set_url(
+                                origin_url.replace(
+                                    "https://",
+                                    "https://" + self.github_token + "@",
+                                ),
+                            )
+                    except git.exc.NoSuchPathError:
+                        pass
 
-                # Create DATS.json if it exists in directory and 1 level deep subdir
-                dats_path: str = os.path.join(dataset_dir, "DATS.json")
-                if existing_dats_path := self._check_file_present(
-                    dataset_dir, "dats.json"
-                ):
-                    if self.verbose:
-                        print(f"Found existing DATS.json at {existing_dats_path}")
-                    if existing_dats_path != dats_path:
-                        shutil.copy(existing_dats_path, dats_path)
-                    self._add_source_data_submodule_if_derived_from_conp_dataset(
-                        dats_path, dataset_dir
-                    )
-                else:
-                    self._create_new_dats(
-                        dataset_dir,
-                        dats_path,
-                        dataset_description,
-                        d,
-                    )
-                # Move the logo into the root directory if found in 1 level deep subdir
-                logo_path = os.path.join(dataset_dir, "logo.png")
-                if existing_logo_path := self._check_file_present(
-                    dataset_dir, "logo.png"
-                ):
-                    if self.verbose:
-                        print(f"Found logo at {existing_logo_path}")
-                    if existing_logo_path != logo_path:
-                        os.rename(existing_logo_path, logo_path)
+                    self._add_github_repo_description(repo_title, dataset_description)
+                    for pattern in NO_ANNEX_FILE_PATTERNS:
+                        d.no_annex(pattern)
+                    self.add_new_dataset(dataset_description, dataset_dir)
 
-                # Create README.md if it doesn't exist
-                if not os.path.isfile(os.path.join(dataset_dir, "README.md")):
-                    readme = self.get_readme_content(dataset_description)
-                    self._create_readme(readme, os.path.join(dataset_dir, "README.md"))
-                d.save()
-                d.publish(to="origin")
-                self.repo.git.submodule(
-                    "add",
-                    r[0][1].replace(self.github_token + "@", ""),
-                    dataset_dir,
-                )
-                modified = True
-                commit_msg = "Created " + dataset_description["title"]
-            else:  # Dataset already existing locally
-                self.repo.git.checkout("-f", branch_name)
-                try:
-                    self.repo.git.merge("-n", "--no-verify", "master")
-                except Exception as e:
-                    print(f"Error while merging master into {branch_name}: {e}")
-                    print("Skipping this dataset")
-                    self.repo.git.merge("--abort")
-                    self.repo.git.checkout("-f", "master")
-                    continue
-
-                modified = self.update_if_necessary(dataset_description, dataset_dir)
-                if modified:
                     # Create DATS.json if it exists in directory and 1 level deep subdir
                     dats_path: str = os.path.join(dataset_dir, "DATS.json")
                     if existing_dats_path := self._check_file_present(
@@ -342,7 +289,7 @@ class BaseCrawler:
                         if self.verbose:
                             print(f"Found existing DATS.json at {existing_dats_path}")
                         if existing_dats_path != dats_path:
-                            os.rename(existing_dats_path, dats_path)
+                            shutil.copy(existing_dats_path, dats_path)
                         self._add_source_data_submodule_if_derived_from_conp_dataset(
                             dats_path, dataset_dir
                         )
@@ -362,24 +309,87 @@ class BaseCrawler:
                             print(f"Found logo at {existing_logo_path}")
                         if existing_logo_path != logo_path:
                             os.rename(existing_logo_path, logo_path)
+
                     # Create README.md if it doesn't exist
                     if not os.path.isfile(os.path.join(dataset_dir, "README.md")):
                         readme = self.get_readme_content(dataset_description)
                         self._create_readme(
-                            readme,
-                            os.path.join(dataset_dir, "README.md"),
+                            readme, os.path.join(dataset_dir, "README.md")
                         )
                     d.save()
                     d.publish(to="origin")
-                commit_msg = "Updated " + dataset_description["title"]
+                    self.repo.git.submodule(
+                        "add",
+                        r[0][1].replace(self.github_token + "@", ""),
+                        dataset_rel_dir,
+                    )
+                    modified = True
+                    commit_msg = "Created " + dataset_description["title"]
+                else:  # Dataset already existing locally
+                    self.repo.git.checkout("-f", branch_name)
+                    try:
+                        self.repo.git.merge("-n", "--no-verify", "master")
+                    except Exception as e:
+                        print(f"Error while merging master into {branch_name}: {e}")
+                        print("Skipping this dataset")
+                        self.repo.git.merge("--abort")
+                        self.repo.git.checkout("-f", "master")
+                        continue
 
-            # If modification detected in dataset, push to branch and create PR
-            if modified:
-                self._push_and_pull_request(
-                    commit_msg,
-                    dataset_dir,
-                    dataset_description["title"],
-                )
+                    modified = self.update_if_necessary(
+                        dataset_description, dataset_dir
+                    )
+                    if modified:
+                        # Create DATS.json if it exists in directory and 1 level deep subdir
+                        dats_path: str = os.path.join(dataset_dir, "DATS.json")
+                        if existing_dats_path := self._check_file_present(
+                            dataset_dir, "dats.json"
+                        ):
+                            if self.verbose:
+                                print(
+                                    f"Found existing DATS.json at {existing_dats_path}"
+                                )
+                            if existing_dats_path != dats_path:
+                                os.rename(existing_dats_path, dats_path)
+                            self._add_source_data_submodule_if_derived_from_conp_dataset(
+                                dats_path, dataset_dir
+                            )
+                        else:
+                            self._create_new_dats(
+                                dataset_dir,
+                                dats_path,
+                                dataset_description,
+                                d,
+                            )
+                        # Move the logo into the root directory if found in 1 level deep subdir
+                        logo_path = os.path.join(dataset_dir, "logo.png")
+                        if existing_logo_path := self._check_file_present(
+                            dataset_dir, "logo.png"
+                        ):
+                            if self.verbose:
+                                print(f"Found logo at {existing_logo_path}")
+                            if existing_logo_path != logo_path:
+                                os.rename(existing_logo_path, logo_path)
+                        # Create README.md if it doesn't exist
+                        if not os.path.isfile(os.path.join(dataset_dir, "README.md")):
+                            readme = self.get_readme_content(dataset_description)
+                            self._create_readme(
+                                readme,
+                                os.path.join(dataset_dir, "README.md"),
+                            )
+                        d.save()
+                        d.publish(to="origin")
+                    commit_msg = "Updated " + dataset_description["title"]
+
+                # If modification detected in dataset, push to branch and create PR
+                if modified:
+                    self._push_and_pull_request(
+                        commit_msg,
+                        dataset_dir,
+                        dataset_description["title"],
+                    )
+            except Exception as e:
+                print(e)
 
             # Go back to master
             self.repo.git.checkout("master")
@@ -563,10 +573,12 @@ Functional checks:
         elif len(modalities) > 1 and "unknown" in modalities:
             modalities.remove("unknown")
         if "types" not in data.keys():
-            data["types"] = [{"value": modality} for modality in modalities]
+            data["types"] = [
+                {"information": {"value": modality}} for modality in modalities
+            ]
         else:
             for modality in modalities:
-                data["types"].append({"value": modality})
+                data["types"].append({"information": {"value": modality}})
 
         # Create file
         with open(dats_path, "w") as f:
