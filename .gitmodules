@@ -171,6 +171,9 @@
 [submodule "projects/Neurocon"]
 	path = projects/Neurocon
 	url = https://github.com/conpdatasets/Neurocon
+[submodule "projects/Quantitative_T1_MRI"]
+	path = projects/Quantitative_T1_MRI
+	url = https://github.com/conp-bot/conp-dataset-Quantitative-T1-MRI.git
 [submodule "projects/braincode_CAN-BIND_Biomarkers_for_Depression_Baseline_Data_Release"]
 	path = projects/braincode_CAN-BIND_Biomarkers_for_Depression_Baseline_Data_Release
 	url = https://github.com/conpdatasets/braincode_CAN-BIND_Biomarkers_for_Depression_Baseline_Data_Release
@@ -573,3 +576,6 @@
 [submodule "projects/Parcellating_the_parcellation_issue___a_proof_of_concept_for_reproducible_analyses_using_Neurolibre"]
 	path = projects/Parcellating_the_parcellation_issue___a_proof_of_concept_for_reproducible_analyses_using_Neurolibre
 	url = https://github.com/conp-bot/conp-dataset-Parcellating-the-parcellation-issue---a-proof-of-concept-for-reproducible-analyses-usin.git
+[submodule "projects/Longitudinal_stability_of_brain_and_spinal_cord_quantitative_MRI_measures"]
+	path = projects/Longitudinal_stability_of_brain_and_spinal_cord_quantitative_MRI_measures
+	url = https://github.com/conp-bot/conp-dataset-Longitudinal-stability-of-brain-and-spinal-cord-quantitative-MRI-measures.git
