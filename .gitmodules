@@ -171,6 +171,9 @@
 [submodule "projects/Neurocon"]
 	path = projects/Neurocon
 	url = https://github.com/conpdatasets/Neurocon
+[submodule "projects/Quantitative_T1_MRI"]
+	path = projects/Quantitative_T1_MRI
+	url = https://github.com/conp-bot/conp-dataset-Quantitative-T1-MRI.git
 [submodule "projects/braincode_CAN-BIND_Biomarkers_for_Depression_Baseline_Data_Release"]
 	path = projects/braincode_CAN-BIND_Biomarkers_for_Depression_Baseline_Data_Release
 	url = https://github.com/conpdatasets/braincode_CAN-BIND_Biomarkers_for_Depression_Baseline_Data_Release
