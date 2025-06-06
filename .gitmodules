@@ -579,3 +579,6 @@
 [submodule "projects/Longitudinal_stability_of_brain_and_spinal_cord_quantitative_MRI_measures"]
 	path = projects/Longitudinal_stability_of_brain_and_spinal_cord_quantitative_MRI_measures
 	url = https://github.com/conp-bot/conp-dataset-Longitudinal-stability-of-brain-and-spinal-cord-quantitative-MRI-measures.git
+[submodule "projects/_Dataset__Little_Science__Big_Science__and_Beyond__How_Amateurs_Shape_the_Scientific_Landscape"]
+	path = projects/_Dataset__Little_Science__Big_Science__and_Beyond__How_Amateurs_Shape_the_Scientific_Landscape
+	url = https://github.com/conp-bot/conp-dataset--Dataset-Little-Science-Big-Science-and-Beyond-How-Amateurs-Shape-the-Scientific-La.git
