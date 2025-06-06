@@ -122,7 +122,7 @@
 	url = https://github.com/conpdatasets/BigBrain_MRISIM
 [submodule "projects/BigBrain_A3D"]
 	path = projects/BigBrain_A3D
-    url = https://github.com/conpdatasets/BigBrain_A3D
+        url = https://github.com/conpdatasets/BigBrain_A3D
 [submodule "projects/BigBrain_Hippocampus_Segmentation"]
 	path = projects/BigBrain_Hippocampus_Segmentation
 	url = https://github.com/conpdatasets/BigBrain_Hippocampus_Segmentation
