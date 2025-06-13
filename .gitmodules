@@ -582,3 +582,6 @@
 [submodule "projects/_Dataset__Little_Science__Big_Science__and_Beyond__How_Amateurs_Shape_the_Scientific_Landscape"]
 	path = projects/_Dataset__Little_Science__Big_Science__and_Beyond__How_Amateurs_Shape_the_Scientific_Landscape
 	url = https://github.com/conp-bot/conp-dataset--Dataset-Little-Science-Big-Science-and-Beyond-How-Amateurs-Shape-the-Scientific-La.git
+[submodule "projects/_Dataset__Representation_in_Brain_Imaging_Research__A_Quebec_demographic_overview"]
+	path = projects/_Dataset__Representation_in_Brain_Imaging_Research__A_Quebec_demographic_overview
+	url = https://github.com/conp-bot/conp-dataset--Dataset-Representation-in-Brain-Imaging-Research-A-Quebec-demographic-overview.git
