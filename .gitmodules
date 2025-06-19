@@ -218,9 +218,6 @@
 	path = projects/AdolescentBrainDevelopment
 	url = https://github.com/conpdatasets/AdolescentBrainDevelopment
 	branch = main
-[submodule "/data/crawler/conp-dataset/projects/Relational_and_Item_Specific_Encoding__RISE_"]
-	path = /data/crawler/conp-dataset/projects/Relational_and_Item_Specific_Encoding__RISE_
-	url = https://github.com/conp-bot/conp-dataset-Relational-and-Item-Specific-Encoding-RISE-.git
 [submodule "projects/CIMA-Q"]
 	path = projects/CIMA-Q
 	url = https://github.com/conpdatasets/CIMA-Q
