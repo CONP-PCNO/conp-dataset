@@ -221,9 +221,6 @@
 [submodule "projects/conp-dataset/projects/processed_PNC002"]
 	path = projects/conp-dataset/projects/processed_PNC002
 	url = https://github.com/conp-bot/conp-dataset-processed_PNC002.git
-[submodule "projects/conp-dataset/projects/Relational_and_Item_Specific_Encoding__RISE_"]
-	path = projects/conp-dataset/projects/Relational_and_Item_Specific_Encoding__RISE_
-	url = https://github.com/conp-bot/conp-dataset-Relational-and-Item-Specific-Encoding-RISE-.git
 [submodule "projects/CIMA-Q"]
 	path = projects/CIMA-Q
 	url = https://github.com/conpdatasets/CIMA-Q
