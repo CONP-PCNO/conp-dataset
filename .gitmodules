@@ -218,6 +218,9 @@
 	path = projects/AdolescentBrainDevelopment
 	url = https://github.com/conpdatasets/AdolescentBrainDevelopment
 	branch = main
+[submodule "/projects/processed_PNC004"]
+	path = /projects/processed_PNC004
+	url = https://github.com/conp-bot/conp-dataset-processed_PNC004.git
 [submodule "projects/conp-dataset/projects/processed_PNC005"]
 	path = projects/conp-dataset/projects/processed_PNC005
 	url = https://github.com/conp-bot/conp-dataset-processed_PNC005.git
