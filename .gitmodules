@@ -585,3 +585,6 @@
 [submodule "projects/_Dataset__Representation_in_Brain_Imaging_Research__A_Quebec_demographic_overview"]
 	path = projects/_Dataset__Representation_in_Brain_Imaging_Research__A_Quebec_demographic_overview
 	url = https://github.com/conp-bot/conp-dataset--Dataset-Representation-in-Brain-Imaging-Research-A-Quebec-demographic-overview.git
+[submodule "projects/_Dataset__Leveraging_Large_Language_Models_for_Interactive_Exploration_of_MRI_Research_Reproducibility__A_Self_Evolving_Review"]
+	path = projects/_Dataset__Leveraging_Large_Language_Models_for_Interactive_Exploration_of_MRI_Research_Reproducibility__A_Self_Evolving_Review
+	url = https://github.com/conp-bot/conp-dataset--Dataset-Leveraging-Large-Language-Models-for-Interactive-Exploration-of-MRI-Research-.git
