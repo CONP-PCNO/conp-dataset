@@ -221,9 +221,15 @@
 [submodule "projects/conp-dataset/projects/processed_PNC005"]
 	path = projects/conp-dataset/projects/processed_PNC005
 	url = https://github.com/conp-bot/conp-dataset-processed_PNC005.git
-[submodule "projects/Relational_and_Item_Specific_Encoding__RISE_"]
-	path = projects/Relational_and_Item_Specific_Encoding__RISE_
-	url = https://github.com/conp-bot/conp-dataset-Relational-and-Item-Specific-Encoding-RISE-.git
+[submodule "projects/conp-dataset/projects/processed_PNC003"]
+	path = projects/conp-dataset/projects/processed_PNC003
+	url = https://github.com/conp-bot/conp-dataset-processed_PNC003.git
+[submodule "projects/conp-dataset/projects/processed_PNC010"]
+	path = projects/conp-dataset/projects/processed_PNC010
+	url = https://github.com/conp-bot/conp-dataset-processed_PNC010.git
+[submodule "projects/conp-dataset/projects/processed_PNC002"]
+	path = projects/conp-dataset/projects/processed_PNC002
+	url = https://github.com/conp-bot/conp-dataset-processed_PNC002.git
 [submodule "projects/CIMA-Q"]
 	path = projects/CIMA-Q
 	url = https://github.com/conpdatasets/CIMA-Q
@@ -591,3 +597,6 @@
 [submodule "projects/_Dataset__Representation_in_Brain_Imaging_Research__A_Quebec_demographic_overview"]
 	path = projects/_Dataset__Representation_in_Brain_Imaging_Research__A_Quebec_demographic_overview
 	url = https://github.com/conp-bot/conp-dataset--Dataset-Representation-in-Brain-Imaging-Research-A-Quebec-demographic-overview.git
+[submodule "projects/An_interactive_meta_analysis_of_MRI_biomarkers_of_myelin"]
+	path = projects/An_interactive_meta_analysis_of_MRI_biomarkers_of_myelin
+	url = https://github.com/conp-bot/conp-dataset-An-interactive-meta-analysis-of-MRI-biomarkers-of-myelin.git
