@@ -218,20 +218,23 @@
 	path = projects/AdolescentBrainDevelopment
 	url = https://github.com/conpdatasets/AdolescentBrainDevelopment
 	branch = main
-[submodule "projects/conp-dataset/projects/processed_PNC006"]
-	path = projects/conp-dataset/projects/processed_PNC006
+[submodule "projects/processed_PNC006"]
+	path = projects/processed_PNC006
 	url = https://github.com/conp-bot/conp-dataset-processed_PNC006.git
-[submodule "projects/conp-dataset/projects/processed_PNC005"]
-	path = projects/conp-dataset/projects/processed_PNC005
+[submodule "projects/processed_PNC004"]
+	path = projects/processed_PNC004
+	url = https://github.com/conp-bot/conp-dataset-processed_PNC004.git
+[submodule "projects/processed_PNC005"]
+	path = projects/processed_PNC005
 	url = https://github.com/conp-bot/conp-dataset-processed_PNC005.git
-[submodule "projects/conp-dataset/projects/processed_PNC003"]
-	path = projects/conp-dataset/projects/processed_PNC003
+[submodule "projects/processed_PNC003"]
+	path = projects/processed_PNC003
 	url = https://github.com/conp-bot/conp-dataset-processed_PNC003.git
-[submodule "projects/conp-dataset/projects/processed_PNC010"]
-	path = projects/conp-dataset/projects/processed_PNC010
+[submodule "projects/processed_PNC010"]
+	path = projects/processed_PNC010
 	url = https://github.com/conp-bot/conp-dataset-processed_PNC010.git
-[submodule "projects/conp-dataset/projects/processed_PNC002"]
-	path = projects/conp-dataset/projects/processed_PNC002
+[submodule "projects/processed_PNC002"]
+	path = projects/processed_PNC002
 	url = https://github.com/conp-bot/conp-dataset-processed_PNC002.git
 [submodule "projects/CIMA-Q"]
 	path = projects/CIMA-Q
