@@ -218,21 +218,6 @@
 	path = projects/AdolescentBrainDevelopment
 	url = https://github.com/conpdatasets/AdolescentBrainDevelopment
 	branch = main
-[submodule "/projects/processed_PNC004"]
-	path = /projects/processed_PNC004
-	url = https://github.com/conp-bot/conp-dataset-processed_PNC004.git
-[submodule "projects/conp-dataset/projects/processed_PNC005"]
-	path = projects/conp-dataset/projects/processed_PNC005
-	url = https://github.com/conp-bot/conp-dataset-processed_PNC005.git
-[submodule "projects/conp-dataset/projects/processed_PNC003"]
-	path = projects/conp-dataset/projects/processed_PNC003
-	url = https://github.com/conp-bot/conp-dataset-processed_PNC003.git
-[submodule "projects/conp-dataset/projects/processed_PNC010"]
-	path = projects/conp-dataset/projects/processed_PNC010
-	url = https://github.com/conp-bot/conp-dataset-processed_PNC010.git
-[submodule "projects/conp-dataset/projects/processed_PNC002"]
-	path = projects/conp-dataset/projects/processed_PNC002
-	url = https://github.com/conp-bot/conp-dataset-processed_PNC002.git
 [submodule "projects/CIMA-Q"]
 	path = projects/CIMA-Q
 	url = https://github.com/conpdatasets/CIMA-Q
@@ -600,6 +585,9 @@
 [submodule "projects/_Dataset__Representation_in_Brain_Imaging_Research__A_Quebec_demographic_overview"]
 	path = projects/_Dataset__Representation_in_Brain_Imaging_Research__A_Quebec_demographic_overview
 	url = https://github.com/conp-bot/conp-dataset--Dataset-Representation-in-Brain-Imaging-Research-A-Quebec-demographic-overview.git
+[submodule "projects/_Dataset__Leveraging_Large_Language_Models_for_Interactive_Exploration_of_MRI_Research_Reproducibility__A_Self_Evolving_Review"]
+	path = projects/_Dataset__Leveraging_Large_Language_Models_for_Interactive_Exploration_of_MRI_Research_Reproducibility__A_Self_Evolving_Review
+	url = https://github.com/conp-bot/conp-dataset--Dataset-Leveraging-Large-Language-Models-for-Interactive-Exploration-of-MRI-Research-.git
 [submodule "projects/_Dataset__Computational_examples_of_software_for_white_matter_tractometry"]
 	path = projects/_Dataset__Computational_examples_of_software_for_white_matter_tractometry
 	url = https://github.com/conp-bot/conp-dataset--Dataset-Computational-examples-of-software-for-white-matter-tractometry.git
