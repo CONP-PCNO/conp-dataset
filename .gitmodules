@@ -218,6 +218,9 @@
 	path = projects/AdolescentBrainDevelopment
 	url = https://github.com/conpdatasets/AdolescentBrainDevelopment
 	branch = main
+[submodule "projects/FISH_Probabilistic_Reasoning_Task"]
+	path = projects/FISH_Probabilistic_Reasoning_Task
+	url = https://github.com/conp-bot/conp-dataset-FISH-Probabilistic-Reasoning-Task.git
 [submodule "projects/CIMA-Q"]
 	path = projects/CIMA-Q
 	url = https://github.com/conpdatasets/CIMA-Q
