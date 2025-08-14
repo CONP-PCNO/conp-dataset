@@ -218,23 +218,23 @@
 	path = projects/AdolescentBrainDevelopment
 	url = https://github.com/conpdatasets/AdolescentBrainDevelopment
 	branch = main
-[submodule "/data/crawler/conp-dataset/projects/processed_PNC007"]
-	path = /data/crawler/conp-dataset/projects/processed_PNC007
+[submodule "projects/processed_PNC007"]
+	path = projects/processed_PNC007
 	url = https://github.com/conp-bot/conp-dataset-processed_PNC007.git
-[submodule "/data/crawler/conp-dataset/projects/raw_PNC001_PNC003"]
-	path = /data/crawler/conp-dataset/projects/raw_PNC001_PNC003
+[submodule "projects/raw_PNC001_PNC003"]
+	path = projects/raw_PNC001_PNC003
 	url = https://github.com/conp-bot/conp-dataset-raw_PNC001-PNC003.git
-[submodule "/data/crawler/conp-dataset/projects/raw_PNC004_PNC006"]
-	path = /data/crawler/conp-dataset/projects/raw_PNC004_PNC006
+[submodule "projects/raw_PNC004_PNC006"]
+	path = projects/raw_PNC004_PNC006
 	url = https://github.com/conp-bot/conp-dataset-raw_PNC004-PNC006.git
-[submodule "/data/crawler/conp-dataset/projects/raw_PNC010"]
-	path = /data/crawler/conp-dataset/projects/raw_PNC010
+[submodule "projects/raw_PNC010"]
+	path = projects/raw_PNC010
 	url = https://github.com/conp-bot/conp-dataset-raw_PNC010.git
-[submodule "/data/crawler/conp-dataset/projects/processed_PNC008"]
-	path = /data/crawler/conp-dataset/projects/processed_PNC008
+[submodule "projects/processed_PNC008"]
+	path = projects/processed_PNC008
 	url = https://github.com/conp-bot/conp-dataset-processed_PNC008.git
-[submodule "/data/crawler/conp-dataset/projects/processed_PNC009"]
-	path = /data/crawler/conp-dataset/projects/processed_PNC009
+[submodule "projects/processed_PNC009"]
+	path = projects/processed_PNC009
 	url = https://github.com/conp-bot/conp-dataset-processed_PNC009.git
 [submodule "projects/CIMA-Q"]
 	path = projects/CIMA-Q
