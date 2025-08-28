@@ -603,3 +603,4 @@
 [submodule "projects/algonauts_2025.competitors"]
 	path = projects/algonauts_2025.competitors
 	url = https://github.com/conpdatasets/algonauts_2025.competitors
+	branch = main
