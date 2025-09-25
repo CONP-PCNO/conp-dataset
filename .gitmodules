@@ -604,3 +604,8 @@
 	path = projects/algonauts_2025_competitors
 	url = https://github.com/conpdatasets/algonauts_2025_competitors
 	branch = main
+[submodule "projects/eegnet_had"]
+	path = projects/eegnet_had
+	url = https://github.com/conpdatasets/eegnet_had
+	branch = main
+
