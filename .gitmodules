@@ -218,6 +218,24 @@
 	path = projects/AdolescentBrainDevelopment
 	url = https://github.com/conpdatasets/AdolescentBrainDevelopment
 	branch = main
+[submodule "projects/processed_PNC007"]
+	path = projects/processed_PNC007
+	url = https://github.com/conp-bot/conp-dataset-processed_PNC007.git
+[submodule "projects/raw_PNC001_PNC003"]
+	path = projects/raw_PNC001_PNC003
+	url = https://github.com/conp-bot/conp-dataset-raw_PNC001-PNC003.git
+[submodule "projects/raw_PNC004_PNC006"]
+	path = projects/raw_PNC004_PNC006
+	url = https://github.com/conp-bot/conp-dataset-raw_PNC004-PNC006.git
+[submodule "projects/raw_PNC010"]
+	path = projects/raw_PNC010
+	url = https://github.com/conp-bot/conp-dataset-raw_PNC010.git
+[submodule "projects/processed_PNC008"]
+	path = projects/processed_PNC008
+	url = https://github.com/conp-bot/conp-dataset-processed_PNC008.git
+[submodule "projects/processed_PNC009"]
+	path = projects/processed_PNC009
+	url = https://github.com/conp-bot/conp-dataset-processed_PNC009.git
 [submodule "projects/CIMA-Q"]
 	path = projects/CIMA-Q
 	url = https://github.com/conpdatasets/CIMA-Q
@@ -608,4 +626,6 @@
 	path = projects/eegnet_had
 	url = https://github.com/conpdatasets/eegnet_had
 	branch = main
-
+[submodule "projects/An_open_dataset_of_cerebral_tau_deposition_in_young_healthy_adults_based_on__18F_MK6240_positron_emission_tomography"]
+	path = projects/An_open_dataset_of_cerebral_tau_deposition_in_young_healthy_adults_based_on__18F_MK6240_positron_emission_tomography
+	url = https://github.com/conp-bot/conp-dataset-An-open-dataset-of-cerebral-tau-deposition-in-young-healthy-adults-based-on-18F-MK6240.git
