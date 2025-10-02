@@ -625,3 +625,7 @@
 [submodule "projects/An_open_dataset_of_cerebral_tau_deposition_in_young_healthy_adults_based_on__18F_MK6240_positron_emission_tomography"]
 	path = projects/An_open_dataset_of_cerebral_tau_deposition_in_young_healthy_adults_based_on__18F_MK6240_positron_emission_tomography
 	url = https://github.com/conp-bot/conp-dataset-An-open-dataset-of-cerebral-tau-deposition-in-young-healthy-adults-based-on-18F-MK6240.git
+[submodule "projects/eegnet_fac"]
+	path = projects/eegnet_fac
+	url = https://github.com/conpdatasets/eegnet_fac
+	branch = main
