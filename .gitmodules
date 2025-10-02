@@ -578,10 +578,6 @@
 	path = projects/eegnet_tdw
 	url = https://github.com/conpdatasets/eegnet_tdw
 	branch = main
-[submodule "projects/eegnet_face13"]
-	path = projects/eegnet_face13
-	url = https://github.com/conpdatasets/eegnet_face13
-	branch = main
 [submodule "projects/A_database_of_the_healthy_human_spinal_cord_morphometry_in_the_PAM50_template_space"]
 	path = projects/A_database_of_the_healthy_human_spinal_cord_morphometry_in_the_PAM50_template_space
 	url = https://github.com/conp-bot/conp-dataset-A-database-of-the-healthy-human-spinal-cord-morphometry-in-the-PAM50-template-space.git
