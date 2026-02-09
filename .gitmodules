@@ -633,3 +633,7 @@
 	path = projects/imaging_in_TLE_DR011
 	url = https://github.com/conpdatasets/imaging_in_TLE_DR011
     branch = main
+[submodule "projects/ONDRI_Parallel_pathways_for_language_processing_DR023"]
+	path = projects/ONDRI_Parallel_pathways_for_language_processing_DR023
+	url = https://github.com/CONP-PCNO/ONDRI_Parallel_pathways_for_language_processing_DR023
+	branch = main
