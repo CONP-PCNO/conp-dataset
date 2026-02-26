@@ -45,7 +45,7 @@ class OSFCrawler(BaseCrawler):
             raise Exception(f"Request to {r.url} failed: {r.content}")
 
     def _query_osf(self):
-        query = "https://api.osf.io/v2/nodes/?filter[title]=An open dataset of cerebral tau deposition in young healthy adults based on [18F]MK6240 positron emission tomography"
+        query = "https://api.osf.io/v2/nodes/?filter[tags]=canadian-open-neuroscience-platform"
         r_json = self._get_request_with_bearer_token(query).json()
         results = r_json["data"]
 
