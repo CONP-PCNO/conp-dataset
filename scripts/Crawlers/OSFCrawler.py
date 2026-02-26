@@ -45,7 +45,7 @@ class OSFCrawler(BaseCrawler):
             raise Exception(f"Request to {r.url} failed: {r.content}")
 
     def _query_osf(self):
-        query = "https://api.osf.io/v2/nodes/?filter[tags]=canadian-open-neuroscience-platform"
+        query = "https://api.osf.io/v2/nodes/?filter[title]=An open dataset of cerebral tau deposition in young healthy adults based on [18F]MK6240 positron emission tomography"
         r_json = self._get_request_with_bearer_token(query).json()
         results = r_json["data"]
 
@@ -128,17 +128,20 @@ class OSFCrawler(BaseCrawler):
 
                 # Public file
                 else:
-                    # Handle zip files
-                    if file["attributes"]["name"].split(".")[-1] == "zip":
-                        d.download_url(
-                            file["links"]["download"],
-                            path=os.path.join(inner_path, ""),
-                            archive=True,
-                        )
+                    filename = file["attributes"]["name"]
+                    url = file["links"]["download"]
+
+                    # Handle zip files: only register URL, don't download
+                    if filename.endswith(".zip"):
+                        target_path = os.path.join(inner_path, filename)
+                        if self.verbose:
+                            print("Registering zip (no download):", target_path)
+                        annex("addurl", "--fast", url, "--file", target_path)
                     else:
                         d.download_url(
-                            file["links"]["download"],
+                            url,
                             path=os.path.join(inner_path, ""),
+                            archive=False,
                         )
 
                 # append the size of the downloaded file to the sizes array
@@ -595,4 +598,4 @@ type = token"""
         return False
 
     def _is_private_dataset(self, files_url) -> bool:
-        return True if requests.get(files_url).status_code == 401 else False
+        return True if requests.get(files_url).status_code == 401 else False  
