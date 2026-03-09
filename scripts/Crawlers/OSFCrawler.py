@@ -598,4 +598,4 @@ type = token"""
         return False
 
     def _is_private_dataset(self, files_url) -> bool:
-        return True if requests.get(files_url).status_code == 401 else False  
+        return True if requests.get(files_url).status_code == 401 else False 
