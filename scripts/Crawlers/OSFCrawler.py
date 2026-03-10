@@ -128,20 +128,17 @@ class OSFCrawler(BaseCrawler):
 
                 # Public file
                 else:
-                    filename = file["attributes"]["name"]
-                    url = file["links"]["download"]
-
-                    # Handle zip files: only register URL, don't download
-                    if filename.endswith(".zip"):
-                        target_path = os.path.join(inner_path, filename)
-                        if self.verbose:
-                            print("Registering zip (no download):", target_path)
-                        annex("addurl", "--fast", url, "--file", target_path)
+                    # Handle zip files
+                    if file["attributes"]["name"].split(".")[-1] == "zip":
+                        d.download_url(
+                            file["links"]["download"],
+                            path=os.path.join(inner_path, ""),
+                            archive=True,
+                        )
                     else:
                         d.download_url(
-                            url,
+                            file["links"]["download"],
                             path=os.path.join(inner_path, ""),
-                            archive=False,
                         )
 
                 # append the size of the downloaded file to the sizes array
@@ -598,4 +595,4 @@ type = token"""
         return False
 
     def _is_private_dataset(self, files_url) -> bool:
-        return True if requests.get(files_url).status_code == 401 else False  
+        return True if requests.get(files_url).status_code == 401 else False
