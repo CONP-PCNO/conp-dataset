@@ -331,7 +331,16 @@ class BaseCrawler:
                         self.repo.git.checkout("-f", branch_name)
                     except git.exc.GitCommandError as e:
                         if "filter-process" in str(e):
-                            self.repo.git.checkout("-c", "filter.process=", "-f", branch_name)
+                            self.repo.git.execute(
+                                [
+                                    "git",
+                                    "-c",
+                                    "filter.annex.process=",
+                                    "checkout",
+                                    "-f",
+                                    branch_name,
+                                ]
+                            )
                         else:
                             raise
 
@@ -346,7 +355,16 @@ class BaseCrawler:
                             self.repo.git.checkout("-f", "master")
                         except git.exc.GitCommandError as e:
                             if "filter-process" in str(e):
-                                self.repo.git.checkout("-c", "filter.process=", "-f", "master")
+                                self.repo.git.execute(
+                                    [
+                                        "git",
+                                        "-c",
+                                        "filter.annex.process=",
+                                        "checkout",
+                                        "-f",
+                                        "master",
+                                    ]
+                                )
                             else:
                                 raise
                         continue
@@ -394,7 +412,7 @@ class BaseCrawler:
                             )
                         d.save()
                         d.publish(to="origin")
-                    commit_msg = "Updated " + dataset_description["title"]
+                        commit_msg = "Updated " + dataset_description["title"]
 
                 # If modification detected in dataset, push to branch and create PR
                 if modified:
@@ -407,7 +425,15 @@ class BaseCrawler:
                 print(e)
 
             # Go back to master
-            self.repo.git.checkout("master")
+            try:
+                self.repo.git.checkout("master")
+            except git.exc.GitCommandError as e:
+                if "filter-process" in str(e):
+                    self.repo.git.execute(
+                        ["git", "-c", "filter.annex.process=", "checkout", "master"]
+                    )
+                else:
+                    raise
 
     def _add_github_repo_description(self, repo_title, dataset_description):
         url = "https://api.github.com/repos/{}/{}".format(
