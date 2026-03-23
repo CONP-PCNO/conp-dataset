@@ -637,3 +637,8 @@
 	path = projects/ONDRI_Parallel_pathways_for_language_processing_DR023
 	url = https://github.com/CONP-PCNO/ONDRI_Parallel_pathways_for_language_processing_DR023
 	branch = main
+[submodule "cbn018-enable"]
+	path = cbn018-enable
+	url = https://github.com/CONP-PCNO/cbn018-enable
+	branch = main
+
