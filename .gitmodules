@@ -641,4 +641,7 @@
 	path = cbn018-enable
 	url = https://github.com/CONP-PCNO/cbn018-enable
 	branch = main
-
+[submodule "projects/conp-dataset-A-steady-state-visual-evoked-potential-SSVEP-based-BCI-dataset-in-children-and-adoles"]
+	path = projects/conp-dataset-A-steady-state-visual-evoked-potential-SSVEP-based-BCI-dataset-in-children-and-adoles
+	url = https://github.com/conp-bot/conp-dataset-A-steady-state-visual-evoked-potential-SSVEP-based-BCI-dataset-in-children-and-adoles.git
+	branch = main
