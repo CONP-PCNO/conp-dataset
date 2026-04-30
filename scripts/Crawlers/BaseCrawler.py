@@ -240,6 +240,16 @@ class BaseCrawler:
         if not. If dataset is already existing locally, verify if dataset needs updating
         with update_if_necessary() and update if so
         """
+        # Fetch latest remote branches to correctly identify existing datasets
+        try:
+            if self.verbose:
+                print("Fetching latest remote branches...")
+            self.repo.remotes.origin.fetch()
+            if self.verbose:
+                print("Fetch completed.")
+        except Exception as e:
+            print(f"Warning: Failed to fetch remote branches: {e}")
+            print("Continuing with cached remote branch information...")
         dataset_description_list = self.get_all_dataset_description()
         for dataset_description in dataset_description_list:
             try:
@@ -248,7 +258,11 @@ class BaseCrawler:
                 dataset_rel_dir = os.path.join("projects", clean_title)
                 dataset_dir = os.path.join(self.basedir, dataset_rel_dir)
                 d = self.datalad.Dataset(dataset_dir)
-                if branch_name not in self.repo.remotes.origin.refs:  # New dataset
+                # using remote_head
+                remote_branch_names = [
+                    ref.remote_head for ref in self.repo.remotes.origin.refs
+                ]
+                if branch_name not in remote_branch_names:  # New dataset
                     self._notify_new_dataset(
                         dataset_description,
                         branch_name,
