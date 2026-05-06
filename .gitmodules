@@ -638,3 +638,7 @@
 	path = projects/multicenter-phantom
 	url = https://github.com/conpdatasets/multicenter-phantom
 	branch = main
+[submodule "projects/Calgary-Preschool-MRI-Dataset"]
+	path = projects/Calgary-Preschool-MRI-Dataset
+	url = https://github.com/CONP-PCNO/Calgary-Preschool-MRI-Dataset
+	branch = main
