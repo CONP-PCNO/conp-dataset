@@ -641,3 +641,8 @@
 	path = projects/multicenter-phantom
 	url = https://github.com/conpdatasets/multicenter-phantom
 	branch = main
+[submodule "projects/MRI_data_for_Stress-inducible_phosphoprotein_1_(HOP_STI1_STIP1)_regulates_the_spreading,_aggregation,_and_toxicity_of_α-synuclein_in_vivo"]
+	path = projects/MRI_data_for_Stress-inducible_phosphoprotein_1_(HOP_STI1_STIP1)_regulates_the_spreading,_aggregation,_and_toxicity_of_α-synuclein_in_vivo
+	url = https://github.com/conp-bot/conp-dataset-MRI_data_for_Stress-inducible_phosphoprotein_1.git
+	datalad-id = a032438f-e116-40b4-8a97-18f7dd3134e5
+	datalad-url = https://github.com/conp-bot/conp-dataset-MRI_data_for_Stress-inducible_phosphoprotein_1.git
