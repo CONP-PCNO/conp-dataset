@@ -646,3 +646,6 @@
 	url = https://github.com/conp-bot/conp-dataset-MRI_data_for_Stress-inducible_phosphoprotein_1.git
 	datalad-id = a032438f-e116-40b4-8a97-18f7dd3134e5
 	datalad-url = https://github.com/conp-bot/conp-dataset-MRI_data_for_Stress-inducible_phosphoprotein_1.git
+[submodule "projects/conp-dataset-Expression-based_polygenic_score_from_the_amygdala_5HTT_gene_network"]
+	path = projects/conp-dataset-Expression-based_polygenic_score_from_the_amygdala_5HTT_gene_network
+	url = https://github.com/conp-bot/conp-dataset-Expression-based_polygenic_score_from_the_amygdala_5HTT_gene_networ.git
