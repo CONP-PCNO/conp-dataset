@@ -642,3 +642,6 @@
 	path = projects/Calgary-Preschool-MRI-Dataset
 	url = https://github.com/CONP-PCNO/Calgary-Preschool-MRI-Dataset
 	branch = main
+[submodule "projects/Results_of_the_ISMRM_2020_joint_Reproducible_Research_&_Quantitative_MR_study_groups_reproducibility_challenge_on_phantom_and_human_brain_T_sub_1_sub"]
+	path = projects/Results_of_the_ISMRM_2020_joint_Reproducible_Research_&_Quantitative_MR_study_groups_reproducibility_challenge_on_phantom_and_human_brain_T_sub_1_sub
+	url = https://github.com/conp-bot/conp-dataset-Results_of_the_ISMRM_2020_joint_Reproducible_Research_and_Quantitat.git
