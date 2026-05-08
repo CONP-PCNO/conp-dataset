@@ -642,3 +642,6 @@
 	path = projects/Calgary-Preschool-MRI-Dataset
 	url = https://github.com/CONP-PCNO/Calgary-Preschool-MRI-Dataset
 	branch = main
+[submodule "projects/MICA-PNI_Precision_NeuroImaging_and_Connectomics"]
+	path = projects/MICA-PNI_Precision_NeuroImaging_and_Connectomics
+	url = https://github.com/conp-bot/conp-dataset-MICA-PNI_Precision_NeuroImaging_and_Connectomics.git
