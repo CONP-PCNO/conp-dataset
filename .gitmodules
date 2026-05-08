@@ -642,3 +642,6 @@
 	path = projects/Calgary-Preschool-MRI-Dataset
 	url = https://github.com/CONP-PCNO/Calgary-Preschool-MRI-Dataset
 	branch = main
+[submodule "projects/Participant_level_contrast_maps"]
+	path = projects/Participant_level_contrast_maps
+	url = https://github.com/conp-bot/conp-dataset-Participant_level_contrast_maps.git
