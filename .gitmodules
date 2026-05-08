@@ -645,3 +645,6 @@
 [submodule "projects/Participant_level_contrast_maps"]
 	path = projects/Participant_level_contrast_maps
 	url = https://github.com/conp-bot/conp-dataset-Participant_level_contrast_maps.git
+[submodule "projects/MICA-PNI_Precision_NeuroImaging_and_Connectomics"]
+	path = projects/MICA-PNI_Precision_NeuroImaging_and_Connectomics
+	url = https://github.com/conp-bot/conp-dataset-MICA-PNI_Precision_NeuroImaging_and_Connectomics.git
