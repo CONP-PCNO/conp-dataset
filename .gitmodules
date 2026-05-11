@@ -648,3 +648,6 @@
 [submodule "projects/MICA-PNI_Precision_NeuroImaging_and_Connectomics"]
 	path = projects/MICA-PNI_Precision_NeuroImaging_and_Connectomics
 	url = https://github.com/conp-bot/conp-dataset-MICA-PNI_Precision_NeuroImaging_and_Connectomics.git
+[submodule "projects/Results_of_the_ISMRM_2020_joint_Reproducible_Research_&_Quantitative_MR_study_gr"]
+	path = projects/Results_of_the_ISMRM_2020_joint_Reproducible_Research_&_Quantitative_MR_study_gr
+	url = https://github.com/conp-bot/conp-dataset-Results_of_the_ISMRM_2020_joint_Reproducible_Research_and_Quantitat.git
