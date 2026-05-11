@@ -648,3 +648,6 @@
 [submodule "projects/MICA-PNI_Precision_NeuroImaging_and_Connectomics"]
 	path = projects/MICA-PNI_Precision_NeuroImaging_and_Connectomics
 	url = https://github.com/conp-bot/conp-dataset-MICA-PNI_Precision_NeuroImaging_and_Connectomics.git
+[submodule "projects/BADE_Evidence_Integration_Task"]
+	path = projects/BADE_Evidence_Integration_Task
+	url = https://github.com/conp-bot/conp-dataset-BADE_Evidence_Integration_Task.git
