@@ -648,3 +648,6 @@
 [submodule "projects/MICA-PNI_Precision_NeuroImaging_and_Connectomics"]
 	path = projects/MICA-PNI_Precision_NeuroImaging_and_Connectomics
 	url = https://github.com/conp-bot/conp-dataset-MICA-PNI_Precision_NeuroImaging_and_Connectomics.git
+[submodule "projects/Paper_is_not_enough_Crowdsourcing_the_T_sub_1_sub_mapping_common_ground_via_the"]
+	path = projects/Paper_is_not_enough_Crowdsourcing_the_T_sub_1_sub_mapping_common_ground_via_the
+	url = https://github.com/conp-bot/conp-dataset-Paper_is_not_enough_Crowdsourcing_the_T_sub_1_sub_mapping_common_gr.git
