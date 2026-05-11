@@ -648,3 +648,6 @@
 [submodule "projects/MICA-PNI_Precision_NeuroImaging_and_Connectomics"]
 	path = projects/MICA-PNI_Precision_NeuroImaging_and_Connectomics
 	url = https://github.com/conp-bot/conp-dataset-MICA-PNI_Precision_NeuroImaging_and_Connectomics.git
+[submodule "projects/TEST_CONP-NEUROHUB"]
+	path = projects/TEST_CONP-NEUROHUB
+	url = https://github.com/conp-bot/conp-dataset-TEST_CONP-NEUROHUB.git
