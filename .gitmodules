@@ -648,3 +648,6 @@
 [submodule "projects/MICA-PNI_Precision_NeuroImaging_and_Connectomics"]
 	path = projects/MICA-PNI_Precision_NeuroImaging_and_Connectomics
 	url = https://github.com/conp-bot/conp-dataset-MICA-PNI_Precision_NeuroImaging_and_Connectomics.git
+[submodule "projects/Raw_data"]
+	path = projects/Raw_data
+	url = https://github.com/conp-bot/conp-dataset-Raw_data.git
