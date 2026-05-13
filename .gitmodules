@@ -648,6 +648,9 @@
 [submodule "projects/MICA-PNI_Precision_NeuroImaging_and_Connectomics"]
 	path = projects/MICA-PNI_Precision_NeuroImaging_and_Connectomics
 	url = https://github.com/conp-bot/conp-dataset-MICA-PNI_Precision_NeuroImaging_and_Connectomics.git
+[submodule "projects/PiDose"]
+	path = projects/PiDose
+	url = https://github.com/conp-bot/conp-dataset-PiDose.git
 [submodule "projects/conp-dataset-Expression-based_polygenic_score_from_the_amygdala_5HTT_gene_network"]
 	path = projects/conp-dataset-Expression-based_polygenic_score_from_the_amygdala_5HTT_gene_network
 	url = https://github.com/conp-bot/conp-dataset-Expression-based_polygenic_score_from_the_amygdala_5HTT_gene_networ.git
