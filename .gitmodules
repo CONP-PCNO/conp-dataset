@@ -648,6 +648,9 @@
 [submodule "projects/MICA-PNI_Precision_NeuroImaging_and_Connectomics"]
 	path = projects/MICA-PNI_Precision_NeuroImaging_and_Connectomics
 	url = https://github.com/conp-bot/conp-dataset-MICA-PNI_Precision_NeuroImaging_and_Connectomics.git
+[submodule "projects/3-step_CPCA"]
+	path = projects/3-step_CPCA
+	url = https://github.com/conp-bot/conp-dataset-3-step_CPCA.git
 [submodule "projects/PiDose"]
 	path = projects/PiDose
 	url = https://github.com/conp-bot/conp-dataset-PiDose.git
