@@ -651,3 +651,18 @@
 [submodule "projects/NiMARE_Neuroimaging_Meta-Analysis_Research_Environment"]
 	path = projects/NiMARE_Neuroimaging_Meta-Analysis_Research_Environment
 	url = https://github.com/conp-bot/conp-dataset-NiMARE_Neuroimaging_Meta-Analysis_Research_Environment.git
+[submodule "projects/3-step_CPCA"]
+	path = projects/3-step_CPCA
+	url = https://github.com/conp-bot/conp-dataset-3-step_CPCA.git
+[submodule "projects/PiDose"]
+	path = projects/PiDose
+	url = https://github.com/conp-bot/conp-dataset-PiDose.git
+[submodule "projects/conp-dataset-Expression-based_polygenic_score_from_the_amygdala_5HTT_gene_network"]
+	path = projects/conp-dataset-Expression-based_polygenic_score_from_the_amygdala_5HTT_gene_network
+	url = https://github.com/conp-bot/conp-dataset-Expression-based_polygenic_score_from_the_amygdala_5HTT_gene_networ.git
+[submodule "projects/MRI_data_for_Stress-inducible_phosphoprotein_1_HOP_STI1_STIP1_regulates_the_spre"]
+	path = projects/MRI_data_for_Stress-inducible_phosphoprotein_1_HOP_STI1_STIP1_regulates_the_spre
+	url = https://github.com/conp-bot/conp-dataset-MRI_data_for_Stress-inducible_phosphoprotein_1_HOP_STI1_STIP1_regul.git
+[submodule "projects/Neural_capacity_limits_on_the_responses_to_memory_interference_during_working_me"]
+	path = projects/Neural_capacity_limits_on_the_responses_to_memory_interference_during_working_me
+	url = https://github.com/conp-bot/conp-dataset-Neural_capacity_limits_on_the_responses_to_memory_interference_duri.git
