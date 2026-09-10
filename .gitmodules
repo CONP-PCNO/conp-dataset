@@ -654,3 +654,6 @@
 [submodule "projects/eegnet_eib"]
 	path = projects/eegnet_eib
 	url = https://github.com/conpdatasets/eegnet_eib
+[submodule "projects/Dataset_Strong_Coupling_of_Retinal_Thickness_and_Optic_Nerve_Myelin_in_Vivo"]
+	path = projects/Dataset_Strong_Coupling_of_Retinal_Thickness_and_Optic_Nerve_Myelin_in_Vivo
+	url = https://github.com/conp-bot/conp-dataset-Dataset_Strong_Coupling_of_Retinal_Thickness_and_Optic_Nerve_Myelin.git

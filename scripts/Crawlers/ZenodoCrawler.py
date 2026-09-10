@@ -193,6 +193,42 @@ class ZenodoCrawler(BaseCrawler):
                 else dataset["doi"]
             )
 
+            # Detect a linked NeuroLibre/Evidence publication.
+            # NeuroLibre/Evidence archives carry a related identifier of the
+            # form "isPartOf 10.55458/neurolibre.XXXXX" pointing to the
+            # publication that this dataset is part of.
+            evidence_publication_doi = None
+            for related in metadata.get("related_identifiers", []):
+                related_id = related.get("identifier", "")
+                if (
+                    related.get("relation", "").lower() == "ispartof"
+                    and "10.55458/" in related_id
+                ):
+                    evidence_publication_doi = related_id.replace(
+                        "https://doi.org/", ""
+                    )
+                    break
+
+            extra_properties = [
+                {
+                    "category": "logo",
+                    "values": [
+                        {
+                            "value": "https://about.zenodo.org/static/img/logos/zenodo-gradient-round.svg"
+                        }
+                    ],
+                },
+                {"category": "CONP_status", "values": [{"value": "Canadian"}]},
+                {"category": "subjects", "values": [{"value": "unknown"}]},
+            ]
+            if evidence_publication_doi:
+                extra_properties.append(
+                    {
+                        "category": "evidence_publication",
+                        "values": [{"value": evidence_publication_doi}],
+                    },
+                )
+
             # Get date created and date modified
             date_created = datetime.datetime.strptime(
                 dataset["created"],
@@ -253,18 +289,7 @@ class ZenodoCrawler(BaseCrawler):
                             },
                         },
                     ],
-                    "extraProperties": [
-                        {
-                            "category": "logo",
-                            "values": [
-                                {
-                                    "value": "https://about.zenodo.org/static/img/logos/zenodo-gradient-round.svg"
-                                }
-                            ],
-                        },
-                        {"category": "CONP_status", "values": [{"value": "Canadian"}]},
-                        {"category": "subjects", "values": [{"value": "unknown"}]},
-                    ],
+                    "extraProperties": extra_properties,
                     "dates": [
                         {
                             "date": date_created.strftime("%Y-%m-%d %H:%M:%S"),
