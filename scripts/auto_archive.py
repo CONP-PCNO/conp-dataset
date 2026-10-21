@@ -133,6 +133,36 @@ def get_modified_datasets(
     return modified_datasets
 
 
+CRAWLER_MARKERS = (".conp-zenodo-crawler.json", ".conp-osf-crawler.json")
+
+
+def has_host_download(dataset_path: str, metadata: dict) -> bool:
+    """True when the Portal offers this dataset's files straight from Zenodo or
+    OSF, so no CONP archive is needed.
+
+    Mirrors the Portal's rule (app/search/dataset_page.py: direct_download):
+    the dataset was imported by the Zenodo or OSF crawler (its marker file is
+    in the repository) and its DATS record gives an access URL on Zenodo or
+    OSF, or a Zenodo record page (Zenodo's whole-record archive).
+    """
+    if not any(
+        os.path.exists(os.path.join(dataset_path, marker)) for marker in CRAWLER_MARKERS
+    ):
+        return False
+    distributions = metadata.get("distributions") or [{}]
+    distribution = (
+        distributions[0] if isinstance(distributions, list) else distributions
+    ) or {}
+    access = distribution.get("access") or {}
+    access_url = str(access.get("accessURL") or "")
+    landing = str(access.get("landingPage") or "")
+    if access_url.startswith("https://") and (
+        "zenodo.org" in access_url or "osf.io" in access_url
+    ):
+        return True
+    return "zenodo.org/record" in landing
+
+
 def archive_dataset(
     dataset_path: str, out_dir: str, archive_name: str, version: str
 ) -> None:
@@ -210,6 +240,14 @@ if __name__ == "__main__":
                         f"{distribution['size']} {distribution['unit']['value']}",
                     )
                     dataset_size //= 1024**3  # Convert to GB
+
+            # Datasets the Portal downloads straight from Zenodo or OSF need no
+            # CONP copy: the archive is the fallback for everything else.
+            if is_public and has_host_download(dataset, metadata):
+                logger.info(
+                    f"SKIPPED: {dataset} is downloaded from its Zenodo/OSF record."
+                )
+                continue
 
             # Only archive public dataset less than a specific size if one is provided to the script
             if is_public:
