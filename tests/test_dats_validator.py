@@ -159,7 +159,9 @@ class AccessURLTest(unittest.TestCase):
         self.assertTrue(validate_access_urls(own)[0])
 
     def test_no_access_url_and_github_archive(self):
-        self.assertTrue(validate_access_urls(_record({"access": {"landingPage": "x"}}))[0])
+        self.assertTrue(
+            validate_access_urls(_record({"access": {"landingPage": "x"}}))[0]
+        )
         github = _record(
             _dist(
                 "https://osf.io/6ctsj",
