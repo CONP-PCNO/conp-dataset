@@ -354,12 +354,12 @@ def validate_access_urls(dataset, check_online=False):
                 if any(value for value in query["zip"]):
                     errors_list.append(
                         f"{where} - the 'zip' parameter must be empty "
-                        f"(…/providers/osfstorage/?zip=); OSF ignores its value.",
+                        "(…/providers/osfstorage/?zip=). OSF ignores its value.",
                     )
                 if provider != "osfstorage":
                     errors_list.append(
                         f"{where} - OSF cannot zip {provider} add-on storage (the download "
-                        f"stops after 64 KiB); link the repository's own archive instead.",
+                        "stops after 64 KiB). Link the repository's own archive instead.",
                     )
             continue
 
