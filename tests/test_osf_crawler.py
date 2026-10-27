@@ -36,3 +36,124 @@ class TestOSFCrawler(TestCase):
             OSFCrawler("github token", "path/to/config", True, False, True, ".").run()
         except Exception as e:
             self.fail("Unexpected Exception raised: " + str(e))
+
+
+class TestDownloadDistributions(TestCase):
+    BASE = {
+        "size": 0,
+        "unit": {"value": "B"},
+        "access": {
+            "landingPage": "https://osf.io/xwajn/",
+            "authorizations": [{"value": "public"}],
+        },
+    }
+
+    def test_single_project_gets_its_own_zip(self):
+        from scripts.Crawlers.OSFCrawler import build_download_distributions
+
+        parts = [
+            {
+                "kind": "osfstorage",
+                "node": "q482e",
+                "title": "F",
+                "root": True,
+                "files": 3,
+                "bytes": 10,
+            }
+        ]
+        dists = build_download_distributions(
+            self.BASE, parts, 2.8, "GB", "https://osf.io/q482e", True
+        )
+        self.assertEqual(len(dists), 1)
+        self.assertEqual(
+            dists[0]["access"]["accessURL"],
+            "https://files.us.osf.io/v1/resources/q482e/providers/osfstorage/?zip=",
+        )
+        self.assertEqual((dists[0]["size"], dists[0]["unit"]["value"]), (2.8, "GB"))
+
+    def test_components_and_addons_are_parts(self):
+        from scripts.Crawlers.OSFCrawler import build_download_distributions
+
+        parts = [
+            {
+                "kind": "osfstorage",
+                "node": "qzucv",
+                "title": "Participant level contrast maps",
+                "root": False,
+                "files": 156,
+                "bytes": 318_500_000,
+            },
+            {
+                "kind": "osfstorage",
+                "node": "8bwys",
+                "title": "Behavioral Data",
+                "root": False,
+                "files": 1,
+                "bytes": 22_548,
+            },
+            {
+                "kind": "github",
+                "node": "xwajn",
+                "title": "N",
+                "root": True,
+                "files": 4,
+                "bytes": 1000,
+                "repo": "a/b",
+                "repo_url": "https://github.com/a/b",
+                "archive": "https://github.com/a/b/archive/refs/heads/main.zip",
+            },
+            {
+                "kind": "gitlab",
+                "node": "xwajn",
+                "title": "N",
+                "root": True,
+                "files": 4,
+                "bytes": 1000,
+                "repo": "a/c",
+            },
+            {
+                "kind": "osfstorage",
+                "node": "8mk46",
+                "title": "Empty",
+                "root": False,
+                "files": 0,
+                "bytes": 0,
+            },
+        ]
+        dists = build_download_distributions(
+            self.BASE, parts, 318.5, "MB", "https://osf.io/xwajn/", True
+        )
+        self.assertEqual(len(dists), 4)
+        self.assertEqual(dists[0]["title"], "Participant level contrast maps")
+        self.assertEqual(dists[0]["identifier"]["identifier"], "https://osf.io/qzucv/")
+        self.assertTrue(
+            dists[0]["access"]["accessURL"].endswith(
+                "/qzucv/providers/osfstorage/?zip="
+            )
+        )
+        self.assertEqual(dists[0]["access"]["landingPage"], "https://osf.io/xwajn/")
+        self.assertEqual(
+            dists[2]["access"]["accessURL"],
+            "https://github.com/a/b/archive/refs/heads/main.zip",
+        )
+        self.assertNotIn("accessURL", dists[3]["access"])
+        self.assertEqual(dists[2]["title"], "Code (GitHub: a/b)")
+        self.assertEqual(dists[3]["title"], "Code (GitLab: a/c)")
+
+    def test_private_records_get_no_links(self):
+        from scripts.Crawlers.OSFCrawler import build_download_distributions
+
+        parts = [
+            {
+                "kind": "osfstorage",
+                "node": "q482e",
+                "title": "F",
+                "root": True,
+                "files": 3,
+                "bytes": 10,
+            }
+        ]
+        dists = build_download_distributions(
+            self.BASE, parts, 1, "KB", "https://osf.io/q482e", False
+        )
+        self.assertNotIn("accessURL", dists[0]["access"])

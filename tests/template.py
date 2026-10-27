@@ -10,6 +10,7 @@ import humanfriendly
 import pytest
 from datalad import api
 
+from scripts.dats_validator.validator import validate_access_urls
 from scripts.dats_validator.validator import validate_date_types
 from scripts.dats_validator.validator import validate_is_about
 from scripts.dats_validator.validator import validate_json
@@ -80,6 +81,20 @@ class Template:
                     f"in privacy value. Error is:\n"
                     f"- {privacy_errors[0]}"
                 )
+                pytest.fail(summary_error_message, pytrace=False)
+
+            # Validate the download links (accessURL) against the record itself
+            access_valid_bool, access_errors = validate_access_urls(
+                json_obj,
+                check_online=True,
+            )
+            if not access_valid_bool:
+                summary_error_message = (
+                    f"Dataset {dataset} contains DATS.json that has errors "
+                    f"in its download links (accessURL). List of errors:\n"
+                )
+                for i, error_message in enumerate(access_errors, 1):
+                    summary_error_message += f"- {i}. {error_message}\n"
                 pytest.fail(summary_error_message, pytrace=False)
 
             # Validate that isAbout contains at least one species entry if present
