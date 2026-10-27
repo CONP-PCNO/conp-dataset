@@ -24,6 +24,81 @@ def _create_osf_tracker(path, dataset):
         json.dump(data, f, indent=4)
 
 
+OSF_ZIP = "https://files.us.osf.io/v1/resources/{}/providers/osfstorage/?zip="
+ADDON_NAMES = {"github": "GitHub", "gitlab": "GitLab", "bitbucket": "Bitbucket"}
+
+
+def _size_and_unit(num_bytes):
+    """humanize.naturalsize, with the unit spellings DATS records use
+    ("kB" -> "KB", "Bytes" -> "B")."""
+    size, unit = humanize.naturalsize(num_bytes or 0).split(" ")
+    unit = {"kB": "KB", "Bytes": "B", "Byte": "B"}.get(unit, unit)
+    return float(size), unit
+
+
+def build_download_distributions(base, parts, total_size, total_unit, landing, public):
+    """DATS distributions for an OSF record, one per downloadable part.
+
+    ``base`` is the crawler's single distribution (landingPage,
+    authorizations, formats...). ``parts`` lists where the files are, in
+    order: {"kind": "osfstorage" or an add-on provider, "node", "title",
+    "bytes", "root", "archive"} ("archive" = a download address for add-on
+    code, e.g. a GitHub archive; None when there is none).
+
+    - all files in the project's own storage: one distribution, with
+      accessURL = OSF's zip of that storage (empty "zip=": OSF ignores its
+      value, which is how "…/znt9d/…?zip=<other id>" served the wrong data);
+    - files in components or add-ons: one distribution per part, with a
+      title, its own size, the component as identifier and its own zip; an
+      add-on part gets its repository's archive, or no accessURL;
+    - private records: no accessURL (OSF needs a sign-in).
+    Sizes of the parts add up to the record's size.
+    """
+    parts = [p for p in parts if p.get("bytes") or p.get("files")]
+    single = len(parts) == 1 and parts[0]["kind"] == "osfstorage" and parts[0].get("root")
+    if single or not parts:
+        dist = json.loads(json.dumps(base))
+        dist["size"] = total_size
+        dist["unit"] = {"value": total_unit}
+        if public and parts:
+            dist.setdefault("access", {})["accessURL"] = OSF_ZIP.format(parts[0]["node"])
+        return [dist]
+
+    distributions = []
+    for part in parts:
+        dist = json.loads(json.dumps(base))
+        size, unit = _size_and_unit(part.get("bytes"))
+        dist["size"] = size
+        dist["unit"] = {"value": unit}
+        access = dist.setdefault("access", {})
+        access["landingPage"] = landing
+        access.pop("accessURL", None)
+        if part["kind"] == "osfstorage":
+            dist["title"] = "Main project files" if part.get("root") else part["title"]
+            if not part.get("root"):
+                dist["identifier"] = {
+                    "identifier": f"https://osf.io/{part['node']}/",
+                    "identifierSource": "OSF",
+                }
+            if public:
+                access["accessURL"] = OSF_ZIP.format(part["node"])
+        else:
+            host = ADDON_NAMES.get(part["kind"], part["kind"].capitalize())
+            code = f"code ({host}: {part.get('repo') or part['kind']})"
+            dist["title"] = "C" + code[1:] if part.get("root") else f"{part['title']}: {code}"
+            if part.get("repo_url"):
+                dist["identifier"] = {"identifier": part["repo_url"], "identifierSource": host}
+            elif not part.get("root"):
+                dist["identifier"] = {
+                    "identifier": f"https://osf.io/{part['node']}/",
+                    "identifierSource": "OSF",
+                }
+            if public and part.get("archive"):
+                access["accessURL"] = part["archive"]
+        distributions.append(dist)
+    return distributions
+
+
 class OSFCrawler(BaseCrawler):
     def __init__(self, github_token, config_path, verbose, force, no_pr, basedir):
         super().__init__(github_token, config_path, verbose, force, no_pr, basedir)
@@ -214,6 +289,86 @@ class OSFCrawler(BaseCrawler):
         for empty_dir in list_of_empty_dirs:
             os.rmdir(empty_dir)
 
+    def _list_osf_files(self, link):
+        """(number of files, bytes) under an OSF files link, recursively."""
+        count, size = 0, 0
+        while link:
+            r_json = self._get_request_with_bearer_token(link).json()
+            for item in r_json["data"]:
+                attributes = item["attributes"]
+                if attributes["kind"] == "file":
+                    count += 1
+                    size += attributes.get("size") or 0
+                else:
+                    sub_count, sub_size = self._list_osf_files(
+                        item["relationships"]["files"]["links"]["related"]["href"],
+                    )
+                    count += sub_count
+                    size += sub_size
+            link = (r_json.get("links") or {}).get("next")
+        return count, size
+
+    def _github_archive(self, folder_id):
+        """("owner/repo", repository URL, archive URL, size in bytes) for an
+        OSF GitHub add-on whose folder_id is "owner/repo:" or "owner/repo:branch"."""
+        repo, _, branch = str(folder_id or "").partition(":")
+        repo = repo.replace("%2F", "/")
+        if not repo:
+            return None, None, None, 0
+        r = requests.get(f"https://api.github.com/repos/{repo}", timeout=30)
+        info = r.json() if r.ok else {}
+        branch = branch or info.get("default_branch")
+        url = f"https://github.com/{repo}"
+        archive = f"{url}/archive/refs/heads/{branch}.zip" if branch else None
+        # OSF lists add-on files without sizes; GitHub gives the repository's (in KB)
+        return repo, url, archive, int(info.get("size") or 0) * 1024
+
+    def _osf_parts(self, node, title, root=True):
+        """Where an OSF project's files are: its own storage, each add-on
+        (GitHub, GitLab...) and each component, recursively."""
+        parts = []
+        providers = self._get_request_with_bearer_token(
+            f"https://api.osf.io/v2/nodes/{node}/files/",
+        ).json()["data"]
+        for provider in providers:
+            name = provider["attributes"].get("provider") or provider["attributes"]["name"]
+            count, size = self._list_osf_files(
+                provider["relationships"]["files"]["links"]["related"]["href"],
+            )
+            if not count:
+                continue
+            part = {"kind": name, "node": node, "title": title, "root": root,
+                    "files": count, "bytes": size}
+            if name != "osfstorage":
+                addon = self._get_request_with_bearer_token(
+                    f"https://api.osf.io/v2/nodes/{node}/addons/{name}/",
+                ).json()["data"]["attributes"]
+                if name == "github":
+                    part["repo"], part["repo_url"], part["archive"], github_size = self._github_archive(
+                        addon.get("folder_id"),
+                    )
+                    part["bytes"] = part["bytes"] or github_size
+                else:
+                    part["repo"] = str(addon.get("folder_id") or "").replace("%2F", "/").rstrip(":")
+            parts.append(part)
+        for component in self._get_components(
+            f"https://api.osf.io/v2/nodes/{node}/children/",
+        ):
+            parts += self._osf_parts(component["id"], component["attributes"]["title"], False)
+        return parts
+
+    def _set_download_distributions(self, dataset, size, unit, is_private):
+        base = dataset["distributions"][0]
+        try:
+            parts = self._osf_parts(dataset["osf_node_id"], dataset["title"])
+        except Exception as e:  # never block a crawl on the download links
+            print(f'Could not list the OSF parts of {dataset["title"]}: {e}')
+            parts = []
+        dataset["distributions"] = build_download_distributions(
+            base, parts, float(size), unit, base.get("access", {}).get("landingPage"),
+            public=not is_private,
+        )
+
     def _get_contributors(self, link):
         r = self._get_request_with_bearer_token(link)
         contributors = [
@@ -337,6 +492,7 @@ class OSFCrawler(BaseCrawler):
             )
 
             dataset_dats_content = {
+                "osf_node_id": dataset["id"],
                 "title": attributes["title"],
                 "files": files_link,
                 "components_list": components_list,
@@ -445,6 +601,7 @@ class OSFCrawler(BaseCrawler):
         )
         dataset["distributions"][0]["size"] = float(dataset_size_num)
         dataset["distributions"][0]["unit"]["value"] = dataset_unit
+        self._set_download_distributions(dataset, dataset_size_num, dataset_unit, is_private)
 
         # Add .conp-osf-crawler.json tracker file
         _create_osf_tracker(
@@ -516,6 +673,9 @@ class OSFCrawler(BaseCrawler):
         )
         dataset_description["distributions"][0]["size"] = float(dataset_size)
         dataset_description["distributions"][0]["unit"]["value"] = dataset_unit
+        self._set_download_distributions(
+            dataset_description, dataset_size, dataset_unit, is_private,
+        )
 
         # Add .conp-osf-crawler.json tracker file
         _create_osf_tracker(
