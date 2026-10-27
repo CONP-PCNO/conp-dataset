@@ -4,6 +4,7 @@ import os
 import unittest
 
 from scripts.dats_validator.validator import REQUIRED_EXTRA_PROPERTIES
+from scripts.dats_validator.validator import validate_access_urls
 from scripts.dats_validator.validator import validate_extra_properties
 from scripts.dats_validator.validator import validate_json
 from scripts.dats_validator.validator import validate_non_schema_required
@@ -80,3 +81,91 @@ class ExtraPropertiesTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+def _record(*distributions):
+    return {"title": "t", "distributions": list(distributions)}
+
+
+def _dist(landing, url, identifier=None):
+    dist = {"access": {"landingPage": landing, "accessURL": url}}
+    if identifier:
+        dist["identifier"] = {"identifier": identifier, "identifierSource": "OSF"}
+    return dist
+
+
+ZIP = "https://files.us.osf.io/v1/resources/{}/providers/{}/?zip="
+
+
+class AccessURLTest(unittest.TestCase):
+    def test_osf_link_to_another_project(self):
+        # the January 2026 links: OSF ignores the value after zip=, so this is znt9d
+        bad = _record(
+            _dist(
+                "https://osf.io/q482e",
+                "https://files.us.osf.io/v1/resources/znt9d/providers/osfstorage/?zip=q482e",
+            ),
+        )
+        valid, errors = validate_access_urls(bad)
+        self.assertFalse(valid)
+        self.assertIn("znt9d", errors[0])
+
+    def test_osf_own_project_and_named_component(self):
+        own = _record(_dist("https://osf.io/q482e", ZIP.format("q482e", "osfstorage")))
+        self.assertTrue(validate_access_urls(own)[0])
+        part = _record(
+            _dist(
+                "https://osf.io/xwajn/",
+                ZIP.format("qzucv", "osfstorage"),
+                "https://osf.io/qzucv/",
+            ),
+        )
+        self.assertTrue(validate_access_urls(part)[0])
+
+    def test_osf_zip_value_and_addon(self):
+        valued = _record(
+            _dist(
+                "https://osf.io/znt9d",
+                "https://files.us.osf.io/v1/resources/znt9d/providers/osfstorage/?zip=znt9d",
+            ),
+        )
+        self.assertFalse(validate_access_urls(valued)[0])
+        addon = _record(_dist("https://osf.io/4dgby", ZIP.format("4dgby", "github")))
+        valid, errors = validate_access_urls(addon)
+        self.assertFalse(valid)
+        self.assertIn("add-on", errors[0])
+
+    def test_zenodo(self):
+        other = _record(
+            _dist(
+                "https://zenodo.org/records/1",
+                "https://zenodo.org/records/2/files/a.zip/content",
+            ),
+        )
+        self.assertFalse(validate_access_urls(other)[0])
+        archive = _record(
+            _dist(
+                "https://zenodo.org/records/1",
+                "https://zenodo.org/api/records/1/files-archive",
+            ),
+        )
+        self.assertFalse(validate_access_urls(archive)[0])
+        own = _record(
+            _dist(
+                "https://zenodo.org/records/1",
+                "https://zenodo.org/records/1/files/a.zip/content",
+            ),
+        )
+        self.assertTrue(validate_access_urls(own)[0])
+
+    def test_no_access_url_and_github_archive(self):
+        self.assertTrue(
+            validate_access_urls(_record({"access": {"landingPage": "x"}}))[0]
+        )
+        github = _record(
+            _dist(
+                "https://osf.io/6ctsj",
+                "https://github.com/a/b/archive/refs/heads/main.zip",
+            ),
+        )
+        self.assertTrue(validate_access_urls(github)[0])

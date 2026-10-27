@@ -2,7 +2,10 @@ import getopt
 import json
 import logging
 import os
+import re
 from sys import argv
+from urllib.parse import parse_qs
+from urllib.parse import urlsplit
 
 import jsonschema
 import requests
@@ -233,6 +236,146 @@ def validate_privacy(dataset):
                 f"value should be one of {valid_privacy_values}. "
             )
             errors_list.append(error_message)
+
+    if errors_list:
+        return False, errors_list
+    else:
+        return True, errors_list
+
+
+_OSF_NODE = re.compile(r"osf\.io/([a-z0-9]{5})(?:[/?#]|$)", re.I)
+_OSF_WATERBUTLER = re.compile(
+    r"^https://files\.(?:[a-z0-9-]+\.)?osf\.io/v1/resources/([a-z0-9]{5})/providers/([a-z0-9_-]+)",
+    re.I,
+)
+_ZENODO_RECORD = re.compile(
+    r"zenodo\.org/(?:records?|deposit)/(\d+)|10\.5281/zenodo\.(\d+)", re.I
+)
+
+
+def _osf_node(url):
+    match = _OSF_NODE.search(str(url or ""))
+    return match.group(1).lower() if match else None
+
+
+def _zenodo_record(url):
+    match = _ZENODO_RECORD.search(str(url or ""))
+    return (match.group(1) or match.group(2)) if match else None
+
+
+def _identifier_url(distribution):
+    identifier = distribution.get("identifier")
+    if isinstance(identifier, dict):
+        return str(identifier.get("identifier") or "")
+    return str(identifier or "")
+
+
+def _osf_ancestors(node, max_depth=10):
+    """OSF ids of a node's parents, nearest first (OSF API)."""
+    ancestors = []
+    for _ in range(max_depth):
+        response = requests.get(f"https://api.osf.io/v2/nodes/{node}/", timeout=30)
+        if not response.ok:
+            break
+        parent = (
+            response.json()["data"]["relationships"]
+            .get("parent", {})
+            .get("links", {})
+            .get("related", {})
+            .get("href")
+        )
+        node = _osf_node(parent) or (
+            parent.rstrip("/").split("/")[-1] if parent else None
+        )
+        if not node:
+            break
+        ancestors.append(node)
+    return ancestors
+
+
+def validate_access_urls(dataset, check_online=False):
+    """Checks every distribution's access.accessURL against the record itself.
+
+    The CONP Portal offers these links as browser downloads, so a link to the
+    wrong record sends people the wrong data. In January 2026 six OSF records
+    received ".../resources/znt9d/providers/osfstorage/?zip=<own id>": OSF
+    ignores the value after "zip=", so all six served the znt9d dataset.
+
+    - an OSF link must name the record's own OSF project (its landingPage) or
+      the component the distribution names as its identifier; with
+      check_online, that component must be a descendant of the project;
+    - an OSF zip link must have an empty "zip" parameter and use osfstorage
+      (OSF cannot zip add-on storage such as GitHub or GitLab);
+    - a Zenodo link must be in the record its landing page names, and not
+      Zenodo's /files-archive address (it returns 404);
+    - every link must be https.
+    """
+    errors_list = []
+    distributions = dataset.get("distributions") or []
+    if isinstance(distributions, dict):
+        distributions = [distributions]
+    first_landing = ""
+    if distributions and isinstance(distributions[0], dict):
+        first_landing = str(
+            (distributions[0].get("access") or {}).get("landingPage") or "",
+        )
+
+    for index, distribution in enumerate(distributions):
+        if not isinstance(distribution, dict):
+            continue
+        access = distribution.get("access") or {}
+        url = str(access.get("accessURL") or "").strip()
+        if not url:
+            continue
+        landing = str(access.get("landingPage") or first_landing)
+        where = f"Validation error in {dataset.get('title')}: distributions[{index}].access.accessURL"
+        if not url.startswith("https://"):
+            errors_list.append(f"{where} - '{url}' is not an https address.")
+            continue
+
+        osf = _OSF_WATERBUTLER.match(url)
+        if osf:
+            node, provider = osf.group(1).lower(), osf.group(2).lower()
+            project, part = _osf_node(landing), _osf_node(_identifier_url(distribution))
+            if node not in {project, part}:
+                errors_list.append(
+                    f"{where} - '{url}' names OSF project {node}, but the record is "
+                    f"{project} (landingPage {landing}). OSF ignores the value after "
+                    f"'zip=', so this link downloads {node}.",
+                )
+            elif (
+                node != project and check_online and project not in _osf_ancestors(node)
+            ):
+                errors_list.append(
+                    f"{where} - OSF component {node} is not part of project {project}.",
+                )
+            query = parse_qs(urlsplit(url).query, keep_blank_values=True)
+            if "zip" in query:
+                if any(value for value in query["zip"]):
+                    errors_list.append(
+                        f"{where} - the 'zip' parameter must be empty "
+                        "(…/providers/osfstorage/?zip=). OSF ignores its value.",
+                    )
+                if provider != "osfstorage":
+                    errors_list.append(
+                        f"{where} - OSF cannot zip {provider} add-on storage (the download "
+                        "stops after 64 KiB). Link the repository's own archive instead.",
+                    )
+            continue
+
+        if "zenodo.org" in url:
+            if "files-archive" in url:
+                errors_list.append(
+                    f"{where} - Zenodo does not serve /files-archive addresses.",
+                )
+            record = _zenodo_record(url)
+            own = _zenodo_record(landing) or _zenodo_record(
+                _identifier_url(distribution),
+            )
+            if record and own and record != own:
+                errors_list.append(
+                    f"{where} - '{url}' is in Zenodo record {record}, but the record is {own}.",
+                )
 
     if errors_list:
         return False, errors_list
