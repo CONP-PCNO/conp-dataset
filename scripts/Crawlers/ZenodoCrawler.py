@@ -44,10 +44,15 @@ class ZenodoCrawler(BaseCrawler):
                 return {}
 
     def _query_zenodo(self):
+        # Experiments shared on Zenodo carry the keyword
+        # "canadian-open-neuroscience-platform-experiment". Zenodo matches keywords
+        # as phrases, so the dataset keyword also matches that longer one: exclude
+        # it, or an experiment uploaded as a dataset would be listed on the Data page.
         query = (
             "https://zenodo.org/api/records/?"
             "type=dataset&"
             'q=keywords:"canadian-open-neuroscience-platform"'
+            ' AND NOT keywords:"canadian-open-neuroscience-platform-experiment"'
         )
         r_json = requests.get(query).json()
         results = r_json.get("hits", {}).get("hits")
