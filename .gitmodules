@@ -630,3 +630,21 @@
 [submodule "projects/Calgary-Preschool-MRI-Dataset"]
 	path = projects/Calgary-Preschool-MRI-Dataset
 	url = https://github.com/conpdatasets/Calgary-Preschool-MRI-Dataset
+[submodule "projects/VFA_T1_mapping___RTHawk__open__vs_Siemens__commercial_"]
+	path = projects/VFA_T1_mapping___RTHawk__open__vs_Siemens__commercial_
+	url = https://github.com/conpdatasets/VFA_T1_mapping___RTHawk__open__vs_Siemens__commercial_
+[submodule "projects/MRI_and_unbiased_averages_of_wild_muskrats__Ondatra_zibethicus__and_red_squirrels__Tami"]
+	path = projects/MRI_and_unbiased_averages_of_wild_muskrats__Ondatra_zibethicus__and_red_squirrels__Tami
+	url = https://github.com/conpdatasets/MRI_and_unbiased_averages_of_wild_muskrats__Ondatra_zibethicus__and_red_squirrels__Tami
+[submodule "projects/Comparing-Perturbation-Modes-for-Evaluating-Instabilities-in-Neuroimaging-Processed-NK"]
+	path = projects/Comparing-Perturbation-Modes-for-Evaluating-Instabilities-in-Neuroimaging-Processed-NK
+	url = https://github.com/conpdatasets/Comparing-Perturbation-Modes-for-Evaluating-Instabilities-in-Neuroimaging-Processed-NK
+[submodule "projects/Intracellular-Recordings-of-Murine-Neocortical-Neurons"]
+	path = projects/Intracellular-Recordings-of-Murine-Neocortical-Neurons
+	url = https://github.com/conpdatasets/Intracellular-Recordings-of-Murine-Neocortical-Neurons
+[submodule "projects/Quantifying-Neural-Cognitive-Relationships-Across-the-Brain"]
+	path = projects/Quantifying-Neural-Cognitive-Relationships-Across-the-Brain
+	url = https://github.com/conpdatasets/Quantifying-Neural-Cognitive-Relationships-Across-the-Brain
+[submodule "projects/Numerically-Perturbed-Structural-Connectomes-from-100-individuals-in-the-NKI-Rockland-D"]
+	path = projects/Numerically-Perturbed-Structural-Connectomes-from-100-individuals-in-the-NKI-Rockland-D
+	url = https://github.com/conpdatasets/Numerically-Perturbed-Structural-Connectomes-from-100-individuals-in-the-NKI-Rockland-D
