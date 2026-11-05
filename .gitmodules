@@ -630,3 +630,18 @@
 [submodule "projects/Dataset_Strong_Coupling_of_Retinal_Thickness_and_Optic_Nerve_Myelin_in_Vivo"]
 	path = projects/Dataset_Strong_Coupling_of_Retinal_Thickness_and_Optic_Nerve_Myelin_in_Vivo
 	url = https://github.com/conp-bot/conp-dataset-Dataset_Strong_Coupling_of_Retinal_Thickness_and_Optic_Nerve_Myelin.git
+[submodule "projects/braincode_EpLink"]
+	path = projects/braincode_EpLink
+	url = https://github.com/conpdatasets/braincode_EpLink
+[submodule "projects/braincode_CP-NET"]
+	path = projects/braincode_CP-NET
+	url = https://github.com/conpdatasets/braincode_CP-NET
+[submodule "projects/braincode_CONNECT_RECOVER"]
+	path = projects/braincode_CONNECT_RECOVER
+	url = https://github.com/conpdatasets/braincode_CONNECT_RECOVER
+[submodule "projects/ONDRI_Parallel_pathways_for_language_processing_DR023"]
+	path = projects/ONDRI_Parallel_pathways_for_language_processing_DR023
+	url = https://github.com/conpdatasets/ONDRI_Parallel_pathways_for_language_processing_DR023
+[submodule "projects/Calgary-Preschool-MRI-Dataset"]
+	path = projects/Calgary-Preschool-MRI-Dataset
+	url = https://github.com/conpdatasets/Calgary-Preschool-MRI-Dataset
