@@ -22,24 +22,12 @@
 [submodule "projects/Learning_Naturalistic_Structure__Processed_fMRI_dataset"]
   path = projects/Learning_Naturalistic_Structure__Processed_fMRI_dataset
   url = https://github.com/conp-bot/conp-dataset-Learning_Naturalistic_Structure__Processed_fMRI_dataset
-[submodule "projects/VFA_T1_mapping___RTHawk__open__vs_Siemens__commercial_"]
-  path = projects/VFA_T1_mapping___RTHawk__open__vs_Siemens__commercial_
-  url = https://github.com/conp-bot/conp-dataset-VFA_T1_mapping___RTHawk__open__vs_Siemens__commercial_
-[submodule "projects/MRI_and_unbiased_averages_of_wild_muskrats__Ondatra_zibethicus__and_red_squirrels__Tamiasciurus_hudsonicus_"]
-  path = projects/MRI_and_unbiased_averages_of_wild_muskrats__Ondatra_zibethicus__and_red_squirrels__Tamiasciurus_hudsonicus_
-  url = https://github.com/conp-bot/conp-dataset-MRI_and_unbiased_averages_of_wild_muskrats__Ondatra_zibethicus__and_red_squirrels__Tami
 [submodule "projects/Reusing-Neuro-Data"]
 	path = projects/Reusing-Neuro-Data
 	url = https://github.com/conpdatasets/Reusing-Neuro-Data
 [submodule "projects/visual-working-memory"]
 	path = projects/visual-working-memory
 	url = https://github.com/conpdatasets/ds001634
-[submodule "projects/Comparing_Perturbation_Modes_for_Evaluating_Instabilities_in_Neuroimaging__Processed_NKI_RS_Subset__08_2019_"]
-	path = projects/Comparing_Perturbation_Modes_for_Evaluating_Instabilities_in_Neuroimaging__Processed_NKI_RS_Subset__08_2019_
-	url = https://github.com/conp-bot/conp-dataset-Comparing-Perturbation-Modes-for-Evaluating-Instabilities-in-Neuroimaging-Processed-NK
-[submodule "projects/Intracellular_Recordings_of_Murine_Neocortical_Neurons"]
-	path = projects/Intracellular_Recordings_of_Murine_Neocortical_Neurons
-	url = https://github.com/conp-bot/conp-dataset-Intracellular-Recordings-of-Murine-Neocortical-Neurons
 [submodule "projects/Khanlab/BigBrainMRICoreg"]
 	path = projects/Khanlab/BigBrainMRICoreg
 	url = https://github.com/conpdatasets/BigBrainMRICoreg
@@ -59,9 +47,6 @@
 [submodule "projects/braincode_NDD_Priority_Setting_Partnership"]
 	path = projects/braincode_NDD_Priority_Setting_Partnership
 	url = https://github.com/conpdatasets/braincode_NDD_Priority_Setting_Partnership
-[submodule "projects/Quantifying_Neural_Cognitive_Relationships_Across_the_Brain"]
-	path = projects/Quantifying_Neural_Cognitive_Relationships_Across_the_Brain
-	url = https://github.com/conp-bot/conp-dataset-Quantifying-Neural-Cognitive-Relationships-Across-the-Brain
 [submodule "projects/1000GenomesProject"]
 	path = projects/1000GenomesProject
 	url = https://github.com/conpdatasets/1000GenomesProject
