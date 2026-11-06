@@ -611,36 +611,3 @@
 [submodule "projects/Longitudinal-structural-MRI-and-behavioural-data-for-mice-prenatally-exposed-to-materna"]
 	path = projects/Longitudinal-structural-MRI-and-behavioural-data-for-mice-prenatally-exposed-to-materna
 	url = https://github.com/conpdatasets/Longitudinal-structural-MRI-and-behavioural-data-for-mice-prenatally-exposed-to-materna
-[submodule "projects/A-database-of-the-healthy-human-spinal-cord-morphometry-in-the-PAM50-template-space"]
-	path = projects/A-database-of-the-healthy-human-spinal-cord-morphometry-in-the-PAM50-template-space
-	url = https://github.com/conpdatasets/A-database-of-the-healthy-human-spinal-cord-morphometry-in-the-PAM50-template-space
-[submodule "projects/Paper-is-not-enough-Crowdsourcing-the-T-sub-1-sub-mapping-common-ground-via-the-ISMR"]
-	path = projects/Paper-is-not-enough-Crowdsourcing-the-T-sub-1-sub-mapping-common-ground-via-the-ISMR
-	url = https://github.com/conpdatasets/Paper-is-not-enough-Crowdsourcing-the-T-sub-1-sub-mapping-common-ground-via-the-ISMR
-[submodule "projects/Feasibility-of-high-resolution-perfusion-imaging-using-Arterial-Spin-Labelling-MRI-at-3"]
-	path = projects/Feasibility-of-high-resolution-perfusion-imaging-using-Arterial-Spin-Labelling-MRI-at-3
-	url = https://github.com/conpdatasets/Feasibility-of-high-resolution-perfusion-imaging-using-Arterial-Spin-Labelling-MRI-at-3
-[submodule "projects/Parcellating-the-parcellation-issue---a-proof-of-concept-for-reproducible-analyses-usin"]
-	path = projects/Parcellating-the-parcellation-issue---a-proof-of-concept-for-reproducible-analyses-usin
-	url = https://github.com/conpdatasets/Parcellating-the-parcellation-issue---a-proof-of-concept-for-reproducible-analyses-usin
-[submodule "projects/Longitudinal-stability-of-brain-and-spinal-cord-quantitative-MRI-measures"]
-	path = projects/Longitudinal-stability-of-brain-and-spinal-cord-quantitative-MRI-measures
-	url = https://github.com/conpdatasets/Longitudinal-stability-of-brain-and-spinal-cord-quantitative-MRI-measures
-[submodule "projects/An-interactive-meta-analysis-of-MRI-biomarkers-of-myelin"]
-	path = projects/An-interactive-meta-analysis-of-MRI-biomarkers-of-myelin
-	url = https://github.com/conpdatasets/An-interactive-meta-analysis-of-MRI-biomarkers-of-myelin
-[submodule "projects/An-open-dataset-of-cerebral-tau-deposition-in-young-healthy-adults-based-on-18F-MK6240"]
-	path = projects/An-open-dataset-of-cerebral-tau-deposition-in-young-healthy-adults-based-on-18F-MK6240
-	url = https://github.com/conpdatasets/An-open-dataset-of-cerebral-tau-deposition-in-young-healthy-adults-based-on-18F-MK6240
-[submodule "projects/A-steady-state-visual-evoked-potential-SSVEP-based-BCI-dataset-in-children-and-adoles"]
-	path = projects/A-steady-state-visual-evoked-potential-SSVEP-based-BCI-dataset-in-children-and-adoles
-	url = https://github.com/conpdatasets/A-steady-state-visual-evoked-potential-SSVEP-based-BCI-dataset-in-children-and-adoles
-[submodule "projects/PiDose"]
-	path = projects/PiDose
-	url = https://github.com/conpdatasets/PiDose
-[submodule "projects/Strong_Coupling_of_Retinal_Thickness_and_Optic_Nerve_Myelin"]
-	path = projects/Strong_Coupling_of_Retinal_Thickness_and_Optic_Nerve_Myelin
-	url = https://github.com/conpdatasets/Strong_Coupling_of_Retinal_Thickness_and_Optic_Nerve_Myelin
-[submodule "projects/Analysis-code-for-the-paper-RF-shimming-in-the-cervical-spinal-cord-at-7T-"]
-	path = projects/Analysis-code-for-the-paper-RF-shimming-in-the-cervical-spinal-cord-at-7T-
-	url = https://github.com/conpdatasets/Analysis-code-for-the-paper-RF-shimming-in-the-cervical-spinal-cord-at-7T-
