@@ -620,3 +620,27 @@
 [submodule "projects/Multimodal-data-with-wide-field-GCaMP-imaging"]
 	path = projects/Multimodal-data-with-wide-field-GCaMP-imaging
 	url = https://github.com/conpdatasets/Multimodal-data-with-wide-field-GCaMP-imaging
+[submodule "projects/Learning_Naturalistic_Structure__Processed_fMRI_dataset"]
+	path = projects/Learning_Naturalistic_Structure__Processed_fMRI_dataset
+	url = https://github.com/conpdatasets/Learning_Naturalistic_Structure__Processed_fMRI_dataset
+[submodule "projects/Synthetic-Animated-Mouse-SAM-University-of-British-Columbia-Datasets-and-3D-models"]
+	path = projects/Synthetic-Animated-Mouse-SAM-University-of-British-Columbia-Datasets-and-3D-models
+	url = https://github.com/conpdatasets/Synthetic-Animated-Mouse-SAM-University-of-British-Columbia-Datasets-and-3D-models
+[submodule "projects/Results-of-the-ISMRM-2020-joint-Reproducible-Research-Quantitative-MR-study-groups-re"]
+	path = projects/Results-of-the-ISMRM-2020-joint-Reproducible-Research-Quantitative-MR-study-groups-re
+	url = https://github.com/conpdatasets/Results-of-the-ISMRM-2020-joint-Reproducible-Research-Quantitative-MR-study-groups-re
+[submodule "projects/MICA-PNI_Precision_NeuroImaging_and_Connectomics"]
+	path = projects/MICA-PNI_Precision_NeuroImaging_and_Connectomics
+	url = https://github.com/conpdatasets/MICA-PNI_Precision_NeuroImaging_and_Connectomics
+[submodule "projects/NiMARE_Neuroimaging_Meta-Analysis_Research_Environment"]
+	path = projects/NiMARE_Neuroimaging_Meta-Analysis_Research_Environment
+	url = https://github.com/conpdatasets/NiMARE_Neuroimaging_Meta-Analysis_Research_Environment
+[submodule "projects/3-step_CPCA"]
+	path = projects/3-step_CPCA
+	url = https://github.com/conpdatasets/3-step_CPCA
+[submodule "projects/MRI_data_for_Stress-inducible_phosphoprotein_1_HOP_STI1_STIP1_regul"]
+	path = projects/MRI_data_for_Stress-inducible_phosphoprotein_1_HOP_STI1_STIP1_regul
+	url = https://github.com/conpdatasets/MRI_data_for_Stress-inducible_phosphoprotein_1_HOP_STI1_STIP1_regul
+[submodule "projects/Neural_capacity_limits_on_the_responses_to_memory_interference_duri"]
+	path = projects/Neural_capacity_limits_on_the_responses_to_memory_interference_duri
+	url = https://github.com/conpdatasets/Neural_capacity_limits_on_the_responses_to_memory_interference_duri
