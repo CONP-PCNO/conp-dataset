@@ -623,4 +623,21 @@
 [submodule "projects/Analysis-code-for-the-paper-RF-shimming-in-the-cervical-spinal-cord-at-7T-"]
 	path = projects/Analysis-code-for-the-paper-RF-shimming-in-the-cervical-spinal-cord-at-7T-
 	url = https://github.com/conpdatasets/Analysis-code-for-the-paper-RF-shimming-in-the-cervical-spinal-cord-at-7T-
-
+[submodule "Little-Science-Big-Science-and-Beyond-How-Amateurs-Shape-the-Scientific-La"]
+	path = Little-Science-Big-Science-and-Beyond-How-Amateurs-Shape-the-Scientific-La
+	url = https://github.com/conpdatasets/Little-Science-Big-Science-and-Beyond-How-Amateurs-Shape-the-Scientific-La
+[submodule "Representation-in-Brain-Imaging-Research-A-Quebec-demographic-overview"]
+	path = Representation-in-Brain-Imaging-Research-A-Quebec-demographic-overview
+	url = https://github.com/conpdatasets/Representation-in-Brain-Imaging-Research-A-Quebec-demographic-overview
+[submodule "NeuroMOSAICS-A-collection-of-neurostimulation-datasets---Multi-scale-Open-So"]
+	path = NeuroMOSAICS-A-collection-of-neurostimulation-datasets---Multi-scale-Open-So
+	url = https://github.com/conpdatasets/NeuroMOSAICS-A-collection-of-neurostimulation-datasets---Multi-scale-Open-So
+[submodule "Leveraging-Large-Language-Models-for-Interactive-Exploration-of-MRI-Research-"]
+	path = Leveraging-Large-Language-Models-for-Interactive-Exploration-of-MRI-Research-
+	url = https://github.com/conpdatasets/Leveraging-Large-Language-Models-for-Interactive-Exploration-of-MRI-Research-
+[submodule "Computational-examples-of-software-for-white-matter-tractometry"]
+	path = Computational-examples-of-software-for-white-matter-tractometry
+	url = https://github.com/conpdatasets/Computational-examples-of-software-for-white-matter-tractometry
+[submodule "Parkinsons-disease-in-the-spinal-cord-an-exploratory-study-to-establish-T2-"]
+	path = Parkinsons-disease-in-the-spinal-cord-an-exploratory-study-to-establish-T2-
+	url = https://github.com/conpdatasets/Parkinsons-disease-in-the-spinal-cord-an-exploratory-study-to-establish-T2-
