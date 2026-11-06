@@ -627,3 +627,18 @@
 [submodule "projects/Numerically-Perturbed-Structural-Connectomes-from-100-individuals-in-the-NKI-Rockland-D"]
 	path = projects/Numerically-Perturbed-Structural-Connectomes-from-100-individuals-in-the-NKI-Rockland-D
 	url = https://github.com/conpdatasets/Numerically-Perturbed-Structural-Connectomes-from-100-individuals-in-the-NKI-Rockland-D
+[submodule "projects/CFMM-7T-MP2RAGE-T1-mapping"]
+	path = projects/CFMM-7T-MP2RAGE-T1-mapping
+	url = https://github.com/conpdatasets/CFMM-7T-MP2RAGE-T1-mapping
+[submodule "projects/PERFORM-Dataset-one-control-subject"]
+	path = projects/PERFORM-Dataset-one-control-subject
+	url = https://github.com/conpdatasets/PERFORM-Dataset-one-control-subject
+[submodule "projects/Open-Access-The-Effect-of-Neurorehabilitation-on-Multiple-Sclerosis-Unlocking-the-Re"]
+	path = projects/Open-Access-The-Effect-of-Neurorehabilitation-on-Multiple-Sclerosis-Unlocking-the-Re
+	url = https://github.com/conpdatasets/Open-Access-The-Effect-of-Neurorehabilitation-on-Multiple-Sclerosis-Unlocking-the-Re
+[submodule "projects/Quantitative-T1-MRI"]
+	path = projects/Quantitative-T1-MRI
+	url = https://github.com/conpdatasets/Quantitative-T1-MRI
+[submodule "projects/Longitudinal-structural-MRI-and-behavioural-data-for-mice-prenatally-exposed-to-materna"]
+	path = projects/Longitudinal-structural-MRI-and-behavioural-data-for-mice-prenatally-exposed-to-materna
+	url = https://github.com/conpdatasets/Longitudinal-structural-MRI-and-behavioural-data-for-mice-prenatally-exposed-to-materna
