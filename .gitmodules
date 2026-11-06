@@ -624,3 +624,24 @@
 	path = projects/Analysis-code-for-the-paper-RF-shimming-in-the-cervical-spinal-cord-at-7T-
 	url = https://github.com/conpdatasets/Analysis-code-for-the-paper-RF-shimming-in-the-cervical-spinal-cord-at-7T-
 
+[submodule "projects/Little-Science-Big-Science-and-Beyond-How-Amateurs-Shape-the-Scientific-La"]
+	path = projects/Little-Science-Big-Science-and-Beyond-How-Amateurs-Shape-the-Scientific-La
+	url = https://github.com/conpdatasets/Little-Science-Big-Science-and-Beyond-How-Amateurs-Shape-the-Scientific-La
+[submodule "projects/Representation-in-Brain-Imaging-Research-A-Quebec-demographic-overview"]
+	path = projects/Representation-in-Brain-Imaging-Research-A-Quebec-demographic-overview
+	url = https://github.com/conpdatasets/Representation-in-Brain-Imaging-Research-A-Quebec-demographic-overview
+[submodule "projects/NeuroMOSAICS-A-collection-of-neurostimulation-datasets---Multi-scale-Open-So"]
+	path = projects/NeuroMOSAICS-A-collection-of-neurostimulation-datasets---Multi-scale-Open-So
+	url = https://github.com/conpdatasets/NeuroMOSAICS-A-collection-of-neurostimulation-datasets---Multi-scale-Open-So
+[submodule "projects/Leveraging-Large-Language-Models-for-Interactive-Exploration-of-MRI-Research-"]
+	path = projects/Leveraging-Large-Language-Models-for-Interactive-Exploration-of-MRI-Research-
+	url = https://github.com/conpdatasets/Leveraging-Large-Language-Models-for-Interactive-Exploration-of-MRI-Research-
+[submodule "projects/Computational-examples-of-software-for-white-matter-tractometry"]
+	path = projects/Computational-examples-of-software-for-white-matter-tractometry
+	url = https://github.com/conpdatasets/Computational-examples-of-software-for-white-matter-tractometry
+[submodule "projects/Parkinsons-disease-in-the-spinal-cord-an-exploratory-study-to-establish-T2-"]
+	path = projects/Parkinsons-disease-in-the-spinal-cord-an-exploratory-study-to-establish-T2-
+	url = https://github.com/conpdatasets/Parkinsons-disease-in-the-spinal-cord-an-exploratory-study-to-establish-T2-
+[submodule "projects/Multimodal-data-with-wide-field-GCaMP-imaging"]
+	path = projects/Multimodal-data-with-wide-field-GCaMP-imaging
+	url = https://github.com/conpdatasets/Multimodal-data-with-wide-field-GCaMP-imaging
