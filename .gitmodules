@@ -623,6 +623,7 @@
 [submodule "projects/Analysis-code-for-the-paper-RF-shimming-in-the-cervical-spinal-cord-at-7T-"]
 	path = projects/Analysis-code-for-the-paper-RF-shimming-in-the-cervical-spinal-cord-at-7T-
 	url = https://github.com/conpdatasets/Analysis-code-for-the-paper-RF-shimming-in-the-cervical-spinal-cord-at-7T-
+
 [submodule "projects/Little-Science-Big-Science-and-Beyond-How-Amateurs-Shape-the-Scientific-La"]
 	path = projects/Little-Science-Big-Science-and-Beyond-How-Amateurs-Shape-the-Scientific-La
 	url = https://github.com/conpdatasets/Little-Science-Big-Science-and-Beyond-How-Amateurs-Shape-the-Scientific-La
