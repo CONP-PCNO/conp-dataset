@@ -19,9 +19,6 @@
 [submodule "projects/Khanlab/BigBrainHippoUnfold"]
 	path = projects/Khanlab/BigBrainHippoUnfold
 	url = https://github.com/conpdatasets/BigBrainHippoUnfold
-[submodule "projects/Learning_Naturalistic_Structure__Processed_fMRI_dataset"]
-  path = projects/Learning_Naturalistic_Structure__Processed_fMRI_dataset
-  url = https://github.com/conp-bot/conp-dataset-Learning_Naturalistic_Structure__Processed_fMRI_dataset
 [submodule "projects/Reusing-Neuro-Data"]
 	path = projects/Reusing-Neuro-Data
 	url = https://github.com/conpdatasets/Reusing-Neuro-Data
@@ -77,9 +74,6 @@
 [submodule "projects/mcgill-emc-rna-seq-experiment"]
 	path = projects/mcgill-emc-rna-seq-experiment
 	url = https://github.com/conpdatasets/mcgill-emc-rna-seq-experiment
-[submodule "projects/Synthetic_Animated_Mouse__SAM___University_of_British_Columbia__Datasets_and_3D_models"]
-	path = projects/Synthetic_Animated_Mouse__SAM___University_of_British_Columbia__Datasets_and_3D_models
-	url = https://github.com/conp-bot/conp-dataset-Synthetic-Animated-Mouse-SAM-University-of-British-Columbia-Datasets-and-3D-models
 [submodule "projects/preventad-open"]
 	path = projects/preventad-open
 	url = https://github.com/conpdatasets/preventad-open
@@ -499,9 +493,6 @@
 	path = projects/eegnet_tdw
 	url = https://github.com/conpdatasets/eegnet_tdw
 	branch = main
-[submodule "projects/Results_of_the_ISMRM_2020_joint_Reproducible_Research___Quantitative_MR_study_groups_reproducibility_challenge_on_phantom_and_human_brain_T_sub_1__sub__mapping"]
-	path = projects/Results_of_the_ISMRM_2020_joint_Reproducible_Research___Quantitative_MR_study_groups_reproducibility_challenge_on_phantom_and_human_brain_T_sub_1__sub__mapping
-	url = https://github.com/conp-bot/conp-dataset-Results-of-the-ISMRM-2020-joint-Reproducible-Research-Quantitative-MR-study-groups-re.git
 [submodule "projects/eegnet_mfa"]
 	path = projects/eegnet_mfa
 	url = https://github.com/conpdatasets/eegnet_mfa
@@ -524,24 +515,6 @@
 [submodule "projects/Participant_level_contrast_maps"]
 	path = projects/Participant_level_contrast_maps
 	url = https://github.com/conp-bot/conp-dataset-Participant_level_contrast_maps.git
-[submodule "projects/MICA-PNI_Precision_NeuroImaging_and_Connectomics"]
-	path = projects/MICA-PNI_Precision_NeuroImaging_and_Connectomics
-	url = https://github.com/conp-bot/conp-dataset-MICA-PNI_Precision_NeuroImaging_and_Connectomics.git
-[submodule "projects/NiMARE_Neuroimaging_Meta-Analysis_Research_Environment"]
-	path = projects/NiMARE_Neuroimaging_Meta-Analysis_Research_Environment
-	url = https://github.com/conp-bot/conp-dataset-NiMARE_Neuroimaging_Meta-Analysis_Research_Environment.git
-[submodule "projects/3-step_CPCA"]
-	path = projects/3-step_CPCA
-	url = https://github.com/conp-bot/conp-dataset-3-step_CPCA.git
-[submodule "projects/conp-dataset-Expression-based_polygenic_score_from_the_amygdala_5HTT_gene_network"]
-	path = projects/conp-dataset-Expression-based_polygenic_score_from_the_amygdala_5HTT_gene_network
-	url = https://github.com/conp-bot/conp-dataset-Expression-based_polygenic_score_from_the_amygdala_5HTT_gene_networ.git
-[submodule "projects/MRI_data_for_Stress-inducible_phosphoprotein_1_HOP_STI1_STIP1_regulates_the_spre"]
-	path = projects/MRI_data_for_Stress-inducible_phosphoprotein_1_HOP_STI1_STIP1_regulates_the_spre
-	url = https://github.com/conp-bot/conp-dataset-MRI_data_for_Stress-inducible_phosphoprotein_1_HOP_STI1_STIP1_regul.git
-[submodule "projects/Neural_capacity_limits_on_the_responses_to_memory_interference_during_working_me"]
-	path = projects/Neural_capacity_limits_on_the_responses_to_memory_interference_during_working_me
-	url = https://github.com/conp-bot/conp-dataset-Neural_capacity_limits_on_the_responses_to_memory_interference_duri.git
 [submodule "projects/braincode_EpLink"]
 	path = projects/braincode_EpLink
 	url = https://github.com/conpdatasets/braincode_EpLink
