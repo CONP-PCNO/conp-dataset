@@ -644,3 +644,19 @@
 [submodule "projects/Multimodal-data-with-wide-field-GCaMP-imaging"]
 	path = projects/Multimodal-data-with-wide-field-GCaMP-imaging
 	url = https://github.com/conpdatasets/Multimodal-data-with-wide-field-GCaMP-imaging
+[submodule "projects/Expression-based_polygenic_score_from_the_amygdala_5HTT_gene_networ"]
+	path = projects/Expression-based_polygenic_score_from_the_amygdala_5HTT_gene_networ
+	url = https://github.com/conpdatasets/Expression-based_polygenic_score_from_the_amygdala_5HTT_gene_networ
+	datalad-id = 9692a65c-e5fd-424f-bfe6-3a1b6f5ce990
+[submodule "projects/MRI_data_for_Stress-inducible_phosphoprotein_1_HOP_STI1_STIP1_regul"]
+	path = projects/MRI_data_for_Stress-inducible_phosphoprotein_1_HOP_STI1_STIP1_regul
+	url = https://github.com/conpdatasets/MRI_data_for_Stress-inducible_phosphoprotein_1_HOP_STI1_STIP1_regul
+	datalad-id = 6b7214ce-cb0a-4cfb-8c40-f27e2c8237c3
+[submodule "projects/Neural_capacity_limits_on_the_responses_to_memory_interference_duri"]
+	path = projects/Neural_capacity_limits_on_the_responses_to_memory_interference_duri
+	url = https://github.com/conpdatasets/Neural_capacity_limits_on_the_responses_to_memory_interference_duri
+	datalad-id = 0fef8371-4c7c-42ac-95de-b05475375479
+[submodule "projects/Synthetic-Animated-Mouse-SAM-University-of-British-Columbia-Datasets-and-3D-models"]
+	path = projects/Synthetic-Animated-Mouse-SAM-University-of-British-Columbia-Datasets-and-3D-models
+	url = https://github.com/conpdatasets/Synthetic-Animated-Mouse-SAM-University-of-British-Columbia-Datasets-and-3D-models
+	datalad-id = ad58b666-1f4f-4993-b782-526eeeed7d55
