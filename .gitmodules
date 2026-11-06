@@ -19,27 +19,12 @@
 [submodule "projects/Khanlab/BigBrainHippoUnfold"]
 	path = projects/Khanlab/BigBrainHippoUnfold
 	url = https://github.com/conpdatasets/BigBrainHippoUnfold
-[submodule "projects/Learning_Naturalistic_Structure__Processed_fMRI_dataset"]
-  path = projects/Learning_Naturalistic_Structure__Processed_fMRI_dataset
-  url = https://github.com/conp-bot/conp-dataset-Learning_Naturalistic_Structure__Processed_fMRI_dataset
-[submodule "projects/VFA_T1_mapping___RTHawk__open__vs_Siemens__commercial_"]
-  path = projects/VFA_T1_mapping___RTHawk__open__vs_Siemens__commercial_
-  url = https://github.com/conp-bot/conp-dataset-VFA_T1_mapping___RTHawk__open__vs_Siemens__commercial_
-[submodule "projects/MRI_and_unbiased_averages_of_wild_muskrats__Ondatra_zibethicus__and_red_squirrels__Tamiasciurus_hudsonicus_"]
-  path = projects/MRI_and_unbiased_averages_of_wild_muskrats__Ondatra_zibethicus__and_red_squirrels__Tamiasciurus_hudsonicus_
-  url = https://github.com/conp-bot/conp-dataset-MRI_and_unbiased_averages_of_wild_muskrats__Ondatra_zibethicus__and_red_squirrels__Tami
 [submodule "projects/Reusing-Neuro-Data"]
 	path = projects/Reusing-Neuro-Data
 	url = https://github.com/conpdatasets/Reusing-Neuro-Data
 [submodule "projects/visual-working-memory"]
 	path = projects/visual-working-memory
 	url = https://github.com/conpdatasets/ds001634
-[submodule "projects/Comparing_Perturbation_Modes_for_Evaluating_Instabilities_in_Neuroimaging__Processed_NKI_RS_Subset__08_2019_"]
-	path = projects/Comparing_Perturbation_Modes_for_Evaluating_Instabilities_in_Neuroimaging__Processed_NKI_RS_Subset__08_2019_
-	url = https://github.com/conp-bot/conp-dataset-Comparing-Perturbation-Modes-for-Evaluating-Instabilities-in-Neuroimaging-Processed-NK
-[submodule "projects/Intracellular_Recordings_of_Murine_Neocortical_Neurons"]
-	path = projects/Intracellular_Recordings_of_Murine_Neocortical_Neurons
-	url = https://github.com/conp-bot/conp-dataset-Intracellular-Recordings-of-Murine-Neocortical-Neurons
 [submodule "projects/Khanlab/BigBrainMRICoreg"]
 	path = projects/Khanlab/BigBrainMRICoreg
 	url = https://github.com/conpdatasets/BigBrainMRICoreg
@@ -59,27 +44,15 @@
 [submodule "projects/braincode_NDD_Priority_Setting_Partnership"]
 	path = projects/braincode_NDD_Priority_Setting_Partnership
 	url = https://github.com/conpdatasets/braincode_NDD_Priority_Setting_Partnership
-[submodule "projects/Quantifying_Neural_Cognitive_Relationships_Across_the_Brain"]
-	path = projects/Quantifying_Neural_Cognitive_Relationships_Across_the_Brain
-	url = https://github.com/conp-bot/conp-dataset-Quantifying-Neural-Cognitive-Relationships-Across-the-Brain
 [submodule "projects/1000GenomesProject"]
 	path = projects/1000GenomesProject
 	url = https://github.com/conpdatasets/1000GenomesProject
 [submodule "projects/Systematic_phenomics_analysis_of_autism-associated_genes"]
 	path = projects/Systematic_phenomics_analysis_of_autism-associated_genes
 	url = https://github.com/conpdatasets/Systematic_phenomics_analysis_of_autism-associated_genes
-[submodule "projects/Multimodal_data_with_wide_field_GCaMP_imaging"]
-	path = projects/Multimodal_data_with_wide_field_GCaMP_imaging
-	url = https://github.com/conp-bot/conp-dataset-Multimodal-data-with-wide-field-GCaMP-imaging
 [submodule "projects/Khanlab/HCPUR100-Template"]
 	path = projects/Khanlab/HCPUR100-Template
 	url = https://github.com/conpdatasets/HCPUR100-Template
-[submodule "projects/Numerically_Perturbed_Structural_Connectomes_from_100_individuals_in_the_NKI_Rockland_Dataset"]
-	path = projects/Numerically_Perturbed_Structural_Connectomes_from_100_individuals_in_the_NKI_Rockland_Dataset
-	url = https://github.com/conp-bot/conp-dataset-Numerically-Perturbed-Structural-Connectomes-from-100-individuals-in-the-NKI-Rockland-D
-[submodule "projects/CFMM_7T__MP2RAGE_T1_mapping"]
-	path = projects/CFMM_7T__MP2RAGE_T1_mapping
-	url = https://github.com/conp-bot/conp-dataset-CFMM-7T-MP2RAGE-T1-mapping
 [submodule "projects/preventad-registered"]
     path = projects/preventad-registered
     url = https://github.com/conpdatasets/preventad-registered
@@ -101,15 +74,9 @@
 [submodule "projects/mcgill-emc-rna-seq-experiment"]
 	path = projects/mcgill-emc-rna-seq-experiment
 	url = https://github.com/conpdatasets/mcgill-emc-rna-seq-experiment
-[submodule "projects/Synthetic_Animated_Mouse__SAM___University_of_British_Columbia__Datasets_and_3D_models"]
-	path = projects/Synthetic_Animated_Mouse__SAM___University_of_British_Columbia__Datasets_and_3D_models
-	url = https://github.com/conp-bot/conp-dataset-Synthetic-Animated-Mouse-SAM-University-of-British-Columbia-Datasets-and-3D-models
 [submodule "projects/preventad-open"]
 	path = projects/preventad-open
 	url = https://github.com/conpdatasets/preventad-open
-[submodule "projects/Longitudinal_structural_MRI_and_behavioural_data_for_mice_prenatally_exposed_to_maternal_immune_activation_either_early_or_late_in_gestation"]
-	path = projects/Longitudinal_structural_MRI_and_behavioural_data_for_mice_prenatally_exposed_to_maternal_immune_activation_either_early_or_late_in_gestation
-	url = https://github.com/conp-bot/conp-dataset-Longitudinal-structural-MRI-and-behavioural-data-for-mice-prenatally-exposed-to-materna
 [submodule "projects/BigBrain_MRISIM"]
 	path = projects/BigBrain_MRISIM
 	url = https://github.com/conpdatasets/BigBrain_MRISIM
@@ -125,9 +92,6 @@
 [submodule "projects/BigBrain_Surface_Parcellations"]
 	path = projects/BigBrain_Surface_Parcellations
 	url = https://github.com/conpdatasets/BigBrain_Surface_Parcellations
-[submodule "projects/PERFORM_Dataset__one_control_subject"]
-	path = projects/PERFORM_Dataset__one_control_subject
-	url = https://github.com/conp-bot/conp-dataset-PERFORM-Dataset-one-control-subject
 [submodule "scripts/dats_jsonld_annotator/schema"]
 	path = scripts/dats_jsonld_annotator/schema
 	url = https://github.com/CONP-PCNO/schema
@@ -137,9 +101,6 @@
 [submodule "projects/spins_travelling_phantoms"]
 	path = projects/spins_travelling_phantoms
 	url = https://github.com/conpdatasets/spins_travelling_phantoms
-[submodule "projects/Open_Access__The_Effect_of_Neurorehabilitation_on_Multiple_Sclerosis___Unlocking_the_Resting_State_fMRI_Data"]
-	path = projects/Open_Access__The_Effect_of_Neurorehabilitation_on_Multiple_Sclerosis___Unlocking_the_Resting_State_fMRI_Data
-	url = https://github.com/conp-bot/conp-dataset-Open-Access-The-Effect-of-Neurorehabilitation-on-Multiple-Sclerosis-Unlocking-the-Re
 [submodule "projects/mica-mics"]
 	path = projects/mica-mics
 	url = https://github.com/conpdatasets/mica-mics
@@ -164,9 +125,6 @@
 [submodule "projects/Neurocon"]
 	path = projects/Neurocon
 	url = https://github.com/conpdatasets/Neurocon
-[submodule "projects/Quantitative_T1_MRI"]
-	path = projects/Quantitative_T1_MRI
-	url = https://github.com/conp-bot/conp-dataset-Quantitative-T1-MRI.git
 [submodule "projects/braincode_CAN-BIND_Biomarkers_for_Depression_Baseline_Data_Release"]
 	path = projects/braincode_CAN-BIND_Biomarkers_for_Depression_Baseline_Data_Release
 	url = https://github.com/conpdatasets/braincode_CAN-BIND_Biomarkers_for_Depression_Baseline_Data_Release
@@ -185,21 +143,9 @@
 [submodule "projects/braincode_Epilepsy_Priority_Setting_Partnership"]
 	path = projects/braincode_Epilepsy_Priority_Setting_Partnership
 	url = https://github.com/conpdatasets/braincode_Epilepsy_Priority_Setting_Partnership
-[submodule "projects/braincode_CP-NET"]
-	path = projects/braincode_CP-NET
-	url = https://github.com/CONP-PCNO/braincode_CP-NET
-[submodule "projects/braincode_EpLink"]
-	path = projects/braincode_EpLink
-	url = https://github.com/CONP-PCNO/braincode_EpLink
 [submodule "projects/Taowu"]
 	path = projects/Taowu
 	url = https://github.com/conpdatasets/Taowu
-[submodule "projects/Feasibility_of_high_resolution_perfusion_imaging_using_Arterial_Spin_Labelling_MRI_at_3_Tesla___Dataset"]
-	path = projects/Feasibility_of_high_resolution_perfusion_imaging_using_Arterial_Spin_Labelling_MRI_at_3_Tesla___Dataset
-	url = https://github.com/conp-bot/conp-dataset-Feasibility-of-high-resolution-perfusion-imaging-using-Arterial-Spin-Labelling-MRI-at-3.git
-[submodule "projects/braincode_CONNECT_RECOVER"]
-	path = projects/braincode_CONNECT_RECOVER
-	url = https://github.com/CONP-PCNO/braincode_CONNECT_RECOVER
 [submodule "projects/cbig-als"]
 	path = projects/cbig-als
 	url = https://github.com/conpdatasets/cbig-als
@@ -519,12 +465,6 @@
 	path = projects/cneuromod_processed
 	url = https://github.com/conpdatasets/cneuromod_processed
 	branch = main
-[submodule "projects/_Dataset__Analysis_code_for_the_paper__RF_shimming_in_the_cervical_spinal_cord_at_7T_"]
-	path = projects/_Dataset__Analysis_code_for_the_paper__RF_shimming_in_the_cervical_spinal_cord_at_7T_
-	url = https://github.com/conp-bot/conp-dataset--Dataset-Analysis-code-for-the-paper-RF-shimming-in-the-cervical-spinal-cord-at-7T-.git
-[submodule "projects/Paper_is_not_enough__Crowdsourcing_the_T_sub_1__sub__mapping_common_ground_via_the_ISMRM_reproducibility_challenge"]
-	path = projects/Paper_is_not_enough__Crowdsourcing_the_T_sub_1__sub__mapping_common_ground_via_the_ISMRM_reproducibility_challenge
-	url = https://github.com/conp-bot/conp-dataset-Paper-is-not-enough-Crowdsourcing-the-T-sub-1-sub-mapping-common-ground-via-the-ISMR.git
 [submodule "projects/eegnet_ssm"]
 	path = projects/eegnet_ssm
 	url = https://github.com/conpdatasets/eegnet_ssm
@@ -553,49 +493,13 @@
 	path = projects/eegnet_tdw
 	url = https://github.com/conpdatasets/eegnet_tdw
 	branch = main
-[submodule "projects/A_database_of_the_healthy_human_spinal_cord_morphometry_in_the_PAM50_template_space"]
-	path = projects/A_database_of_the_healthy_human_spinal_cord_morphometry_in_the_PAM50_template_space
-	url = https://github.com/conp-bot/conp-dataset-A-database-of-the-healthy-human-spinal-cord-morphometry-in-the-PAM50-template-space.git
-[submodule "projects/Results_of_the_ISMRM_2020_joint_Reproducible_Research___Quantitative_MR_study_groups_reproducibility_challenge_on_phantom_and_human_brain_T_sub_1__sub__mapping"]
-	path = projects/Results_of_the_ISMRM_2020_joint_Reproducible_Research___Quantitative_MR_study_groups_reproducibility_challenge_on_phantom_and_human_brain_T_sub_1__sub__mapping
-	url = https://github.com/conp-bot/conp-dataset-Results-of-the-ISMRM-2020-joint-Reproducible-Research-Quantitative-MR-study-groups-re.git
 [submodule "projects/eegnet_mfa"]
 	path = projects/eegnet_mfa
 	url = https://github.com/conpdatasets/eegnet_mfa
-[submodule "projects/Parcellating_the_parcellation_issue___a_proof_of_concept_for_reproducible_analyses_using_Neurolibre"]
-	path = projects/Parcellating_the_parcellation_issue___a_proof_of_concept_for_reproducible_analyses_using_Neurolibre
-	url = https://github.com/conp-bot/conp-dataset-Parcellating-the-parcellation-issue---a-proof-of-concept-for-reproducible-analyses-usin.git
-[submodule "projects/Longitudinal_stability_of_brain_and_spinal_cord_quantitative_MRI_measures"]
-	path = projects/Longitudinal_stability_of_brain_and_spinal_cord_quantitative_MRI_measures
-	url = https://github.com/conp-bot/conp-dataset-Longitudinal-stability-of-brain-and-spinal-cord-quantitative-MRI-measures.git
-[submodule "projects/_Dataset__Little_Science__Big_Science__and_Beyond__How_Amateurs_Shape_the_Scientific_Landscape"]
-	path = projects/_Dataset__Little_Science__Big_Science__and_Beyond__How_Amateurs_Shape_the_Scientific_Landscape
-	url = https://github.com/conp-bot/conp-dataset--Dataset-Little-Science-Big-Science-and-Beyond-How-Amateurs-Shape-the-Scientific-La.git
-[submodule "projects/_Dataset__Representation_in_Brain_Imaging_Research__A_Quebec_demographic_overview"]
-	path = projects/_Dataset__Representation_in_Brain_Imaging_Research__A_Quebec_demographic_overview
-	url = https://github.com/conp-bot/conp-dataset--Dataset-Representation-in-Brain-Imaging-Research-A-Quebec-demographic-overview.git
-[submodule "projects/_Dataset__NeuroMOSAICS__A_collection_of_neurostimulation_datasets___Multi_scale_Open_Source_Across_Interfaces_Conditions___Species"]
-	path = projects/_Dataset__NeuroMOSAICS__A_collection_of_neurostimulation_datasets___Multi_scale_Open_Source_Across_Interfaces_Conditions___Species
-	url = https://github.com/conp-bot/conp-dataset--Dataset-NeuroMOSAICS-A-collection-of-neurostimulation-datasets---Multi-scale-Open-So.git
-[submodule "projects/_Dataset__Leveraging_Large_Language_Models_for_Interactive_Exploration_of_MRI_Research_Reproducibility__A_Self_Evolving_Review"]
-	path = projects/_Dataset__Leveraging_Large_Language_Models_for_Interactive_Exploration_of_MRI_Research_Reproducibility__A_Self_Evolving_Review
-	url = https://github.com/conp-bot/conp-dataset--Dataset-Leveraging-Large-Language-Models-for-Interactive-Exploration-of-MRI-Research-.git
-[submodule "projects/_Dataset__Computational_examples_of_software_for_white_matter_tractometry"]
-	path = projects/_Dataset__Computational_examples_of_software_for_white_matter_tractometry
-	url = https://github.com/conp-bot/conp-dataset--Dataset-Computational-examples-of-software-for-white-matter-tractometry.git
-[submodule "projects/_Dataset__Parkinson_s_disease_in_the_spinal_cord__an_exploratory_study_to_establish_T2_w__MTR_and_diffusion_weighted_imaging_metric_values"]
-	path = projects/_Dataset__Parkinson_s_disease_in_the_spinal_cord__an_exploratory_study_to_establish_T2_w__MTR_and_diffusion_weighted_imaging_metric_values
-	url = https://github.com/conp-bot/conp-dataset--Dataset-Parkinson-s-disease-in-the-spinal-cord-an-exploratory-study-to-establish-T2-.git
-[submodule "projects/An_interactive_meta_analysis_of_MRI_biomarkers_of_myelin"]
-	path = projects/An_interactive_meta_analysis_of_MRI_biomarkers_of_myelin
-	url = https://github.com/conp-bot/conp-dataset-An-interactive-meta-analysis-of-MRI-biomarkers-of-myelin.git
 [submodule "projects/algonauts_2025_competitors"]
 	path = projects/algonauts_2025_competitors
 	url = https://github.com/conpdatasets/algonauts_2025_competitors
 	branch = main
-[submodule "projects/An_open_dataset_of_cerebral_tau_deposition_in_young_healthy_adults_based_on__18F_MK6240_positron_emission_tomography"]
-	path = projects/An_open_dataset_of_cerebral_tau_deposition_in_young_healthy_adults_based_on__18F_MK6240_positron_emission_tomography
-	url = https://github.com/conp-bot/conp-dataset-An-open-dataset-of-cerebral-tau-deposition-in-young-healthy-adults-based-on-18F-MK6240.git
 [submodule "projects/eegnet_fac"]
 	path = projects/eegnet_fac
 	url = https://github.com/conpdatasets/eegnet_fac
@@ -604,46 +508,139 @@
 	path = projects/imaging_in_TLE_DR011
 	url = https://github.com/conpdatasets/imaging_in_TLE_DR011
     branch = main
-[submodule "projects/ONDRI_Parallel_pathways_for_language_processing_DR023"]
-	path = projects/ONDRI_Parallel_pathways_for_language_processing_DR023
-	url = https://github.com/CONP-PCNO/ONDRI_Parallel_pathways_for_language_processing_DR023
-	branch = main
-[submodule "projects/A_steady_state_visual_evoked_potential__SSVEP__based_BCI_dataset_in_children_and_adolescents"]
-	path = projects/A_steady_state_visual_evoked_potential__SSVEP__based_BCI_dataset_in_children_and_adolescents
-	url = https://github.com/conp-bot/conp-dataset-A-steady-state-visual-evoked-potential-SSVEP-based-BCI-dataset-in-children-and-adoles.git
-	datalad-id = 98b915ec-f2f9-4429-9c4d-9f7ddfc582ce
 [submodule "projects/multicenter-phantom"]
 	path = projects/multicenter-phantom
 	url = https://github.com/conpdatasets/multicenter-phantom
 	branch = main
-[submodule "projects/Calgary-Preschool-MRI-Dataset"]
-	path = projects/Calgary-Preschool-MRI-Dataset
-	url = https://github.com/CONP-PCNO/Calgary-Preschool-MRI-Dataset
-	branch = main
 [submodule "projects/Participant_level_contrast_maps"]
 	path = projects/Participant_level_contrast_maps
 	url = https://github.com/conp-bot/conp-dataset-Participant_level_contrast_maps.git
-[submodule "projects/MICA-PNI_Precision_NeuroImaging_and_Connectomics"]
-	path = projects/MICA-PNI_Precision_NeuroImaging_and_Connectomics
-	url = https://github.com/conp-bot/conp-dataset-MICA-PNI_Precision_NeuroImaging_and_Connectomics.git
-[submodule "projects/NiMARE_Neuroimaging_Meta-Analysis_Research_Environment"]
-	path = projects/NiMARE_Neuroimaging_Meta-Analysis_Research_Environment
-	url = https://github.com/conp-bot/conp-dataset-NiMARE_Neuroimaging_Meta-Analysis_Research_Environment.git
-[submodule "projects/3-step_CPCA"]
-	path = projects/3-step_CPCA
-	url = https://github.com/conp-bot/conp-dataset-3-step_CPCA.git
-[submodule "projects/PiDose"]
-	path = projects/PiDose
-	url = https://github.com/conp-bot/conp-dataset-PiDose.git
 [submodule "projects/conp-dataset-Expression-based_polygenic_score_from_the_amygdala_5HTT_gene_network"]
 	path = projects/conp-dataset-Expression-based_polygenic_score_from_the_amygdala_5HTT_gene_network
 	url = https://github.com/conp-bot/conp-dataset-Expression-based_polygenic_score_from_the_amygdala_5HTT_gene_networ.git
-[submodule "projects/MRI_data_for_Stress-inducible_phosphoprotein_1_HOP_STI1_STIP1_regulates_the_spre"]
-	path = projects/MRI_data_for_Stress-inducible_phosphoprotein_1_HOP_STI1_STIP1_regulates_the_spre
-	url = https://github.com/conp-bot/conp-dataset-MRI_data_for_Stress-inducible_phosphoprotein_1_HOP_STI1_STIP1_regul.git
-[submodule "projects/Neural_capacity_limits_on_the_responses_to_memory_interference_during_working_me"]
-	path = projects/Neural_capacity_limits_on_the_responses_to_memory_interference_during_working_me
-	url = https://github.com/conp-bot/conp-dataset-Neural_capacity_limits_on_the_responses_to_memory_interference_duri.git
-[submodule "projects/Dataset_Strong_Coupling_of_Retinal_Thickness_and_Optic_Nerve_Myelin_in_Vivo"]
-	path = projects/Dataset_Strong_Coupling_of_Retinal_Thickness_and_Optic_Nerve_Myelin_in_Vivo
-	url = https://github.com/conp-bot/conp-dataset-Dataset_Strong_Coupling_of_Retinal_Thickness_and_Optic_Nerve_Myelin.git
+[submodule "projects/braincode_EpLink"]
+	path = projects/braincode_EpLink
+	url = https://github.com/conpdatasets/braincode_EpLink
+[submodule "projects/braincode_CP-NET"]
+	path = projects/braincode_CP-NET
+	url = https://github.com/conpdatasets/braincode_CP-NET
+[submodule "projects/braincode_CONNECT_RECOVER"]
+	path = projects/braincode_CONNECT_RECOVER
+	url = https://github.com/conpdatasets/braincode_CONNECT_RECOVER
+[submodule "projects/ONDRI_Parallel_pathways_for_language_processing_DR023"]
+	path = projects/ONDRI_Parallel_pathways_for_language_processing_DR023
+	url = https://github.com/conpdatasets/ONDRI_Parallel_pathways_for_language_processing_DR023
+[submodule "projects/Calgary-Preschool-MRI-Dataset"]
+	path = projects/Calgary-Preschool-MRI-Dataset
+	url = https://github.com/conpdatasets/Calgary-Preschool-MRI-Dataset
+[submodule "projects/VFA_T1_mapping___RTHawk__open__vs_Siemens__commercial_"]
+	path = projects/VFA_T1_mapping___RTHawk__open__vs_Siemens__commercial_
+	url = https://github.com/conpdatasets/VFA_T1_mapping___RTHawk__open__vs_Siemens__commercial_
+[submodule "projects/MRI_and_unbiased_averages_of_wild_muskrats__Ondatra_zibethicus__and_red_squirrels__Tami"]
+	path = projects/MRI_and_unbiased_averages_of_wild_muskrats__Ondatra_zibethicus__and_red_squirrels__Tami
+	url = https://github.com/conpdatasets/MRI_and_unbiased_averages_of_wild_muskrats__Ondatra_zibethicus__and_red_squirrels__Tami
+[submodule "projects/Comparing-Perturbation-Modes-for-Evaluating-Instabilities-in-Neuroimaging-Processed-NK"]
+	path = projects/Comparing-Perturbation-Modes-for-Evaluating-Instabilities-in-Neuroimaging-Processed-NK
+	url = https://github.com/conpdatasets/Comparing-Perturbation-Modes-for-Evaluating-Instabilities-in-Neuroimaging-Processed-NK
+[submodule "projects/Intracellular-Recordings-of-Murine-Neocortical-Neurons"]
+	path = projects/Intracellular-Recordings-of-Murine-Neocortical-Neurons
+	url = https://github.com/conpdatasets/Intracellular-Recordings-of-Murine-Neocortical-Neurons
+[submodule "projects/Quantifying-Neural-Cognitive-Relationships-Across-the-Brain"]
+	path = projects/Quantifying-Neural-Cognitive-Relationships-Across-the-Brain
+	url = https://github.com/conpdatasets/Quantifying-Neural-Cognitive-Relationships-Across-the-Brain
+[submodule "projects/Numerically-Perturbed-Structural-Connectomes-from-100-individuals-in-the-NKI-Rockland-D"]
+	path = projects/Numerically-Perturbed-Structural-Connectomes-from-100-individuals-in-the-NKI-Rockland-D
+	url = https://github.com/conpdatasets/Numerically-Perturbed-Structural-Connectomes-from-100-individuals-in-the-NKI-Rockland-D
+[submodule "projects/CFMM-7T-MP2RAGE-T1-mapping"]
+	path = projects/CFMM-7T-MP2RAGE-T1-mapping
+	url = https://github.com/conpdatasets/CFMM-7T-MP2RAGE-T1-mapping
+[submodule "projects/PERFORM-Dataset-one-control-subject"]
+	path = projects/PERFORM-Dataset-one-control-subject
+	url = https://github.com/conpdatasets/PERFORM-Dataset-one-control-subject
+[submodule "projects/Open-Access-The-Effect-of-Neurorehabilitation-on-Multiple-Sclerosis-Unlocking-the-Re"]
+	path = projects/Open-Access-The-Effect-of-Neurorehabilitation-on-Multiple-Sclerosis-Unlocking-the-Re
+	url = https://github.com/conpdatasets/Open-Access-The-Effect-of-Neurorehabilitation-on-Multiple-Sclerosis-Unlocking-the-Re
+[submodule "projects/Quantitative-T1-MRI"]
+	path = projects/Quantitative-T1-MRI
+	url = https://github.com/conpdatasets/Quantitative-T1-MRI
+[submodule "projects/Longitudinal-structural-MRI-and-behavioural-data-for-mice-prenatally-exposed-to-materna"]
+	path = projects/Longitudinal-structural-MRI-and-behavioural-data-for-mice-prenatally-exposed-to-materna
+	url = https://github.com/conpdatasets/Longitudinal-structural-MRI-and-behavioural-data-for-mice-prenatally-exposed-to-materna
+[submodule "projects/A-database-of-the-healthy-human-spinal-cord-morphometry-in-the-PAM50-template-space"]
+	path = projects/A-database-of-the-healthy-human-spinal-cord-morphometry-in-the-PAM50-template-space
+	url = https://github.com/conpdatasets/A-database-of-the-healthy-human-spinal-cord-morphometry-in-the-PAM50-template-space
+[submodule "projects/Paper-is-not-enough-Crowdsourcing-the-T-sub-1-sub-mapping-common-ground-via-the-ISMR"]
+	path = projects/Paper-is-not-enough-Crowdsourcing-the-T-sub-1-sub-mapping-common-ground-via-the-ISMR
+	url = https://github.com/conpdatasets/Paper-is-not-enough-Crowdsourcing-the-T-sub-1-sub-mapping-common-ground-via-the-ISMR
+[submodule "projects/Feasibility-of-high-resolution-perfusion-imaging-using-Arterial-Spin-Labelling-MRI-at-3"]
+	path = projects/Feasibility-of-high-resolution-perfusion-imaging-using-Arterial-Spin-Labelling-MRI-at-3
+	url = https://github.com/conpdatasets/Feasibility-of-high-resolution-perfusion-imaging-using-Arterial-Spin-Labelling-MRI-at-3
+[submodule "projects/Parcellating-the-parcellation-issue---a-proof-of-concept-for-reproducible-analyses-usin"]
+	path = projects/Parcellating-the-parcellation-issue---a-proof-of-concept-for-reproducible-analyses-usin
+	url = https://github.com/conpdatasets/Parcellating-the-parcellation-issue---a-proof-of-concept-for-reproducible-analyses-usin
+[submodule "projects/Longitudinal-stability-of-brain-and-spinal-cord-quantitative-MRI-measures"]
+	path = projects/Longitudinal-stability-of-brain-and-spinal-cord-quantitative-MRI-measures
+	url = https://github.com/conpdatasets/Longitudinal-stability-of-brain-and-spinal-cord-quantitative-MRI-measures
+[submodule "projects/An-interactive-meta-analysis-of-MRI-biomarkers-of-myelin"]
+	path = projects/An-interactive-meta-analysis-of-MRI-biomarkers-of-myelin
+	url = https://github.com/conpdatasets/An-interactive-meta-analysis-of-MRI-biomarkers-of-myelin
+[submodule "projects/An-open-dataset-of-cerebral-tau-deposition-in-young-healthy-adults-based-on-18F-MK6240"]
+	path = projects/An-open-dataset-of-cerebral-tau-deposition-in-young-healthy-adults-based-on-18F-MK6240
+	url = https://github.com/conpdatasets/An-open-dataset-of-cerebral-tau-deposition-in-young-healthy-adults-based-on-18F-MK6240
+[submodule "projects/A-steady-state-visual-evoked-potential-SSVEP-based-BCI-dataset-in-children-and-adoles"]
+	path = projects/A-steady-state-visual-evoked-potential-SSVEP-based-BCI-dataset-in-children-and-adoles
+	url = https://github.com/conpdatasets/A-steady-state-visual-evoked-potential-SSVEP-based-BCI-dataset-in-children-and-adoles
+[submodule "projects/PiDose"]
+	path = projects/PiDose
+	url = https://github.com/conpdatasets/PiDose
+[submodule "projects/Strong_Coupling_of_Retinal_Thickness_and_Optic_Nerve_Myelin"]
+	path = projects/Strong_Coupling_of_Retinal_Thickness_and_Optic_Nerve_Myelin
+	url = https://github.com/conpdatasets/Strong_Coupling_of_Retinal_Thickness_and_Optic_Nerve_Myelin
+[submodule "projects/Analysis-code-for-the-paper-RF-shimming-in-the-cervical-spinal-cord-at-7T-"]
+	path = projects/Analysis-code-for-the-paper-RF-shimming-in-the-cervical-spinal-cord-at-7T-
+	url = https://github.com/conpdatasets/Analysis-code-for-the-paper-RF-shimming-in-the-cervical-spinal-cord-at-7T-
+[submodule "projects/Little-Science-Big-Science-and-Beyond-How-Amateurs-Shape-the-Scientific-La"]
+	path = projects/Little-Science-Big-Science-and-Beyond-How-Amateurs-Shape-the-Scientific-La
+	url = https://github.com/conpdatasets/Little-Science-Big-Science-and-Beyond-How-Amateurs-Shape-the-Scientific-La
+[submodule "projects/Representation-in-Brain-Imaging-Research-A-Quebec-demographic-overview"]
+	path = projects/Representation-in-Brain-Imaging-Research-A-Quebec-demographic-overview
+	url = https://github.com/conpdatasets/Representation-in-Brain-Imaging-Research-A-Quebec-demographic-overview
+[submodule "projects/NeuroMOSAICS-A-collection-of-neurostimulation-datasets---Multi-scale-Open-So"]
+	path = projects/NeuroMOSAICS-A-collection-of-neurostimulation-datasets---Multi-scale-Open-So
+	url = https://github.com/conpdatasets/NeuroMOSAICS-A-collection-of-neurostimulation-datasets---Multi-scale-Open-So
+[submodule "projects/Leveraging-Large-Language-Models-for-Interactive-Exploration-of-MRI-Research-"]
+	path = projects/Leveraging-Large-Language-Models-for-Interactive-Exploration-of-MRI-Research-
+	url = https://github.com/conpdatasets/Leveraging-Large-Language-Models-for-Interactive-Exploration-of-MRI-Research-
+[submodule "projects/Computational-examples-of-software-for-white-matter-tractometry"]
+	path = projects/Computational-examples-of-software-for-white-matter-tractometry
+	url = https://github.com/conpdatasets/Computational-examples-of-software-for-white-matter-tractometry
+[submodule "projects/Parkinsons-disease-in-the-spinal-cord-an-exploratory-study-to-establish-T2-"]
+	path = projects/Parkinsons-disease-in-the-spinal-cord-an-exploratory-study-to-establish-T2-
+	url = https://github.com/conpdatasets/Parkinsons-disease-in-the-spinal-cord-an-exploratory-study-to-establish-T2-
+[submodule "projects/Multimodal-data-with-wide-field-GCaMP-imaging"]
+	path = projects/Multimodal-data-with-wide-field-GCaMP-imaging
+	url = https://github.com/conpdatasets/Multimodal-data-with-wide-field-GCaMP-imaging
+[submodule "projects/Learning_Naturalistic_Structure__Processed_fMRI_dataset"]
+	path = projects/Learning_Naturalistic_Structure__Processed_fMRI_dataset
+	url = https://github.com/conpdatasets/Learning_Naturalistic_Structure__Processed_fMRI_dataset
+[submodule "projects/Synthetic-Animated-Mouse-SAM-University-of-British-Columbia-Datasets-and-3D-models"]
+	path = projects/Synthetic-Animated-Mouse-SAM-University-of-British-Columbia-Datasets-and-3D-models
+	url = https://github.com/conpdatasets/Synthetic-Animated-Mouse-SAM-University-of-British-Columbia-Datasets-and-3D-models
+[submodule "projects/Results-of-the-ISMRM-2020-joint-Reproducible-Research-Quantitative-MR-study-groups-re"]
+	path = projects/Results-of-the-ISMRM-2020-joint-Reproducible-Research-Quantitative-MR-study-groups-re
+	url = https://github.com/conpdatasets/Results-of-the-ISMRM-2020-joint-Reproducible-Research-Quantitative-MR-study-groups-re
+[submodule "projects/MICA-PNI_Precision_NeuroImaging_and_Connectomics"]
+	path = projects/MICA-PNI_Precision_NeuroImaging_and_Connectomics
+	url = https://github.com/conpdatasets/MICA-PNI_Precision_NeuroImaging_and_Connectomics
+[submodule "projects/NiMARE_Neuroimaging_Meta-Analysis_Research_Environment"]
+	path = projects/NiMARE_Neuroimaging_Meta-Analysis_Research_Environment
+	url = https://github.com/conpdatasets/NiMARE_Neuroimaging_Meta-Analysis_Research_Environment
+[submodule "projects/3-step_CPCA"]
+	path = projects/3-step_CPCA
+	url = https://github.com/conpdatasets/3-step_CPCA
+[submodule "projects/MRI_data_for_Stress-inducible_phosphoprotein_1_HOP_STI1_STIP1_regul"]
+	path = projects/MRI_data_for_Stress-inducible_phosphoprotein_1_HOP_STI1_STIP1_regul
+	url = https://github.com/conpdatasets/MRI_data_for_Stress-inducible_phosphoprotein_1_HOP_STI1_STIP1_regul
+[submodule "projects/Neural_capacity_limits_on_the_responses_to_memory_interference_duri"]
+	path = projects/Neural_capacity_limits_on_the_responses_to_memory_interference_duri
+	url = https://github.com/conpdatasets/Neural_capacity_limits_on_the_responses_to_memory_interference_duri
