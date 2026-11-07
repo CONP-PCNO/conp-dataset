@@ -1,10 +1,27 @@
 # Reference: https://docs.github.com/en/github/administering-a-repository/keeping-your-actions-up-to-date-with-dependabot
 # Set update schedule for GitHub Actions
 
+# Set update schedule, grouping, and exclude paths for GitHub Actions
 version: 2
 updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      # Check for updates to GitHub Actions every weekday
       interval: "daily"
+
+    # Exclude the projects folder containing DataLad dataset submodules
+    exclude-paths:
+      - "/projects/**"
+
+    # Limit concurrent PRs to prevent flooding your queue
+    open-pull-requests-limit: 10
+
+    # Standardize commit messages for cleaner git history
+    commit-message:
+      prefix: "ci"
+
+    # Group all action updates into a single PR
+    groups:
+      all-actions:
+        patterns:
+          - "*"
