@@ -1,2 +1,8 @@
-datalad==0.14.0
-datalad-osf==0.2.3.1
+datalad==1.*
+datalad-osf==0.3.*
+git-annex==10.*
+
+# from scripts/requirements.txt
+git-python==1.*
+html2markdown==0.1.*
+humanfriendly==9.*
