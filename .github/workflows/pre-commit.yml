@@ -9,7 +9,7 @@ on:
 jobs:
   pre-commit:
     name: pre-commit hooks
-    runs-on: ubuntu-latest
+    runs-on: ubuntu:24
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5.0.0
