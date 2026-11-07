@@ -11,6 +11,9 @@ jobs:
     name: pre-commit hooks
     runs-on: ubuntu-24
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository (without submodules)
+        uses: actions/checkout@v4
+        with:
+          submodules: false
       - uses: actions/setup-python@v
       - uses: pre-commit/action@v3
