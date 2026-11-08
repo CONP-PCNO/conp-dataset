@@ -7,7 +7,6 @@ import time
 
 import jsonschema as jss
 
-
 CONTEXT_DIR = (pal.Path(__file__).parent / "context" / "sdo").resolve()
 SCHEMA_DIR = (pal.Path(__file__).parent / "schema").resolve()
 logger = logging.getLogger("DATS annotator")
@@ -28,7 +27,7 @@ def find_schema(parent_schema, term, json_object):
         # The only way this could happen on a valid dataset is if someone has specified additional properties
         # We'd like to discourage this
         logger.warning(
-            f'I cannot find {term = } in the parent schema: {parent_schema["id"]}.\n{json_object = }'
+            f"I cannot find {term = } in the parent schema: {parent_schema['id']}.\n{json_object = }"
         )
         return None
 
@@ -86,7 +85,7 @@ def find_schema(parent_schema, term, json_object):
         _schema = parent_schema
     if _schema is None:
         logger.warning(
-            f'The schema we found for {schema_name}: was None! The parent schema was: {parent_schema["id"]}'
+            f"The schema we found for {schema_name}: was None! The parent schema was: {parent_schema['id']}"
             f"and it was resolved using this URI: {resolver.base_uri}"
         )
     return _schema
@@ -155,7 +154,7 @@ def annotate_dats_object(
             json_object[k] = annotation_list
         # Add the key mapping to the context
         if k not in context.keys():
-            logger.debug(f'{k} not in context: {pal.Path(schema["id"]).name}')
+            logger.debug(f"{k} not in context: {pal.Path(schema['id']).name}")
             continue
         if k not in specific_context.keys():
             specific_context[k] = context[k]
@@ -168,7 +167,7 @@ def annotate_dats_object(
 
     dtype = schema["properties"]["@type"]["enum"][0]
     if dtype not in context.keys():
-        logger.debug(f'{dtype} not in context {schema["id"]}')
+        logger.debug(f"{dtype} not in context {schema['id']}")
     else:
         specific_context[dtype] = context[dtype]
     json_object["@type"] = dtype
@@ -255,7 +254,7 @@ def dats_to_jsonld(dats_f, schema_f, context_dir, out_path=None, clobber=False):
         context,
     ]
     logger.info(
-        f"Final result written to {dats_jsonld_f.resolve()}! This took {time.time()-tic :.2f} seconds"
+        f"Final result written to {dats_jsonld_f.resolve()}! This took {time.time() - tic:.2f} seconds"
     )
     json.dump(dats_jsonld, open(dats_jsonld_f, "w"), indent=2)
 
@@ -330,7 +329,7 @@ def main(cli_args):
             )
         logger.info(
             f"Completed annotating {len(files_to_convert)} DATS files. "
-            f"This took {time.time()-start :.2f} seconds."
+            f"This took {time.time() - start:.2f} seconds."
         )
     else:
         logger.error(f"I cannot find {args.dats_path}. Will stop now.")

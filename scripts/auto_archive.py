@@ -4,17 +4,14 @@ import argparse
 import json
 import logging
 import os
-from datetime import datetime
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 import git
 import humanfriendly
 from datalad.plugin import export_archive
 from github import Github
 
-from scripts.datalad_utils import get_dataset
-from scripts.datalad_utils import install_dataset
-from scripts.datalad_utils import uninstall_dataset
+from scripts.datalad_utils import get_dataset, install_dataset, uninstall_dataset
 from scripts.dats_validator.validator import validate_access_urls
 from scripts.log import get_logger
 from tests.functions import get_proper_submodules
@@ -192,7 +189,7 @@ def archive_dataset(
     except Exception as e:
         raise ArchiveFailed(
             f"FAILURE: could not archive dataset: {dataset_path} to {out_filename}\n{e}"
-        )
+        ) from e
     finally:
         os.chdir(cwd)
 

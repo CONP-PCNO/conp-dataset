@@ -37,7 +37,7 @@ def project_name2env(project_name: str) -> str:
 def unlock():
     repo = Repo()
     project: str = project_name2env(repo.working_dir.split("/")[-1])
-    token: (str | None) = os.getenv(project + "_ZENODO_TOKEN", None)
+    token: str | None = os.getenv(project + "_ZENODO_TOKEN", None)
 
     if not token:
         raise Exception(

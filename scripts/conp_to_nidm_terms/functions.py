@@ -6,7 +6,6 @@ from copy import deepcopy
 
 import requests
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -152,6 +151,7 @@ def collect_values(
             distributions_formats,
             keywords_values,
         ],
+        strict=False,
     ):
         if value:
             report[key] = {

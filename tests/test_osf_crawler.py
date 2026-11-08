@@ -1,5 +1,4 @@
-from unittest import mock
-from unittest import TestCase
+from unittest import TestCase, mock
 
 from scripts.Crawlers.OSFCrawler import OSFCrawler
 

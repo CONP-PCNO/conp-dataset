@@ -9,10 +9,12 @@ import git
 import requests
 from datalad import api
 
-from scripts.Crawlers.constants import DATS_FIELDS
-from scripts.Crawlers.constants import LICENSE_CODES
-from scripts.Crawlers.constants import MODALITIES
-from scripts.Crawlers.constants import REQUIRED_DATS_FIELDS
+from scripts.Crawlers.constants import (
+    DATS_FIELDS,
+    LICENSE_CODES,
+    MODALITIES,
+    REQUIRED_DATS_FIELDS,
+)
 
 
 class BaseCrawler:
@@ -439,11 +441,8 @@ class BaseCrawler:
         )
 
     def _add_github_repo_description(self, repo_title, dataset_description):
-        url = "https://api.github.com/repos/{}/{}".format(
-            self.username,
-            repo_title,
-        )
-        head = {"Authorization": "token {}".format(self.github_token)}
+        url = f"https://api.github.com/repos/{self.username}/{repo_title}"
+        head = {"Authorization": f"token {self.github_token}"}
         description = "Please don't submit any PR to this repository. "
         if "creators" in dataset_description.keys():
             description += (
@@ -454,7 +453,7 @@ class BaseCrawler:
         r = requests.patch(url, data=json.dumps(payload), headers=head)
         if not r.ok:
             print(
-                "Problem adding description to repository {}:".format(repo_title),
+                f"Problem adding description to repository {repo_title}:",
             )
             print(r.content)
 
@@ -496,7 +495,7 @@ class BaseCrawler:
             r = requests.post(
                 "https://api.github.com/repos/CONP-PCNO/conp-dataset/pulls",
                 json={
-                    "title": "Crawler result ({})".format(title),
+                    "title": f"Crawler result ({title})",
                     "body": """## Description
 {}
 
@@ -522,7 +521,7 @@ Functional checks:
                     "head": self.username + ":conp-bot/" + clean_title,
                     "base": "master",
                 },
-                headers={"Authorization": "token {}".format(self.github_token)},
+                headers={"Authorization": f"token {self.github_token}"},
             )
             if r.status_code != 201:
                 raise Exception("Error while creating pull request: " + r.text)
@@ -548,9 +547,7 @@ Functional checks:
         for field in REQUIRED_DATS_FIELDS:
             if field not in dataset.keys():
                 print(
-                    "Warning: required property {} not found in dataset description".format(
-                        field,
-                    ),
+                    f"Warning: required property {field} not found in dataset description",
                 )
 
         # Add all dats properties from dataset description

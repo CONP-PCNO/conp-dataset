@@ -4,12 +4,10 @@ import logging
 import os
 import re
 from sys import argv
-from urllib.parse import parse_qs
-from urllib.parse import urlsplit
+from urllib.parse import parse_qs, urlsplit
 
 import jsonschema
 import requests
-
 
 logger = logging.getLogger(__name__)
 # path to a top-level schema
@@ -129,7 +127,7 @@ def validate_extra_properties(dataset):
             f"{e} is required."
             f"The following extra properties categories are required: "
             f"{[k for k in REQUIRED_EXTRA_PROPERTIES.keys()]}",
-        )
+        ) from e
 
 
 def validate_formats(dataset):
