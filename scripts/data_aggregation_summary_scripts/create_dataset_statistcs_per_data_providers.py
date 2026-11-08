@@ -160,7 +160,6 @@ def get_stats_for_data_provider(dataset_summary_dict, data_provider):
     keywords_list = []
 
     for index in dataset_summary_dict:
-
         dataset_dict = dataset_summary_dict[index]
         if data_provider not in dataset_dict["data_provider"]:
             continue

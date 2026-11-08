@@ -6,7 +6,7 @@ LICENSE_CODES = [
     "CC BY-ND",
     "CC BY",
     "CC0",
-    "ODbL" "ODC-By",
+    "ODbLODC-By",
     "PDDL",
 ]
 NO_ANNEX_FILE_PATTERNS = ["**/DATS.json", "**/README*", "**/LICENSE*", "**/logo.png"]

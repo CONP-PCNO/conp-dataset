@@ -1,4 +1,5 @@
 """Docstring."""
+
 import getopt
 import os
 import sys
@@ -136,7 +137,8 @@ def parse_json_information(json_dict):
 
 def get_stats_per_domain(tool_summary_dict, domain):
     """
-    Produce a summary statistics per domain (Neuroinformatics, Bioinformatics, MRI, EEG...) of the identified variables of interest.  # noqa: E501.
+    Produce a summary statistics per domain (Neuroinformatics, Bioinformatics,
+    MRI, EEG...) of the identified variables of interest.
 
     :param tool_summary_dict: dictionary with the variables of interest for the summary
      :type tool_summary_dict: dict
@@ -154,7 +156,6 @@ def get_stats_per_domain(tool_summary_dict, domain):
     number_of_cbrain_tools = 0
 
     for index in tool_summary_dict:
-
         tool_dict = tool_summary_dict[index]
 
         if not tool_dict["domain"]:
@@ -184,7 +185,7 @@ def get_stats_per_domain(tool_summary_dict, domain):
     return [
         domain,
         str(number_of_tools),
-        f'Docker ({str(container["docker"])}); Singularity ({str(container["singularity"])})',  # noqa: E702
+        f"Docker ({str(container['docker'])}); Singularity ({str(container['singularity'])})",  # noqa: E702
         "CBRAIN (" + str(number_of_cbrain_tools) + ")",
     ]
 

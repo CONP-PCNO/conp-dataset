@@ -3,10 +3,7 @@ import os
 from datetime import datetime
 
 import requests
-from junitparser import Error
-from junitparser import Failure
-from junitparser import JUnitXml
-from junitparser import Skipped
+from junitparser import Error, Failure, JUnitXml, Skipped
 
 
 def get_previous_test_results():
