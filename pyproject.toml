@@ -14,7 +14,7 @@ dependencies = [
     "html2markdown>=0.1.7,<0.2",
     "humanfriendly>=9.1,<10",
     "humanize>=2.5",
-    "jsonschema>=3.2,<5",
+    "jsonschema[format]>=3.2,<5",
     "pygithub>=2.4",
     "requests>=2.32.2,<3",
 ]
