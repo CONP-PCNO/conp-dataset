@@ -1,7 +1,5 @@
 # CONP dataset
 
-[![CircleCI](https://circleci.com/gh/CONP-PCNO/conp-dataset.svg?style=shield)](https://circleci.com/gh/CONP-PCNO/conp-dataset)
-
 **"CONP dataset"** is a repository containing the datasets available through the [CONP Portal](https://portal.conp.ca/). It uses [DataLad](http://datalad.org) to store metadata and references to data files distributed in various storage spaces and accessible according to each data owner's policy.
 
 The instructions below explain how to install the necessary software and fetch data from a given dataset. You can also add dataset to the CONP Portal by following the instructions in our [contribution guidelines](https://github.com/CONP-PCNO/conp-dataset/blob/master/.github/CONTRIBUTING.md). We welcome your feedback! :smiley:
