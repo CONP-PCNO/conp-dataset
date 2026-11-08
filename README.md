@@ -1,12 +1,12 @@
-# CONP dataset
+# CONP Dataset
 
-**"CONP dataset"** is a repository containing the datasets available through the [CONP Portal](https://portal.conp.ca/). It uses [DataLad](http://datalad.org) to store metadata and references to data files distributed in various storage spaces and accessible according to each data owner's policy.
+**"CONP Dataset"** is a repository containing the datasets available through the [CONP Portal](https://portal.conp.ca/). It uses [DataLad](http://datalad.org) to store metadata and references to data files distributed in various storage spaces and accessible according to each data owner's policy.
 
-The instructions below explain how to install the necessary software and fetch data from a given dataset. You can also add dataset to the CONP Portal by following the instructions in our [contribution guidelines](https://github.com/CONP-PCNO/conp-dataset/blob/master/.github/CONTRIBUTING.md). We welcome your feedback! :smiley:
+The instructions below explain how to install the necessary software and fetch data from a given dataset. You can also add a dataset to the CONP Portal by following the instructions in our [contribution guidelines](https://github.com/CONP-PCNO/conp-dataset/blob/master/.github/CONTRIBUTING.md). We welcome your feedback! :smiley:
 
 ## Dataset structure
 
-Datasets are contained in each directory listed under projects `projects`. Each project maintainer is responsible for the management and curation of their own datasets.
+Datasets are contained in each directory listed under projects `projects/`. Each project maintainer is responsible for the management and curation of their own datasets.
 
 ## Installing required software
 
@@ -59,7 +59,7 @@ Replace "janedoe@example.com" with your email address.
 sudo apt-get install git-annex-standalone
 ```
 
-As of late 2024, this installs git-annex version 10.20241202 or above, which works with CONP datasets. Earlier versions are also compatible but the CONP recommends a relatively recent version for maximum ease. The version of git-annex installed can be verified with:
+As of late 2026, this installs git-annex version 10.20261026 or above, which works with CONP datasets. Earlier versions are also compatible but the CONP recommends a relatively recent version for maximum ease. The version of git-annex installed can be verified with:
 
 ```bash
 git-annex version
