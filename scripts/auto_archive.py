@@ -15,9 +15,9 @@ from github import Github
 from scripts.datalad_utils import get_dataset
 from scripts.datalad_utils import install_dataset
 from scripts.datalad_utils import uninstall_dataset
+from scripts.dats_validator.validator import validate_access_urls
 from scripts.log import get_logger
 from tests.functions import get_proper_submodules
-
 
 logger = get_logger(
     "CONP-Archive", filename="conp-archive.log", file_level=logging.DEBUG
@@ -133,6 +133,41 @@ def get_modified_datasets(
     return modified_datasets
 
 
+CRAWLER_MARKERS = (".conp-zenodo-crawler.json", ".conp-osf-crawler.json")
+
+
+def has_host_download(dataset_path: str, metadata: dict) -> bool:
+    """True when the Portal offers this dataset's files straight from Zenodo or
+    OSF, so no CONP archive is needed.
+
+    Mirrors the Portal's rule (app/search/dataset_page.py: direct_download):
+    the dataset was imported by the Zenodo or OSF crawler (its marker file is
+    in the repository), its DATS record gives at least one accessURL on Zenodo
+    or OSF, and every accessURL passes the validator's check against the
+    record (validate_access_urls), which the Portal applies before showing a
+    link. A Zenodo landing page alone is not enough: Zenodo's whole-record
+    archive is switched off, so the Portal has nothing to download there.
+    """
+    if not any(
+        os.path.exists(os.path.join(dataset_path, marker)) for marker in CRAWLER_MARKERS
+    ):
+        return False
+    distributions = metadata.get("distributions") or []
+    if isinstance(distributions, dict):
+        distributions = [distributions]
+    urls = [
+        str(((d or {}).get("access") or {}).get("accessURL") or "")
+        for d in distributions
+        if isinstance(d, dict)
+    ]
+    if not any(
+        u.startswith("https://") and ("zenodo.org" in u or "osf.io" in u) for u in urls
+    ):
+        return False
+    is_valid, _ = validate_access_urls(metadata)
+    return is_valid
+
+
 def archive_dataset(
     dataset_path: str, out_dir: str, archive_name: str, version: str
 ) -> None:
@@ -210,6 +245,14 @@ if __name__ == "__main__":
                         f"{distribution['size']} {distribution['unit']['value']}",
                     )
                     dataset_size //= 1024**3  # Convert to GB
+
+            # Datasets the Portal downloads straight from Zenodo or OSF need no
+            # CONP copy: the archive is the fallback for everything else.
+            if is_public and has_host_download(dataset, metadata):
+                logger.info(
+                    f"SKIPPED: {dataset} is downloaded from its Zenodo/OSF record."
+                )
+                continue
 
             # Only archive public dataset less than a specific size if one is provided to the script
             if is_public:
