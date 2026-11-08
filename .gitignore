@@ -1,10 +1,47 @@
+# Editor settings and temporary files
 .idea/
-venv/
-tests/test*
-!tests/test_zenodo_crawler.py
-!tests/test_osf_crawler.py
-!tests/test_dats_validator.py
+.vscode/
+*.swp
+*.swo
+
+# Python environments
+/venv/
+/.venv/
+/virtualenv/
+
+# Python bytecode, test, and tool caches
 __pycache__/
-.DS_Store
-virtualenv
+*.py[cod]
+.pytest_cache/
 .mypy_cache/
+.ruff_cache/
+.tox/
+
+# Generated dataset test modules
+/tests/test*
+!/tests/test_zenodo_crawler.py
+!/tests/test_osf_crawler.py
+!/tests/test_dats_validator.py
+
+# Local environment variables and secrets
+/.env
+/.env.*
+!/.env.example
+!/.env.*.example
+
+# Build and coverage output
+/build/
+/dist/
+*.egg-info/
+/.coverage
+/.coverage.*
+/coverage.xml
+/htmlcov/
+
+# Runtime logs
+/logs/
+*.log
+
+# Operating system files
+.DS_Store
+Thumbs.db
