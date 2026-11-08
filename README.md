@@ -53,17 +53,17 @@ As of late 2024, this installs git-annex version 10.20241202 or above, which wor
 
 ```sudo apt-get install datalad```
 
-## Installing required software - Method 2: `pip`
+## Installing required software - Method 2: `uv`
 
 The same requirements for `Python` and `git` apply from the previous section.
 
-Recent versions of Ubuntu-based distributions (e.g., based on 24.04 LTS) require virtual environments for external Python packages.  You can use `venv` or `pipx` to do this. The easiest for most users is probably to use `pipx`, in which case `git-annex` and `datalad` are installed with the following commands:
+Install [uv](https://docs.astral.sh/uv/getting-started/installation/) to manage the Python command-line tools:
 
 ```
-pipx install datalad-installer
+uv tool install datalad-installer
 datalad-installer git-annex -m datalad/git-annex:release
 git config --global filter.annex.process "git-annex filter-process"
-pipx install datalad
+uv tool install datalad
 ```
 
 ## Downloading data
@@ -100,20 +100,26 @@ datalad search T1
 
 For detailed explanations of the tests, please consult the [test suite documentation](https://github.com/CONP-PCNO/conp-dataset/blob/master/tests/README.md).
 
-1. Execute `python tests/create_tests.py` from the root of conp-dataset repository.
-2. Run `pytest tests/` to execute tests for all datasets in projects and investigators.
-3. To run a specific test on a specific dataset, run `pytest tests/test_<name of dataset>`, e.g., `pytest tests/test_projects_SIMON-dataset`
+Install the Python dependencies with `uv sync`, initialize the script submodules, then run:
+
+```bash
+uv run datalad install -r scripts
+uv run python tests/create_tests.py
+uv run pytest tests/
+```
+
+To run a specific test on a specific dataset, use `uv run pytest tests/test_<name of dataset>`, e.g., `uv run pytest tests/test_projects_SIMON-dataset`.
 
 
 ## Coding standards
 
 To keep the Python code maintainable and readable, a suite of quality-assurance pipelines tests the code. Pull requests will trigger a GitHub workflow executing pre-commit.
 
-To execute pre-commit locally, you will need to [install pre-commit](https://pre-commit.com/#installation) using your favorite method. Then, run:
+Install the development tools with `uv sync`, then install and run the pre-commit hooks:
 
 ```bash
-pre-commit install
-pre-commit run --all-files
+uv run pre-commit install
+uv run pre-commit run --all-files
 ```
 
 Pre-commit won't let you commit until reported issues are fixed. If problematic, you can optionally skip the pre-commit for a local commit using the `--no-verify` flag when committing, however this will still perform QA test on your PR.

@@ -16,7 +16,6 @@ repos:
       - id: check-executables-have-shebangs
       - id: detect-private-key
       - id: trailing-whitespace
-      - id: requirements-txt-fixer
       - id: pretty-format-json
         args: [--autofix]
       - id: check-builtin-literals
