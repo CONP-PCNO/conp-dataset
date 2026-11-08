@@ -1,9 +1,7 @@
 import getopt
 from sys import argv
 
-from functions import API_KEY
-from functions import collect_values
-from functions import generate_jsonld_files
+from functions import API_KEY, collect_values, generate_jsonld_files
 
 
 def main(argv):
