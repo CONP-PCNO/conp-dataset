@@ -7,8 +7,8 @@ assignees: ''
 
 ---
 
-* Test build:
-<!--- Add a link to the CircleCI test build here -->
+* Relevant CI workflow or local test run (if available):
+<!-- Add a link to the relevant workflow or local test output here -->
 
 * Standard error:
 <!-- Copy the standard error related to the broken dataset here -->

@@ -1,3 +1,4 @@
+import json
 import os
 import re
 import string
@@ -9,12 +10,30 @@ from git import Repo
 def get_datasets():
     datasets: list[str] = list(map(lambda x: x.path, Repo(".").submodules))
 
-    pull_number = os.getenv("CIRCLE_PR_NUMBER", False)
-    if pull_number:
-        response = requests.get(
-            f"https://api.github.com/repos/CONP-PCNO/conp-dataset/pulls/{pull_number}/files",
+    if os.getenv("GITHUB_EVENT_NAME") == "pull_request":
+        event_path = os.environ.get("GITHUB_EVENT_PATH")
+        if not event_path:
+            raise RuntimeError(
+                "GITHUB_EVENT_PATH is required for pull request test selection."
+            )
+        with open(event_path) as event_file:
+            pull_number = json.load(event_file)["pull_request"]["number"]
+
+        repository = os.getenv("GITHUB_REPOSITORY", "CONP-PCNO/conp-dataset")
+        next_url = (
+            f"https://api.github.com/repos/{repository}/pulls/{pull_number}/files"
+            "?per_page=100"
         )
-        pr_files: list[str] = [data["filename"] for data in response.json()]
+        headers = {"Accept": "application/vnd.github+json"}
+        if token := os.getenv("GITHUB_TOKEN"):
+            headers["Authorization"] = f"Bearer {token}"
+
+        pr_files = []
+        while next_url:
+            response = requests.get(next_url, headers=headers, timeout=30)
+            response.raise_for_status()
+            pr_files.extend(data["filename"] for data in response.json())
+            next_url = response.links.get("next", {}).get("url")
 
         return minimal_tests(datasets, pr_files)
     return datasets
@@ -46,7 +65,13 @@ def minimal_tests(datasets: list[str], pr_files: list[str]):
         "docs",
         "metadata",
     ]
-    WHITELIST: list[str] = [".git", "README", "LICENSE", "requirements.txt"]
+    WHITELIST: list[str] = [
+        ".git",
+        "README",
+        "LICENSE",
+        "pyproject.toml",
+        "uv.lock",
+    ]
 
     # No need to do tests when no modification are brought.
     if len(pr_files) == 0:

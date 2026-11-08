@@ -226,7 +226,7 @@ def authenticate(dataset):
     elif zenodo_token:
         os.environ["DATALAD_ZENODO_token"] = zenodo_token
     elif is_authentication_required(dataset):
-        if os.getenv("CIRCLE_PR_NUMBER", False):
+        if os.getenv("CI") and os.getenv("GITHUB_EVENT_NAME") == "pull_request":
             pytest.skip(
                 f"WARNING: {dataset} cannot be test on Pull Requests to protect secrets.",
             )
@@ -234,7 +234,7 @@ def authenticate(dataset):
         pytest.fail(
             "Cannot download file (dataset requires authentication, make sure "
             f"that environment variables {project}_USERNAME, {project}_PASSWORD, "
-            f"and {project}_LORIS_API are defined in CircleCI).",
+            f"and {project}_LORIS_API are defined in the test environment).",
             pytrace=False,
         )
 
