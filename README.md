@@ -16,7 +16,7 @@ The following instructions assume a relatively recent Ubuntu- or Debian-based Li
 
 One of the most convenient ways of installing a host of neuro-related software is through the [Neurodebian](https://neuro.debian.net/) repository.  For the following installation procedure, we will assume the use of NeuroDebian, which is installed with:
 
-```
+```bash
 sudo apt-get update
 # neurodebian includes: Python, Git, git-annex and Datalad
 sudo apt-get install neurodebian
@@ -35,17 +35,23 @@ The CONP recommends you use Python version 3.12 and up. You can check your Pytho
 
 ### git
 
-```sudo apt-get install git```
+```bash
+sudo apt-get install git
+```
 
 It is strongly recommended that you configure your `git` credentials to avoid having to enter them repeatedly or other complications when using DataLad:
 
-```git config --global user.name "Jane Doe"```
+```bash
+git config --global user.name "Jane Doe"
+```
 
-Replace “John Doe” with your name.
+Replace "John Doe" with your name.
 
-```git config --global user.email “janedoe@example.com”```
+```bash
+git config --global user.email "janedoe@example.com"
+```
 
-Replace “janedoe@example.com” with your email address.
+Replace "janedoe@example.com" with your email address.
 
 ### git-annex
 
@@ -65,7 +71,7 @@ git-annex version
 sudo apt-get install datalad
 ```
 
-## Installing required software - Method 3: `uv`
+## Method 3: `uv`
 
 The same requirements for `Python` and `git` apply from the previous section.
 
