@@ -1,65 +1,85 @@
-# CONP dataset
+# CONP Dataset
 
-**"CONP dataset"** is a repository containing the datasets available through the [CONP Portal](https://portal.conp.ca/). It uses [DataLad](http://datalad.org) to store metadata and references to data files distributed in various storage spaces and accessible according to each data owner's policy.
+**"CONP Dataset"** is a repository containing the datasets available through the [CONP Portal](https://portal.conp.ca/). It uses [DataLad](http://datalad.org) to store metadata and references to data files distributed in various storage spaces and accessible according to each data owner's policy.
 
-The instructions below explain how to install the necessary software and fetch data from a given dataset. You can also add dataset to the CONP Portal by following the instructions in our [contribution guidelines](https://github.com/CONP-PCNO/conp-dataset/blob/master/.github/CONTRIBUTING.md). We welcome your feedback! :smiley:
+The instructions below explain how to install the necessary software and fetch data from a given dataset. You can also add a dataset to the CONP Portal by following the instructions in our [contribution guidelines](https://github.com/CONP-PCNO/conp-dataset/blob/master/.github/CONTRIBUTING.md). We welcome your feedback! :smiley:
 
 ## Dataset structure
 
-Datasets are contained in each directory listed under projects `projects`. Each project maintainer is responsible for the management and curation of their own datasets.
+Datasets are contained in each directory listed under projects `projects/`. Each project maintainer is responsible for the management and curation of their own datasets.
 
-## Installing required software - Method 1: NeuroDebian
+## Installing required software
+
+## Method 1: NeuroDebian
 
 The following instructions assume a relatively recent Ubuntu- or Debian-based Linux system, though equivalent steps can be taken with other operating systems.
 
 One of the most convenient ways of installing a host of neuro-related software is through the [Neurodebian](https://neuro.debian.net/) repository.  For the following installation procedure, we will assume the use of NeuroDebian, which is installed with:
 
-```
+```bash
 sudo apt-get update
+# neurodebian includes: Python, Git, git-annex and Datalad
 sudo apt-get install neurodebian
 ```
+
+## Method 2: Linux Manual Installation
+
+Below are instructions for linux apt package manager.
+The instructions are similar for other package managers.
 
 ### Python
 
 The CONP recommends you use Python version 3.12 and up. You can check your Python version with:
 
-```python --version```or ```python3 --version```
+`python --version` or `python3 --version`
 
 ### git
 
-```sudo apt-get install git```
+```bash
+sudo apt-get install git
+```
 
 It is strongly recommended that you configure your `git` credentials to avoid having to enter them repeatedly or other complications when using DataLad:
 
-```git config --global user.name "Jane Doe"```
+```bash
+git config --global user.name "Jane Doe"
+```
 
-Replace “John Doe” with your name.
+Replace "John Doe" with your name.
 
-```git config --global user.email “janedoe@example.com”```
+```bash
+git config --global user.email "janedoe@example.com"
+```
 
-Replace “janedoe@example.com” with your email address.
+Replace "janedoe@example.com" with your email address.
 
 ### git-annex
 
-```
+```bash
 sudo apt-get install git-annex-standalone
 ```
 
-As of late 2024, this installs git-annex version 10.20241202 or above, which works with CONP datasets. Earlier versions are also compatible but the CONP recommends a relatively recent version for maximum ease. The version of git-annex installed can be verified with:
+As of late 2026, this installs git-annex version 10.20261026 or above, which works with CONP datasets. Earlier versions are also compatible but the CONP recommends a relatively recent version for maximum ease. The version of git-annex installed can be verified with:
 
-```git-annex version```
+```bash
+git-annex version
+```
 
 ### DataLad
 
-```sudo apt-get install datalad```
+```bash
+sudo apt-get install datalad
+```
 
-## Installing required software - Method 2: `uv`
+## Method 3: `uv`
 
 The same requirements for `Python` and `git` apply from the previous section.
 
 Install [uv](https://docs.astral.sh/uv/getting-started/installation/) to manage the Python command-line tools:
 
-```
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+
+```bash
 uv tool install datalad-installer
 datalad-installer git-annex -m datalad/git-annex:release
 git config --global filter.annex.process "git-annex filter-process"
@@ -70,20 +90,20 @@ uv tool install datalad
 
 Install the main CONP dataset on your computer:
 
-```
+```bash
 datalad install -r http://github.com/CONP-PCNO/conp-dataset
 ```
 
 Install the specific dataset you are interested in:
 
-```
+```bash
 cd conp-dataset/projects
 datalad install <project name>
 ```
 
 Get the files you are interested in:
 
-```
+```bash
 cd <project name>
 datalad get <file_name>
 ```
@@ -92,7 +112,7 @@ This may require authentication depending on the data owner's configuration.  Th
 
 You can also search for relevant files and sub-datasets, for example:
 
-```
+```bash
 datalad search T1
 ```
 
