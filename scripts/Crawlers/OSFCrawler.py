@@ -1,11 +1,8 @@
 import datetime
 import json
 import os
+from collections.abc import Callable
 from typing import Any
-from typing import Callable
-from typing import Dict
-from typing import List
-from typing import Optional
 
 import humanize
 import requests
@@ -142,7 +139,7 @@ class OSFCrawler(BaseCrawler):
                 next_page = next_page_json["links"]["next"]
 
         if self.verbose:
-            print("OSF query: {}".format(query))
+            print(f"OSF query: {query}")
         return results
 
     def _download_files(
@@ -186,7 +183,6 @@ class OSFCrawler(BaseCrawler):
 
             # Handle single files
             elif file["attributes"]["kind"] == "file":
-
                 # Private dataset/files
                 if is_private:
                     correct_download_link = self._get_request_with_bearer_token(
@@ -206,7 +202,7 @@ class OSFCrawler(BaseCrawler):
                         )
                     else:  # Token did not work for downloading file, return
                         print(
-                            f'Unable to download file {file["links"]["download"]} with current token, skipping file',
+                            f"Unable to download file {file['links']['download']} with current token, skipping file",
                         )
                         return
 
@@ -390,7 +386,7 @@ class OSFCrawler(BaseCrawler):
         try:
             parts = self._osf_parts(dataset["osf_node_id"], dataset["title"])
         except Exception as e:  # never block a crawl on the download links
-            print(f'Could not list the OSF parts of {dataset["title"]}: {e}')
+            print(f"Could not list the OSF parts of {dataset['title']}: {e}")
             parts = []
         dataset["distributions"] = build_download_distributions(
             base,
@@ -417,7 +413,7 @@ class OSFCrawler(BaseCrawler):
         r = self._get_request_with_bearer_token(link)
         return r.json()["data"]
 
-    def _get_wiki(self, link) -> Optional[str]:
+    def _get_wiki(self, link) -> str | None:
         r = self._get_request_with_bearer_token(link)
         data = r.json()["data"]
         if len(data) > 0:
@@ -484,13 +480,13 @@ class OSFCrawler(BaseCrawler):
             )
 
             # Get wiki to put in README
-            wiki: Optional[str] = None
+            wiki: str | None = None
             try:
                 wiki = self._get_wiki(
                     dataset["relationships"]["wikis"]["links"]["related"]["href"]
                 )
             except Exception as e:
-                print(f'Error getting wiki for {attributes["title"]} because of {e}')
+                print(f"Error getting wiki for {attributes['title']} because of {e}")
 
             # Gather extra properties
             extra_properties = [
@@ -595,12 +591,12 @@ class OSFCrawler(BaseCrawler):
 
         return osf_dois
 
-    def add_new_dataset(self, dataset: Dict[str, Any], dataset_dir: str):
+    def add_new_dataset(self, dataset: dict[str, Any], dataset_dir: str):
         d: Dataset = self.datalad.Dataset(dataset_dir)
         d.no_annex(".conp-osf-crawler.json")
         d.save()
         annex: Callable = Repo(dataset_dir).git.annex
-        dataset_size: List[int] = []
+        dataset_size: list[int] = []
 
         # Setup private OSF dataset if the dataset is private
         is_private: bool = self._setup_private_dataset(
@@ -646,7 +642,7 @@ class OSFCrawler(BaseCrawler):
     def update_if_necessary(self, dataset_description, dataset_dir):
         tracker_path = os.path.join(dataset_dir, ".conp-osf-crawler.json")
         if not os.path.isfile(tracker_path):
-            print("{} does not exist in dataset, skipping".format(tracker_path))
+            print(f"{tracker_path} does not exist in dataset, skipping")
             return False
         with open(tracker_path) as f:
             tracker = json.load(f)
@@ -724,17 +720,17 @@ class OSFCrawler(BaseCrawler):
 
     def get_readme_content(self, dataset):
         readme_content = (
-            f'# {dataset["title"]}\n\nCrawled from [OSF]({dataset["homepage"]})'
+            f"# {dataset['title']}\n\nCrawled from [OSF]({dataset['homepage']})"
         )
 
         if "description" in dataset and dataset["description"]:
-            readme_content += f'\n\n## Description\n\n{dataset["description"]}'
+            readme_content += f"\n\n## Description\n\n{dataset['description']}"
 
         if "identifier" in dataset and dataset["identifier"]:
-            readme_content += f'\n\n## DOI: {dataset["identifier"]["identifier"]}'
+            readme_content += f"\n\n## DOI: {dataset['identifier']['identifier']}"
 
         if "wiki" in dataset and dataset["wiki"]:
-            readme_content += f'\n\n## WIKI\n\n{dataset["wiki"]}'
+            readme_content += f"\n\n## WIKI\n\n{dataset['wiki']}"
 
         return readme_content
 

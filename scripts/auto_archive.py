@@ -4,20 +4,16 @@ import argparse
 import json
 import logging
 import os
-from datetime import datetime
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 import git
 import humanfriendly
 from datalad.plugin import export_archive
 from github import Github
 
-from scripts.datalad_utils import get_dataset
-from scripts.datalad_utils import install_dataset
-from scripts.datalad_utils import uninstall_dataset
+from scripts.datalad_utils import get_dataset, install_dataset, uninstall_dataset
 from scripts.log import get_logger
 from tests.functions import get_proper_submodules
-
 
 logger = get_logger(
     "CONP-Archive", filename="conp-archive.log", file_level=logging.DEBUG
@@ -157,7 +153,7 @@ def archive_dataset(
     except Exception as e:
         raise ArchiveFailed(
             f"FAILURE: could not archive dataset: {dataset_path} to {out_filename}\n{e}"
-        )
+        ) from e
     finally:
         os.chdir(cwd)
 

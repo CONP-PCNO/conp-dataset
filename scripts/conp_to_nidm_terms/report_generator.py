@@ -3,8 +3,7 @@ import json
 from datetime import date
 from sys import argv
 
-from functions import collect_values
-from functions import find_duplicates
+from functions import collect_values, find_duplicates
 
 
 def main(argv):

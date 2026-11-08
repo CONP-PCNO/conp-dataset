@@ -1,5 +1,5 @@
-"""Template to base the test of the datasets.
-"""
+"""Template to base the test of the datasets."""
+
 import json
 import os
 import time
@@ -10,18 +10,22 @@ import humanfriendly
 import pytest
 from datalad import api
 
-from scripts.dats_validator.validator import validate_access_urls
-from scripts.dats_validator.validator import validate_date_types
-from scripts.dats_validator.validator import validate_is_about
-from scripts.dats_validator.validator import validate_json
-from scripts.dats_validator.validator import validate_non_schema_required
-from scripts.dats_validator.validator import validate_privacy
+from scripts.dats_validator.validator import (
+    validate_access_urls,
+    validate_date_types,
+    validate_is_about,
+    validate_json,
+    validate_non_schema_required,
+    validate_privacy,
+)
 from tests.constants import RETROSPECTIVE_CRAWLED_DATASET_LIST
-from tests.functions import authenticate
-from tests.functions import download_files
-from tests.functions import eval_config
-from tests.functions import get_proper_submodules
-from tests.functions import timeout
+from tests.functions import (
+    authenticate,
+    download_files,
+    eval_config,
+    get_proper_submodules,
+    timeout,
+)
 
 
 def delay_rerun(*args):

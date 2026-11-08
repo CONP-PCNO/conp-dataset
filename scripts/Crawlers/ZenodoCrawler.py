@@ -2,7 +2,7 @@ import datetime
 import json
 import os
 import re
-from typing import Callable
+from collections.abc import Callable
 
 import html2markdown
 import humanize
@@ -69,7 +69,7 @@ class ZenodoCrawler(BaseCrawler):
                 )
 
         if self.verbose:
-            print("Zenodo query: {}".format(query))
+            print(f"Zenodo query: {query}")
         return results
 
     def _download_file(self, bucket, d, is_private):
@@ -105,8 +105,8 @@ class ZenodoCrawler(BaseCrawler):
                     ).json()
                     if "files" not in data.keys():
                         print(
-                            "Unable to access {} using stored tokens, "
-                            "skipping this dataset".format(clean_title),
+                            f"Unable to access {clean_title} using stored tokens, "
+                            "skipping this dataset",
                         )
                         continue
                     else:
@@ -247,7 +247,7 @@ class ZenodoCrawler(BaseCrawler):
             zenodo_dois.append(
                 {
                     "identifier": {
-                        "identifier": "https://doi.org/{}".format(identifier),
+                        "identifier": f"https://doi.org/{identifier}",
                         "identifierSource": "DOI",
                     },
                     "concept_doi": dataset["conceptrecid"],
@@ -341,7 +341,7 @@ class ZenodoCrawler(BaseCrawler):
 
         if self.verbose:
             print(
-                f'Adding new dataset {dataset["title"]}, is_private: {is_private}, token: {dataset_token}'
+                f"Adding new dataset {dataset['title']}, is_private: {is_private}, token: {dataset_token}"
             )
 
         for bucket in dataset["files"]:
@@ -356,7 +356,7 @@ class ZenodoCrawler(BaseCrawler):
     def update_if_necessary(self, dataset_description, dataset_dir):
         tracker_path = os.path.join(dataset_dir, ".conp-zenodo-crawler.json")
         if not os.path.isfile(tracker_path):
-            print("{} does not exist in dataset, skipping".format(tracker_path))
+            print(f"{tracker_path} does not exist in dataset, skipping")
             return False
         with open(tracker_path) as f:
             tracker = json.load(f)

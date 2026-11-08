@@ -205,7 +205,6 @@ def remove_invalid_urls(filtered_file_urls_dict, script_options, annex):
 
 
 if __name__ == "__main__":
-
     script_options = parse_input(sys.argv[1:])
 
     repo = git.Repo(script_options["dataset_path"])
