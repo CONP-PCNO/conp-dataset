@@ -7,6 +7,10 @@ on:
       - "projects/**"
       - "tests/**"
       - ".gitmodules"
+      - ".python-version"
+      - "Dockerfile"
+      - "pyproject.toml"
+      - "uv.lock"
     branches:
       - master
 

@@ -1,0 +1,35 @@
+[project]
+name = "conp-dataset"
+version = "0.1.0"
+description = "Tools for managing and validating CONP datasets."
+readme = "README.md"
+requires-python = ">=3.12"
+authors = [{ name = "CONP-PCNO" }]
+license = "MIT License"
+dependencies = [
+    "datalad>=1,<2",
+    "datalad-osf>=0.3,<0.4",
+    "git-annex>=10,<11",
+    "gitpython>=3.1.59",
+    "html2markdown>=0.1.7,<0.2",
+    "humanfriendly>=9.1,<10",
+    "humanize>=2.5",
+    "jsonschema>=3.2,<5",
+    "pygithub>=2.4",
+    "requests>=2.32.2,<3",
+]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4,<5",
+    "pytest>=8.3,<9",
+    "pytest-xdist>=3.6,<4",
+]
+
+[tool.pytest.ini_options]
+addopts = "--ignore=.venv --ignore=venv --ignore=node_modules --ignore=projects --ignore=__pycache__"
+pythonpath = [".", "scripts"]
+testpaths = ["tests"]
+
+[tool.uv]
+package = false

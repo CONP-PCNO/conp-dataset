@@ -112,7 +112,7 @@ datalad create -d . projects/<dataset_name>
 
     * Files that you want to make available through Google Drive:
     ```console
-    pip install git+https://github.com/glatard/git-annex-remote-googledrive.git@dev
+    uv tool install git+https://github.com/glatard/git-annex-remote-googledrive.git@dev
     git-annex-remote-googledrive setup
     git annex initremote google type=external externaltype=googledrive prefix=CONP-data root_id=<folder_id> chunk=50MiB encryption=shared mac=HMACSHA512
     ```
