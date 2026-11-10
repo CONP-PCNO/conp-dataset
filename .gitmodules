@@ -512,9 +512,6 @@
 	path = projects/multicenter-phantom
 	url = https://github.com/conpdatasets/multicenter-phantom
 	branch = main
-[submodule "projects/conp-dataset-Expression-based_polygenic_score_from_the_amygdala_5HTT_gene_network"]
-	path = projects/conp-dataset-Expression-based_polygenic_score_from_the_amygdala_5HTT_gene_network
-	url = https://github.com/conp-bot/conp-dataset-Expression-based_polygenic_score_from_the_amygdala_5HTT_gene_networ.git
 [submodule "projects/braincode_EpLink"]
 	path = projects/braincode_EpLink
 	url = https://github.com/conpdatasets/braincode_EpLink
@@ -641,7 +638,3 @@
 [submodule "projects/Neural_capacity_limits_on_the_responses_to_memory_interference_duri"]
 	path = projects/Neural_capacity_limits_on_the_responses_to_memory_interference_duri
 	url = https://github.com/conpdatasets/Neural_capacity_limits_on_the_responses_to_memory_interference_duri
-[submodule "projects/Expression-based_polygenic_score_from_the_amygdala_5HTT_gene_networ"]
-	path = projects/Expression-based_polygenic_score_from_the_amygdala_5HTT_gene_networ
-	url = https://github.com/conpdatasets/Expression-based_polygenic_score_from_the_amygdala_5HTT_gene_networ
-	datalad-id = 9692a65c-e5fd-424f-bfe6-3a1b6f5ce990
