@@ -46,6 +46,11 @@
   pull requests, standardize commit-message prefixes, and exclude dataset
   submodule paths.
 
+### Testing
+
+- Make DATS validator fixture tests independent of GitHub availability by
+  mocking the `derivedFrom` existence check instead of issuing a live request.
+
 ### Repository maintenance
 
 - Update the Docker image build configuration to use current Ubuntu and Docker

@@ -2,6 +2,7 @@ import copy
 import json
 import os
 import unittest
+from unittest.mock import patch
 
 from scripts.dats_validator.validator import (
     REQUIRED_EXTRA_PROPERTIES,
@@ -33,8 +34,13 @@ class JsonschemaTest(unittest.TestCase):
 
 class ExtraPropertiesTest(unittest.TestCase):
     def test_non_schema_required(self):
-        valid_validation, errors = validate_non_schema_required(valid_obj)
-        invalid_validation, errors = validate_non_schema_required(invalid_obj)
+        with patch(
+            "scripts.dats_validator.validator.dataset_exists",
+            return_value=False,
+        ) as dataset_exists:
+            valid_validation, errors = validate_non_schema_required(valid_obj)
+            invalid_validation, errors = validate_non_schema_required(invalid_obj)
+        dataset_exists.assert_called_once_with("https://github.com/sdajdhajhdahdj")
         self.assertEqual(valid_validation, True)
         self.assertEqual(invalid_validation, False)
 
