@@ -1,0 +1,34 @@
+name: Dataset filename portability
+
+on:
+  pull_request:
+    paths:
+      - "projects/**"
+      - ".gitmodules"
+    branches: master
+
+permissions:
+  contents: read
+
+jobs:
+  check-filenames:
+    name: Validate tracked dataset filenames
+    runs-on: ubuntu-24.04
+    steps:
+      # https://github.com/actions/checkout
+      - name: Checkout repository and pinned subdatasets
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: recursive
+      # https://github.com/actions/setup-python
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Check filename portability
+        run: >-
+          python scripts/check_dataset_filenames.py
+          --base-ref "${{ github.event.pull_request.base.sha }}"
+          --strict-submodules
+          --fetch-missing-base

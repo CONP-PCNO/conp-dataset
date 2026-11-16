@@ -25,6 +25,10 @@
 
 ### Continuous integration
 
+- Add pull-request validation for dataset filenames across the CONP superdataset
+  and its pinned DataLad subdatasets. Detect case-insensitive and Unicode
+  normalization collisions and Windows-incompatible/reserved names; report
+  existing findings while blocking only newly introduced issues.
 - Add a local pre-commit check and document how to run it. The checker inspects
   Git-tracked paths only, does not download git-annex content, and reports
   incomplete local scans when subdatasets are unavailable.

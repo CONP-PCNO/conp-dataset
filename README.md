@@ -147,4 +147,8 @@ and Unicode-normalization collisions, as well as Windows-incompatible names.
 It scans initialized subdatasets; an `INCOMPLETE` message indicates that local
 subdatasets were unavailable.
 
+GitHub Actions performs the authoritative
+recursive check at pinned subdataset commits without downloading git-annex
+content.
+
 Pre-commit won't let you commit until reported issues are fixed. If problematic, you can optionally skip the pre-commit for a local commit using the `--no-verify` flag when committing, however this will still perform QA test on your PR.
