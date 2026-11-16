@@ -46,6 +46,11 @@ normalization collisions, and Windows-incompatible names. The local
 initialized subdatasets; an `INCOMPLETE` message means some subdatasets were
 not available locally.
 
+GitHub Actions performs the authoritative recursive
+check against each subdataset's pinned commit. It reports existing catalogue
+findings but blocks a pull request only for newly introduced filename issues.
+The check reads Git-tracked paths only and does not download git-annex content.
+
 You can create a sub-dataset in the CONP repository in two ways:
 
 1. Using Zenodo
