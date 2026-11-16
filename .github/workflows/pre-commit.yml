@@ -11,11 +11,15 @@ jobs:
     name: pre-commit hooks
     runs-on: ubuntu-24.04
     steps:
+      # https://github.com/actions/checkout
       - name: Checkout repository (without submodules)
         uses: actions/checkout@v4
         with:
           submodules: false
+      # https://github.com/actions/setup-python
       - uses: actions/setup-python@v7
+      # https://github.com/astral-sh/setup-uv
       - name: Install uv
         uses: astral-sh/setup-uv@v7
+      # https://github.com/pre-commit/action
       - uses: pre-commit/action@v3.0.1
