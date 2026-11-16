@@ -25,6 +25,9 @@
 
 ### Continuous integration
 
+- Add a local pre-commit check and document how to run it. The checker inspects
+  Git-tracked paths only, does not download git-annex content, and reports
+  incomplete local scans when subdatasets are unavailable.
 - Remove CircleCI configuration, its Docker image, and its CircleCI artifact
   reporting script and documentation.
 - Move pull-request dataset test selection from CircleCI-specific environment

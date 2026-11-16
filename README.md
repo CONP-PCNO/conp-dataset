@@ -142,4 +142,9 @@ uv run pre-commit install
 uv run pre-commit run --all-files
 ```
 
+The `dataset-filename-portability` hook checks tracked names for case-insensitive
+and Unicode-normalization collisions, as well as Windows-incompatible names.
+It scans initialized subdatasets; an `INCOMPLETE` message indicates that local
+subdatasets were unavailable.
+
 Pre-commit won't let you commit until reported issues are fixed. If problematic, you can optionally skip the pre-commit for a local commit using the `--no-verify` flag when committing, however this will still perform QA test on your PR.
