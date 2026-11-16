@@ -1,6 +1,15 @@
 minimum_pre_commit_version: "3.2.0"
 
 repos:
+  - repo: local
+    hooks:
+      - id: dataset-filename-portability
+        name: check dataset filename portability
+        entry: python scripts/check_dataset_filenames.py
+        language: system
+        pass_filenames: false
+        always_run: true
+        stages: [pre-commit]
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:
