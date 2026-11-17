@@ -131,7 +131,7 @@ def main():
     req = urllib.request.Request(f"https://zenodo.org/api/records/{record_id}", headers=headers)
     with urllib.request.urlopen(req) as r:
         record = json.loads(r.read().decode())
-    
+
     title = record.get("metadata", {}).get("title", f"Record_{record_id}")
     folder_name = clean_title(title)
     dataset_dir = os.path.abspath(os.path.join(args.basedir, "projects", folder_name))
@@ -186,17 +186,17 @@ def main():
     dats_path = os.path.join(dataset_dir, "DATS.json")
     # First build a complete template to use as the reference
     perfect_dats = generate_dats_json(record, total_size, size_unit, len(files))
-    
+
     if os.path.exists(dats_path):
         print("📝 Existing DATS.json found, merging metadata...")
         try:
             with open(dats_path, 'r', encoding="utf-8") as f:
                 final_dats = json.load(f)
-            
+
             # 1. Dynamic field: Version
             metadata = record.get("metadata", {})
             final_dats["version"] = metadata.get("version") or record.get("updated", perfect_dats.get("version", final_dats.get("version")))
-            
+
             # 2. Dynamic field: Distributions (deep merge, only size/unit are updated)
             if "distributions" in final_dats and isinstance(final_dats["distributions"], list) and len(final_dats["distributions"]) > 0:
                 # Assume the first entry is the main distribution
@@ -206,11 +206,11 @@ def main():
                     template_dist = perfect_dats["distributions"][0]
                     main_dist["size"] = template_dist["size"]
                     main_dist["unit"] = template_dist["unit"]
-                    
+
                     # Fill in required field: formats (enforced by the validator)
                     if "formats" not in main_dist or not main_dist["formats"]:
                         main_dist["formats"] = template_dist.get("formats", ["DataLad"])
-                    
+
                     # Fill in required field: access
                     if "access" not in main_dist:
                         main_dist["access"] = template_dist.get("access", {})
@@ -219,7 +219,7 @@ def main():
                 # Keep every other entry from main_dist (authorizations, etc.)
             else:
                 final_dats["distributions"] = perfect_dats.get("distributions", [])
-                
+
             # 3. Dynamic field: Dates (only set/add date modified)
             now_str = dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             mod_date_val = record.get("updated", now_str)
@@ -257,7 +257,7 @@ def main():
                     placeholder_names = ["Multiple Contributors", "N/A", "unknown", ""]
                     is_new_placeholder = len(new_creators) > 0 and new_creators[0].get("name") in placeholder_names
                     has_old_real_name = len(old_creators) > 0 and old_creators[0].get("name") not in placeholder_names
-                    
+
                     if is_new_placeholder and has_old_real_name:
                         print("🛡️  Preserving manually curated creators list...")
                         # Leave final_dats["creators"] untouched
@@ -266,7 +266,7 @@ def main():
 
             # 5. Hard lock: keywords, licenses, description, title, etc.
             # Never modify the value of any key already present in final_dats
-            
+
             # Strong patch: fix the types validation (must be an information -> value structure)
             correct_types = perfect_dats.get("types", [{"information": {"value": "dataset"}}])
             if "types" in final_dats:
@@ -278,7 +278,7 @@ def main():
                     final_dats["types"] = correct_types
             else:
                 final_dats["types"] = correct_types
-                
+
         except Exception as e:
             print(f"⚠️  Error in ultimate strict merge ({e}), falling back to template.")
             final_dats = perfect_dats
