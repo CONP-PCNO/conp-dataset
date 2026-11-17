@@ -52,8 +52,7 @@ def parse_input(argv):
 
     if not os.path.exists(conp_dataset_dir + "/projects"):
         print(
-            conp_dataset_dir
-            + "does not appear to be a valid path and does not include a `projects` directory",
+            conp_dataset_dir + "does not appear to be a valid path and does not include a `projects` directory",
         )
         print(description + usage)
         sys.exit()
@@ -102,9 +101,7 @@ def look_for_dats_file_in_subfolders(conp_dataset_dir, dataset):
     subdataset_content = []
 
     for subdataset in subdataset_dirs_list:
-        dats_path = (
-            conp_dataset_dir + "/projects/" + dataset + "/" + subdataset + "/DATS.json"
-        )
+        dats_path = conp_dataset_dir + "/projects/" + dataset + "/" + subdataset + "/DATS.json"
         parsed_result = parse_dats_json_file(dats_path)
         subdataset_content.append(parsed_result)
 
@@ -129,21 +126,14 @@ def parse_dats_json_file(dats_path):
     for creator in creators:
         if "roles" in creator.keys():
             for role in creator["roles"]:
-                if (
-                    role["value"] == "Principal Investigator"
-                    and "name" in creator.keys()
-                ):
+                if role["value"] == "Principal Investigator" and "name" in creator.keys():
                     values_dict["principal_investigator"] = creator["name"]
 
     return [
         dats_dict["title"],
-        values_dict["principal_investigator"]
-        if "principal_investigator" in values_dict
-        else "",
+        values_dict["principal_investigator"] if "principal_investigator" in values_dict else "",
         values_dict["origin_consortium"] if "origin_consortium" in values_dict else "",
-        values_dict["origin_institution"]
-        if "origin_institution" in values_dict
-        else "",
+        values_dict["origin_institution"] if "origin_institution" in values_dict else "",
         values_dict["origin_city"] if "origin_city" in values_dict else "",
         values_dict["origin_province"] if "origin_province" in values_dict else "",
         values_dict["origin_country"] if "origin_country" in values_dict else "",
@@ -152,9 +142,7 @@ def parse_dats_json_file(dats_path):
 
 def write_csv_file(csv_content):
 
-    csv_file = (
-        os.getcwd() + "/dataset_provenance_" + str(datetime.date.today()) + ".csv"
-    )
+    csv_file = os.getcwd() + "/dataset_provenance_" + str(datetime.date.today()) + ".csv"
 
     with open(csv_file, "w", newline="") as file:
         writer = csv.writer(file)

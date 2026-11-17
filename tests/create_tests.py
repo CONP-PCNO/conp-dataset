@@ -13,17 +13,12 @@ def get_datasets():
     if os.getenv("GITHUB_EVENT_NAME") == "pull_request":
         event_path = os.environ.get("GITHUB_EVENT_PATH")
         if not event_path:
-            raise RuntimeError(
-                "GITHUB_EVENT_PATH is required for pull request test selection."
-            )
+            raise RuntimeError("GITHUB_EVENT_PATH is required for pull request test selection.")
         with open(event_path) as event_file:
             pull_number = json.load(event_file)["pull_request"]["number"]
 
         repository = os.getenv("GITHUB_REPOSITORY", "CONP-PCNO/conp-dataset")
-        next_url = (
-            f"https://api.github.com/repos/{repository}/pulls/{pull_number}/files"
-            "?per_page=100"
-        )
+        next_url = f"https://api.github.com/repos/{repository}/pulls/{pull_number}/files?per_page=100"
         headers = {"Accept": "application/vnd.github+json"}
         if token := os.getenv("GITHUB_TOKEN"):
             headers["Authorization"] = f"Bearer {token}"

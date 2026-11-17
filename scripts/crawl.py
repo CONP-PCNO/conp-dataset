@@ -7,8 +7,8 @@ import traceback
 from git import Repo
 
 sys.path.append(os.getcwd())
-from scripts.Crawlers.OSFCrawler import OSFCrawler  # noqa: E402
-from scripts.Crawlers.ZenodoCrawler import ZenodoCrawler  # noqa: E402
+from scripts.Crawlers.OSFCrawler import OSFCrawler
+from scripts.Crawlers.ZenodoCrawler import ZenodoCrawler
 
 
 def parse_args():
@@ -88,9 +88,7 @@ def parse_args():
         github_token = config["github_token"]
 
     if "BASEDIR" not in os.environ:
-        raise Exception(
-            "BASEDIR environment variable must be set and pointing to conp-dataset repo"
-        )
+        raise Exception("BASEDIR environment variable must be set and pointing to conp-dataset repo")
 
     return (
         github_token,
@@ -118,8 +116,7 @@ if __name__ == "__main__":
         try:
             if verbose:
                 print(
-                    "==================== Zenodo Crawler Running ===================="
-                    + os.linesep,
+                    "==================== Zenodo Crawler Running ====================" + os.linesep,
                 )
             ZenodoCrawlerObj = ZenodoCrawler(
                 github_token,
@@ -136,13 +133,9 @@ if __name__ == "__main__":
         try:
             if verbose:
                 print(
-                    os.linesep
-                    + "==================== OSF Crawler Running ===================="
-                    + os.linesep,
+                    os.linesep + "==================== OSF Crawler Running ====================" + os.linesep,
                 )
-            OSFCrawlerObj = OSFCrawler(
-                github_token, config_path, verbose, force, no_pr, basedir
-            )
+            OSFCrawlerObj = OSFCrawler(github_token, config_path, verbose, force, no_pr, basedir)
             OSFCrawlerObj.run()
         except Exception:
             traceback.print_exc()

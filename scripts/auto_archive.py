@@ -16,9 +16,7 @@ from scripts.dats_validator.validator import validate_access_urls
 from scripts.log import get_logger
 from tests.functions import get_proper_submodules
 
-logger = get_logger(
-    "CONP-Archive", filename="conp-archive.log", file_level=logging.DEBUG
-)
+logger = get_logger("CONP-Archive", filename="conp-archive.log", file_level=logging.DEBUG)
 
 
 class ArchiveFailed(Exception):
@@ -36,9 +34,7 @@ def parse_args():
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
 
-    parser.add_argument(
-        "--out_dir", "-o", type=str, help="Path to store the archived datasets."
-    )
+    parser.add_argument("--out_dir", "-o", type=str, help="Path to store the archived datasets.")
     parser.add_argument(
         "--max-size",
         type=float,
@@ -145,29 +141,19 @@ def has_host_download(dataset_path: str, metadata: dict) -> bool:
     link. A Zenodo landing page alone is not enough: Zenodo's whole-record
     archive is switched off, so the Portal has nothing to download there.
     """
-    if not any(
-        os.path.exists(os.path.join(dataset_path, marker)) for marker in CRAWLER_MARKERS
-    ):
+    if not any(os.path.exists(os.path.join(dataset_path, marker)) for marker in CRAWLER_MARKERS):
         return False
     distributions = metadata.get("distributions") or []
     if isinstance(distributions, dict):
         distributions = [distributions]
-    urls = [
-        str(((d or {}).get("access") or {}).get("accessURL") or "")
-        for d in distributions
-        if isinstance(d, dict)
-    ]
-    if not any(
-        u.startswith("https://") and ("zenodo.org" in u or "osf.io" in u) for u in urls
-    ):
+    urls = [str(((d or {}).get("access") or {}).get("accessURL") or "") for d in distributions if isinstance(d, dict)]
+    if not any(u.startswith("https://") and ("zenodo.org" in u or "osf.io" in u) for u in urls):
         return False
     is_valid, _ = validate_access_urls(metadata)
     return is_valid
 
 
-def archive_dataset(
-    dataset_path: str, out_dir: str, archive_name: str, version: str
-) -> None:
+def archive_dataset(dataset_path: str, out_dir: str, archive_name: str, version: str) -> None:
     os.makedirs(out_dir, mode=0o755, exist_ok=True)
     out_filename = os.path.join(out_dir, f"{archive_name}_version-{version}.tar.gz")
     logger.info(f"Archiving dataset: {dataset_path} to {out_filename}")
@@ -187,9 +173,7 @@ def archive_dataset(
         datalad_archiver(".", filename=out_filename)
 
     except Exception as e:
-        raise ArchiveFailed(
-            f"FAILURE: could not archive dataset: {dataset_path} to {out_filename}\n{e}"
-        ) from e
+        raise ArchiveFailed(f"FAILURE: could not archive dataset: {dataset_path} to {out_filename}\n{e}") from e
     finally:
         os.chdir(cwd)
 
@@ -202,16 +186,12 @@ if __name__ == "__main__":
     datasets = datasets_path.keys()
     if args.dataset:
         target_datasets = {os.path.basename(os.path.normpath(d)) for d in args.dataset}
-        logger.warning(
-            f"The following dataset were not found locally: {target_datasets - datasets}"
-        )
+        logger.warning(f"The following dataset were not found locally: {target_datasets - datasets}")
         datasets &= target_datasets
 
     elif not args.all:
         modified_datasets = get_modified_datasets()
-        logger.warning(
-            f"The following dataset were not found locally: {modified_datasets - datasets}"
-        )
+        logger.warning(f"The following dataset were not found locally: {modified_datasets - datasets}")
         datasets &= modified_datasets
 
     for dataset_name in datasets:
@@ -229,10 +209,7 @@ if __name__ == "__main__":
                 metadata = json.load(fin)
 
                 is_public = (
-                    metadata.get("distributions", [{}])[0]
-                    .get("access", {})
-                    .get("authorizations", [{}])[0]
-                    .get("value")
+                    metadata.get("distributions", [{}])[0].get("access", {}).get("authorizations", [{}])[0].get("value")
                     == "public"
                 )
                 version = metadata.get("version")
@@ -246,9 +223,7 @@ if __name__ == "__main__":
             # Datasets the Portal downloads straight from Zenodo or OSF need no
             # CONP copy: the archive is the fallback for everything else.
             if is_public and has_host_download(dataset, metadata):
-                logger.info(
-                    f"SKIPPED: {dataset} is downloaded from its Zenodo/OSF record."
-                )
+                logger.info(f"SKIPPED: {dataset} is downloaded from its Zenodo/OSF record.")
                 continue
 
             # Only archive public dataset less than a specific size if one is provided to the script
@@ -259,9 +234,7 @@ if __name__ == "__main__":
                     for submodule in get_proper_submodules(dataset):
                         get_dataset(submodule)
 
-                    archive_name = "__".join(
-                        os.path.relpath(dataset, "projects").split("/")
-                    )
+                    archive_name = "__".join(os.path.relpath(dataset, "projects").split("/"))
                     archive_dataset(
                         dataset,
                         out_dir=args.out_dir,
@@ -276,15 +249,11 @@ if __name__ == "__main__":
                 else:
                     logger.info(f"SKIPPED: {dataset} larger than {args.max_size} GB")
             else:
-                logger.info(
-                    f"SKIPPED: archive not needed for {dataset}. Non-public dataset."
-                )
+                logger.info(f"SKIPPED: archive not needed for {dataset}. Non-public dataset.")
 
         except Exception as e:
             # TODO implement notification system.
             # This will alert when a dataset fails the archiving process.
-            logger.exception(
-                f"FAILURE: could not archive dataset: {dataset} to {args.out_dir}.tar.gz\n{e}"
-            )
+            logger.exception(f"FAILURE: could not archive dataset: {dataset} to {args.out_dir}.tar.gz\n{e}")
 
     logger.info("Done archiving the datasets.")

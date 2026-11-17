@@ -261,9 +261,7 @@ class BaseCrawler:
                 dataset_dir = os.path.join(self.basedir, dataset_rel_dir)
                 d = self.datalad.Dataset(dataset_dir)
                 # using remote_head
-                remote_branch_names = [
-                    ref.remote_head for ref in self.repo.remotes.origin.refs
-                ]
+                remote_branch_names = [ref.remote_head for ref in self.repo.remotes.origin.refs]
                 if branch_name not in remote_branch_names:  # New dataset
                     self._notify_new_dataset(
                         dataset_description,
@@ -333,24 +331,16 @@ class BaseCrawler:
                                 raise
                         continue
 
-                    modified = self.update_if_necessary(
-                        dataset_description, dataset_dir
-                    )
+                    modified = self.update_if_necessary(dataset_description, dataset_dir)
                     if modified:
                         # Create DATS.json if it exists in directory and 1 level deep subdir
                         dats_path: str = os.path.join(dataset_dir, "DATS.json")
-                        if existing_dats_path := self._check_file_present(
-                            dataset_dir, "dats.json"
-                        ):
+                        if existing_dats_path := self._check_file_present(dataset_dir, "dats.json"):
                             if self.verbose:
-                                print(
-                                    f"Found existing DATS.json at {existing_dats_path}"
-                                )
+                                print(f"Found existing DATS.json at {existing_dats_path}")
                             if existing_dats_path != dats_path:
                                 os.rename(existing_dats_path, dats_path)
-                            self._add_source_data_submodule_if_derived_from_conp_dataset(
-                                dats_path, dataset_dir
-                            )
+                            self._add_source_data_submodule_if_derived_from_conp_dataset(dats_path, dataset_dir)
                         else:
                             self._create_new_dats(
                                 dataset_dir,
@@ -360,9 +350,7 @@ class BaseCrawler:
                             )
                         # Move the logo into the root directory if found in 1 level deep subdir
                         logo_path = os.path.join(dataset_dir, "logo.png")
-                        if existing_logo_path := self._check_file_present(
-                            dataset_dir, "logo.png"
-                        ):
+                        if existing_logo_path := self._check_file_present(dataset_dir, "logo.png"):
                             if self.verbose:
                                 print(f"Found logo at {existing_logo_path}")
                             if existing_logo_path != logo_path:
@@ -393,9 +381,7 @@ class BaseCrawler:
                 self.repo.git.checkout("master")
             except git.exc.GitCommandError as e:
                 if "filter-process" in str(e):
-                    self.repo.git.execute(
-                        ["git", "-c", "filter.annex.process=", "checkout", "master"]
-                    )
+                    self.repo.git.execute(["git", "-c", "filter.annex.process=", "checkout", "master"])
                 else:
                     raise
 
@@ -413,10 +399,7 @@ class BaseCrawler:
         msg = EmailMessage()
         msg["To"] = recipient
         msg["From"] = from_email
-        msg["Subject"] = (
-            "[CONP crawler] New dataset needs manual DataLad import: "
-            f"{dataset_description['title']}"
-        )
+        msg["Subject"] = f"[CONP crawler] New dataset needs manual DataLad import: {dataset_description['title']}"
         msg.set_content(
             "\n".join(
                 [
@@ -446,8 +429,7 @@ class BaseCrawler:
         description = "Please don't submit any PR to this repository. "
         if "creators" in dataset_description.keys():
             description += (
-                "If you want to request modifications, please contact "
-                f"{dataset_description['creators'][0]['name']}"
+                f"If you want to request modifications, please contact {dataset_description['creators'][0]['name']}"
             )
         payload = {"description": description}
         r = requests.patch(url, data=json.dumps(payload), headers=head)
@@ -554,9 +536,7 @@ Functional checks:
         data = {key: value for key, value in dataset.items() if key in DATS_FIELDS}
 
         # Check for license code in dataset if a license was not specified from the platform
-        if "licenses" not in data or (
-            len(data["licenses"]) == 1 and data["licenses"][0]["name"].lower() == "none"
-        ):
+        if "licenses" not in data or (len(data["licenses"]) == 1 and data["licenses"][0]["name"].lower() == "none"):
             # Collect all license file paths
             license_f_paths = []
             retrieve_license_path_in_dir(dataset_dir, license_f_paths)
@@ -577,18 +557,13 @@ Functional checks:
         num = 0
         for file in os.listdir(dataset_dir):
             file_path = os.path.join(dataset_dir, file)
-            if (
-                file[0] == "."
-                or file == "DATS.json"
-                or file == "README.md"
-                or file == "logo.png"
-            ):
+            if file[0] == "." or file == "DATS.json" or file == "README.md" or file == "logo.png":
                 continue
             elif os.path.isdir(file_path):
                 num += sum([len(files) for r, d, files in os.walk(file_path)])
             else:
                 num += 1
-        if "extraProperties" not in data.keys():
+        if "extraProperties" not in data:
             data["extraProperties"] = [
                 {"category": "files", "values": [{"value": str(num)}]},
             ]
@@ -613,10 +588,8 @@ Functional checks:
             modalities.add("unknown")
         elif len(modalities) > 1 and "unknown" in modalities:
             modalities.remove("unknown")
-        if "types" not in data.keys():
-            data["types"] = [
-                {"information": {"value": modality}} for modality in modalities
-            ]
+        if "types" not in data:
+            data["types"] = [{"information": {"value": modality}} for modality in modalities]
         else:
             for modality in modalities:
                 data["types"].append({"information": {"value": modality}})
@@ -647,9 +620,7 @@ Functional checks:
             elif file_name.lower() == filename.lower():
                 return file_path
 
-    def _add_source_data_submodule_if_derived_from_conp_dataset(
-        self, dats_json, dataset_dir
-    ):
+    def _add_source_data_submodule_if_derived_from_conp_dataset(self, dats_json, dataset_dir):
         with open(dats_json) as f:
             metadata = json.loads(f.read())
 

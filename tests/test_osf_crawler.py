@@ -60,9 +60,7 @@ class TestDownloadDistributions(TestCase):
                 "bytes": 10,
             }
         ]
-        dists = build_download_distributions(
-            self.BASE, parts, 2.8, "GB", "https://osf.io/q482e", True
-        )
+        dists = build_download_distributions(self.BASE, parts, 2.8, "GB", "https://osf.io/q482e", True)
         self.assertEqual(len(dists), 1)
         self.assertEqual(
             dists[0]["access"]["accessURL"],
@@ -119,17 +117,11 @@ class TestDownloadDistributions(TestCase):
                 "bytes": 0,
             },
         ]
-        dists = build_download_distributions(
-            self.BASE, parts, 318.5, "MB", "https://osf.io/xwajn/", True
-        )
+        dists = build_download_distributions(self.BASE, parts, 318.5, "MB", "https://osf.io/xwajn/", True)
         self.assertEqual(len(dists), 4)
         self.assertEqual(dists[0]["title"], "Participant level contrast maps")
         self.assertEqual(dists[0]["identifier"]["identifier"], "https://osf.io/qzucv/")
-        self.assertTrue(
-            dists[0]["access"]["accessURL"].endswith(
-                "/qzucv/providers/osfstorage/?zip="
-            )
-        )
+        self.assertTrue(dists[0]["access"]["accessURL"].endswith("/qzucv/providers/osfstorage/?zip="))
         self.assertEqual(dists[0]["access"]["landingPage"], "https://osf.io/xwajn/")
         self.assertEqual(
             dists[2]["access"]["accessURL"],
@@ -152,7 +144,5 @@ class TestDownloadDistributions(TestCase):
                 "bytes": 10,
             }
         ]
-        dists = build_download_distributions(
-            self.BASE, parts, 1, "KB", "https://osf.io/q482e", False
-        )
+        dists = build_download_distributions(self.BASE, parts, 1, "KB", "https://osf.io/q482e", False)
         self.assertNotIn("accessURL", dists[0]["access"])
