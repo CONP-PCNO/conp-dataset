@@ -163,21 +163,21 @@ def download_files(files_link: str, current_dir: str, inner_path: str, dataset_d
 
         target_rel = os.path.join(inner_path, name) if inner_path else name
         target_abs = os.path.join(dataset_dir, target_rel)
-        
+
         # Make sure the parent directory exists
         parent_dir = os.path.dirname(target_abs)
         if parent_dir:
             os.makedirs(parent_dir, exist_ok=True)
-        
+
         download_url = file_item["links"]["download"]
-        
+
         if is_text_file(name):
             print(f"   📄 [TEXT] Downloading: {target_rel}")
             try:
                 # Fix: if the file already exists (possibly an annex symlink), remove it first, otherwise open() raises
                 if os.path.lexists(target_abs):
                     os.remove(target_abs)
-                
+
                 download_file_directly(download_url, target_abs, token)
                 run(["git", "add", target_rel], cwd=dataset_dir)
             except Exception as e:
@@ -186,7 +186,7 @@ def download_files(files_link: str, current_dir: str, inner_path: str, dataset_d
         else:
             print(f"   📦 [LARGE] Adding URL: {target_rel}")
             run(["git", "annex", "addurl", download_url, "--fast", "--relaxed", "--file", target_rel], cwd=dataset_dir)
-            
+
         file_size = attributes.get("size")
         if file_size: file_sizes.append(int(file_size))
 
@@ -249,11 +249,11 @@ def main():
 
     print(f"📥 Fetching OSF node {node_id}...")
     node_data = fetch_json(f"https://api.osf.io/v2/nodes/{node_id}/", token)["data"]
-    
+
     # Mimic the build_description logic
     relationships = node_data["relationships"]
     attributes = node_data["attributes"]
-    
+
     dataset = {
         "node_id": node_id,
         "title": attributes["title"],
@@ -263,7 +263,7 @@ def main():
         "files_link": relationships["files"]["links"]["related"]["href"],
         "creators": [{"name": c} for c in ["Multiple Contributors"]], # simplified; can be enriched later
     }
-    
+
     # Fetch the wiki (optional)
     try:
         wikis = fetch_paginated_data(relationships["wikis"]["links"]["related"]["href"], token)
@@ -287,7 +287,7 @@ def main():
     file_sizes = []
     print("🔗 Downloading files...")
     download_files(dataset["files_link"], dataset_dir, "", dataset_dir, token, file_sizes)
-    
+
     # Fetch the components
     components = fetch_paginated_data(relationships["children"]["links"]["related"]["href"], token)
     if components:
@@ -299,20 +299,20 @@ def main():
     print("📝 Generating metadata...")
     with open(os.path.join(dataset_dir, "README.md"), "w", encoding="utf-8") as f:
         f.write(generate_readme(dataset, total_size, size_unit))
-    
+
     # --- Handle DATS.json (strictest merge logic) ---
     dats_path = os.path.join(dataset_dir, "DATS.json")
     perfect_dats = generate_dats_json(dataset, total_size, size_unit, len(file_sizes))
-    
+
     if os.path.exists(dats_path):
         print("📝 Existing DATS.json found, applying ultimate strict merge...")
         try:
             with open(dats_path, 'r', encoding="utf-8") as f:
                 final_dats = json.load(f)
-            
+
             # 1. Dynamic field: Version
             final_dats["version"] = attributes.get("date_modified", perfect_dats.get("version", final_dats.get("version")))
-            
+
             # 2. Dynamic field: Distributions (deep merge, only size/unit are updated)
             if "distributions" in final_dats and isinstance(final_dats["distributions"], list) and len(final_dats["distributions"]) > 0:
                 # Assume the first entry is the main distribution
@@ -322,11 +322,11 @@ def main():
                     template_dist = perfect_dats["distributions"][0]
                     main_dist["size"] = template_dist["size"]
                     main_dist["unit"] = template_dist["unit"]
-                    
+
                     # Fill in required field: formats (enforced by the validator)
                     if "formats" not in main_dist or not main_dist["formats"]:
                         main_dist["formats"] = template_dist.get("formats", ["DataLad"])
-                    
+
                     # Fill in required field: access
                     if "access" not in main_dist:
                         main_dist["access"] = template_dist.get("access", {})
@@ -335,7 +335,7 @@ def main():
                 # Keep every other entry from main_dist (authorizations, etc.)
             else:
                 final_dats["distributions"] = perfect_dats.get("distributions", [])
-                
+
             # 3. Dynamic field: Dates (only set/add date modified)
             now_str = dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             mod_date_val = attributes.get("date_modified", now_str)
@@ -380,7 +380,7 @@ def main():
 
             # 5. Hard lock: keywords, licenses, description, title, etc.
             # Never modify the value of any key already present in final_dats
-            
+
             # Strong patch: fix the types validation (must be an information -> value structure)
             correct_types = perfect_dats.get("types", [{"information": {"value": "dataset"}}])
             if "types" in final_dats:
@@ -392,7 +392,7 @@ def main():
                     final_dats["types"] = correct_types
             else:
                 final_dats["types"] = correct_types
-                
+
         except Exception as e:
             print(f"⚠️ Error in ultimate strict merge ({e}), falling back to template.")
             final_dats = perfect_dats
@@ -419,7 +419,7 @@ def main():
     run(["git", "add", ".conp-osf-crawler.json"], cwd=dataset_dir)
     print("💾 Saving dataset state...")
     run(["datalad", "save", "-m", f"Import OSF node {node_id} with mixed storage"], cwd=dataset_dir)
-    
+
     print(f"\n✅ Success! OSF Dataset ready at {dataset_dir}")
 
 if __name__ == "__main__":
