@@ -26,9 +26,7 @@ def find_schema(parent_schema, term, json_object):
     if term not in ps.keys():
         # The only way this could happen on a valid dataset is if someone has specified additional properties
         # We'd like to discourage this
-        logger.warning(
-            f"I cannot find {term = } in the parent schema: {parent_schema['id']}.\n{json_object = }"
-        )
+        logger.warning(f"I cannot find {term = } in the parent schema: {parent_schema['id']}.\n{json_object = }")
         return None
 
     # Set up the schema resolver
@@ -48,9 +46,7 @@ def find_schema(parent_schema, term, json_object):
     elif len(set(search_dict.keys()).intersection(["anyOf", "oneOf", "allOf"])) > 0:
         # There is (most likely) more than one option for the schema as indicated by one of the
         # keys from ["anyOf", "oneOf", "allOf"]
-        schema_rel = list(
-            set(search_dict.keys()).intersection(["anyOf", "oneOf", "allOf"])
-        )[0]
+        schema_rel = list(set(search_dict.keys()).intersection(["anyOf", "oneOf", "allOf"]))[0]
         possible_schemata = []
         # We will now iterate over the possible schemata for the term
         for ref in search_dict[schema_rel]:
@@ -67,9 +63,7 @@ def find_schema(parent_schema, term, json_object):
             # TODO: decide if we let the user pick which option to go with
             logger.debug(f"I got more than one option for {term}: {possible_schemata}")
         elif len(possible_schemata) == 0:
-            logger.warning(
-                f"I have no fitting schema for {json_object} {term} among {search_dict[schema_rel]}"
-            )
+            logger.warning(f"I have no fitting schema for {json_object} {term} among {search_dict[schema_rel]}")
             return None
         # If anything fits, just pick the first one
         # TODO: we may want to leave this up to the user here, particularly if the instances
@@ -102,16 +96,12 @@ def find_context(schema_id, context_dir):
     :return: the @context section of the DATS SDO context file as a dictionary
     """
     schema_name = pal.Path(schema_id).name
-    context_name = pal.Path(schema_name.replace("_schema", "_sdo_context")).with_suffix(
-        ".jsonld"
-    )
+    context_name = pal.Path(schema_name.replace("_schema", "_sdo_context")).with_suffix(".jsonld")
     context = json.load(open(context_dir / context_name))["@context"]
     return context
 
 
-def annotate_dats_object(
-    json_object, schema, specific_context, context_dir=CONTEXT_DIR
-):
+def annotate_dats_object(json_object, schema, specific_context, context_dir=CONTEXT_DIR):
     """
     This function recursively traverses a DATS instance and generates two things:
 
@@ -134,9 +124,7 @@ def annotate_dats_object(
     for k, v in json_object.items():
         if isinstance(v, dict):
             _schema = find_schema(schema, k, v)
-            json_object[k], _local_context = annotate_dats_object(
-                v, _schema, specific_context, context_dir
-            )
+            json_object[k], _local_context = annotate_dats_object(v, _schema, specific_context, context_dir)
             specific_context.update(_local_context)
         if isinstance(v, list):
             # Let's find the schema link under "items"
@@ -146,9 +134,7 @@ def annotate_dats_object(
                     annotation_list.append(vv)
                     continue
                 _schema = find_schema(schema, k, vv)
-                _json_o, _local_context = annotate_dats_object(
-                    vv, _schema, specific_context, context_dir
-                )
+                _json_o, _local_context = annotate_dats_object(vv, _schema, specific_context, context_dir)
                 annotation_list.append(_json_o)
                 specific_context.update(_local_context)
             json_object[k] = annotation_list
@@ -253,18 +239,14 @@ def dats_to_jsonld(dats_f, schema_f, context_dir, out_path=None, clobber=False):
     dats_jsonld["@context"] = [
         context,
     ]
-    logger.info(
-        f"Final result written to {dats_jsonld_f.resolve()}! This took {time.time() - tic:.2f} seconds"
-    )
+    logger.info(f"Final result written to {dats_jsonld_f.resolve()}! This took {time.time() - tic:.2f} seconds")
     json.dump(dats_jsonld, open(dats_jsonld_f, "w"), indent=2)
 
 
 def main(cli_args):
 
     logging.basicConfig(format="%(levelname)s:  %(message)s", level=logging.INFO)
-    parser = argparse.ArgumentParser(
-        description="Annotate a DATS.json file to DATS.jsonld given a schema"
-    )
+    parser = argparse.ArgumentParser(description="Annotate a DATS.json file to DATS.jsonld given a schema")
     parser.add_argument(
         "dats_path",
         type=pal.Path,
@@ -302,24 +284,16 @@ def main(cli_args):
     elif args.dats_path.is_dir():
         files_to_convert = list(args.dats_path.glob("*/DATS.json"))
         if not args.out.is_dir():
-            logger.warning(
-                f"The {args.out.resolve()} folder will be created and JSONLD files will be saved in it."
-            )
+            logger.warning(f"The {args.out.resolve()} folder will be created and JSONLD files will be saved in it.")
             args.out.mkdir()
         if files_to_convert is None:
-            logger.error(
-                f"could not find any DATS.json files in subdirectories of {args.dats_path.resolve()}"
-            )
+            logger.error(f"could not find any DATS.json files in subdirectories of {args.dats_path.resolve()}")
             exit(code=1)
 
-        logger.info(
-            f"Found {len(files_to_convert)} files to convert at {args.dats_path.resolve()}"
-        )
+        logger.info(f"Found {len(files_to_convert)} files to convert at {args.dats_path.resolve()}")
         start = time.time()
         for file_idx, dats_f in enumerate(files_to_convert, start=1):
-            logger.info(
-                f"Now processing file {file_idx}/{len(files_to_convert)}: {dats_f.parent.name}"
-            )
+            logger.info(f"Now processing file {file_idx}/{len(files_to_convert)}: {dats_f.parent.name}")
             dats_to_jsonld(
                 dats_f=dats_f,
                 schema_f=args.dats_schema,
@@ -328,8 +302,7 @@ def main(cli_args):
                 clobber=args.clobber,
             )
         logger.info(
-            f"Completed annotating {len(files_to_convert)} DATS files. "
-            f"This took {time.time() - start:.2f} seconds."
+            f"Completed annotating {len(files_to_convert)} DATS files. This took {time.time() - start:.2f} seconds."
         )
     else:
         logger.error(f"I cannot find {args.dats_path}. Will stop now.")

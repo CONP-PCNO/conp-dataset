@@ -57,10 +57,7 @@ def unlock():
     # Ensure correct data
     if not metadata["restricted"]:
         raise Exception("Dataset not restricted, no need to unlock")
-    if (
-        len(metadata["private_files"]["archive_links"]) == 0
-        and len(metadata["private_files"]["files"]) == 0
-    ):
+    if len(metadata["private_files"]["archive_links"]) == 0 and len(metadata["private_files"]["files"]) == 0:
         raise Exception("No restricted files to unlock")
 
     # Set token in archive link URLs

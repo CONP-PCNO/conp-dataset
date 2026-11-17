@@ -51,9 +51,7 @@ def install_dataset(dataset_path: str, *, recursive: bool = False) -> None:
     try:
         _install_dataset(dataset_path, recursive=recursive)
     except Exception as e:
-        raise InstallFailed(
-            f"Installation failed for dataset: {dataset_path}\n{e}"
-        ) from e
+        raise InstallFailed(f"Installation failed for dataset: {dataset_path}\n{e}") from e
 
 
 @retry(max_attempt=3)
@@ -79,6 +77,4 @@ def uninstall_dataset(dataset_path: str, *, recursive: bool = False) -> None:
     try:
         _uninstall_dataset(dataset_path, recursive=recursive)
     except Exception as e:
-        raise UninstallFailed(
-            f"Installation failed for dataset: {dataset_path}\n{e}"
-        ) from e
+        raise UninstallFailed(f"Installation failed for dataset: {dataset_path}\n{e}") from e

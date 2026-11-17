@@ -8,11 +8,11 @@ import subprocess
 from contextlib import contextmanager
 from functools import reduce
 
-import datalad.api as api
 import git
 import humanize
 import keyring
 import pytest
+from datalad import api
 from datalad.support.annexrepo import AnnexRepo
 from git.exc import InvalidGitRepositoryError
 
@@ -115,18 +115,15 @@ def is_authentication_required(dataset):
                     authorizations = distrubtion["access"]["authorizations"]
 
                     if all(
-                        [
-                            authorization["value"] == "public"
-                            for authorization in authorizations
-                        ],
+                        [authorization["value"] == "public" for authorization in authorizations],
                     ):
                         return False
             except KeyError as e:
-                print(f"{str(e)} field not found in DATS.json")  # noqa: E713
+                print(f"{e!s} field not found in DATS.json")
     except FileNotFoundError as e:
-        pytest.fail(f"DATS.json was not found!\n{str(e)}", pytrace=False)
+        pytest.fail(f"DATS.json was not found!\n{e!s}", pytrace=False)
     except Exception as e:
-        pytest.fail(f"Authentication error!\n{str(e)}", pytrace=False)
+        pytest.fail(f"Authentication error!\n{e!s}", pytrace=False)
 
     # At least one distribution has non-public authorization
     if len(AnnexRepo(dataset).get_annexed_files()) == 0:
@@ -283,11 +280,7 @@ def download_files(dataset, dataset_size, *, num=4):
     if len(k_smallest) == 0:
         return
 
-    download_size = (
-        dataset_size
-        if contains_archived_files
-        else get_sample_files_size(dataset, k_smallest)
-    )
+    download_size = dataset_size if contains_archived_files else get_sample_files_size(dataset, k_smallest)
     # Set a time limit based on the download size.
     # Limit between 20 sec and 10 minutes to avoid test to fail/hang.
     time_limit = int(max(20, min(download_size * 1.2 // 2e6, 600)))
@@ -367,9 +360,7 @@ def get_proper_submodules(dataset: str):
     # For this reason we only install submodules for which there is no derivedFrom
     # value associated with.
     proper_submodules = [
-        os.path.join(dataset, submodule.path)
-        for submodule in submodules
-        if submodule.path not in parent_dataset_ids
+        os.path.join(dataset, submodule.path) for submodule in submodules if submodule.path not in parent_dataset_ids
     ]
 
     for submodule in proper_submodules:

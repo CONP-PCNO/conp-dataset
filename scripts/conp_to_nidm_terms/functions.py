@@ -53,9 +53,7 @@ def get_api_response(term):
         if "existing_ids" in response["data"] and response["data"]["existing_ids"]:
             for i in response["data"]["existing_ids"]:
                 # retrieve InterLex ID, its curie has "ILX" prefix
-                match = (
-                    i["iri"] if "curie" in i and "ILX:".upper() in i["curie"] else match
-                )
+                match = i["iri"] if "curie" in i and "ILX:".upper() in i["curie"] else match
         else:
             match = "no match found"
         return match
@@ -215,4 +213,3 @@ def generate_jsonld_files(report, use_api=True):
             ) as jldfile:
                 json.dump(jsonld_description, jldfile, indent=4, ensure_ascii=False)
     print(f"JSON-LD files created: {len(terms_counter.keys())}")
-    return
