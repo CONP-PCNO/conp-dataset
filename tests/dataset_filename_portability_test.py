@@ -38,15 +38,12 @@ def _index_file(repo: Path, path: str, content: str) -> None:
 
 
 def test_finds_case_and_directory_collisions() -> None:
-    findings = find_findings(
-        ["Data/scan.nii", "data/other.nii", "Report.TXT", "report.txt"], "."
-    )
+    findings = find_findings(["Data/scan.nii", "data/other.nii", "Report.TXT", "report.txt"], ".")
 
     assert {
         finding.category
         for finding in findings
-        if finding.path_a in {"Data/scan.nii", "Report.TXT"}
-        or finding.path_b in {"Data/scan.nii", "Report.TXT"}
+        if finding.path_a in {"Data/scan.nii", "Report.TXT"} or finding.path_b in {"Data/scan.nii", "Report.TXT"}
     } == {"case-insensitive"}
     assert any(
         finding.category == "case-insensitive"
@@ -79,9 +76,7 @@ def test_finds_windows_incompatible_components(path: str, detail: str) -> None:
     assert detail in next(iter(findings)).detail
 
 
-def test_existing_findings_do_not_block_unrelated_changes(
-    tmp_path: Path, capsys
-) -> None:
+def test_existing_findings_do_not_block_unrelated_changes(tmp_path: Path, capsys) -> None:
     repo = tmp_path / "catalogue"
     _init_repo(repo)
     _index_file(repo, "Name.txt", "one")
@@ -118,9 +113,7 @@ def test_new_root_collision_fails(tmp_path: Path, capsys) -> None:
     assert "new filename portability issue" in capsys.readouterr().out
 
 
-def test_new_conflict_in_changed_subdataset_is_checked_at_pinned_commit(
-    tmp_path: Path, capsys
-) -> None:
+def test_new_conflict_in_changed_subdataset_is_checked_at_pinned_commit(tmp_path: Path, capsys) -> None:
     origin = tmp_path / "dataset-origin"
     _init_repo(origin)
     (origin / "scan.nii").write_text("one")
@@ -164,9 +157,7 @@ def test_new_conflict_in_changed_subdataset_is_checked_at_pinned_commit(
     assert "case-insensitive" in output
 
 
-def test_missing_pinned_subdataset_is_an_explicit_failure(
-    tmp_path: Path, capsys
-) -> None:
+def test_missing_pinned_subdataset_is_an_explicit_failure(tmp_path: Path, capsys) -> None:
     origin = tmp_path / "dataset-origin"
     _init_repo(origin)
     (origin / "README.md").write_text("dataset")

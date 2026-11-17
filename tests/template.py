@@ -70,8 +70,7 @@ class Template:
             date_type_valid_bool, date_type_errors = validate_date_types(json_obj)
             if not date_type_valid_bool:
                 summary_error_message = (
-                    f"Dataset {dataset} contains DATS.json that has errors "
-                    f"in date's type encoding. List of errors:\n"
+                    f"Dataset {dataset} contains DATS.json that has errors in date's type encoding. List of errors:\n"
                 )
                 for i, error_message in enumerate(date_type_errors, 1):
                     summary_error_message += f"- {i}. {error_message}\n"

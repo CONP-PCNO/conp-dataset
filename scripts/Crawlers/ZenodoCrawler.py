@@ -62,22 +62,14 @@ class ZenodoCrawler(BaseCrawler):
             while next_page is not None:
                 next_page_json = requests.get(next_page).json()
                 results.extend(next_page_json["hits"]["hits"])
-                next_page = (
-                    next_page_json["links"]["next"]
-                    if "next" in next_page_json["links"]
-                    else None
-                )
+                next_page = next_page_json["links"]["next"] if "next" in next_page_json["links"] else None
 
         if self.verbose:
             print(f"Zenodo query: {query}")
         return results
 
     def _download_file(self, bucket, d, is_private):
-        link: str = (
-            bucket["links"]["self"]
-            if not is_private
-            else bucket["links"]["self"].split("?")[0]
-        )
+        link: str = bucket["links"]["self"] if not is_private else bucket["links"]["self"].split("?")[0]
         file_name: str = bucket.get("key", "no name")
         file_size: int = bucket.get("size", 0)
         if self.verbose:
@@ -105,16 +97,13 @@ class ZenodoCrawler(BaseCrawler):
                     ).json()
                     if "files" not in data.keys():
                         print(
-                            f"Unable to access {clean_title} using stored tokens, "
-                            "skipping this dataset",
+                            f"Unable to access {clean_title} using stored tokens, skipping this dataset",
                         )
                         continue
                     else:
                         # Append access token to each file url
                         for bucket in data["files"]:
-                            bucket["links"]["self"] += (
-                                "?access_token=" + self.zenodo_tokens[clean_title]
-                            )
+                            bucket["links"]["self"] += "?access_token=" + self.zenodo_tokens[clean_title]
                             files.append(bucket)
                         is_private = True
                         dataset_token = self.zenodo_tokens[clean_title]
@@ -136,9 +125,7 @@ class ZenodoCrawler(BaseCrawler):
 
             # Retrieve and clean file formats/extensions
             file_formats = (
-                list(set(map(lambda x: os.path.splitext(x.get("key"))[1][1:], files)))
-                if len(files) > 0
-                else []
+                list(set(map(lambda x: os.path.splitext(x.get("key"))[1][1:], files))) if len(files) > 0 else []
             )
 
             if "" in file_formats:
@@ -192,11 +179,7 @@ class ZenodoCrawler(BaseCrawler):
                             )
 
             # Get identifier
-            identifier = (
-                dataset["conceptdoi"]
-                if "conceptdoi" in dataset.keys()
-                else dataset["doi"]
-            )
+            identifier = dataset["conceptdoi"] if "conceptdoi" in dataset.keys() else dataset["doi"]
 
             # Detect a linked NeuroLibre/Evidence publication.
             # NeuroLibre/Evidence archives carry a related identifier of the
@@ -205,23 +188,14 @@ class ZenodoCrawler(BaseCrawler):
             evidence_publication_doi = None
             for related in metadata.get("related_identifiers", []):
                 related_id = related.get("identifier", "")
-                if (
-                    related.get("relation", "").lower() == "ispartof"
-                    and "10.55458/" in related_id
-                ):
-                    evidence_publication_doi = related_id.replace(
-                        "https://doi.org/", ""
-                    )
+                if related.get("relation", "").lower() == "ispartof" and "10.55458/" in related_id:
+                    evidence_publication_doi = related_id.replace("https://doi.org/", "")
                     break
 
             extra_properties = [
                 {
                     "category": "logo",
-                    "values": [
-                        {
-                            "value": "https://about.zenodo.org/static/img/logos/zenodo-gradient-round.svg"
-                        }
-                    ],
+                    "values": [{"value": "https://about.zenodo.org/static/img/logos/zenodo-gradient-round.svg"}],
                 },
                 {"category": "CONP_status", "values": [{"value": "Canadian"}]},
                 {"category": "subjects", "values": [{"value": "unknown"}]},
@@ -257,14 +231,10 @@ class ZenodoCrawler(BaseCrawler):
                     "doi_badge": identifier,
                     "creators": creators,
                     "description": metadata["description"],
-                    "version": metadata["version"]
-                    if "version" in metadata.keys()
-                    else "None",
+                    "version": metadata["version"] if "version" in metadata.keys() else "None",
                     "licenses": [
                         {
-                            "name": metadata["license"]["id"]
-                            if "license" in metadata.keys()
-                            else "None",
+                            "name": metadata["license"]["id"] if "license" in metadata.keys() else "None",
                         },
                     ],
                     "is_private": is_private,
@@ -281,14 +251,10 @@ class ZenodoCrawler(BaseCrawler):
                             "size": dataset_size,
                             "unit": {"value": dataset_unit},
                             "access": {
-                                "landingPage": dataset.get("links", {}).get(
-                                    "self_html", "n/a"
-                                ),
+                                "landingPage": dataset.get("links", {}).get("self_html", "n/a"),
                                 "authorizations": [
                                     {
-                                        "value": "public"
-                                        if metadata["access_right"] == "open"
-                                        else "private",
+                                        "value": "public" if metadata["access_right"] == "open" else "private",
                                     },
                                 ],
                             },
@@ -340,9 +306,7 @@ class ZenodoCrawler(BaseCrawler):
             self._setup_private_dataset(dataset_dir, annex, d, dataset_token)
 
         if self.verbose:
-            print(
-                f"Adding new dataset {dataset['title']}, is_private: {is_private}, token: {dataset_token}"
-            )
+            print(f"Adding new dataset {dataset['title']}, is_private: {is_private}, token: {dataset_token}")
 
         for bucket in dataset["files"]:
             self._download_file(bucket, d, is_private)

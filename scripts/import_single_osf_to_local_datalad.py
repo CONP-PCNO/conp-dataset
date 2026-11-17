@@ -103,7 +103,7 @@ def load_osf_token(config_path: str | None, arg_token: str | None) -> str | None
             with open(config_path) as f:
                 data = json.load(f)
             return data.get("osf_token")
-        except (json.JSONDecodeError, OSError):
+        except (OSError, json.JSONDecodeError):
             pass
     return None
 
@@ -230,9 +230,7 @@ def download_files(
                 download_file_directly(download_url, target_abs, token)
                 run(["git", "add", target_rel], cwd=dataset_dir)
             except Exception as e:
-                print(
-                    f"   ⚠️  Download failed for {target_rel}: {e}. Falling back to Annex."
-                )
+                print(f"   ⚠️  Download failed for {target_rel}: {e}. Falling back to Annex.")
                 run(
                     [
                         "git",
@@ -295,6 +293,7 @@ def download_components(
             download_components(
                 subcomponents, dataset_dir, token, file_sizes, component_inner_path
             )
+
 
 
 def generate_readme(dataset: dict, total_size: float, size_unit: str) -> str:
@@ -426,7 +425,8 @@ def main():
 
             # 1. Dynamic field: Version
             final_dats["version"] = attributes.get(
-                "date_modified", perfect_dats.get("version", final_dats.get("version"))
+                "date_modified",
+                perfect_dats.get("version", final_dats.get("version")),
             )
 
             # 2. Dynamic field: Distributions (deep merge, only size/unit are updated)
@@ -492,7 +492,7 @@ def main():
                             existing_props.append(p)
                     final_dats["extraProperties"] = existing_props
                 elif key == "creators":
-                    # Preserve real authors when the template contains the placeholder name.
+                    # Preserve manually curated creators over the placeholder template.
                     old_creators = final_dats.get("creators", [])
                     new_creators = perfect_dats.get("creators", [])
                     if (

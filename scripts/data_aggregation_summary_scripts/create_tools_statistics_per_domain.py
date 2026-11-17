@@ -4,7 +4,7 @@ import getopt
 import os
 import sys
 
-import lib.Utility as Utility
+from lib import Utility
 
 
 def main(argv):
@@ -68,9 +68,7 @@ def parse_input(argv):
     )
     usage = (
         "\n"
-        "usage  : python "
-        + __file__
-        + " -d <path to the Boutiques's JSON cached directory to parse."
+        "usage  : python " + __file__ + " -d <path to the Boutiques's JSON cached directory to parse."
         " (typically ~/.cache/boutiques/production>\n\n"
         "options: \n"
         "\t-d: path to the Boutiques's JSON cached directory to parse."
@@ -176,16 +174,13 @@ def get_stats_per_domain(tool_summary_dict, domain):
 
         print(tool_dict["online_platform_urls"])
 
-        if (
-            tool_dict["online_platform_urls"]
-            and "https://portal.cbrain.mcgill.ca" in tool_dict["online_platform_urls"]
-        ):
+        if tool_dict["online_platform_urls"] and "https://portal.cbrain.mcgill.ca" in tool_dict["online_platform_urls"]:
             number_of_cbrain_tools += 1
 
     return [
         domain,
         str(number_of_tools),
-        f"Docker ({str(container['docker'])}); Singularity ({str(container['singularity'])})",  # noqa: E702
+        f"Docker ({container['docker']!s}); Singularity ({container['singularity']!s})",
         "CBRAIN (" + str(number_of_cbrain_tools) + ")",
     ]
 

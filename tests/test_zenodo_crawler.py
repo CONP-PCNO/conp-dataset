@@ -97,8 +97,6 @@ class TestZenodoCrawler(TestCase):
         mock_check_file_present,
     ):
         try:
-            ZenodoCrawler(
-                "github token", "path/to/config", True, False, True, "."
-            ).run()
+            ZenodoCrawler("github token", "path/to/config", True, False, True, ".").run()
         except Exception as e:
             self.fail("Unexpected Exception raised: " + str(e))

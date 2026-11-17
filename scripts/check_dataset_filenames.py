@@ -82,9 +82,7 @@ def _parse_tree_records(output: bytes, *, index: bool = False) -> list[TreeEntry
                 mode, _object_type, object_id = fields
         except ValueError as error:
             raise CheckError(f"could not parse Git tree entry: {record!r}") from error
-        entries.append(
-            TreeEntry(mode, object_id.decode("ascii"), os.fsdecode(raw_path))
-        )
+        entries.append(TreeEntry(mode, object_id.decode("ascii"), os.fsdecode(raw_path)))
     return entries
 
 
@@ -93,9 +91,7 @@ def current_entries(repo: Path) -> list[TreeEntry]:
 
 
 def tree_entries(repo: Path, revision: str) -> list[TreeEntry]:
-    return _parse_tree_records(
-        git(repo, "ls-tree", "-r", "-z", "--full-tree", revision)
-    )
+    return _parse_tree_records(git(repo, "ls-tree", "-r", "-z", "--full-tree", revision))
 
 
 def _windows_problem(component: str) -> str | None:
@@ -103,9 +99,7 @@ def _windows_problem(component: str) -> str | None:
         return "Windows does not preserve trailing spaces or periods"
     if any(char in WINDOWS_FORBIDDEN or ord(char) < 32 for char in component):
         return "contains a character forbidden in Windows filenames"
-    device_stem = (
-        component.rstrip(" .").split(".", maxsplit=1)[0].rstrip(" .").casefold()
-    )
+    device_stem = component.rstrip(" .").split(".", maxsplit=1)[0].rstrip(" .").casefold()
     if device_stem in WINDOWS_RESERVED:
         return "uses a reserved Windows device name"
     return None
@@ -113,9 +107,7 @@ def _windows_problem(component: str) -> str | None:
 
 def find_findings(paths: list[str], location: str) -> set[Finding]:
     findings: set[Finding] = set()
-    components_by_parent: dict[
-        tuple[str, ...], dict[str, dict[str, tuple[str, str]]]
-    ] = {}
+    components_by_parent: dict[tuple[str, ...], dict[str, dict[str, tuple[str, str]]]] = {}
 
     for path in paths:
         components = path.split("/")
@@ -126,9 +118,7 @@ def find_findings(paths: list[str], location: str) -> set[Finding]:
             full_path = "/".join(prefix)
             problem = _windows_problem(component)
             if problem:
-                findings.add(
-                    Finding("windows-incompatible", location, path, detail=problem)
-                )
+                findings.add(Finding("windows-incompatible", location, path, detail=problem))
             component_key = unicodedata.normalize("NFC", component).casefold()
             siblings = components_by_parent.setdefault(normalized_parent, {})
             siblings.setdefault(component_key, {})[component] = (
@@ -146,20 +136,14 @@ def find_findings(paths: list[str], location: str) -> set[Finding]:
                         continue
                     normalized_a = unicodedata.normalize("NFC", name_a)
                     normalized_b = unicodedata.normalize("NFC", name_b)
-                    category = (
-                        "unicode-normalization"
-                        if normalized_a == normalized_b
-                        else "case-insensitive"
-                    )
+                    category = "unicode-normalization" if normalized_a == normalized_b else "case-insensitive"
                     first, second = sorted((path_a, path_b))
                     findings.add(Finding(category, location, first, second))
     return findings
 
 
 def gitlinks(entries: list[TreeEntry]) -> dict[str, str]:
-    return {
-        entry.path: entry.object_id for entry in entries if entry.mode == GITLINK_MODE
-    }
+    return {entry.path: entry.object_id for entry in entries if entry.mode == GITLINK_MODE}
 
 
 def ensure_commit(repo: Path, revision: str, *, fetch: bool) -> None:
@@ -181,9 +165,7 @@ def ensure_commit(repo: Path, revision: str, *, fetch: bool) -> None:
         check=False,
     )
     if verified.returncode:
-        raise CheckError(
-            f"fetch completed but baseline commit {revision} is unavailable in {repo}"
-        )
+        raise CheckError(f"fetch completed but baseline commit {revision} is unavailable in {repo}")
 
 
 def _head(repo: Path) -> str:
@@ -232,14 +214,11 @@ def inspect_repository(
         except CheckError as error:
             if strict_submodules:
                 raise
-            incomplete.append(
-                f"{child_location!r}: subdataset checkout is not usable ({error})"
-            )
+            incomplete.append(f"{child_location!r}: subdataset checkout is not usable ({error})")
             continue
         if actual_head != expected_commit:
             message = (
-                f"{child_location!r}: checked-out commit {actual_head} does not match "
-                f"pinned gitlink {expected_commit}"
+                f"{child_location!r}: checked-out commit {actual_head} does not match pinned gitlink {expected_commit}"
             )
             if strict_submodules:
                 raise CheckError(message)
@@ -303,9 +282,7 @@ def run_check(
     for message in incomplete[:10]:
         print(f"INCOMPLETE: {message}")
     if len(incomplete) > 10:
-        print(
-            f"INCOMPLETE: {len(incomplete) - 10} additional subdataset(s) were not inspected."
-        )
+        print(f"INCOMPLETE: {len(incomplete) - 10} additional subdataset(s) were not inspected.")
 
     if new_findings:
         print(f"Found {len(new_findings)} new filename portability issue(s).")
@@ -317,9 +294,7 @@ def run_check(
         )
         return 0
     if existing_findings:
-        print(
-            f"No new issues; {len(existing_findings)} existing issue(s) are reported above."
-        )
+        print(f"No new issues; {len(existing_findings)} existing issue(s) are reported above.")
     else:
         print("PASS: no new filename portability issues.")
     return 0
@@ -327,9 +302,7 @@ def run_check(
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument(
-        "--root", type=Path, default=Path.cwd(), help="superdataset checkout"
-    )
+    parser.add_argument("--root", type=Path, default=Path.cwd(), help="superdataset checkout")
     parser.add_argument(
         "--base-ref",
         help="baseline root commit (GitHub Actions uses the PR base commit; defaults to HEAD)",

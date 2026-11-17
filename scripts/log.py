@@ -1,9 +1,7 @@
 import logging
 
 
-def get_logger(
-    name, *, filename=None, console_level=logging.INFO, file_level=logging.WARNING
-) -> logging.Logger:
+def get_logger(name, *, filename=None, console_level=logging.INFO, file_level=logging.WARNING) -> logging.Logger:
     logger = logging.getLogger(name)
     logger.setLevel(logging.DEBUG)
 
@@ -16,9 +14,7 @@ def get_logger(
     if filename:
         f_handler = logging.FileHandler(filename)
         f_handler.setLevel(file_level)
-        f_format = logging.Formatter(
-            "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-        )
+        f_format = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
         f_handler.setFormatter(f_format)
         logger.addHandler(f_handler)
 

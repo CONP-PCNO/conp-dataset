@@ -36,7 +36,8 @@ def parse_input(argv):
         "\noptions: \n"
         "\t-d: path to the DataLad dataset to work on\n"  # noqa: E131
         "\t-u: regular expression for invalid URLs to remove from git-annex\n"  # noqa: E131
-        "\t-c: confirm that the removal of the URLs should be performed. By default it will just print out what needs to be removed for validation\n"  # noqa: E501,E131
+        "\t-c: confirm that the removal of the URLs should be performed.\n"
+        "\t    By default, it prints what needs to be removed for validation.\n"
         "\t-v: verbose\n"  # noqa: E131
     )
 
@@ -65,11 +66,9 @@ def parse_input(argv):
         elif opt == "-v":
             script_options["verbose"] = True
 
-    if "dataset_path" not in script_options.keys():
+    if "dataset_path" not in script_options:
         print(
-            "\n\t* ----------------------------------------------------------------------------------------------------------------------- *"  # noqa: E501
-            "\n\t* ERROR: a path to the DataLad dataset to process needs to be given as an argument to the script by using the option `-d` *"  # noqa: E501
-            "\n\t* ----------------------------------------------------------------------------------------------------------------------- *",  # noqa: E501
+            "\n\t* A DataLad dataset path must be provided with the `-d` option.",
         )
         print(description + usage)
         sys.exit()
@@ -92,11 +91,9 @@ def parse_input(argv):
         print(description + usage)
         sys.exit()
 
-    if "invalid_url_regex" not in script_options.keys():
+    if "invalid_url_regex" not in script_options:
         print(
-            "\n\t* --------------------------------------------------------------------------------------------------- *"  # noqa: E501
-            "\n\t* ERROR: a regex for invalid URLs to remove should be provided to the script by using the option `-u` *"  # noqa: E501
-            "\n\t* --------------------------------------------------------------------------------------------------- *",  # noqa: E501
+            "\n\t* A regex for invalid URLs must be provided with the `-u` option.",
         )
         print(description + usage)
         sys.exit()

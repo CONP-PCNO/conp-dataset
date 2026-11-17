@@ -122,14 +122,7 @@ def write_csv_file(csv_file_basename, csv_content):
      :type csv_content      : list
     """
 
-    csv_file = (
-        os.getcwd()
-        + "/"
-        + csv_file_basename
-        + "_"
-        + str(datetime.date.today())
-        + ".csv"
-    )
+    csv_file = os.getcwd() + "/" + csv_file_basename + "_" + str(datetime.date.today()) + ".csv"
 
     with open(csv_file, "w", newline="") as file:
         writer = csv.writer(file)
