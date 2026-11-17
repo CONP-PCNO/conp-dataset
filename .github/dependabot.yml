@@ -11,7 +11,7 @@ updates:
 
     # Exclude the projects folder containing DataLad dataset submodules
     exclude-paths:
-      - "projects/**"
+      - "projects/"
 
     # Limit concurrent PRs to prevent flooding your queue
     open-pull-requests-limit: 10
