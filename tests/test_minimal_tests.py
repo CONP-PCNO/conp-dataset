@@ -2,6 +2,7 @@
 
 This function should return the minimal set of test to execute.
 """
+
 import git
 import pytest
 

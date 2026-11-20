@@ -40,6 +40,17 @@ for more information about PR evaluations.
 
 ## Adding data
 
+Dataset filenames are checked for case-insensitive collisions, Unicode
+normalization collisions, and Windows-incompatible names. The local
+`dataset-filename-portability` pre-commit hook checks the superdataset and
+initialized subdatasets; an `INCOMPLETE` message means some subdatasets were
+not available locally.
+
+GitHub Actions performs the authoritative recursive
+check against each subdataset's pinned commit. It reports existing catalogue
+findings but blocks a pull request only for newly introduced filename issues.
+The check reads Git-tracked paths only and does not download git-annex content.
+
 You can create a sub-dataset in the CONP repository in two ways:
 
 1. Using Zenodo
@@ -112,7 +123,7 @@ datalad create -d . projects/<dataset_name>
 
     * Files that you want to make available through Google Drive:
     ```console
-    pip install git+https://github.com/glatard/git-annex-remote-googledrive.git@dev
+    uv tool install git+https://github.com/glatard/git-annex-remote-googledrive.git@dev
     git-annex-remote-googledrive setup
     git annex initremote google type=external externaltype=googledrive prefix=CONP-data root_id=<folder_id> chunk=50MiB encryption=shared mac=HMACSHA512
     ```

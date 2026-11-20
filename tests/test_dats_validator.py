@@ -2,12 +2,15 @@ import copy
 import json
 import os
 import unittest
+from unittest.mock import patch
 
-from scripts.dats_validator.validator import REQUIRED_EXTRA_PROPERTIES
-from scripts.dats_validator.validator import validate_access_urls
-from scripts.dats_validator.validator import validate_extra_properties
-from scripts.dats_validator.validator import validate_json
-from scripts.dats_validator.validator import validate_non_schema_required
+from scripts.dats_validator.validator import (
+    REQUIRED_EXTRA_PROPERTIES,
+    validate_access_urls,
+    validate_extra_properties,
+    validate_json,
+    validate_non_schema_required,
+)
 
 EXAMPLES = os.path.join(os.getcwd(), "scripts", "dats_validator", "examples")
 VALID = os.path.join(EXAMPLES, "valid_dats.json")
@@ -31,8 +34,13 @@ class JsonschemaTest(unittest.TestCase):
 
 class ExtraPropertiesTest(unittest.TestCase):
     def test_non_schema_required(self):
-        valid_validation, errors = validate_non_schema_required(valid_obj)
-        invalid_validation, errors = validate_non_schema_required(invalid_obj)
+        with patch(
+            "scripts.dats_validator.validator.dataset_exists",
+            return_value=False,
+        ) as dataset_exists:
+            valid_validation, errors = validate_non_schema_required(valid_obj)
+            invalid_validation, errors = validate_non_schema_required(invalid_obj)
+        dataset_exists.assert_called_once_with("https://github.com/sdajdhajhdahdj")
         self.assertEqual(valid_validation, True)
         self.assertEqual(invalid_validation, False)
 
