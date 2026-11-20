@@ -38,12 +38,7 @@ repos:
     rev: v0.17.4
     hooks:
       - id: ruff-check
-        args:
-          - --fix
-          - --line-length=120
-          - --target-version=py312
-          - --select=E,F,W,B,I,UP
-          - --ignore=W5,E203,E226,E231,E251,E202
+        args: [--fix]
       - id: ruff-format
   - repo: https://github.com/asottile/blacken-docs
     rev: v1.12.1
