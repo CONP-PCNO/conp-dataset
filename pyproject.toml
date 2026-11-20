@@ -24,12 +24,22 @@ dev = [
     "pre-commit>=4,<5",
     "pytest>=8.3,<9",
     "pytest-xdist>=3.6,<4",
+    "ruff>=0.17,<0.18",
 ]
 
 [tool.pytest.ini_options]
 addopts = "--ignore=.venv --ignore=venv --ignore=node_modules --ignore=projects --ignore=__pycache__"
 pythonpath = [".", "scripts"]
 testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 120
+extend-exclude = [".datalad", ".ruff_cache", "projects"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "B", "I", "UP"]
+ignore = ["E202", "E203", "E226", "E231", "E251", "W5"]
 
 [tool.uv]
 package = false

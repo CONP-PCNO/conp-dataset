@@ -52,17 +52,13 @@ def build_download_distributions(base, parts, total_size, total_unit, landing, p
     Sizes of the parts add up to the record's size.
     """
     parts = [p for p in parts if p.get("bytes") or p.get("files")]
-    single = (
-        len(parts) == 1 and parts[0]["kind"] == "osfstorage" and parts[0].get("root")
-    )
+    single = len(parts) == 1 and parts[0]["kind"] == "osfstorage" and parts[0].get("root")
     if single or not parts:
         dist = json.loads(json.dumps(base))
         dist["size"] = total_size
         dist["unit"] = {"value": total_unit}
         if public and parts:
-            dist.setdefault("access", {})["accessURL"] = OSF_ZIP.format(
-                parts[0]["node"]
-            )
+            dist.setdefault("access", {})["accessURL"] = OSF_ZIP.format(parts[0]["node"])
         return [dist]
 
     distributions = []
@@ -86,9 +82,7 @@ def build_download_distributions(base, parts, total_size, total_unit, landing, p
         else:
             host = ADDON_NAMES.get(part["kind"], part["kind"].capitalize())
             code = f"code ({host}: {part.get('repo') or part['kind']})"
-            dist["title"] = (
-                "C" + code[1:] if part.get("root") else f"{part['title']}: {code}"
-            )
+            dist["title"] = "C" + code[1:] if part.get("root") else f"{part['title']}: {code}"
             if part.get("repo_url"):
                 dist["identifier"] = {
                     "identifier": part["repo_url"],
@@ -156,10 +150,7 @@ class OSFCrawler(BaseCrawler):
         files = r_json["data"]
 
         # Retrieve the files in the other pages if there are more than 1 page
-        if (
-            "links" in r_json.keys()
-            and r_json["links"]["meta"]["total"] > r_json["links"]["meta"]["per_page"]
-        ):
+        if "links" in r_json.keys() and r_json["links"]["meta"]["total"] > r_json["links"]["meta"]["per_page"]:
             next_page = r_json["links"]["next"]
             while next_page is not None:
                 next_page_json = self._get_request_with_bearer_token(next_page).json()
@@ -190,11 +181,7 @@ class OSFCrawler(BaseCrawler):
                         redirect=False,
                     ).headers["location"]
                     if "https://accounts.osf.io/login" not in correct_download_link:
-                        zip_file = (
-                            True
-                            if file["attributes"]["name"].split(".")[-1] == "zip"
-                            else False
-                        )
+                        zip_file = True if file["attributes"]["name"].split(".")[-1] == "zip" else False
                         d.download_url(
                             correct_download_link,
                             path=os.path.join(inner_path, ""),
@@ -336,9 +323,7 @@ class OSFCrawler(BaseCrawler):
             f"https://api.osf.io/v2/nodes/{node}/files/",
         ).json()["data"]
         for provider in providers:
-            name = (
-                provider["attributes"].get("provider") or provider["attributes"]["name"]
-            )
+            name = provider["attributes"].get("provider") or provider["attributes"]["name"]
             count, size = self._list_osf_files(
                 provider["relationships"]["files"]["links"]["related"]["href"],
             )
@@ -367,18 +352,12 @@ class OSFCrawler(BaseCrawler):
                     )
                     part["bytes"] = part["bytes"] or github_size
                 else:
-                    part["repo"] = (
-                        str(addon.get("folder_id") or "")
-                        .replace("%2F", "/")
-                        .rstrip(":")
-                    )
+                    part["repo"] = str(addon.get("folder_id") or "").replace("%2F", "/").rstrip(":")
             parts.append(part)
         for component in self._get_components(
             f"https://api.osf.io/v2/nodes/{node}/children/",
         ):
-            parts += self._osf_parts(
-                component["id"], component["attributes"]["title"], False
-            )
+            parts += self._osf_parts(component["id"], component["attributes"]["title"], False)
         return parts
 
     def _set_download_distributions(self, dataset, size, unit, is_private):
@@ -400,8 +379,7 @@ class OSFCrawler(BaseCrawler):
     def _get_contributors(self, link):
         r = self._get_request_with_bearer_token(link)
         contributors = [
-            contributor["embeds"]["users"]["data"]["attributes"]["full_name"]
-            for contributor in r.json()["data"]
+            contributor["embeds"]["users"]["data"]["attributes"]["full_name"] for contributor in r.json()["data"]
         ]
         return contributors
 
@@ -417,16 +395,12 @@ class OSFCrawler(BaseCrawler):
         r = self._get_request_with_bearer_token(link)
         data = r.json()["data"]
         if len(data) > 0:
-            return self._get_request_with_bearer_token(
-                data[0]["links"]["download"]
-            ).content.decode()
+            return self._get_request_with_bearer_token(data[0]["links"]["download"]).content.decode()
 
     def _get_institutions(self, link):
         r = self._get_request_with_bearer_token(link)
         if r.json()["data"]:
-            institutions = [
-                institution["attributes"]["name"] for institution in r.json()["data"]
-            ]
+            institutions = [institution["attributes"]["name"] for institution in r.json()["data"]]
             return institutions
 
     def _get_identifier(self, link):
@@ -461,9 +435,7 @@ class OSFCrawler(BaseCrawler):
 
             # Retrieve institution information
             institutions = self._get_institutions(
-                dataset["relationships"]["affiliated_institutions"]["links"]["related"][
-                    "href"
-                ],
+                dataset["relationships"]["affiliated_institutions"]["links"]["related"]["href"],
             )
 
             # Retrieve identifier information
@@ -482,9 +454,7 @@ class OSFCrawler(BaseCrawler):
             # Get wiki to put in README
             wiki: str | None = None
             try:
-                wiki = self._get_wiki(
-                    dataset["relationships"]["wikis"]["links"]["related"]["href"]
-                )
+                wiki = self._get_wiki(dataset["relationships"]["wikis"]["links"]["related"]["href"])
             except Exception as e:
                 print(f"Error getting wiki for {attributes['title']} because of {e}")
 
@@ -559,9 +529,7 @@ class OSFCrawler(BaseCrawler):
                             "landingPage": dataset["links"]["html"],
                             "authorizations": [
                                 {
-                                    "value": "public"
-                                    if attributes["public"]
-                                    else "private",
+                                    "value": "public" if attributes["public"] else "private",
                                 },
                             ],
                         },
@@ -629,9 +597,7 @@ class OSFCrawler(BaseCrawler):
         )
         dataset["distributions"][0]["size"] = float(dataset_size_num)
         dataset["distributions"][0]["unit"]["value"] = dataset_unit
-        self._set_download_distributions(
-            dataset, dataset_size_num, dataset_unit, is_private
-        )
+        self._set_download_distributions(dataset, dataset_size_num, dataset_unit, is_private)
 
         # Add .conp-osf-crawler.json tracker file
         _create_osf_tracker(
@@ -719,17 +685,15 @@ class OSFCrawler(BaseCrawler):
         return True
 
     def get_readme_content(self, dataset):
-        readme_content = (
-            f"# {dataset['title']}\n\nCrawled from [OSF]({dataset['homepage']})"
-        )
+        readme_content = f"# {dataset['title']}\n\nCrawled from [OSF]({dataset['homepage']})"
 
-        if "description" in dataset and dataset["description"]:
+        if dataset.get("description"):
             readme_content += f"\n\n## Description\n\n{dataset['description']}"
 
-        if "identifier" in dataset and dataset["identifier"]:
+        if dataset.get("identifier"):
             readme_content += f"\n\n## DOI: {dataset['identifier']['identifier']}"
 
-        if "wiki" in dataset and dataset["wiki"]:
+        if dataset.get("wiki"):
             readme_content += f"\n\n## WIKI\n\n{dataset['wiki']}"
 
         return readme_content

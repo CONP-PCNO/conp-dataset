@@ -47,16 +47,12 @@ class OSFCrawler(BaseCrawler):
             except HTTPError as http_err:
                 print(f"HTTP error occurred: {http_err} - Response: {r.text}")
                 if r.status_code == 503:  # Spécifiquement pour gérer les erreurs 503
-                    print(
-                        f"Request to {r.url} failed with 503 Bad Gateway, retrying..."
-                    )
+                    print(f"Request to {r.url} failed with 503 Bad Gateway, retrying...")
                     attempt += 1
                     time.sleep(2**attempt)  # Backoff exponentiel
                     continue
                 if r.status_code == 502:  # Spécifiquement pour gérer les erreurs 502
-                    print(
-                        f"Request to {r.url} failed with 502 Bad Gateway, skipping download."
-                    )
+                    print(f"Request to {r.url} failed with 502 Bad Gateway, skipping download.")
                     return None  # Retourne None pour permettre au code de continuer
                 else:
                     raise Exception(
@@ -101,10 +97,7 @@ class OSFCrawler(BaseCrawler):
         files = r_json["data"]
 
         # Retrieve the files in the other pages if there are more than 1 page
-        if (
-            "links" in r_json.keys()
-            and r_json["links"]["meta"]["total"] > r_json["links"]["meta"]["per_page"]
-        ):
+        if "links" in r_json.keys() and r_json["links"]["meta"]["total"] > r_json["links"]["meta"]["per_page"]:
             print("dans le next page")
             next_page = r_json["links"]["next"]
             while next_page is not None:
@@ -146,19 +139,9 @@ class OSFCrawler(BaseCrawler):
                             redirect=False,
                         )
                         if correct_download_link is not None:
-                            correct_download_link = correct_download_link.headers[
-                                "location"
-                            ]
-                            if (
-                                "https://accounts.osf.io/login"
-                                not in correct_download_link
-                            ):
-                                zip_file = (
-                                    True
-                                    if file["attributes"]["name"].split(".")[-1]
-                                    == "zip"
-                                    else False
-                                )
+                            correct_download_link = correct_download_link.headers["location"]
+                            if "https://accounts.osf.io/login" not in correct_download_link:
+                                zip_file = True if file["attributes"]["name"].split(".")[-1] == "zip" else False
                                 d.download_url(
                                     correct_download_link,
                                     path=os.path.join(inner_path, ""),
@@ -187,9 +170,7 @@ class OSFCrawler(BaseCrawler):
                             )
 
                 except IncompleteResultsError as e:
-                    print(
-                        f"Skipping file {file['links']['download']} due to error: {e}"
-                    )
+                    print(f"Skipping file {file['links']['download']} due to error: {e}")
                     continue  # Skip ce fichier et passer au suivant
 
                 # append the size of the downloaded file to the sizes array
@@ -265,8 +246,7 @@ class OSFCrawler(BaseCrawler):
     def _get_contributors(self, link):
         r = self._get_request_with_bearer_token(link)
         contributors = [
-            contributor["embeds"]["users"]["data"]["attributes"]["full_name"]
-            for contributor in r.json()["data"]
+            contributor["embeds"]["users"]["data"]["attributes"]["full_name"] for contributor in r.json()["data"]
         ]
         return contributors
 
@@ -282,16 +262,12 @@ class OSFCrawler(BaseCrawler):
         r = self._get_request_with_bearer_token(link)
         data = r.json()["data"]
         if len(data) > 0:
-            return self._get_request_with_bearer_token(
-                data[0]["links"]["download"]
-            ).content.decode()
+            return self._get_request_with_bearer_token(data[0]["links"]["download"]).content.decode()
 
     def _get_institutions(self, link):
         r = self._get_request_with_bearer_token(link)
         if r.json()["data"]:
-            institutions = [
-                institution["attributes"]["name"] for institution in r.json()["data"]
-            ]
+            institutions = [institution["attributes"]["name"] for institution in r.json()["data"]]
             return institutions
 
     def _get_identifier(self, link):
@@ -328,9 +304,7 @@ class OSFCrawler(BaseCrawler):
 
             # Retrieve institution information
             institutions = self._get_institutions(
-                dataset["relationships"]["affiliated_institutions"]["links"]["related"][
-                    "href"
-                ],
+                dataset["relationships"]["affiliated_institutions"]["links"]["related"]["href"],
             )
 
             # Retrieve identifier information
@@ -349,9 +323,7 @@ class OSFCrawler(BaseCrawler):
             # Get wiki to put in README
             wiki: str | None = None
             try:
-                wiki = self._get_wiki(
-                    dataset["relationships"]["wikis"]["links"]["related"]["href"]
-                )
+                wiki = self._get_wiki(dataset["relationships"]["wikis"]["links"]["related"]["href"])
             except Exception as e:
                 print(f"Error getting wiki for {attributes['title']} because of {e}")
 
@@ -425,9 +397,7 @@ class OSFCrawler(BaseCrawler):
                             "landingPage": dataset["links"]["html"],
                             "authorizations": [
                                 {
-                                    "value": "public"
-                                    if attributes["public"]
-                                    else "private",
+                                    "value": "public" if attributes["public"] else "private",
                                 },
                             ],
                         },
@@ -583,17 +553,15 @@ class OSFCrawler(BaseCrawler):
         return True
 
     def get_readme_content(self, dataset):
-        readme_content = (
-            f"# {dataset['title']}\n\nCrawled from [OSF]({dataset['homepage']})"
-        )
+        readme_content = f"# {dataset['title']}\n\nCrawled from [OSF]({dataset['homepage']})"
 
-        if "description" in dataset and dataset["description"]:
+        if dataset.get("description"):
             readme_content += f"\n\n## Description\n\n{dataset['description']}"
 
-        if "identifier" in dataset and dataset["identifier"]:
+        if dataset.get("identifier"):
             readme_content += f"\n\n## DOI: {dataset['identifier']['identifier']}"
 
-        if "wiki" in dataset and dataset["wiki"]:
+        if dataset.get("wiki"):
             readme_content += f"\n\n## WIKI\n\n{dataset['wiki']}"
 
         return readme_content

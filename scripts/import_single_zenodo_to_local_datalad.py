@@ -6,38 +6,43 @@ import os
 import re
 import subprocess
 import urllib.request
-from typing import List, Dict, Any
 
 # File extensions that must be stored as regular files (not annexed)
-TEXT_EXTENSIONS = {'.csv', '.json', '.md', '.txt', '.py', '.yml', '.yaml', '.tsv', '.jsonld', '.html'}
-TEXT_FILENAMES = {'README', 'LICENSE', 'CHANGES', 'AUTHORS', 'MANIFEST', 'DESCRIPTION'}
+TEXT_EXTENSIONS = {".csv", ".json", ".md", ".txt", ".py", ".yml", ".yaml", ".tsv", ".jsonld", ".html"}
+TEXT_FILENAMES = {"README", "LICENSE", "CHANGES", "AUTHORS", "MANIFEST", "DESCRIPTION"}
+
 
 def is_text_file(filename: str) -> bool:
     ext = os.path.splitext(filename)[1].lower()
     base = os.path.basename(filename).upper()
     return ext in TEXT_EXTENSIONS or base in TEXT_FILENAMES
 
+
 def run(cmd: list[str], cwd: str | None = None):
     subprocess.run(cmd, cwd=cwd, check=True)
 
+
 def clean_title(title: str) -> str:
     """Sanitize the title: cap at 80 chars and strip shell-unsafe characters"""
-    clean = title.replace('&', 'and')
-    clean = re.sub(r'[<>:"/\\|?*(),]', '_', clean)
-    clean = re.sub(r'\s+', '_', clean)
-    clean = re.sub(r'_+', '_', clean)
-    clean = clean.strip('_')
+    clean = title.replace("&", "and")
+    clean = re.sub(r'[<>:"/\\|?*(),]', "_", clean)
+    clean = re.sub(r"\s+", "_", clean)
+    clean = re.sub(r"_+", "_", clean)
+    clean = clean.strip("_")
     if len(clean) > 80:
-        clean = clean[:80].strip('_')
+        clean = clean[:80].strip("_")
     return clean
 
+
 def html_to_text(value: str) -> str:
-    if not value: return ""
+    if not value:
+        return ""
     text = re.sub(r"<br\s*/?>", "\n", value, flags=re.IGNORECASE)
     text = re.sub(r"</p\s*>", "\n\n", text, flags=re.IGNORECASE)
     text = re.sub(r"<[^>]+>", "", text)
-    text = re.sub(r'\n\s*\n', '\n\n', text)
+    text = re.sub(r"\n\s*\n", "\n\n", text)
     return text.strip()
+
 
 def natural_size(num_bytes: int) -> tuple[float, str]:
     units = ["Bytes", "KB", "MB", "GB", "TB", "PB"]
@@ -50,12 +55,14 @@ def natural_size(num_bytes: int) -> tuple[float, str]:
         size /= 1024
     return (round(size, 2), unit)
 
+
 def download_file_to_disk(url: str, dest_path: str, token: str | None = None):
     """Download a file straight to the local disk"""
     headers = {"Authorization": f"Bearer {token}"} if token else {}
     req = urllib.request.Request(url, headers=headers)
     with urllib.request.urlopen(req, timeout=300) as response, open(dest_path, "wb") as out_file:
         out_file.write(response.read())
+
 
 def configure_git_attributes(dataset_dir: str):
     """Configure .gitattributes so text files stay out of the annex"""
@@ -68,28 +75,30 @@ def configure_git_attributes(dataset_dir: str):
         "*.csv annex.largefiles=nothing",
         "*.json annex.largefiles=nothing",
         "*.txt annex.largefiles=nothing",
-        ".gitattributes annex.largefiles=nothing"
+        ".gitattributes annex.largefiles=nothing",
     ]
     with open(attr_path, "w") as f:
         f.write("\n".join(patterns) + "\n")
     run(["git", "add", ".gitattributes"], cwd=dataset_dir)
 
+
 def generate_readme(record: dict, total_size: float, size_unit: str) -> str:
     metadata = record.get("metadata", {})
-    return f"""# {metadata.get('title')}
+    return f"""# {metadata.get("title")}
 
 ## Description
-{html_to_text(metadata.get('description', 'No description provided.'))}
+{html_to_text(metadata.get("description", "No description provided."))}
 
 ## Metadata
-- **Zenodo Record ID**: {record.get('id')}
-- **DOI**: {metadata.get('doi', 'N/A')}
+- **Zenodo Record ID**: {record.get("id")}
+- **DOI**: {metadata.get("doi", "N/A")}
 - **Total Size**: {total_size} {size_unit}
-- **Keywords**: {", ".join(metadata.get('keywords', []))}
+- **Keywords**: {", ".join(metadata.get("keywords", []))}
 
 ---
 *Automatically imported via CONP-Zenodo-Crawler*
 """
+
 
 def generate_dats_json(record: dict, total_size: float, size_unit: str, file_count: int) -> dict:
     metadata = record.get("metadata", {})
@@ -100,21 +109,26 @@ def generate_dats_json(record: dict, total_size: float, size_unit: str, file_cou
         "version": metadata.get("version", "1.0.0"),
         "types": [{"information": {"value": "dataset"}}],
         "licenses": [{"name": metadata.get("license", "None")}],
-        "keywords": [{"value": k} for k in metadata.get("keywords", [])] if metadata.get("keywords") else [{"value": "N/A"}],
-        "distributions": [{
-            "size": total_size,
-            "unit": {"value": size_unit},
-            "access": {"landingPage": f"https://zenodo.org/record/{record.get('id')}"},
-            "formats": ["N/A"]
-        }],
+        "keywords": (
+            [{"value": k} for k in metadata.get("keywords", [])] if metadata.get("keywords") else [{"value": "N/A"}]
+        ),
+        "distributions": [
+            {
+                "size": total_size,
+                "unit": {"value": size_unit},
+                "access": {"landingPage": f"https://zenodo.org/record/{record.get('id')}"},
+                "formats": ["N/A"],
+            }
+        ],
         "extraProperties": [
             {"category": "source", "values": [{"value": "zenodo"}]},
-            {"category": "zenodo_record_id", "values": [{"value": str(record.get('id'))}]},
+            {"category": "zenodo_record_id", "values": [{"value": str(record.get("id"))}]},
             {"category": "files", "values": [{"value": str(file_count)}]},
             {"category": "subjects", "values": [{"value": "N/A"}]},
-            {"category": "CONP_status", "values": [{"value": "CONP"}]}
-        ]
+            {"category": "CONP_status", "values": [{"value": "CONP"}]},
+        ],
     }
+
 
 def main():
     parser = argparse.ArgumentParser()
@@ -151,18 +165,16 @@ def main():
 
     # Track whether the metadata file has been handled yet
     has_readme = False
-    has_dats = False
 
     print(f"🔗 Processing {len(files)} files...")
     for f_item in files:
         name = f_item["key"]
         url = f_item["links"]["self"]
-        ext = os.path.splitext(name)[1].lower()
         dest = os.path.join(dataset_dir, name)
         os.makedirs(os.path.dirname(dest), exist_ok=True)
 
-        if name.lower() == "readme.md": has_readme = True
-        if name.lower() == "dats.json": has_dats = True
+        if name.lower() == "readme.md":
+            has_readme = True
 
         if is_text_file(name):
             print(f"   📄 [TEXT] Downloading: {name}")
@@ -190,15 +202,22 @@ def main():
     if os.path.exists(dats_path):
         print("📝 Existing DATS.json found, merging metadata...")
         try:
-            with open(dats_path, 'r', encoding="utf-8") as f:
+            with open(dats_path, encoding="utf-8") as f:
                 final_dats = json.load(f)
 
             # 1. Dynamic field: Version
             metadata = record.get("metadata", {})
-            final_dats["version"] = metadata.get("version") or record.get("updated", perfect_dats.get("version", final_dats.get("version")))
+            final_dats["version"] = metadata.get("version") or record.get(
+                "updated",
+                perfect_dats.get("version", final_dats.get("version")),
+            )
 
             # 2. Dynamic field: Distributions (deep merge, only size/unit are updated)
-            if "distributions" in final_dats and isinstance(final_dats["distributions"], list) and len(final_dats["distributions"]) > 0:
+            if (
+                "distributions" in final_dats
+                and isinstance(final_dats["distributions"], list)
+                and len(final_dats["distributions"]) > 0
+            ):
                 # Assume the first entry is the main distribution
                 main_dist = final_dats["distributions"][0]
                 # Deep merge: make sure the required fields (size, unit, formats, access) exist
@@ -221,7 +240,7 @@ def main():
                 final_dats["distributions"] = perfect_dats.get("distributions", [])
 
             # 3. Dynamic field: Dates (only set/add date modified)
-            now_str = dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            now_str = dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             mod_date_val = record.get("updated", now_str)
             if "dates" in final_dats and isinstance(final_dats["dates"], list):
                 found_mod = False
@@ -230,10 +249,7 @@ def main():
                         d["date"] = mod_date_val
                         found_mod = True
                 if not found_mod:
-                    final_dats["dates"].append({
-                        "date": mod_date_val,
-                        "type": {"value": "date modified"}
-                    })
+                    final_dats["dates"].append({"date": mod_date_val, "type": {"value": "date modified"}})
             else:
                 final_dats["dates"] = perfect_dats.get("dates", [])
 
@@ -250,7 +266,7 @@ def main():
                             existing_props.append(p)
                     final_dats["extraProperties"] = existing_props
                 elif key == "creators":
-                    # Placeholder guard: if the template says Multiple Contributors but the old file has real authors, keep the old ones
+                    # Preserve manually curated creators over placeholder template values.
                     old_creators = final_dats.get("creators", [])
                     new_creators = perfect_dats.get("creators", [])
                     # The Zenodo template sometimes contains "N/A" or an empty list
@@ -272,7 +288,12 @@ def main():
             if "types" in final_dats:
                 old_types = final_dats["types"]
                 # Check that it uses the standard list form and contains the information key
-                is_valid = isinstance(old_types, list) and len(old_types) > 0 and isinstance(old_types[0], dict) and "information" in old_types[0]
+                is_valid = (
+                    isinstance(old_types, list)
+                    and len(old_types) > 0
+                    and isinstance(old_types[0], dict)
+                    and "information" in old_types[0]
+                )
                 if not is_valid:
                     print("🔧 Repairing 'types' field for schema compliance...")
                     final_dats["types"] = correct_types
@@ -307,8 +328,17 @@ def main():
     run(["git", "add", ".conp-zenodo-crawler.json"], cwd=dataset_dir)
 
     print("💾 Saving dataset state...")
-    run(["datalad", "save", "-m", f"Import Zenodo {record_id} with standardized metadata and mixed storage"], cwd=dataset_dir)
+    run(
+        [
+            "datalad",
+            "save",
+            "-m",
+            f"Import Zenodo {record_id} with standardized metadata and mixed storage",
+        ],
+        cwd=dataset_dir,
+    )
     print(f"\n✅ Success! Dataset ready at {dataset_dir}")
+
 
 if __name__ == "__main__":
     main()

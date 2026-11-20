@@ -126,7 +126,7 @@ def validate_extra_properties(dataset):
         raise KeyError(
             f"{e} is required."
             f"The following extra properties categories are required: "
-            f"{[k for k in REQUIRED_EXTRA_PROPERTIES.keys()]}",
+            f"{[k for k in REQUIRED_EXTRA_PROPERTIES]}",
         ) from e
 
 
@@ -147,10 +147,7 @@ def validate_formats(dataset):
             errors_list.append(error_message)
         else:
             for file_format in distribution_dict["formats"]:
-                if (
-                    file_format != file_format.upper()
-                    and file_format not in format_exceptions
-                ):
+                if file_format != file_format.upper() and file_format not in format_exceptions:
                     error_message = (
                         f"Validation error in {dataset['title']}: distributions."
                         f"formats - {file_format} is not allowed. "
@@ -241,14 +238,12 @@ def validate_privacy(dataset):
         return True, errors_list
 
 
-_OSF_NODE = re.compile(r"osf\.io/([a-z0-9]{5})(?:[/?#]|$)", re.I)
+_OSF_NODE = re.compile(r"osf\.io/([a-z0-9]{5})(?:[/?#]|$)", re.IGNORECASE)
 _OSF_WATERBUTLER = re.compile(
     r"^https://files\.(?:[a-z0-9-]+\.)?osf\.io/v1/resources/([a-z0-9]{5})/providers/([a-z0-9_-]+)",
-    re.I,
+    re.IGNORECASE,
 )
-_ZENODO_RECORD = re.compile(
-    r"zenodo\.org/(?:records?|deposit)/(\d+)|10\.5281/zenodo\.(\d+)", re.I
-)
+_ZENODO_RECORD = re.compile(r"zenodo\.org/(?:records?|deposit)/(\d+)|10\.5281/zenodo\.(\d+)", re.IGNORECASE)
 
 
 def _osf_node(url):
@@ -276,15 +271,9 @@ def _osf_ancestors(node, max_depth=10):
         if not response.ok:
             break
         parent = (
-            response.json()["data"]["relationships"]
-            .get("parent", {})
-            .get("links", {})
-            .get("related", {})
-            .get("href")
+            response.json()["data"]["relationships"].get("parent", {}).get("links", {}).get("related", {}).get("href")
         )
-        node = _osf_node(parent) or (
-            parent.rstrip("/").split("/")[-1] if parent else None
-        )
+        node = _osf_node(parent) or (parent.rstrip("/").split("/")[-1] if parent else None)
         if not node:
             break
         ancestors.append(node)
@@ -341,9 +330,7 @@ def validate_access_urls(dataset, check_online=False):
                     f"{project} (landingPage {landing}). OSF ignores the value after "
                     f"'zip=', so this link downloads {node}.",
                 )
-            elif (
-                node != project and check_online and project not in _osf_ancestors(node)
-            ):
+            elif node != project and check_online and project not in _osf_ancestors(node):
                 errors_list.append(
                     f"{where} - OSF component {node} is not part of project {project}.",
                 )
@@ -434,9 +421,7 @@ def validate_types(dataset):
         # 1 check for empty object inside of types list
         empty_obj = [obj for obj in dataset["types"] if not obj]
         if len(empty_obj) == len(dataset["types"]):
-            error_message = (
-                f"Validation in {dataset['title']}: types - list has no value."
-            )
+            error_message = f"Validation in {dataset['title']}: types - list has no value."
             errors_list.append(error_message)
 
         # 2 check that only data_type_schema properties are present
@@ -453,8 +438,7 @@ def validate_types(dataset):
             for key in obj.keys():
                 if key not in allowed_keys:
                     error_message = (
-                        f"Validation in {dataset['title']}: "
-                        f"types - the key {key} is not supported by the schema."
+                        f"Validation in {dataset['title']}: types - the key {key} is not supported by the schema."
                     )
                     errors_list.append(error_message)
     # no need to check for types otherwise because this error will be caught by jsonschema validation

@@ -29,6 +29,9 @@
   formatting under Ruff; update the core hook revisions; and add private-key
   detection and a 500 KB added-file limit. Retain the repository-specific
   Dockerfile and documentation checks.
+- Centralize the Ruff target Python version, line length, selected rules,
+  exclusions, and development dependency in `pyproject.toml`
+- Fixed the Ruff findings across the Python scripts/ and tests/.
 - Organize `.gitignore` into sections and cover local environments, Python and
   test caches, generated dataset tests, local environment files, build and
   coverage output, logs, and common operating-system files.

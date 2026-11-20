@@ -2,7 +2,7 @@ import getopt
 import os
 import sys
 
-import lib.Utility as Utility
+from lib import Utility
 
 
 def main(argv):
@@ -88,8 +88,7 @@ def parse_input(argv):
 
     if not os.path.exists(conp_dataset_dir_path + "/projects"):
         print(
-            conp_dataset_dir_path
-            + "does not appear to be a valid path and does not include a `projects` directory",
+            conp_dataset_dir_path + "does not appear to be a valid path and does not include a `projects` directory",
         )
         print(description + usage)
         sys.exit()
@@ -124,9 +123,7 @@ def parse_dats_information(dats_dict):
 
     authorization = "unknown"
     if "authorizations" in dats_dict["distributions"][0]["access"]:
-        authorization = dats_dict["distributions"][0]["access"]["authorizations"][0][
-            "value"
-        ]
+        authorization = dats_dict["distributions"][0]["access"]["authorizations"][0]["value"]
 
     return {
         "title": dats_dict["title"],
