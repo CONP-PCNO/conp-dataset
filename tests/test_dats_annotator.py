@@ -119,16 +119,12 @@ class TestFindSchema:
         test_schema = find_schema(dats_dataset_schema, term, basic_json)
         assert test_schema["id"].split("/")[-1] == "identifier_info_schema.json"
 
-    def test_term_with_multiple_possible_schemata(
-        self, dats_dataset_schema, dats_person_instance
-    ):
+    def test_term_with_multiple_possible_schemata(self, dats_dataset_schema, dats_person_instance):
         term = "creators"
         test_schema = find_schema(dats_dataset_schema, term, dats_person_instance)
         assert test_schema["id"].split("/")[-1] == "person_schema.json"
 
-    def test_term_with_recursive_schema(
-        self, dats_dataset_schema, dats_dataset_instance
-    ):
+    def test_term_with_recursive_schema(self, dats_dataset_schema, dats_dataset_instance):
         term = "hasPart"
         test_schema = find_schema(dats_dataset_schema, term, dats_dataset_instance)
         assert test_schema["id"].split("/")[-1] == "dataset_schema.json"
@@ -143,26 +139,16 @@ class TestFindContext:
 
 class TestWalkSchema:
     def test_not_a_json_object(self, dats_dataset_schema):
-        test_result = annotate_dats_object(
-            None, dats_dataset_schema, {}, context_dir=CONTEXT_DIR
-        )
+        test_result = annotate_dats_object(None, dats_dataset_schema, {}, context_dir=CONTEXT_DIR)
         assert test_result == (None, {})
 
-    def test_simple_instance(
-        self, dats_person_schema, dats_person_instance, dats_jsonld_person_instance
-    ):
-        jsonld, context = annotate_dats_object(
-            dats_person_instance, dats_person_schema, {}, context_dir=CONTEXT_DIR
-        )
+    def test_simple_instance(self, dats_person_schema, dats_person_instance, dats_jsonld_person_instance):
+        jsonld, context = annotate_dats_object(dats_person_instance, dats_person_schema, {}, context_dir=CONTEXT_DIR)
         assert jsonld == dats_jsonld_person_instance["jsonld"]
         assert context == dats_jsonld_person_instance["context"]
 
-    def test_recursive_instance(
-        self, dats_dataset_schema, dats_dataset_instance, dats_jsonld_dataset_instance
-    ):
-        jsonld, context = annotate_dats_object(
-            dats_dataset_instance, dats_dataset_schema, {}, context_dir=CONTEXT_DIR
-        )
+    def test_recursive_instance(self, dats_dataset_schema, dats_dataset_instance, dats_jsonld_dataset_instance):
+        jsonld, context = annotate_dats_object(dats_dataset_instance, dats_dataset_schema, {}, context_dir=CONTEXT_DIR)
         assert jsonld == dats_jsonld_dataset_instance["jsonld"]
         assert context == dats_jsonld_dataset_instance["context"]
 

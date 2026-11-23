@@ -114,9 +114,7 @@ def generate_readme(record: dict, total_size: float, size_unit: str) -> str:
 """
 
 
-def generate_dats_json(
-    record: dict, total_size: float, size_unit: str, file_count: int
-) -> dict:
+def generate_dats_json(record: dict, total_size: float, size_unit: str, file_count: int) -> dict:
     metadata = record.get("metadata", {})
     return {
         "title": metadata.get("title"),
@@ -132,9 +130,7 @@ def generate_dats_json(
             {
                 "size": total_size,
                 "unit": {"value": size_unit},
-                "access": {
-                    "landingPage": f"https://zenodo.org/record/{record.get('id')}"
-                },
+                "access": {"landingPage": f"https://zenodo.org/record/{record.get('id')}"},
                 "formats": ["N/A"],
             }
         ],
@@ -159,17 +155,11 @@ def main():
     args = parser.parse_args()
 
     record_id = args.record.split("/")[-1]
-    token = (
-        args.zenodo_token
-        or os.getenv("ZENODO_TOKEN")
-        or os.getenv("DATALAD_ZENODO_token")
-    )
+    token = args.zenodo_token or os.getenv("ZENODO_TOKEN") or os.getenv("DATALAD_ZENODO_token")
 
     print(f"📥 Fetching Zenodo record {record_id}...")
     headers = {"Authorization": f"Bearer {token}"} if token else {}
-    req = urllib.request.Request(
-        f"https://zenodo.org/api/records/{record_id}", headers=headers
-    )
+    req = urllib.request.Request(f"https://zenodo.org/api/records/{record_id}", headers=headers)
     with urllib.request.urlopen(req) as r:
         record = json.loads(r.read().decode())
 
@@ -249,10 +239,7 @@ def main():
                 # Assume the first entry is the main distribution
                 main_dist = final_dats["distributions"][0]
                 # Deep merge: make sure the required fields (size, unit, formats, access) exist
-                if (
-                    "distributions" in perfect_dats
-                    and len(perfect_dats["distributions"]) > 0
-                ):
+                if "distributions" in perfect_dats and len(perfect_dats["distributions"]) > 0:
                     template_dist = perfect_dats["distributions"][0]
                     main_dist["size"] = template_dist["size"]
                     main_dist["unit"] = template_dist["unit"]
@@ -265,9 +252,7 @@ def main():
                     if "access" not in main_dist:
                         main_dist["access"] = template_dist.get("access", {})
                     elif "landingPage" not in main_dist["access"]:
-                        main_dist["access"]["landingPage"] = template_dist.get(
-                            "access", {}
-                        ).get("landingPage", "")
+                        main_dist["access"]["landingPage"] = template_dist.get("access", {}).get("landingPage", "")
                 # Keep every other entry from main_dist (authorizations, etc.)
             else:
                 final_dats["distributions"] = perfect_dats.get("distributions", [])
@@ -282,9 +267,7 @@ def main():
                         d["date"] = mod_date_val
                         found_mod = True
                 if not found_mod:
-                    final_dats["dates"].append(
-                        {"date": mod_date_val, "type": {"value": "date modified"}}
-                    )
+                    final_dats["dates"].append({"date": mod_date_val, "type": {"value": "date modified"}})
             else:
                 final_dats["dates"] = perfect_dats.get("dates", [])
 
@@ -295,9 +278,7 @@ def main():
                 elif key == "extraProperties":
                     # Fill extraProperties incrementally too (add only, never remove)
                     existing_props = final_dats.get("extraProperties", [])
-                    existing_cats = {
-                        p.get("category") for p in existing_props if "category" in p
-                    }
+                    existing_cats = {p.get("category") for p in existing_props if "category" in p}
                     for p in perfect_dats.get("extraProperties", []):
                         if p.get("category") not in existing_cats:
                             existing_props.append(p)
@@ -308,14 +289,8 @@ def main():
                     new_creators = perfect_dats.get("creators", [])
                     # The Zenodo template sometimes contains "N/A" or an empty list
                     placeholder_names = ["Multiple Contributors", "N/A", "unknown", ""]
-                    is_new_placeholder = (
-                        len(new_creators) > 0
-                        and new_creators[0].get("name") in placeholder_names
-                    )
-                    has_old_real_name = (
-                        len(old_creators) > 0
-                        and old_creators[0].get("name") not in placeholder_names
-                    )
+                    is_new_placeholder = len(new_creators) > 0 and new_creators[0].get("name") in placeholder_names
+                    has_old_real_name = len(old_creators) > 0 and old_creators[0].get("name") not in placeholder_names
 
                     if is_new_placeholder and has_old_real_name:
                         print("🛡️  Preserving manually curated creators list...")
@@ -327,9 +302,7 @@ def main():
             # Never modify the value of any key already present in final_dats
 
             # Strong patch: fix the types validation (must be an information -> value structure)
-            correct_types = perfect_dats.get(
-                "types", [{"information": {"value": "dataset"}}]
-            )
+            correct_types = perfect_dats.get("types", [{"information": {"value": "dataset"}}])
             if "types" in final_dats:
                 old_types = final_dats["types"]
                 # Check that it uses the standard list form and contains the information key
