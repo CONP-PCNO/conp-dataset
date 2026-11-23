@@ -273,9 +273,7 @@ def download_components(
     inner_path: str = "",
 ):
     for component in components:
-        component_title = clean_title(
-            component.get("attributes", {}).get("title", "component")
-        )
+        component_title = clean_title(component.get("attributes", {}).get("title", "component"))
         component_inner_path = os.path.join(inner_path, "components", component_title)
         os.makedirs(os.path.join(dataset_dir, component_inner_path), exist_ok=True)
         download_files(
@@ -286,14 +284,9 @@ def download_components(
             token,
             file_sizes,
         )
-        subcomponents = fetch_paginated_data(
-            component["relationships"]["children"]["links"]["related"]["href"], token
-        )
+        subcomponents = fetch_paginated_data(component["relationships"]["children"]["links"]["related"]["href"], token)
         if subcomponents:
-            download_components(
-                subcomponents, dataset_dir, token, file_sizes, component_inner_path
-            )
-
+            download_components(subcomponents, dataset_dir, token, file_sizes, component_inner_path)
 
 
 def generate_readme(dataset: dict, total_size: float, size_unit: str) -> str:
@@ -309,9 +302,7 @@ def generate_readme(dataset: dict, total_size: float, size_unit: str) -> str:
     return content
 
 
-def generate_dats_json(
-    dataset: dict, total_size: float, size_unit: str, file_count: int
-) -> dict:
+def generate_dats_json(dataset: dict, total_size: float, size_unit: str, file_count: int) -> dict:
     return {
         "title": dataset["title"],
         "description": html_to_text(dataset.get("description", "")),
@@ -340,9 +331,7 @@ def generate_dats_json(
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Import OSF dataset with DataLad and standardized metadata."
-    )
+    parser = argparse.ArgumentParser(description="Import OSF dataset with DataLad and standardized metadata.")
     parser.add_argument("--node", required=True, help="OSF node id or URL")
     parser.add_argument("--basedir", default=".")
     parser.add_argument("--osf-token")
@@ -365,16 +354,12 @@ def main():
         "description": attributes.get("description", ""),
         "version": attributes["date_modified"],
         "files_link": relationships["files"]["links"]["related"]["href"],
-        "creators": [
-            {"name": c} for c in ["Multiple Contributors"]
-        ],  # simplified; can be enriched later
+        "creators": [{"name": c} for c in ["Multiple Contributors"]],  # simplified; can be enriched later
     }
 
     # Fetch the wiki (optional)
     try:
-        wikis = fetch_paginated_data(
-            relationships["wikis"]["links"]["related"]["href"], token
-        )
+        wikis = fetch_paginated_data(relationships["wikis"]["links"]["related"]["href"], token)
         if wikis:
             with request(wikis[0]["links"]["download"], token=token) as response:
                 dataset["wiki"] = response.read().decode("utf-8")
@@ -395,14 +380,10 @@ def main():
 
     file_sizes = []
     print("🔗 Downloading files...")
-    download_files(
-        dataset["files_link"], dataset_dir, "", dataset_dir, token, file_sizes
-    )
+    download_files(dataset["files_link"], dataset_dir, "", dataset_dir, token, file_sizes)
 
     # Fetch the components
-    components = fetch_paginated_data(
-        relationships["children"]["links"]["related"]["href"], token
-    )
+    components = fetch_paginated_data(relationships["children"]["links"]["related"]["href"], token)
     if components:
         print(f"📦 Downloading {len(components)} components...")
         download_components(components, dataset_dir, token, file_sizes)
@@ -438,10 +419,7 @@ def main():
                 # Assume the first entry is the main distribution
                 main_dist = final_dats["distributions"][0]
                 # Deep merge: make sure the required fields (size, unit, formats, access) exist
-                if (
-                    "distributions" in perfect_dats
-                    and len(perfect_dats["distributions"]) > 0
-                ):
+                if "distributions" in perfect_dats and len(perfect_dats["distributions"]) > 0:
                     template_dist = perfect_dats["distributions"][0]
                     main_dist["size"] = template_dist["size"]
                     main_dist["unit"] = template_dist["unit"]
@@ -454,9 +432,7 @@ def main():
                     if "access" not in main_dist:
                         main_dist["access"] = template_dist.get("access", {})
                     elif "landingPage" not in main_dist["access"]:
-                        main_dist["access"]["landingPage"] = template_dist.get(
-                            "access", {}
-                        ).get("landingPage", "")
+                        main_dist["access"]["landingPage"] = template_dist.get("access", {}).get("landingPage", "")
                 # Keep every other entry from main_dist (authorizations, etc.)
             else:
                 final_dats["distributions"] = perfect_dats.get("distributions", [])
@@ -471,9 +447,7 @@ def main():
                         d["date"] = mod_date_val
                         found_mod = True
                 if not found_mod:
-                    final_dats["dates"].append(
-                        {"date": mod_date_val, "type": {"value": "date modified"}}
-                    )
+                    final_dats["dates"].append({"date": mod_date_val, "type": {"value": "date modified"}})
             else:
                 final_dats["dates"] = perfect_dats.get("dates", [])
 
@@ -484,9 +458,7 @@ def main():
                 elif key == "extraProperties":
                     # Fill extraProperties incrementally too (add only, never remove)
                     existing_props = final_dats.get("extraProperties", [])
-                    existing_cats = {
-                        p.get("category") for p in existing_props if "category" in p
-                    }
+                    existing_cats = {p.get("category") for p in existing_props if "category" in p}
                     for p in perfect_dats.get("extraProperties", []):
                         if p.get("category") not in existing_cats:
                             existing_props.append(p)
@@ -495,14 +467,8 @@ def main():
                     # Preserve manually curated creators over the placeholder template.
                     old_creators = final_dats.get("creators", [])
                     new_creators = perfect_dats.get("creators", [])
-                    if (
-                        len(new_creators) > 0
-                        and new_creators[0].get("name") == "Multiple Contributors"
-                    ):
-                        if (
-                            len(old_creators) > 0
-                            and old_creators[0].get("name") != "Multiple Contributors"
-                        ):
+                    if len(new_creators) > 0 and new_creators[0].get("name") == "Multiple Contributors":
+                        if len(old_creators) > 0 and old_creators[0].get("name") != "Multiple Contributors":
                             print("🛡️  Preserving manually curated creators list...")
                             # Leave final_dats["creators"] untouched
                         else:
@@ -514,9 +480,7 @@ def main():
             # Never modify the value of any key already present in final_dats
 
             # Strong patch: fix the types validation (must be an information -> value structure)
-            correct_types = perfect_dats.get(
-                "types", [{"information": {"value": "dataset"}}]
-            )
+            correct_types = perfect_dats.get("types", [{"information": {"value": "dataset"}}])
             if "types" in final_dats:
                 old_types = final_dats["types"]
                 # Check that it uses the standard list form and contains the information key
