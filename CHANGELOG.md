@@ -29,6 +29,7 @@
   formatting under Ruff; update the core hook revisions; and add private-key
   detection and a 500 KB added-file limit. Retain the repository-specific
   Dockerfile and documentation checks.
+- Replace the Dockerfilelint pre-commit hook with Hadolint.
 - Centralize the Ruff target Python version, line length, selected rules,
   exclusions, and development dependency in `pyproject.toml`
 - Fixed the Ruff findings across the Python scripts/ and tests/.
