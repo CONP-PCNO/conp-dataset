@@ -7,7 +7,6 @@
 **/.vs
 **/.vscode
 
-**/.circleci
 **/.github
 **/.gitignore
 README.md
