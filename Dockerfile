@@ -1,18 +1,18 @@
 FROM ubuntu:24.04
-LABEL maintainer="mathieu.dugre@concordia.ca"
-LABEL Name=conp-dataset Version=0.0.1
+LABEL maintainer="anthony.hatzopoulos@mcin.ca"
+LABEL name=conp-dataset version=0.0.1
 
 COPY --from=ghcr.io/astral-sh/uv:0.13.5 /uv /uvx /bin/
 
 RUN : \
     && apt-get -yq update \
     && apt-get install -yq --no-install-recommends \
-        python3-dev \
-        python3-venv \
-        curl \
-        git \
-        openssh-client \
-        netbase \
+        python3-dev=3.12.3-0ubuntu2.1 \
+        python3-venv=3.12.3-0ubuntu2.1 \
+        curl=8.5.0-2ubuntu10.16 \
+        git=1:2.43.0-1ubuntu7.4 \
+        openssh-client=1:9.6p1-3ubuntu13.20 \
+        netbase=6.4 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && ln -s /usr/bin/python3 /usr/bin/python \
@@ -20,6 +20,7 @@ RUN : \
 ENV UV_PYTHON_DOWNLOADS=never
 
 # Retrieve the binaries for the latest version of git-annex.
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN : \
     && curl \
         https://downloads.kitenet.net/git-annex/linux/current/git-annex-standalone-amd64.tar.gz \
