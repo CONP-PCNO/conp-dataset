@@ -11,6 +11,9 @@
   and supports token-based access.
 - Added `scripts/how_to_use_import_single_scripts.md` with example commands for
   both importers.
+- Document the repository scripts in `scripts/README.md`, including an inventory
+  of each script, usage and validation notes, Git history, and security and
+  maintenance observations.
 
 ### Python tooling and dependencies
 
@@ -30,6 +33,7 @@
   detection and a 500 KB added-file limit. Retain the repository-specific
   Dockerfile and documentation checks.
 - Replace the Dockerfilelint pre-commit hook with Hadolint.
+- Add Hadolint's Python package to the development dependencies.
 - Centralize the Ruff target Python version, line length, selected rules,
   exclusions, and development dependency in `pyproject.toml`
 - Fixed the Ruff findings across the Python scripts/ and tests/.
@@ -63,6 +67,7 @@
 - Configure Dependabot to group GitHub Actions updates, limit concurrent update
   pull requests, standardize commit-message prefixes, and exclude dataset
   submodule paths.
+- Remove the GitHub Actions DockerHub build and push workflow.
 
 ### Testing
 
@@ -73,5 +78,11 @@
 
 - Update the Docker image build configuration to use current Ubuntu and Docker
   tooling.
+- Fix Dockerfile lint findings by standardizing label names, pinning Ubuntu
+  package versions, and configuring Bash with pipefail for piped download
+  commands.
+- Add `.ackrc` to exclude editor, Python cache, and local data directories from
+  Ack searches.
+- Remove the obsolete CircleCI exclusion from `.dockerignore`.
 - Update the license copyright year to 2026.
 - Adjust the automatic pull-request reviewer list.
