@@ -1,0 +1,16 @@
+# Ack configuration File .ackrc file
+# https://beyondgrep.com/
+
+# VS Code
+--ignore-directory=is:.vscode
+
+# Python
+--ignore-directory=is:venv
+--ignore-directory=is:.venv
+--ignore-directory=is:__pycache__
+--ignore-directory=is:.ruff_cache
+
+# Data
+--ignore-directory=is:projects
+--ignore-directory=is:data
+--ignore-directory=is:logs
