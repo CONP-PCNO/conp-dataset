@@ -29,10 +29,10 @@ repos:
         args: [--autofix]
       - id: check-builtin-literals
       - id: check-docstring-first
-  - repo: https://github.com/pryorda/dockerfilelint-precommit-hooks
-    rev: v0.1.0
+  - repo: https://github.com/shenxianpeng/hadolint-pre-commit
+    rev: v2.15.1.3
     hooks:
-      - id: dockerfilelint
+      - id: hadolint
         stages: [pre-commit]
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.17.4
