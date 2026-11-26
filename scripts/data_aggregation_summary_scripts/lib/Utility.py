@@ -1,3 +1,5 @@
+"""Shared readers and CSV output helpers for the aggregation scripts."""
+
 import csv
 import datetime
 import json

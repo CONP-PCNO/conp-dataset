@@ -1,3 +1,5 @@
+"""Test-oriented base crawler implementation for provider crawler test scenarios."""
+
 import abc
 import json
 import os

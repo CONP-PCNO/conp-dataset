@@ -1,3 +1,5 @@
+"""Retrying DataLad dataset operations with operation-specific failure types."""
+
 from __future__ import annotations
 
 import functools

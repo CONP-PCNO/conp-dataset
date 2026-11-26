@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-#  sftp_crawler.pl - crawl a dataset on sftp-conp.acelab.ca
+#  sftp_crawler.pl - register remote SFTP dataset files with git-annex
 #                    - EOB - Mar 03 2020 - reworked Apr 21 2022
 #
 # usage: sftp_crawler.pl $local_projectname $username $password $local_directory $remote_directory $inlist

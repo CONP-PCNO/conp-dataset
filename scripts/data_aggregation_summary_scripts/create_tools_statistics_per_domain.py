@@ -1,4 +1,4 @@
-"""Docstring."""
+"""Write summary statistics for cached Boutiques tools, grouped by domain."""
 
 import getopt
 import os

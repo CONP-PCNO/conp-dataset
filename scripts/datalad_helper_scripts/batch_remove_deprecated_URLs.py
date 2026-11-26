@@ -1,3 +1,5 @@
+"""Find deprecated annex URLs and remove them from a DataLad dataset in batches."""
+
 import getopt
 import json
 import os

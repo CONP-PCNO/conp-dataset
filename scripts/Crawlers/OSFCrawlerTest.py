@@ -1,3 +1,5 @@
+"""Test-oriented OSF crawler implementation used by the crawler test suite."""
+
 import datetime
 import json
 import os

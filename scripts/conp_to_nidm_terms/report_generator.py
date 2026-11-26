@@ -1,3 +1,5 @@
+"""Command-line entry point for reporting distinct and duplicate DATS terms."""
+
 import getopt
 import json
 from datetime import date

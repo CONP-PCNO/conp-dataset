@@ -1,3 +1,5 @@
+"""Validate DATS documents against the CONP schema and additional rules."""
+
 import getopt
 import json
 import logging

@@ -1,3 +1,5 @@
+"""Export selected dataset provenance metadata to a CSV summary."""
+
 import csv
 import datetime
 import getopt

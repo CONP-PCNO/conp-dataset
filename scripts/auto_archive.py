@@ -1,3 +1,5 @@
+"""Create archive exports for datasets selected by their recent modification time."""
+
 from __future__ import annotations
 
 import argparse

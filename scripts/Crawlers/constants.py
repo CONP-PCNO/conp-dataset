@@ -1,3 +1,5 @@
+"""Shared DATS field names, license identifiers, and modality mappings."""
+
 LICENSE_CODES = [
     "CC BY-NC-SA",
     "CC BY-NC-ND",

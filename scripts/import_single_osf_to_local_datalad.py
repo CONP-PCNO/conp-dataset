@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+"""Import one OSF node and its components into a local DataLad dataset."""
+
 import argparse
 import datetime as dt
 import json
