@@ -1,3 +1,5 @@
+"""Import OSF projects, components, and files into CONP DataLad datasets."""
+
 import datetime
 import json
 import os

@@ -1,3 +1,5 @@
+"""Shared base workflow for turning provider records into CONP DataLad datasets."""
+
 import abc
 import json
 import os

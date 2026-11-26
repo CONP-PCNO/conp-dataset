@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# Scheduled wrapper that prepares a working copy and log/lock files before crawling.
 set -e
 set -u
 

@@ -1,3 +1,5 @@
+"""Discover Zenodo records and import their metadata and files as datasets."""
+
 import datetime
 import json
 import os

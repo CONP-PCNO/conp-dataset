@@ -1,3 +1,5 @@
+"""Command-line entry point for generating JSON-LD files from distinct DATS terms."""
+
 import getopt
 from sys import argv
 

@@ -1,3 +1,5 @@
+"""Collect DATS terms and generate JSON-LD reports with optional NIF lookups."""
+
 import json
 import logging
 import os

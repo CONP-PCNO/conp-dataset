@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+"""Import one Zenodo record into a local DataLad dataset."""
+
 import argparse
 import datetime as dt
 import json

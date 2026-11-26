@@ -1,3 +1,5 @@
+"""Write dataset counts and metadata summaries grouped by data provider."""
+
 import getopt
 import os
 import sys

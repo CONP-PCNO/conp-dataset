@@ -1,3 +1,5 @@
+"""Parse crawler configuration and run the selected OSF and/or Zenodo crawlers."""
+
 import argparse
 import json
 import os

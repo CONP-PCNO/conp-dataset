@@ -1,3 +1,5 @@
+"""Download files from an FTP endpoint into a local DataLad dataset."""
+
 import argparse
 import os
 from ftplib import FTP

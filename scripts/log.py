@@ -1,3 +1,5 @@
+"""Provide the shared logger configuration used by repository scripts."""
+
 import logging
 
 

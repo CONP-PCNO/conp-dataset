@@ -1,3 +1,5 @@
+"""Annotate DATS JSON documents with the CONP JSON-LD schema and context."""
+
 import argparse
 import json
 import logging
