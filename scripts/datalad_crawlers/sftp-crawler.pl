@@ -1,5 +1,5 @@
 
-#!/usr/bin/perl
+#!/usr/bin/env perl
 #
 #  sftp_crawler.pl - list remote SFTP files and register them with git-annex
 #                    - EOB - Mar 03 2020

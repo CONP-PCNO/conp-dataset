@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 #
 #  DATS2csv.pl - crawl all DATS.json files from CONP and output a single .csv file
 #                    - EOB - Mar 16 2023

@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 #
 #  sftp_crawler.pl - register remote SFTP dataset files with git-annex
 #                    - EOB - Mar 03 2020 - reworked Apr 21 2022
