@@ -4,6 +4,14 @@
 
 ### Added
 
+- Add concise purpose descriptions to scripts and helper modules, and clarify
+  selected non-obvious implementation details with inline comments.
+- Add `scripts/DEVELOPMENT.md` for script layout, safe development practices,
+  and focused validation guidance.
+- Add `scripts/REPORT-SCRIPTS.md` with a file-by-file inventory and cautious
+  maintenance recommendations for the script source files.
+- Rework `scripts/README.md` into a compact navigation guide that is readable
+  on narrow screens.
 - Added scripts to import individual Zenodo records and OSF nodes into local
   DataLad datasets. The importers download text files directly, register other
   files with Git-annex, generate or update `README.md` and `DATS.json`, and save
@@ -11,9 +19,8 @@
   and supports token-based access.
 - Added `scripts/how_to_use_import_single_scripts.md` with example commands for
   both importers.
-- Document the repository scripts in `scripts/README.md`, including an inventory
-  of each script, usage and validation notes, Git history, and security and
-  maintenance observations.
+- Document the repository scripts in `scripts/README.md`, with the detailed
+  inventory and maintenance observations in `scripts/REPORT-SCRIPTS.md`.
 
 ### Python tooling and dependencies
 
