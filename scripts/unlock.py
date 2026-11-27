@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Add Zenodo access tokens to annex URLs for restricted dataset files."""
 
 import json
