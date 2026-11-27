@@ -8,7 +8,7 @@ from lib import Utility
 
 
 def main(argv):
-    """Doctring."""
+    """Parse options, aggregate tool descriptors, and write the CSV summary."""
     # create the getopt table + read and validate the options given to the script
     tools_json_dir_path = parse_input(argv)
 
