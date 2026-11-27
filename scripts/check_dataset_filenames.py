@@ -119,6 +119,7 @@ def find_findings(paths: list[str], location: str) -> set[Finding]:
             problem = _windows_problem(component)
             if problem:
                 findings.add(Finding("windows-incompatible", location, path, detail=problem))
+            # Group spellings that Windows may treat as the same name.
             component_key = unicodedata.normalize("NFC", component).casefold()
             siblings = components_by_parent.setdefault(normalized_parent, {})
             siblings.setdefault(component_key, {})[component] = (
