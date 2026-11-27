@@ -22,6 +22,7 @@ class UninstallFailed(Exception):
 
 def retry(max_attempt):
     """Retry an operation up to ``max_attempt`` times, then raise its last error."""
+
     def decorator(func):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
